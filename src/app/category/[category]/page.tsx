@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { getPostsByCategory } from '@/lib/posts';
+import { getPostsByCategory, getAllPosts } from '@/lib/posts';
 import { CATEGORIES, getCategoryBySlug } from '@/lib/categories';
-import PostCard from '@/components/PostCard';
-import { ArrowLeft, Layers } from 'lucide-react';
+import ArticleCard from '@/components/ArticleCard';
+import Sidebar from '@/components/Sidebar';
+import { ChevronRight } from 'lucide-react';
 
 interface CategoryPageProps {
   params: {
@@ -20,7 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const meta = getCategoryBySlug(params.category);
   return {
-    title: `${meta.name} - GravityPulse`,
+    title: `${meta.name} News & Analysis - BonusRadar`,
     description: meta.description,
   };
 }
@@ -28,51 +29,59 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 export default function CategoryPage({ params }: CategoryPageProps) {
   const meta = getCategoryBySlug(params.category);
   const posts = getPostsByCategory(params.category);
+  const allPosts = getAllPosts();
 
   return (
-    <div className="py-8 md:py-12 space-y-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to all articles
-        </Link>
+    <div className="py-6 space-y-8">
+      {/* Breadcrumb Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+          <Link href="/" className="hover:text-[#1b2e67] font-semibold">Home</Link>
+          <ChevronRight className="w-3 h-3 text-zinc-400" />
+          <span className="text-zinc-800 font-bold uppercase">{meta.name}</span>
+        </div>
+      </div>
 
-        {/* Category Header */}
-        <div className="p-8 md:p-12 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300">
-            <Layers className="w-3.5 h-3.5 text-blue-600" />
-            Category
-          </div>
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
+      {/* Category Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white border-l-4 border-[#1b2e67] p-6 sm:p-8 rounded-r shadow-sm">
+          <h1 className="text-2xl sm:text-3xl font-black uppercase text-[#1b2e67] tracking-tight">
             {meta.name}
           </h1>
-          <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
+          <p className="mt-2 text-xs sm:text-sm text-zinc-600 max-w-2xl leading-relaxed">
             {meta.description}
           </p>
-          <div className="text-xs font-semibold text-zinc-400">
-            {posts.length} {posts.length === 1 ? 'article' : 'articles'} in this category
+          <div className="mt-3 text-xs font-bold text-[#f9b44d] uppercase tracking-wider">
+            {posts.length} {posts.length === 1 ? 'Article' : 'Articles'} Published
           </div>
         </div>
       </div>
 
-      {/* Posts Grid */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-dashed border-zinc-200 dark:border-zinc-800">
-            <p className="text-zinc-500">No articles found in this category yet.</p>
-            <p className="text-xs text-zinc-400 mt-2">
-              Use the Antigravity generator to create a new post for {meta.name}!
-            </p>
-          </div>
-        )}
+      {/* 2-Column Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <main className="lg:col-span-8">
+            <div className="tg-section-header">
+              <h2 className="tg-section-title">{meta.name} Coverage</h2>
+            </div>
+
+            {posts.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {posts.map((post) => (
+                  <ArticleCard key={post.slug} post={post} />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white p-12 text-center rounded border border-zinc-200 text-zinc-500">
+                No articles found in this category yet.
+              </div>
+            )}
+          </main>
+
+          <aside className="lg:col-span-4 sticky top-24">
+            <Sidebar mustReadPosts={allPosts.slice(0, 5)} />
+          </aside>
+        </div>
       </div>
     </div>
   );
