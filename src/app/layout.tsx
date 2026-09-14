@@ -4,22 +4,22 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site'),
   title: {
-    default: 'GravityPulse - Insights on Technology, AI, & Future Business',
-    template: '%s | GravityPulse',
+    default: 'BonusRadar - Insights on Technology, AI, & Digital Growth',
+    template: '%s | BonusRadar',
   },
   description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
-  keywords: ['AI', 'Technology', 'Productivity', 'Business Growth', 'Software Engineering', 'Next.js', 'Vercel'],
-  authors: [{ name: 'GravityPulse Editorial' }],
-  creator: 'GravityPulse',
+  keywords: ['AI', 'Technology', 'Productivity', 'Business Growth', 'Software Engineering', 'BonusRadar'],
+  authors: [{ name: 'BonusRadar Editorial' }],
+  creator: 'BonusRadar',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://example.com',
-    title: 'GravityPulse - Insights on Technology, AI, & Future Business',
+    url: 'https://bunusradar.site',
+    title: 'BonusRadar - Insights on Technology, AI, & Digital Growth',
     description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
-    siteName: 'GravityPulse',
+    siteName: 'BonusRadar',
   },
   twitter: {
     card: 'summary_large_image',
