@@ -10,9 +10,11 @@
     "build": "next build",
     "start": "next start",
     "post:new": "node scripts/generate-post.js",
-    "publish:auto": "node scripts/publish.js"
+    "publish:auto": "node scripts/publish.js",
+    "ai:publish": "node --experimental-vm-modules scripts/ai-publish.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "gray-matter": "^4.0.3",
