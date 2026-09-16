@@ -3,7 +3,7 @@ import { getAllPosts } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bonusradar.site';
   const posts = getAllPosts();
 
   // Post pages

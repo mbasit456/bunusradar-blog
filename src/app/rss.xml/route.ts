@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/posts';
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bonusradar.site';
   const posts = getAllPosts();
 
   const rssItems = posts
@@ -20,7 +20,7 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>GravityPulse</title>
+    <title>BonusRadar</title>
     <link>${baseUrl}</link>
     <description>Insights on Technology, AI Systems, Digital Business, and Productivity</description>
     <language>en</language>

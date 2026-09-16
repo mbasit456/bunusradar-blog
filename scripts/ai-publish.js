@@ -5,6 +5,7 @@
  * Usage: node scripts/ai-publish.js "keyword1" "keyword2" "keyword3"
  * Or:    npm run ai:publish -- "best productivity apps 2026" "AI tools for bloggers"
  *
+ * Automatically schedules articles 1 every 2 days!
  * Requires: GEMINI_API_KEY environment variable
  */
 
@@ -51,8 +52,55 @@ function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function today() {
-  return new Date().toISOString().split('T')[0];
+/** 
+ * Computes the starting date for scheduling:
+ * Checks all existing posts for their date.
+ * If the latest post is today or in the future, the next one begins 2 days after that date.
+ * Otherwise, the first post starts today.
+ */
+function getNextScheduleStart() {
+  const postsDir = path.join(ROOT, 'content', 'posts');
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+
+  if (!fs.existsSync(postsDir)) return todayStr;
+
+  const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.md'));
+  let latestDateStr = todayStr;
+  let hasPostToday = false;
+
+  for (const file of files) {
+    try {
+      const content = fs.readFileSync(path.join(postsDir, file), 'utf8');
+      const match = content.match(/^date:\s*"?(\d{4}-\d{2}-\d{2})"?/m);
+      if (match) {
+        const dStr = match[1];
+        if (dStr === todayStr) hasPostToday = true;
+        if (dStr > latestDateStr) {
+          latestDateStr = dStr;
+        }
+      }
+    } catch {}
+  }
+
+  if (latestDateStr > todayStr) {
+    const nextD = new Date(latestDateStr + 'T00:00:00Z');
+    nextD.setUTCDate(nextD.getUTCDate() + 2);
+    return nextD.toISOString().split('T')[0];
+  } else if (hasPostToday) {
+    const nextD = new Date(todayStr + 'T00:00:00Z');
+    nextD.setUTCDate(nextD.getUTCDate() + 2);
+    return nextD.toISOString().split('T')[0];
+  } else {
+    return todayStr;
+  }
+}
+
+/** Returns a UTC ISO date string offset by `index * 2` days from the start date */
+function scheduledDate(startDateStr, index) {
+  const d = new Date(startDateStr + 'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate() + index * 2);
+  return d.toISOString().split('T')[0];
 }
 
 // ─── AI ARTICLE GENERATOR ────────────────────────────────────────────────────
@@ -61,8 +109,8 @@ async function generateArticle(keyword, apiKey) {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-3.6-flash' });
 
-  const prompt = `You are an expert blogger writing for "${SITE_NAME}", a tech & lifestyle magazine.
-Write a high-quality, SEO-optimized blog article about: "${keyword}"
+  const prompt = `You are an expert journalist and blogger writing for "${SITE_NAME}", a tech, business, and lifestyle magazine.
+Write a comprehensive, SEO-optimized blog article about: "${keyword}"
 
 STRICT OUTPUT FORMAT — Return ONLY valid JSON, no markdown fences, no extra text:
 {
@@ -76,11 +124,11 @@ STRICT OUTPUT FORMAT — Return ONLY valid JSON, no markdown fences, no extra te
 }
 
 Requirements:
-- Title must be engaging and include the main keyword
+- Title must be engaging and include the main topic/keyword naturally
 - Body must be informative, practical, and authoritative
-- Use examples, statistics (can be illustrative), and actionable tips
-- Conversational but professional tone
-- No fluff, every paragraph adds value`;
+- Use examples, statistics, and actionable advice
+- Professional editorial tone matching TG Daily / Forbes / Wired
+- No placeholder text, produce a finished publish-ready piece`;
 
   console.log(`  ✍️  Generating article for: "${keyword}"...`);
 
@@ -102,13 +150,13 @@ Requirements:
 
 // ─── MARKDOWN FILE BUILDER ───────────────────────────────────────────────────
 
-function buildMarkdownFile(data) {
+function buildMarkdownFile(data, publishDate) {
   const coverImage = randomItem(COVER_IMAGES);
   const tags = Array.isArray(data.tags) ? data.tags : [];
 
   const frontmatter = `---
 title: "${data.title.replace(/"/g, '\\"')}"
-date: "${today()}"
+date: "${publishDate}"
 excerpt: "${data.excerpt.replace(/"/g, '\\"')}"
 category: "${data.category}"
 tags: [${tags.map(t => `"${t}"`).join(', ')}]
@@ -125,12 +173,17 @@ featured: false
 
 function gitPush(filenames) {
   try {
+    const gitCmdPath = path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Git', 'cmd');
+    if (fs.existsSync(gitCmdPath) && !process.env.PATH.includes(gitCmdPath)) {
+      process.env.PATH = `${process.env.PATH};${gitCmdPath}`;
+    }
+
     console.log('\n  📦 Committing and pushing to GitHub...');
-    execSync('git add -A', { cwd: ROOT, stdio: 'inherit' });
-    const msg = `ai: publish ${filenames.length} new article(s) — ${filenames.join(', ')}`;
-    execSync(`git commit -m "${msg}"`, { cwd: ROOT, stdio: 'inherit' });
-    execSync('git push', { cwd: ROOT, stdio: 'inherit' });
-    console.log('  ✅ Pushed! Vercel will deploy in ~30 seconds.');
+    execSync('git add -A', { cwd: ROOT, stdio: 'inherit', env: process.env });
+    const msg = `ai: schedule ${filenames.length} article(s) (every 2 days) — ${filenames.join(', ')}`;
+    execSync(`git commit -m "${msg}"`, { cwd: ROOT, stdio: 'inherit', env: process.env });
+    execSync('git push', { cwd: ROOT, stdio: 'inherit', env: process.env });
+    console.log('  ✅ Pushed to GitHub! Vercel updated.');
   } catch (err) {
     console.error('  ❌ Git push failed:', err.message);
     console.log('  💡 You can push manually: git add -A && git commit -m "add articles" && git push');
@@ -155,68 +208,70 @@ Example:
     process.exit(1);
   }
 
-  // Get API key
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     console.error(`
 ❌ GEMINI_API_KEY environment variable not set!
 
-Get your free API key at: https://aistudio.google.com/app/apikey
-
-Then set it:
-  Windows PowerShell: $env:GEMINI_API_KEY = "your-key-here"
-  Then run the script again.
+Set it before running:
+  $env:GEMINI_API_KEY = "your-api-key"
 `);
     process.exit(1);
   }
 
-  console.log(`\n🚀 BonusRadar AI Publisher`);
-  console.log(`   Generating ${keywords.length} article(s)...\n`);
+  console.log(`\n🚀 BonusRadar AI Auto-Scheduler`);
+  console.log(`   Scheduling 1 article every 2 days for ${keywords.length} topic(s)...\n`);
+
+  const startDateStr = getNextScheduleStart();
+  console.log(`   📅 Queue starting date: ${startDateStr}\n`);
 
   const published = [];
+  let scheduleIndex = 0;
 
   for (const keyword of keywords) {
     try {
+      const pubDate = scheduledDate(startDateStr, scheduleIndex);
       const data = await generateArticle(keyword, apiKey);
 
-      // Use AI-generated slug or create from title
       const slug = data.slug ? slugify(data.slug) : slugify(data.title);
       const filename = `${slug}.md`;
       const filepath = path.join(POSTS_DIR, filename);
 
-      // Don't overwrite existing articles
       if (fs.existsSync(filepath)) {
-        console.log(`  ⚠️  Skipping "${keyword}" — file already exists: ${filename}`);
+        console.log(`  ⚠️  Skipping "${keyword}" — file already exists: ${filename}\n`);
         continue;
       }
 
-      const markdown = buildMarkdownFile(data);
+      const markdown = buildMarkdownFile(data, pubDate);
       fs.writeFileSync(filepath, markdown, 'utf8');
 
-      console.log(`  ✅ Created: ${filename}`);
-      console.log(`     Title: ${data.title}`);
+      console.log(`  ✅ Scheduled for: ${pubDate}`);
+      console.log(`     File:     ${filename}`);
+      console.log(`     Title:    ${data.title}`);
       console.log(`     Category: ${data.category}`);
-      console.log(`     Tags: ${(data.tags || []).join(', ')}\n`);
+      console.log(`     Tags:     ${(data.tags || []).join(', ')}\n`);
 
-      published.push(filename);
+      published.push({ filename, title: data.title, date: pubDate });
+      scheduleIndex++;
     } catch (err) {
       console.error(`  ❌ Failed for "${keyword}": ${err.message}\n`);
     }
   }
 
   if (published.length === 0) {
-    console.log('⚠️  No new articles were created.');
+    console.log('⚠️  No new articles were scheduled.');
     return;
   }
 
-  console.log(`\n📝 Created ${published.length} article(s):`);
-  published.forEach(f => console.log(`   • ${f}`));
+  console.log(`\n📅 Schedule Summary (1 article every 2 days):`);
+  published.forEach(p => console.log(`   • [${p.date}] ${p.title} (${p.filename})`));
 
-  // Auto git push
-  gitPush(published);
+  // Push to GitHub
+  gitPush(published.map(p => p.filename));
 
   console.log(`
-🎉 Done! Your article(s) will be live at bonusradar.site in ~1 minute.
+🎉 All done! Articles are scheduled in your repository.
+Each article will automatically go live on its scheduled date.
 `);
 }
 

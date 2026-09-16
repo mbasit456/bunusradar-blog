@@ -11,6 +11,8 @@ interface HomePageProps {
   };
 }
 
+export const revalidate = 60;
+
 export default function HomePage({ searchParams }: HomePageProps) {
   const allPosts = getAllPosts();
   const searchQuery = searchParams?.search?.toLowerCase().trim();

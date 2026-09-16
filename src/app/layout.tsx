@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://bonusradar.site'),
   title: {
     default: 'BonusRadar - Insights on Technology, AI, & Digital Growth',
     template: '%s | BonusRadar',
@@ -16,14 +16,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://bunusradar.site',
+    url: 'https://bonusradar.site',
     title: 'BonusRadar - Insights on Technology, AI, & Digital Growth',
     description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
     siteName: 'BonusRadar',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GravityPulse - Technology, AI, & Future Business',
+    title: 'BonusRadar - Technology, AI, & Future Business',
     description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
   },
   alternates: {

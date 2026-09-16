@@ -36,9 +36,11 @@ function ensurePostsDir() {
   }
 }
 
-export function getAllPosts(): PostMetadata[] {
+export function getAllPosts(includeScheduled = false): PostMetadata[] {
   ensurePostsDir();
   const fileNames = fs.readdirSync(POSTS_DIRECTORY);
+  const today = new Date().toISOString().split('T')[0];
+
   const allPosts = fileNames
     .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
     .map((fileName) => {
@@ -64,7 +66,9 @@ export function getAllPosts(): PostMetadata[] {
         readingTime: stats.text,
         featured: Boolean(data.featured),
       };
-    });
+    })
+    // Only show articles whose publish date has arrived (unless includeScheduled=true)
+    .filter((post) => includeScheduled || post.date <= today);
 
   // Sort descending by date
   return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -103,7 +107,7 @@ export function getAllTags(): { tag: string; count: number }[] {
     .sort((a, b) => b.count - a.count);
 }
 
-export async function getPostBySlug(slug: string): Promise<PostWithContent | null> {
+export async function getPostBySlug(slug: string, includeScheduled = false): Promise<PostWithContent | null> {
   ensurePostsDir();
   const mdPath = path.join(POSTS_DIRECTORY, `${slug}.md`);
   const mdxPath = path.join(POSTS_DIRECTORY, `${slug}.mdx`);
@@ -117,6 +121,14 @@ export async function getPostBySlug(slug: string): Promise<PostWithContent | nul
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContents);
   const stats = readingTime(content);
+
+  const today = new Date().toISOString().split('T')[0];
+  const postDate = data.date ? new Date(data.date).toISOString().split('T')[0] : today;
+
+  // Don't show scheduled articles before their date unless explicitly requested
+  if (!includeScheduled && postDate > today) {
+    return null;
+  }
 
   // Parse Table of Contents
   const headingRegex = /^(#{2,3})\s+(.*)$/gm;
@@ -150,7 +162,7 @@ export async function getPostBySlug(slug: string): Promise<PostWithContent | nul
     slug,
     title: data.title || 'Untitled Post',
     excerpt: data.excerpt || data.description || '',
-    date: data.date ? new Date(data.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+    date: postDate,
     category: (data.category || 'general').toLowerCase(),
     tags: Array.isArray(data.tags) ? data.tags : [],
     coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',

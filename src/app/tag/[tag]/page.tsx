@@ -10,6 +10,9 @@ interface TagPageProps {
   };
 }
 
+export const dynamicParams = true;
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const tags = getAllTags();
   return tags.map(({ tag }) => ({
