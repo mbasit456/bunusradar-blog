@@ -85,21 +85,21 @@ function getNextScheduleStart() {
 
   if (latestDateStr > todayStr) {
     const nextD = new Date(latestDateStr + 'T00:00:00Z');
-    nextD.setUTCDate(nextD.getUTCDate() + 2);
+    nextD.setUTCDate(nextD.getUTCDate() + 1);
     return nextD.toISOString().split('T')[0];
   } else if (hasPostToday) {
     const nextD = new Date(todayStr + 'T00:00:00Z');
-    nextD.setUTCDate(nextD.getUTCDate() + 2);
+    nextD.setUTCDate(nextD.getUTCDate() + 1);
     return nextD.toISOString().split('T')[0];
   } else {
     return todayStr;
   }
 }
 
-/** Returns a UTC ISO date string offset by `index * 2` days from the start date */
+/** Returns a UTC ISO date string offset by `index` days from the start date (1 article daily) */
 function scheduledDate(startDateStr, index) {
   const d = new Date(startDateStr + 'T00:00:00Z');
-  d.setUTCDate(d.getUTCDate() + index * 2);
+  d.setUTCDate(d.getUTCDate() + index);
   return d.toISOString().split('T')[0];
 }
 
@@ -180,7 +180,7 @@ function gitPush(filenames) {
 
     console.log('\n  📦 Committing and pushing to GitHub...');
     execSync('git add -A', { cwd: ROOT, stdio: 'inherit', env: process.env });
-    const msg = `ai: schedule ${filenames.length} article(s) (every 2 days) — ${filenames.join(', ')}`;
+    const msg = `ai: schedule ${filenames.length} article(s) (daily queue) — ${filenames.join(', ')}`;
     execSync(`git commit -m "${msg}"`, { cwd: ROOT, stdio: 'inherit', env: process.env });
     execSync('git push', { cwd: ROOT, stdio: 'inherit', env: process.env });
     console.log('  ✅ Pushed to GitHub! Vercel updated.');
@@ -220,7 +220,7 @@ Set it before running:
   }
 
   console.log(`\n🚀 BonusRadar AI Auto-Scheduler`);
-  console.log(`   Scheduling 1 article every 2 days for ${keywords.length} topic(s)...\n`);
+  console.log(`   Scheduling 1 article daily for ${keywords.length} topic(s)...\n`);
 
   const startDateStr = getNextScheduleStart();
   console.log(`   📅 Queue starting date: ${startDateStr}\n`);
