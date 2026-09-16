@@ -103,16 +103,25 @@ function scheduledDate(startDateStr, index) {
   return d.toISOString().split('T')[0];
 }
 
-// ─── AI ARTICLE GENERATOR ────────────────────────────────────────────────────
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-async function generateArticle(keyword, apiKey) {
+async function generateArticle(keyword, apiKey, attempt = 1) {
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-3.6-flash' });
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-3.6-flash',
+    generationConfig: {
+      responseMimeType: 'application/json',
+      maxOutputTokens: 8192,
+      temperature: 0.7,
+    },
+  });
 
   const prompt = `You are an expert journalist and blogger writing for "${SITE_NAME}", a tech, business, and lifestyle magazine.
 Write a comprehensive, SEO-optimized blog article about: "${keyword}"
 
-STRICT OUTPUT FORMAT — Return ONLY valid JSON, no markdown fences, no extra text:
+STRICT OUTPUT FORMAT — Return a valid JSON object matching this schema:
 {
   "title": "Engaging, click-worthy article title (60-70 chars)",
   "slug": "url-friendly-slug-with-hyphens",
@@ -120,7 +129,7 @@ STRICT OUTPUT FORMAT — Return ONLY valid JSON, no markdown fences, no extra te
   "category": "ONE of: Technology | Artificial Intelligence | Business & Growth | Productivity | Lifestyle",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
   "readingTime": "estimated reading time like '7 min read'",
-  "body": "Full article in markdown (1200-1600 words). Use ## for H2 headings, ### for H3. Include: intro paragraph, 4-6 sections with headings, bullet points where useful, a conclusion with actionable takeaway. NO frontmatter, just the body content."
+  "body": "Full article in markdown (1200-1500 words). Use ## for H2 headings, ### for H3. Include: intro paragraph, 4-6 sections with headings, bullet points where useful, a conclusion with actionable takeaway. NO frontmatter, just the body content."
 }
 
 Requirements:
@@ -130,22 +139,22 @@ Requirements:
 - Professional editorial tone matching TG Daily / Forbes / Wired
 - No placeholder text, produce a finished publish-ready piece`;
 
-  console.log(`  ✍️  Generating article for: "${keyword}"...`);
+  console.log(`  ✍️  Generating article for: "${keyword}" (Attempt ${attempt})...`);
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text().trim();
-
-  // Strip markdown fences if model wraps in them
-  const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
-
-  let parsed;
   try {
-    parsed = JSON.parse(cleaned);
-  } catch (e) {
-    throw new Error(`Failed to parse AI response as JSON.\nRaw response:\n${text.substring(0, 500)}`);
+    const result = await model.generateContent(prompt);
+    const text = result.response.text().trim();
+    const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
+    return JSON.parse(cleaned);
+  } catch (err) {
+    if (attempt < 3) {
+      const delay = attempt * 4000;
+      console.log(`  ⚠️  Error on attempt ${attempt} (${err.message}). Retrying in ${delay / 1000}s...`);
+      await sleep(delay);
+      return generateArticle(keyword, apiKey, attempt + 1);
+    }
+    throw err;
   }
-
-  return parsed;
 }
 
 // ─── MARKDOWN FILE BUILDER ───────────────────────────────────────────────────
@@ -253,6 +262,9 @@ Set it before running:
 
       published.push({ filename, title: data.title, date: pubDate });
       scheduleIndex++;
+
+      // Small pacing delay to respect API rate limits
+      await sleep(2500);
     } catch (err) {
       console.error(`  ❌ Failed for "${keyword}": ${err.message}\n`);
     }
@@ -263,7 +275,7 @@ Set it before running:
     return;
   }
 
-  console.log(`\n📅 Schedule Summary (1 article every 2 days):`);
+  console.log(`\n📅 Schedule Summary (1 article daily):`);
   published.forEach(p => console.log(`   • [${p.date}] ${p.title} (${p.filename})`));
 
   // Push to GitHub
