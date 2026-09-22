@@ -47,7 +47,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="font-extrabold text-2xl tracking-tight text-white group-hover:text-[#f9b44d] transition-colors">
-                BONUS<span className="text-[#f9b44d]">RADAR</span>
+                BUNUS<span className="text-[#f9b44d]">RADAR</span>
               </span>
               <span className="text-[10px] uppercase font-semibold tracking-widest text-zinc-300">
                 More Than The News

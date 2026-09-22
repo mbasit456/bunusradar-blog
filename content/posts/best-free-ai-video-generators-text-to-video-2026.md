@@ -4,7 +4,7 @@ date: "2026-09-27"
 excerpt: "Discover the top free AI video generators of 2026. Compare text-to-video tools like Runway, Kling, and Luma Dream Machine for effortless video creation."
 category: "Artificial Intelligence"
 tags: ["AI Video", "Text to Video", "Artificial Intelligence", "Content Creation", "Video Editing"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

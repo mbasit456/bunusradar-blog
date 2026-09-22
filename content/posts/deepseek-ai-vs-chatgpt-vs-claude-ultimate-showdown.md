@@ -4,7 +4,7 @@ date: "2026-09-26"
 excerpt: "Compare DeepSeek AI, ChatGPT, and Claude. Discover performance, pricing, and coding benchmarks to choose the best AI model for your workflow in 2025."
 category: "Artificial Intelligence"
 tags: ["DeepSeek", "ChatGPT", "Claude", "Artificial Intelligence", "AI Comparison"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false

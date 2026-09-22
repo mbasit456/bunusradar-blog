@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { Sparkles, Globe, Zap, Cpu, ArrowRight } from 'lucide-react';
+import { Sparkles, Globe, Zap, Cpu, ArrowRight, TrendingUp, Brain, Briefcase, Clock, Heart } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 
 export const metadata: Metadata = {
-  title: 'About GravityPulse',
-  description: 'About GravityPulse - Modern autonomous intelligence, tech insights, and automated publishing.',
+  title: 'About BunusRadar',
+  description: 'BunusRadar is your daily source for the latest in Technology, AI, Business & Growth, Productivity, and Lifestyle. Fresh insights published every day.',
 };
 
 export default function AboutPage() {
@@ -16,13 +16,16 @@ export default function AboutPage() {
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-900 shadow-sm">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>The Publishing Philosophy</span>
+            <span>Your Daily Intelligence Briefing</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-            Curating Knowledge at the Speed of Software
+            Welcome to BunusRadar
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
-            GravityPulse is an automated, modern publication built to explore the boundaries of technology, generative intelligence, digital entrepreneurship, and productivity systems.
+            BunusRadar is a modern daily blog covering the topics that matter most: Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle. We publish fresh, high-quality content every single day to keep you ahead of the curve.
+          </p>
+          <p className="text-base text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Whether you want to discover the best AI tools, learn how to grow your business, build smart productivity habits, or explore the future of remote work — BunusRadar has you covered with practical, in-depth guides and analysis.
           </p>
         </div>
 
@@ -30,49 +33,62 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
           <div className="p-6 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-3">
             <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-              <Cpu className="w-5 h-5" />
+              <Brain className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Autonomous Research</h2>
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">AI & Technology</h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Powered by Antigravity AI agents, each publication undergoes structured synthesis—distilling complex engineering and market trends into clear, actionable prose.
+              We cover the latest AI tools, models, coding assistants, and technology trends — from ChatGPT alternatives to the best free image generators. Honest, practical comparisons you can act on today.
             </p>
           </div>
 
           <div className="p-6 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-              <Zap className="w-5 h-5" />
+              <TrendingUp className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Sub-second Global Edge</h2>
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Business & Growth</h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Hosted on Vercel’s global Edge Network with Next.js static site generation. Content is cached at the edge worldwide with instant loading and 100/100 Lighthouse performance.
+              From micro-SaaS to passive income ideas, side hustles to work-from-home careers — we break down proven strategies to help you earn more and grow faster in 2026.
             </p>
           </div>
 
           <div className="p-6 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-3">
             <div className="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-              <Globe className="w-5 h-5" />
+              <Clock className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Full Markdown Portability</h2>
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Productivity</h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Zero vendor lock-in. All articles are stored in pure Markdown/MDX with frontmatter inside version-controlled Git repositories.
+              Deep dives into the best productivity tools, systems, and frameworks. From Notion templates to focus stacks and time-management strategies that actually work.
             </p>
           </div>
 
           <div className="p-6 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-              <Sparkles className="w-5 h-5" />
+              <Heart className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Built for High Velocity</h2>
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Lifestyle & Future</h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Generate an article with one CLI command or AI prompt, push to GitHub, and see it live across the globe within 30 seconds.
+              Explore the future of remote work, digital nomad life, career reinvention, and how technology is reshaping the way we live, work, and connect in the years ahead.
             </p>
           </div>
+        </div>
+
+        {/* Mission Statement */}
+        <div className="p-8 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 border border-blue-200 dark:border-blue-900 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+              <Zap className="w-5 h-5" />
+            </div>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Our Mission</h2>
+          </div>
+          <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            BunusRadar exists to democratize access to high-quality information. We believe everyone deserves access to expert-level insights about technology, money, and modern life — presented clearly, without the fluff. That's why we publish every single day, covering the topics with the highest real-world impact for readers like you.
+          </p>
         </div>
 
         {/* Categories Overview */}
         <div className="space-y-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            What We Write About
+            Explore Our Topics
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {Object.values(CATEGORIES).map((cat) => (
@@ -93,6 +109,20 @@ export default function AboutPage() {
               </Link>
             ))}
           </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center space-y-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+            New articles published daily. Stay ahead — explore what's new.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 transition-colors"
+          >
+            <Globe className="w-4 h-4" />
+            Browse Latest Articles
+          </Link>
         </div>
       </div>
     </div>

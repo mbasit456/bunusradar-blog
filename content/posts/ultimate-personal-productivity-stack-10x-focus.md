@@ -4,7 +4,7 @@ date: "2026-09-23"
 excerpt: "Discover the ultimate personal productivity stack combining top software tools and proven mental systems to conquer distractions and achieve 10x deep focus."
 category: "Productivity"
 tags: ["Productivity", "Time Management", "Focus", "Workflow", "Digital Tools"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false

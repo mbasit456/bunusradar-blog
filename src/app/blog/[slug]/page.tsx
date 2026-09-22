@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   }
 
   return {
-    title: `${post.title} - BonusRadar`,
+    title: `${post.title} - BunusRadar`,
     description: post.excerpt,
     openGraph: {
       title: post.title,

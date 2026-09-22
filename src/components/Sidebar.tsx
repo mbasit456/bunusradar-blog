@@ -86,7 +86,7 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
           Get breaking technology & AI intelligence delivered daily.
         </h4>
         <p className="text-xs text-zinc-300">
-          Join over 45,000 engineers and leaders who read BonusRadar every morning.
+          Join over 45,000 engineers and leaders who read BunusRadar every morning.
         </p>
 
         {subscribed ? (

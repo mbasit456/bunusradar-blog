@@ -4,7 +4,7 @@ date: "2026-10-02"
 excerpt: "Discover 8 scalable passive income systems for 2026. Learn how to leverage modern tech, digital assets, and automated platforms to build lasting wealth."
 category: "Business & Growth"
 tags: ["Passive Income", "Wealth Building", "Automated Business", "Financial Freedom", "Investments 2026"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
 readingTime: "9 min read"
 featured: false

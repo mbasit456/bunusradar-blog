@@ -4,7 +4,7 @@ date: "2026-09-30"
 excerpt: "Discover 10 proven ways to build sustainable online income streams in 2026. From AI-assisted freelancing to digital products, start your journey today."
 category: "Business & Growth"
 tags: ["Make Money Online", "Side Hustle", "Passive Income", "Remote Work", "Digital Economy"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

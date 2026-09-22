@@ -21,8 +21,8 @@ const POSTS_DIR = path.join(ROOT, 'content', 'posts');
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
-const SITE_NAME = 'BonusRadar';
-const AUTHOR = 'BonusRadar Editorial';
+const SITE_NAME = 'BunusRadar';
+const AUTHOR = 'BunusRadar Editorial';
 const CATEGORIES = ['Technology', 'Artificial Intelligence', 'Business & Growth', 'Productivity', 'Lifestyle'];
 
 const COVER_IMAGES = [

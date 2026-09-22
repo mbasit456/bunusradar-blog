@@ -4,27 +4,27 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://bonusradar.site'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site'),
   title: {
-    default: 'BonusRadar - Insights on Technology, AI, & Digital Growth',
-    template: '%s | BonusRadar',
+    default: 'BunusRadar - Insights on Technology, AI, & Digital Growth',
+    template: '%s | BunusRadar',
   },
-  description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
-  keywords: ['AI', 'Technology', 'Productivity', 'Business Growth', 'Software Engineering', 'BonusRadar'],
-  authors: [{ name: 'BonusRadar Editorial' }],
-  creator: 'BonusRadar',
+  description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
+  keywords: ['AI', 'Technology', 'Productivity', 'Business Growth', 'Software Engineering', 'BunusRadar'],
+  authors: [{ name: 'BunusRadar Editorial' }],
+  creator: 'BunusRadar',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://bonusradar.site',
-    title: 'BonusRadar - Insights on Technology, AI, & Digital Growth',
-    description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
-    siteName: 'BonusRadar',
+    url: 'https://bunusradar.site',
+    title: 'BunusRadar - Insights on Technology, AI, & Digital Growth',
+    description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
+    siteName: 'BunusRadar',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BonusRadar - Technology, AI, & Future Business',
-    description: 'A modern, automated multi-category publication exploring Artificial Intelligence, Software Engineering, Digital Growth, and Future Systems.',
+    title: 'BunusRadar - Technology, AI, & Future Business',
+    description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
   },
   alternates: {
     types: {

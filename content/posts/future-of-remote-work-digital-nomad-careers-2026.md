@@ -4,7 +4,7 @@ date: "2026-09-24"
 excerpt: "Discover the top remote work and digital nomad trends shaping 2026. From AI-driven productivity to global visas, learn how distributed work is evolving."
 category: "Business & Growth"
 tags: ["Remote Work", "Digital Nomad", "Future of Work", "Productivity", "Global Trends"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false
@@ -16,7 +16,7 @@ By 2026, the global workforce has crossed a decisive threshold. What began as a 
 
 Today's digital nomads are no longer just travel bloggers or freelance content creators surviving on laptop-and-latte setups in Bali. They are chief technology officers, corporate legal consultants, AI engineers, and product directors managing multi-million-dollar pipelines while crossing borders. Driven by advancements in generative AI, spatial computing, low-latency satellite internet, and progressive global visa policies, the decentralized workforce of 2026 operates with unprecedented efficiency. 
 
-In this report, BonusRadar examines the core macro-trends, technological infrastructure, and strategic frameworks shaping the future of remote work and digital nomad careers in 2026 and beyond.
+In this report, BunusRadar examines the core macro-trends, technological infrastructure, and strategic frameworks shaping the future of remote work and digital nomad careers in 2026 and beyond.
 
 ---
 

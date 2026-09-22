@@ -4,7 +4,7 @@ date: "2026-09-25"
 excerpt: "Looking for powerful, free AI chatbots in 2026? Discover the top ChatGPT alternatives for coding, writing, research, and daily workflow optimization."
 category: "Artificial Intelligence"
 tags: ["AI Chatbots", "ChatGPT Alternatives", "Artificial Intelligence", "Productivity Tools", "DeepSeek"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

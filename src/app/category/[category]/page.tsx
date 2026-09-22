@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const meta = getCategoryBySlug(params.category);
   return {
-    title: `${meta.name} News & Analysis - BonusRadar`,
+    title: `${meta.name} News & Analysis - BunusRadar`,
     description: meta.description,
   };
 }

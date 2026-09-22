@@ -4,7 +4,7 @@ date: "2026-10-04"
 excerpt: "Discover the best free Notion templates to boost productivity and organize your life. Transform your daily routine with top task, habit, and finance hubs."
 category: "Productivity"
 tags: ["Notion", "Productivity", "Life Organization", "Free Templates", "Workflow"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false

@@ -14,11 +14,11 @@ export default function Footer() {
                 BR
               </span>
               <span className="font-extrabold text-2xl tracking-tight text-white">
-                BONUS<span className="text-[#f9b44d]">RADAR</span>
+                BUNUS<span className="text-[#f9b44d]">RADAR</span>
               </span>
             </Link>
             <p className="text-xs text-zinc-300 max-w-md leading-relaxed">
-              BonusRadar delivers authoritative daily technology journalism, deep dives into artificial intelligence, hardware reviews, software architecture, and enterprise digital strategies.
+              BunusRadar delivers authoritative daily technology journalism, deep dives into artificial intelligence, hardware reviews, software architecture, and enterprise digital strategies.
             </p>
             <div className="flex items-center gap-3 pt-2 text-xs text-[#f9b44d]">
               <Link href="/rss.xml" target="_blank" className="flex items-center gap-1 hover:underline">
@@ -86,7 +86,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-400 gap-2">
-          <p>© {new Date().getFullYear()} BonusRadar. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} BunusRadar. All rights reserved.</p>
           <p>More than the news. Built on Next.js & edge network architecture.</p>
         </div>
       </div>

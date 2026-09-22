@@ -4,7 +4,7 @@ date: "2026-10-01"
 excerpt: "Discover the top scalable side hustles to earn $1,000 extra per month in 2026. Explore actionable, future-proof ideas in tech, business, and creation."
 category: "Business & Growth"
 tags: ["Side Hustles", "Passive Income", "Freelancing", "Business Growth", "Financial Freedom"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

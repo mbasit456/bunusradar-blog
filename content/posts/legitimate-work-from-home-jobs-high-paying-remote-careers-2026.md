@@ -4,7 +4,7 @@ date: "2026-10-03"
 excerpt: "Discover top-tier, high-paying remote careers for 2026. Explore legitimate work-from-home opportunities, required skills, and salary benchmarks."
 category: "Business & Growth"
 tags: ["Remote Work", "Career Growth", "High-Paying Jobs", "Work From Home", "Future of Work"]
-author: "BonusRadar Editorial"
+author: "BunusRadar Editorial"
 coverImage: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false
