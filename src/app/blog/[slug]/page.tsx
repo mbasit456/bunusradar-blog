@@ -70,8 +70,56 @@ export default async function PostPage({ params }: PostPageProps) {
     .filter((p) => p.slug !== post.slug)
     .slice(0, 2);
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site';
+  const articleUrl = `${baseUrl}/blog/${post.slug}`;
+
+  // JSON-LD structured data for rich snippets
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.coverImage ? [post.coverImage] : [],
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author.name,
+      url: baseUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'BunusRadar',
+      url: baseUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': articleUrl,
+    },
+    url: articleUrl,
+    keywords: post.tags.join(', '),
+    articleSection: post.category,
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: post.category, item: `${baseUrl}/category/${post.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: articleUrl },
+    ],
+  };
+
   return (
     <div className="py-6 space-y-8">
+      {/* JSON-LD Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Breadcrumb Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-1.5 text-xs text-zinc-500">

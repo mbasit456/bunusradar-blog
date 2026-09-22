@@ -13,6 +13,30 @@ interface HomePageProps {
 
 export const revalidate = 60;
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site';
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'BunusRadar',
+  url: baseUrl,
+  description: 'Daily insights on Technology, AI, Business & Growth, Productivity, and Lifestyle.',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${baseUrl}/?search={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'BunusRadar',
+  url: baseUrl,
+  logo: `${baseUrl}/logo.png`,
+  sameAs: [],
+};
+
 export default function HomePage({ searchParams }: HomePageProps) {
   const allPosts = getAllPosts();
   const searchQuery = searchParams?.search?.toLowerCase().trim();
@@ -33,6 +57,9 @@ export default function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <div className="space-y-6 pb-16">
+      {/* JSON-LD Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       {/* Search notification banner if search is active */}
       {searchQuery && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
