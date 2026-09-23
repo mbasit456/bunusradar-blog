@@ -1,20 +1,36 @@
 import { getAllPosts } from '@/lib/posts';
 
+function escapeXml(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts();
 
   const rssItems = posts
-    .map((post) => `
+    .map((post) => {
+      const pubDate = new Date(post.rawDate || post.date);
+      const validDate = isNaN(pubDate.getTime()) ? new Date().toUTCString() : pubDate.toUTCString();
+      const articleUrl = `${baseUrl}/blog/${post.slug}`;
+
+      return `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${baseUrl}/blog/${post.slug}</link>
-      <guid isPermaLink="true">${baseUrl}/blog/${post.slug}</guid>
-      <description><![CDATA[${post.excerpt}]]></description>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <category>${post.category}</category>
-      <author>${post.author.name}</author>
-    </item>`)
+      <link>${articleUrl}</link>
+      <guid isPermaLink="true">${articleUrl}</guid>
+      <description><![CDATA[${post.excerpt || post.title}]]></description>
+      <pubDate>${validDate}</pubDate>
+      <category><![CDATA[${post.category}]]></category>
+      <author><![CDATA[${post.author?.name || 'BunusRadar Editorial'}]]></author>
+    </item>`;
+    })
     .join('');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -22,8 +38,8 @@ export async function GET() {
   <channel>
     <title>BunusRadar</title>
     <link>${baseUrl}</link>
-    <description>Insights on Technology, AI Systems, Digital Business, and Productivity</description>
-    <language>en</language>
+    <description><![CDATA[Insights on Technology, AI Systems, Digital Business, and Productivity]]></description>
+    <language>en-us</language>
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml"/>
     ${rssItems}
   </channel>

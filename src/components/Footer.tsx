@@ -61,23 +61,18 @@ export default function Footer() {
             </h4>
             <ul className="space-y-1.5 text-xs text-zinc-300">
               <li>
-                <Link href="/about" className="hover:text-[#f9b44d] transition-colors">
+                <Link href="/editorial-standards" className="hover:text-[#f9b44d] transition-colors">
                   Editorial Standards
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-[#f9b44d] transition-colors">
+                <Link href="/latest-publications" className="hover:text-[#f9b44d] transition-colors">
                   Latest Publications
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-[#f9b44d] transition-colors">
+                <Link href="/privacy-terms" className="hover:text-[#f9b44d] transition-colors">
                   Privacy & Terms
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#f9b44d] transition-colors">
-                  Contact Editorial
                 </Link>
               </li>
             </ul>
