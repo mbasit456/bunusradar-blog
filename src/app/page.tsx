@@ -13,7 +13,7 @@ interface HomePageProps {
 
 export const revalidate = 60;
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site';
+const baseUrl = 'https://bunusradar.site';
 
 const websiteSchema = {
   '@context': 'https://schema.org',

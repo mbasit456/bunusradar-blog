@@ -70,7 +70,7 @@ export default async function PostPage({ params }: PostPageProps) {
     .filter((p) => p.slug !== post.slug)
     .slice(0, 2);
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site';
+  const baseUrl = 'https://bunusradar.site';
   const articleUrl = `${baseUrl}/blog/${post.slug}`;
 
   // JSON-LD structured data for rich snippets

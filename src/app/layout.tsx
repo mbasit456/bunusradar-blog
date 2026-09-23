@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://bunusradar.site'),
+  metadataBase: new URL('https://bunusradar.site'),
   title: {
     default: 'BunusRadar - Insights on Technology, AI, & Digital Growth',
     template: '%s | BunusRadar',
