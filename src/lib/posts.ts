@@ -11,6 +11,7 @@ export interface PostMetadata {
   title: string;
   excerpt: string;
   date: string;
+  rawDate?: string;
   category: string;
   tags: string[];
   coverImage?: string;
@@ -50,11 +51,18 @@ export function getAllPosts(includeScheduled = false): PostMetadata[] {
       const { data, content } = matter(fileContents);
       const stats = readingTime(content);
 
+      const rawDateStr = data.date ? String(data.date).trim() : '';
+      const dateObj = rawDateStr ? new Date(rawDateStr) : new Date();
+      const dateDisplay = isNaN(dateObj.getTime())
+        ? new Date().toISOString().split('T')[0]
+        : dateObj.toISOString().split('T')[0];
+
       return {
         slug,
         title: data.title || 'Untitled Post',
         excerpt: data.excerpt || data.description || '',
-        date: data.date ? new Date(data.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        date: dateDisplay,
+        rawDate: rawDateStr,
         category: (data.category || 'general').toLowerCase(),
         tags: Array.isArray(data.tags) ? data.tags : [],
         coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
@@ -67,11 +75,22 @@ export function getAllPosts(includeScheduled = false): PostMetadata[] {
         featured: Boolean(data.featured),
       };
     })
-    // Only show articles whose publish date has arrived (unless includeScheduled=true)
-    .filter((post) => includeScheduled || post.date <= today);
+    // Only show articles whose publish date & time has arrived (unless includeScheduled=true)
+    .filter((post) => {
+      if (includeScheduled) return true;
+      if (post.rawDate && (post.rawDate.includes('T') || post.rawDate.includes(':'))) {
+        const postTime = new Date(post.rawDate).getTime();
+        return !isNaN(postTime) && postTime <= Date.now();
+      }
+      return post.date <= today;
+    });
 
-  // Sort descending by date
-  return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // Sort descending by date & time
+  return allPosts.sort((a, b) => {
+    const timeA = new Date(a.rawDate || a.date).getTime();
+    const timeB = new Date(b.rawDate || b.date).getTime();
+    return timeB - timeA;
+  });
 }
 
 export function getFeaturedPost(): PostMetadata | null {
@@ -122,12 +141,23 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
   const { data, content } = matter(fileContents);
   const stats = readingTime(content);
 
-  const today = new Date().toISOString().split('T')[0];
-  const postDate = data.date ? new Date(data.date).toISOString().split('T')[0] : today;
+  const rawDateStr = data.date ? String(data.date).trim() : '';
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const postDate = rawDateStr && !isNaN(new Date(rawDateStr).getTime())
+    ? new Date(rawDateStr).toISOString().split('T')[0]
+    : today;
 
-  // Don't show scheduled articles before their date unless explicitly requested
-  if (!includeScheduled && postDate > today) {
-    return null;
+  // Don't show scheduled articles before their date & time unless explicitly requested
+  if (!includeScheduled) {
+    if (rawDateStr && (rawDateStr.includes('T') || rawDateStr.includes(':'))) {
+      const postTime = new Date(rawDateStr).getTime();
+      if (!isNaN(postTime) && postTime > Date.now()) {
+        return null;
+      }
+    } else if (postDate > today) {
+      return null;
+    }
   }
 
   // Parse Table of Contents

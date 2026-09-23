@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 /**
- * AI Article Publisher for BonusRadar Blog
+ * AI Article Publisher for BunusRadar Blog
  * =========================================
- * Usage: node scripts/ai-publish.js "keyword1" "keyword2" "keyword3"
- * Or:    npm run ai:publish -- "best productivity apps 2026" "AI tools for bloggers"
+ * Usage:
+ *   node scripts/ai-publish.js                  -> Publishes next 3 articles from keywords.json (1 day worth)
+ *   node scripts/ai-publish.js --count=6        -> Publishes next 6 articles (2 days worth: 3 daily, 4 hours apart)
+ *   node scripts/ai-publish.js "keyword1" ...   -> Publishes specified keywords into the 3-daily schedule
  *
- * Automatically schedules articles 1 every 2 days!
- * Requires: GEMINI_API_KEY environment variable
+ * Schedule: 3 articles daily, separated by 4 hours:
+ *   Slot 1: 08:00:00Z
+ *   Slot 2: 12:00:00Z (+4 hours)
+ *   Slot 3: 16:00:00Z (+4 hours)
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -18,12 +22,13 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'content', 'posts');
+const KEYWORDS_FILE = path.join(__dirname, 'keywords.json');
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
 const SITE_NAME = 'BunusRadar';
 const AUTHOR = 'BunusRadar Editorial';
-const CATEGORIES = ['Technology', 'Artificial Intelligence', 'Business & Growth', 'Productivity', 'Lifestyle'];
+const DAILY_SLOTS = ['08:00:00Z', '12:00:00Z', '16:00:00Z'];
 
 const COVER_IMAGES = [
   'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop',
@@ -34,6 +39,8 @@ const COVER_IMAGES = [
   'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop',
 ];
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -52,60 +59,124 @@ function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-/** 
- * Computes the starting date for scheduling:
- * Checks all existing posts for their date.
- * If the latest post is today or in the future, the next one begins 2 days after that date.
- * Otherwise, the first post starts today.
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function getApiKey() {
+  if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
+  const envFiles = ['.env.local', '.env'];
+  for (const envFile of envFiles) {
+    const p = path.join(ROOT, envFile);
+    if (fs.existsSync(p)) {
+      const content = fs.readFileSync(p, 'utf8');
+      const match = content.match(/^GEMINI_API_KEY=(.+)$/m);
+      if (match) return match[1].trim();
+    }
+  }
+  return null;
+}
+
+/**
+ * Returns map of date (YYYY-MM-DD) -> Array of filled slots ('08:00:00Z', etc.)
  */
-function getNextScheduleStart() {
-  const postsDir = path.join(ROOT, 'content', 'posts');
-  const now = new Date();
-  const todayStr = now.toISOString().split('T')[0];
+function getExistingScheduleMap() {
+  if (!fs.existsSync(POSTS_DIR)) return new Map();
 
-  if (!fs.existsSync(postsDir)) return todayStr;
-
-  const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.md'));
-  let latestDateStr = todayStr;
-  let hasPostToday = false;
+  const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+  const scheduleMap = new Map();
 
   for (const file of files) {
     try {
-      const content = fs.readFileSync(path.join(postsDir, file), 'utf8');
-      const match = content.match(/^date:\s*"?(\d{4}-\d{2}-\d{2})"?/m);
+      const content = fs.readFileSync(path.join(POSTS_DIR, file), 'utf8');
+      const match = content.match(/^date:\s*"?([^"\r\n]+)"?/m);
       if (match) {
-        const dStr = match[1];
-        if (dStr === todayStr) hasPostToday = true;
-        if (dStr > latestDateStr) {
-          latestDateStr = dStr;
+        const raw = match[1].trim();
+        const datePart = raw.split('T')[0];
+        const timePart = raw.includes('T') ? raw.split('T')[1] : null;
+
+        if (!scheduleMap.has(datePart)) {
+          scheduleMap.set(datePart, []);
         }
+        scheduleMap.get(datePart).push(timePart || '08:00:00Z');
       }
     } catch {}
   }
 
-  if (latestDateStr > todayStr) {
-    const nextD = new Date(latestDateStr + 'T00:00:00Z');
-    nextD.setUTCDate(nextD.getUTCDate() + 1);
-    return nextD.toISOString().split('T')[0];
-  } else if (hasPostToday) {
-    const nextD = new Date(todayStr + 'T00:00:00Z');
-    nextD.setUTCDate(nextD.getUTCDate() + 1);
-    return nextD.toISOString().split('T')[0];
-  } else {
-    return todayStr;
+  return scheduleMap;
+}
+
+/**
+ * Generates an array of N consecutive slots (3 daily, 4 hours difference: 08:00, 12:00, 16:00 UTC)
+ * filling any available slots starting from today.
+ */
+function allocateNextSlots(count) {
+  const scheduleMap = getExistingScheduleMap();
+  const slots = [];
+  const curr = new Date();
+  // Format curr to YYYY-MM-DD
+  let cursor = new Date(Date.UTC(curr.getUTCFullYear(), curr.getUTCMonth(), curr.getUTCDate()));
+
+  while (slots.length < count) {
+    const dateStr = cursor.toISOString().split('T')[0];
+    const filledToday = scheduleMap.get(dateStr) || [];
+
+    for (const slotTime of DAILY_SLOTS) {
+      if (slots.length >= count) break;
+      // If today doesn't have this slot filled yet, allocate it
+      if (!filledToday.includes(slotTime)) {
+        slots.push(`${dateStr}T${slotTime}`);
+        filledToday.push(slotTime);
+        scheduleMap.set(dateStr, filledToday);
+      }
+    }
+
+    // Move to next day
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
   }
+
+  return slots;
 }
 
-/** Returns a UTC ISO date string offset by `index` days from the start date (1 article daily) */
-function scheduledDate(startDateStr, index) {
-  const d = new Date(startDateStr + 'T00:00:00Z');
-  d.setUTCDate(d.getUTCDate() + index);
-  return d.toISOString().split('T')[0];
+/**
+ * Loads keywords list from keywords.json and finds ones not yet covered in existing posts.
+ */
+function getUnusedKeywords(requestedCount) {
+  if (!fs.existsSync(KEYWORDS_FILE)) {
+    throw new Error(`Keywords file not found at ${KEYWORDS_FILE}`);
+  }
+
+  const allKeywords = JSON.parse(fs.readFileSync(KEYWORDS_FILE, 'utf8'));
+  const existingSlugs = fs.existsSync(POSTS_DIR)
+    ? fs.readdirSync(POSTS_DIR).map(f => f.replace(/\.mdx?$/, ''))
+    : [];
+
+  const existingTitles = [];
+  if (fs.existsSync(POSTS_DIR)) {
+    const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'));
+    for (const f of files) {
+      const c = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8');
+      const m = c.match(/^title:\s*"([^"]+)"/m);
+      if (m) existingTitles.push(m[1].toLowerCase());
+    }
+  }
+
+  const unused = [];
+  for (const kw of allKeywords) {
+    const s = slugify(kw);
+    const kwLower = kw.toLowerCase();
+    const alreadyExists = existingSlugs.some(slug => slug.includes(s) || s.includes(slug)) ||
+                          existingTitles.some(title => title.includes(kwLower));
+    if (!alreadyExists) {
+      unused.push(kw);
+      if (unused.length >= requestedCount) break;
+    }
+  }
+
+  return unused;
 }
 
-async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+// ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
 
 async function generateArticle(keyword, apiKey, attempt = 1) {
   const genAI = new GoogleGenerativeAI(apiKey);
@@ -118,28 +189,28 @@ async function generateArticle(keyword, apiKey, attempt = 1) {
     },
   });
 
-  const prompt = `You are an expert journalist and blogger writing for "${SITE_NAME}", a tech, business, and lifestyle magazine.
-Write a comprehensive, SEO-optimized blog article about: "${keyword}"
+  const prompt = `You are an expert journalist and authoritative writer writing for "${SITE_NAME}", a high-quality publication covering Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.
 
-STRICT OUTPUT FORMAT — Return a valid JSON object matching this schema:
+Write an in-depth, original, SEO-optimized blog article about: "${keyword}"
+
+STRICT OUTPUT FORMAT — Return ONLY a valid JSON object matching this schema:
 {
-  "title": "Engaging, click-worthy article title (60-70 chars)",
+  "title": "Engaging, click-worthy article title containing the keyword naturally (55-70 chars)",
   "slug": "url-friendly-slug-with-hyphens",
-  "excerpt": "2-3 sentence SEO meta description (150-160 chars)",
+  "excerpt": "Compelling 2-3 sentence SEO meta description (150-160 chars)",
   "category": "ONE of: Technology | Artificial Intelligence | Business & Growth | Productivity | Lifestyle",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
   "readingTime": "estimated reading time like '7 min read'",
-  "body": "Full article in markdown (1200-1500 words). Use ## for H2 headings, ### for H3. Include: intro paragraph, 4-6 sections with headings, bullet points where useful, a conclusion with actionable takeaway. NO frontmatter, just the body content."
+  "body": "Full article in markdown (1300-1800 words). Use ## for H2 headings, ### for H3. Include an engaging intro, 4-6 detailed sections with actionable insights, bullet points/tables where helpful, and a thoughtful conclusion. NO frontmatter, just the body content."
 }
 
-Requirements:
-- Title must be engaging and include the main topic/keyword naturally
-- Body must be informative, practical, and authoritative
-- Use examples, statistics, and actionable advice
-- Professional editorial tone matching TG Daily / Forbes / Wired
-- No placeholder text, produce a finished publish-ready piece`;
+Content Guidelines:
+- High editorial quality, practical takeaways, and structured data.
+- Naturally include the keyword "${keyword}" in the title, first paragraph, and within subheadings.
+- If relevant (e.g. buying guides, comparison keywords, pet food, financial calculators), include comparison markdown tables.
+- Professional, engaging tone matching Wired, TechCrunch, or Healthline.`;
 
-  console.log(`  ✍️  Generating article for: "${keyword}" (Attempt ${attempt})...`);
+  console.log(`  ✍️  Generating: "${keyword}" (Attempt ${attempt})...`);
 
   try {
     const result = await model.generateContent(prompt);
@@ -147,9 +218,9 @@ Requirements:
     const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
     return JSON.parse(cleaned);
   } catch (err) {
-    if (attempt < 3) {
-      const delay = attempt * 4000;
-      console.log(`  ⚠️  Error on attempt ${attempt} (${err.message}). Retrying in ${delay / 1000}s...`);
+    if (attempt < 5) {
+      const delay = attempt * 5000;
+      console.log(`  ⚠️  Demand spike/error on attempt ${attempt} (${err.message.split('\n')[0]}). Retrying in ${delay / 1000}s...`);
       await sleep(delay);
       return generateArticle(keyword, apiKey, attempt + 1);
     }
@@ -159,19 +230,19 @@ Requirements:
 
 // ─── MARKDOWN FILE BUILDER ───────────────────────────────────────────────────
 
-function buildMarkdownFile(data, publishDate) {
+function buildMarkdownFile(data, publishTimestamp) {
   const coverImage = randomItem(COVER_IMAGES);
   const tags = Array.isArray(data.tags) ? data.tags : [];
 
   const frontmatter = `---
 title: "${data.title.replace(/"/g, '\\"')}"
-date: "${publishDate}"
+date: "${publishTimestamp}"
 excerpt: "${data.excerpt.replace(/"/g, '\\"')}"
 category: "${data.category}"
 tags: [${tags.map(t => `"${t}"`).join(', ')}]
 author: "${AUTHOR}"
 coverImage: "${coverImage}"
-readingTime: "${data.readingTime || '6 min read'}"
+readingTime: "${data.readingTime || '7 min read'}"
 featured: false
 ---`;
 
@@ -189,57 +260,58 @@ function gitPush(filenames) {
 
     console.log('\n  📦 Committing and pushing to GitHub...');
     execSync('git add -A', { cwd: ROOT, stdio: 'inherit', env: process.env });
-    const msg = `ai: schedule ${filenames.length} article(s) (daily queue) — ${filenames.join(', ')}`;
+    const msg = `ai: schedule ${filenames.length} article(s) (3 daily, 4h intervals)`;
     execSync(`git commit -m "${msg}"`, { cwd: ROOT, stdio: 'inherit', env: process.env });
-    execSync('git push', { cwd: ROOT, stdio: 'inherit', env: process.env });
+    execSync('git push origin main', { cwd: ROOT, stdio: 'inherit', env: process.env });
     console.log('  ✅ Pushed to GitHub! Vercel updated.');
   } catch (err) {
     console.error('  ❌ Git push failed:', err.message);
-    console.log('  💡 You can push manually: git add -A && git commit -m "add articles" && git push');
   }
 }
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 
 async function main() {
-  const keywords = process.argv.slice(2).filter(Boolean);
+  const args = process.argv.slice(2);
+  let count = 3; // Default: 3 articles (1 day)
+  let explicitKeywords = [];
 
-  if (keywords.length === 0) {
-    console.error(`
-❌ No keywords provided!
+  for (const arg of args) {
+    if (arg.startsWith('--count=')) {
+      count = parseInt(arg.split('=')[1], 10) || 3;
+    } else if (!arg.startsWith('--')) {
+      explicitKeywords.push(arg);
+    }
+  }
 
-Usage:
-  node scripts/ai-publish.js "keyword 1" "keyword 2" "keyword 3"
+  let keywordsToPublish = [];
+  if (explicitKeywords.length > 0) {
+    keywordsToPublish = explicitKeywords;
+  } else {
+    keywordsToPublish = getUnusedKeywords(count);
+  }
 
-Example:
-  node scripts/ai-publish.js "best AI tools for freelancers 2026" "how to build passive income online"
-`);
+  if (keywordsToPublish.length === 0) {
+    console.error('❌ No available keywords found to publish!');
     process.exit(1);
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = getApiKey();
   if (!apiKey) {
-    console.error(`
-❌ GEMINI_API_KEY environment variable not set!
-
-Set it before running:
-  $env:GEMINI_API_KEY = "your-api-key"
-`);
+    console.error('❌ GEMINI_API_KEY is missing! Set it in your environment or .env.local');
     process.exit(1);
   }
+  console.log(`\n🚀 BunusRadar AI Auto-Scheduler (3 Articles Daily, 4h Intervals)`);
+  console.log(`   Preparing ${keywordsToPublish.length} article(s)...\n`);
 
-  console.log(`\n🚀 BonusRadar AI Auto-Scheduler`);
-  console.log(`   Scheduling 1 article daily for ${keywords.length} topic(s)...\n`);
-
-  const startDateStr = getNextScheduleStart();
-  console.log(`   📅 Queue starting date: ${startDateStr}\n`);
-
+  const allocatedSlots = allocateNextSlots(keywordsToPublish.length);
   const published = [];
-  let scheduleIndex = 0;
 
-  for (const keyword of keywords) {
+  for (let i = 0; i < keywordsToPublish.length; i++) {
+    const keyword = keywordsToPublish[i];
+    const pubTimestamp = allocatedSlots[i];
+
     try {
-      const pubDate = scheduledDate(startDateStr, scheduleIndex);
       const data = await generateArticle(keyword, apiKey);
 
       const slug = data.slug ? slugify(data.slug) : slugify(data.title);
@@ -247,44 +319,38 @@ Set it before running:
       const filepath = path.join(POSTS_DIR, filename);
 
       if (fs.existsSync(filepath)) {
-        console.log(`  ⚠️  Skipping "${keyword}" — file already exists: ${filename}\n`);
+        console.log(`  ⚠️  File already exists: ${filename}, skipping...\n`);
         continue;
       }
 
-      const markdown = buildMarkdownFile(data, pubDate);
+      const markdown = buildMarkdownFile(data, pubTimestamp);
       fs.writeFileSync(filepath, markdown, 'utf8');
 
-      console.log(`  ✅ Scheduled for: ${pubDate}`);
+      console.log(`  ✅ Scheduled for: ${pubTimestamp}`);
       console.log(`     File:     ${filename}`);
       console.log(`     Title:    ${data.title}`);
-      console.log(`     Category: ${data.category}`);
-      console.log(`     Tags:     ${(data.tags || []).join(', ')}\n`);
+      console.log(`     Category: ${data.category}\n`);
 
-      published.push({ filename, title: data.title, date: pubDate });
-      scheduleIndex++;
+      published.push({ filename, title: data.title, timestamp: pubTimestamp });
 
-      // Small pacing delay to respect API rate limits
-      await sleep(2500);
+      // Delay to avoid hitting rate limits
+      await sleep(3000);
     } catch (err) {
       console.error(`  ❌ Failed for "${keyword}": ${err.message}\n`);
     }
   }
 
   if (published.length === 0) {
-    console.log('⚠️  No new articles were scheduled.');
+    console.log('⚠️  No new articles were generated.');
     return;
   }
 
-  console.log(`\n📅 Schedule Summary (1 article daily):`);
-  published.forEach(p => console.log(`   • [${p.date}] ${p.title} (${p.filename})`));
+  console.log(`\n📅 Scheduled Output (${published.length} articles):`);
+  published.forEach(p => console.log(`   • [${p.timestamp}] ${p.title}`));
 
-  // Push to GitHub
   gitPush(published.map(p => p.filename));
 
-  console.log(`
-🎉 All done! Articles are scheduled in your repository.
-Each article will automatically go live on its scheduled date.
-`);
+  console.log(`\n🎉 Success! All articles scheduled with 4-hour intervals.`);
 }
 
 main().catch(err => {
