@@ -178,7 +178,7 @@ function getUnusedKeywords(requestedCount) {
 
 // ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
 
-async function generateArticle(keyword, apiKey, attempt = 1) {
+async function generateArticle(keyword, apiKey, availableArticles = [], attempt = 1) {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
     model: 'gemini-3.6-flash',
@@ -189,9 +189,25 @@ async function generateArticle(keyword, apiKey, attempt = 1) {
     },
   });
 
+  const sampleArticles = availableArticles.slice(0, 10).map(a => `- [${a.title}](/blog/${a.slug})`).join('\n');
+
   const prompt = `You are an expert journalist and authoritative writer writing for "${SITE_NAME}", a high-quality publication covering Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.
 
 Write an in-depth, original, SEO-optimized blog article about: "${keyword}"
+
+STRICT INTERNAL LINKING RULES:
+1. NEVER USE HASH LINKS (#, #section, javascript:void(0), placeholder URLs).
+2. Every internal link must point ONLY to real pages from this list of verified BunusRadar articles or category pillars:
+${sampleArticles}
+Category pillars:
+- [Artificial Intelligence](/category/ai)
+- [Technology](/category/technology)
+- [Business & Growth](/category/business)
+- [Productivity](/category/productivity)
+- [Lifestyle](/category/lifestyle)
+3. Include 3 to 5 natural, contextually relevant internal links using descriptive anchor text (e.g. "[autonomous AI agents](/blog/autonomous-ai-agents-software-development)").
+4. NEVER use generic anchor text like "click here" or "read more".
+5. NEVER invent URLs. If a relevant destination is not available, leave text unlinked.
 
 STRICT OUTPUT FORMAT — Return ONLY a valid JSON object matching this schema:
 {
@@ -222,17 +238,38 @@ Content Guidelines:
       const delay = attempt * 5000;
       console.log(`  ⚠️  Demand spike/error on attempt ${attempt} (${err.message.split('\n')[0]}). Retrying in ${delay / 1000}s...`);
       await sleep(delay);
-      return generateArticle(keyword, apiKey, attempt + 1);
+      return generateArticle(keyword, apiKey, availableArticles, attempt + 1);
     }
     throw err;
   }
 }
 
-// ─── MARKDOWN FILE BUILDER ───────────────────────────────────────────────────
+// ─── MARKDOWN FILE BUILDER WITH STRICT LINK VALIDATION ───────────────────────
 
-function buildMarkdownFile(data, publishTimestamp) {
+function buildMarkdownFile(data, publishTimestamp, currentSlug) {
   const coverImage = randomItem(COVER_IMAGES);
   const tags = Array.isArray(data.tags) ? data.tags : [];
+
+  let body = data.body.trim();
+
+  // STRICT RULE 1 & 12: Zero tolerance for hash or placeholder links
+  body = body.replace(/\[([^\]]+)\]\(#[^)]*\)/g, '$1');
+  body = body.replace(/\[([^\]]+)\]\(\s*\)/g, '$1');
+  body = body.replace(/\[([^\]]+)\]\(javascript:[^)]*\)/gi, '$1');
+  body = body.replace(/<a\s+[^>]*href=["']#[^"']*["'][^>]*>(.*?)<\/a>/gi, '$1');
+
+  // Verify internal links point to real existing slugs
+  const validSlugs = fs.existsSync(POSTS_DIR)
+    ? new Set(fs.readdirSync(POSTS_DIR).map(f => f.replace(/\.mdx?$/, '')))
+    : new Set();
+
+  body = body.replace(/\[([^\]]+)\]\((\/blog\/([a-z0-9-]+))\)/gi, (match, anchor, fullUrl, slug) => {
+    // Rule 10: Never link to self
+    if (slug === currentSlug) return anchor;
+    // Rule 2 & 13: Only link if destination actually exists
+    if (!validSlugs.has(slug)) return anchor;
+    return match;
+  });
 
   const frontmatter = `---
 title: "${data.title.replace(/"/g, '\\"')}"
@@ -246,7 +283,7 @@ readingTime: "${data.readingTime || '7 min read'}"
 featured: false
 ---`;
 
-  return `${frontmatter}\n\n${data.body.trim()}\n`;
+  return `${frontmatter}\n\n${body}\n`;
 }
 
 // ─── GIT PUSH ────────────────────────────────────────────────────────────────
@@ -312,7 +349,11 @@ async function main() {
     const pubTimestamp = allocatedSlots[i];
 
     try {
-      const data = await generateArticle(keyword, apiKey);
+      const availableArticles = fs.readdirSync(POSTS_DIR)
+        .filter(f => f.endsWith('.md'))
+        .map(f => ({ slug: f.replace(/\.md$/, ''), title: f.replace(/-/g, ' ').replace(/\.md$/, '') }));
+
+      const data = await generateArticle(keyword, apiKey, availableArticles);
 
       const slug = data.slug ? slugify(data.slug) : slugify(data.title);
       const filename = `${slug}.md`;
@@ -323,7 +364,7 @@ async function main() {
         continue;
       }
 
-      const markdown = buildMarkdownFile(data, pubTimestamp);
+      const markdown = buildMarkdownFile(data, pubTimestamp, slug);
       fs.writeFileSync(filepath, markdown, 'utf8');
 
       console.log(`  ✅ Scheduled for: ${pubTimestamp}`);

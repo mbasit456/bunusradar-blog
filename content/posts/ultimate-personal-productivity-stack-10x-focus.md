@@ -14,7 +14,7 @@ featured: false
 
 We live in an age of unprecedented digital friction. Knowledge workers are bombarded with over 120 emails a day, context-switch every 3 minutes, and spend up to 60% of their working hours on "work about work"—tracking down files, managing notifications, and sitting in redundant status meetings. The result is chronic cognitive overload, fragmented focus, and burnout.
 
-To achieve true flow and output at high levels, willpower alone is no longer sufficient. You need a system. Specifically, you need a **Personal Productivity Stack**—an integrated ecosystem of mental models, digital applications, and automated routines engineered to safeguard your attention and magnify your output.
+To achieve true flow and output at high levels, willpower alone is no longer sufficient. You need a system. Specifically, you need a **Personal [productivity](/category/productivity) Stack**—an integrated ecosystem of mental models, digital applications, and automated routines engineered to safeguard your attention and magnify your output.
 
 Just as software engineering teams rely on a tech stack to deploy code efficiently, high-performing individuals require a productivity stack to convert raw cognitive effort into meaningful outcomes. Below is the definitive framework for building a high-yield focus engine.
 
@@ -25,7 +25,7 @@ Just as software engineering teams rely on a tech stack to deploy code efficient
 Before opening a single app or buying a subscription, your productivity stack must rest on solid psychological systems. Software simply digitizes your existing habits; bad systems automated through software only yield faster chaos.
 
 ### 1. Timeboxing and the 3-2-1 Rule
-To combat Parkinson's Law—the idea that work expands to fill the time allotted for its completion—top performers utilize strict timeboxing. Instead of managing a sprawling to-do list, assign specific, unyielding time blocks on your calendar for deep work. 
+To combat Parkinson's Law—the idea that work expands to fill the time allotted for its completion—top performers utilize strict timeboxing. Instead of managing a sprawling to-do list, assign specific, unyielding time blocks on your calendar for [deep work](/blog/hyper-focused-productivity-systems). 
 *   **3 Hours:** Dedicate your prime cognitive hours (typically morning) to your highest-leverage task.
 *   **2 Hours:** Allocate to shallow tasks, meetings, and collaboration.
 *   **1 Hour:** Reserve for learning, skill synthesis, and administrative housekeeping.
@@ -83,7 +83,7 @@ Deep focus is a rare currency in the digital economy. Once your tasks are organi
 
 ## Layer 5: The AI Acceleration Layer
 
-In 2024 and beyond, a truly modern productivity stack leverages Artificial Intelligence to handle routine operational synthesis, freeing human cognition for high-level creative direction.
+In 2024 and beyond, a truly modern productivity stack leverages [Artificial Intelligence](/category/ai) to handle routine operational synthesis, freeing human cognition for high-level creative direction.
 
 ```
 +-------------------------------------------------------------+
