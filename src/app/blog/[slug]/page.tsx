@@ -31,10 +31,16 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     };
   }
 
+  const canonicalUrl = `https://bunusradar.site/blog/${post.slug}`;
+
   return {
     title: `${post.title} - BunusRadar`,
     description: post.excerpt,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
+      url: canonicalUrl,
       title: post.title,
       description: post.excerpt,
       type: 'article',

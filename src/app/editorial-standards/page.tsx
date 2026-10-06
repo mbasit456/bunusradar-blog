@@ -5,6 +5,14 @@ import { ShieldCheck, CheckCircle2, AlertCircle, RefreshCw, FileText, Scale } fr
 export const metadata: Metadata = {
   title: 'Editorial Standards & Integrity Policy | BunusRadar',
   description: 'Learn about BunusRadar’s commitment to journalistic integrity, rigorous fact-checking, AI disclosure, and unbiased reviews.',
+  alternates: {
+    canonical: 'https://bunusradar.site/editorial-standards',
+  },
+  openGraph: {
+    url: 'https://bunusradar.site/editorial-standards',
+    title: 'Editorial Standards & Integrity Policy | BunusRadar',
+    description: 'Learn about BunusRadar’s commitment to journalistic integrity, rigorous fact-checking, AI disclosure, and unbiased reviews.',
+  },
 };
 
 export default function EditorialStandardsPage() {

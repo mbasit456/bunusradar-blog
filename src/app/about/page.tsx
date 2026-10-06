@@ -6,6 +6,14 @@ import { CATEGORIES } from '@/lib/categories';
 export const metadata: Metadata = {
   title: 'About BunusRadar',
   description: 'BunusRadar is your daily source for the latest in Technology, AI, Business & Growth, Productivity, and Lifestyle. Fresh insights published every day.',
+  alternates: {
+    canonical: 'https://bunusradar.site/about',
+  },
+  openGraph: {
+    url: 'https://bunusradar.site/about',
+    title: 'About BunusRadar',
+    description: 'BunusRadar is your daily source for the latest in Technology, AI, Business & Growth, Productivity, and Lifestyle.',
+  },
 };
 
 export default function AboutPage() {

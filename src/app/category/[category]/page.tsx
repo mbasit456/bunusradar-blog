@@ -22,9 +22,19 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const meta = getCategoryBySlug(params.category);
+  const canonicalUrl = `https://bunusradar.site/category/${params.category}`;
   return {
     title: `${meta.name} News & Analysis - BunusRadar`,
     description: meta.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: `${meta.name} - BunusRadar`,
+      description: meta.description,
+      type: 'website',
+    },
   };
 }
 

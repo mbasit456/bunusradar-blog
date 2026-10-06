@@ -1,9 +1,21 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getAllPosts } from '@/lib/posts';
 import MagazineHero from '@/components/MagazineHero';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
 import { ChevronRight } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'BunusRadar - Insights on Technology, AI, & Digital Growth',
+  description: 'BunusRadar is your daily digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Productivity Trends.',
+  alternates: {
+    canonical: 'https://bunusradar.site',
+  },
+  openGraph: {
+    url: 'https://bunusradar.site',
+  },
+};
 
 interface HomePageProps {
   searchParams?: {

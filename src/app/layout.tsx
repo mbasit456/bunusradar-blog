@@ -28,8 +28,20 @@ export const metadata: Metadata = {
     description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
   },
   alternates: {
+    canonical: 'https://bunusradar.site',
     types: {
       'application/rss+xml': '/rss.xml',
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   icons: {

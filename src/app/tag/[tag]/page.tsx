@@ -22,9 +22,18 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const decodedTag = decodeURIComponent(params.tag);
+  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(params.tag)}`;
   return {
-    title: `#${decodedTag} - GravityPulse`,
-    description: `Articles tagged with #${decodedTag}`,
+    title: `#${decodedTag} | BunusRadar`,
+    description: `Articles and guides tagged with #${decodedTag} on BunusRadar`,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: `#${decodedTag} - BunusRadar`,
+      description: `Articles tagged with #${decodedTag}`,
+    },
   };
 }
 

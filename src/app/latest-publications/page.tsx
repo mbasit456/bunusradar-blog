@@ -8,6 +8,14 @@ import Image from 'next/image';
 export const metadata: Metadata = {
   title: 'Latest Publications | BunusRadar Archive',
   description: 'Browse all published articles, guides, and intelligence briefings on Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.',
+  alternates: {
+    canonical: 'https://bunusradar.site/latest-publications',
+  },
+  openGraph: {
+    url: 'https://bunusradar.site/latest-publications',
+    title: 'Latest Publications | BunusRadar Archive',
+    description: 'Browse all published articles, guides, and intelligence briefings on Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.',
+  },
 };
 
 export const revalidate = 60;
