@@ -7,13 +7,15 @@ import Sidebar from '@/components/Sidebar';
 import { ChevronRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'BunusRadar - Insights on Technology, AI, & Digital Growth',
-  description: 'BunusRadar is your daily digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Productivity Trends.',
+  title: 'BunusRadar - Independent AI Tool Reviews, Tests & Developer Research',
+  description: 'BunusRadar helps developers, engineers, and businesses evaluate AI tools through practical benchmarks, reproducible tests, and evidence-based software research.',
   alternates: {
     canonical: 'https://bunusradar.site',
   },
   openGraph: {
     url: 'https://bunusradar.site',
+    title: 'BunusRadar - Independent AI Tool Reviews, Tests & Developer Research',
+    description: 'Practical AI benchmarks, developer software evaluations, and reproducible research.',
   },
 };
 
@@ -94,6 +96,73 @@ export default function HomePage({ searchParams }: HomePageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Feed (8 Cols / 67%) */}
           <main className="lg:col-span-8 space-y-10">
+            {/* Editorial Positioning & Original Research Banner */}
+            <section className="bg-white border border-zinc-200/90 rounded-xl p-6 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-100 pb-4">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-blue-50 text-[#1b2e67] border border-blue-100">
+                    Editorial Promise
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-zinc-900 mt-1">
+                    Independent AI Tool Reviews, Tests & Research
+                  </h2>
+                  <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mt-1">
+                    BunusRadar helps developers, engineers, and tech leaders evaluate emerging AI systems through hands-on testing, reproducible benchmarks, and documented methodologies.
+                  </p>
+                </div>
+                <div className="flex gap-2 shrink-0">
+                  <Link
+                    href="/research"
+                    className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider bg-[#1b2e67] text-[#f9b44d] hover:bg-[#14234f] rounded transition-colors"
+                  >
+                    Research Hub →
+                  </Link>
+                  <Link
+                    href="/methodology"
+                    className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider bg-zinc-100 text-zinc-700 hover:bg-zinc-200 rounded transition-colors"
+                  >
+                    Methodology
+                  </Link>
+                </div>
+              </div>
+
+              {/* Research Benchmarks Quick Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                <Link
+                  href="/research#ai-coding-benchmark"
+                  className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group"
+                >
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">Benchmark</span>
+                  <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
+                    AI Coding Assistants 2026
+                  </strong>
+                  <span className="text-[11px] text-zinc-500 block mt-1">50 tasks across 5 repos. Accuracy, latency & cost.</span>
+                </Link>
+
+                <Link
+                  href="/research#llm-pricing"
+                  className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group"
+                >
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">Pricing Tracker</span>
+                  <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
+                    LLM Cost & Token Tracker
+                  </strong>
+                  <span className="text-[11px] text-zinc-500 block mt-1">GPT-4o, Claude 3.5, Gemini 1.5, DeepSeek V3 per 1M.</span>
+                </Link>
+
+                <Link
+                  href="/research#image-generator-benchmark"
+                  className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group"
+                >
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block">Evaluation</span>
+                  <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
+                    AI Image Generators
+                  </strong>
+                  <span className="text-[11px] text-zinc-500 block mt-1">Prompt adherence & fidelity across 100 test prompts.</span>
+                </Link>
+              </div>
+            </section>
+
             {/* Latest Articles Section */}
             <section>
               <div className="tg-section-header">

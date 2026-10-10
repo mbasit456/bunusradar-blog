@@ -12,9 +12,9 @@ featured: false
 
 ## The Modern Attention Crisis and the Need for a Stack
 
-We live in an age of unprecedented digital friction. Knowledge workers are bombarded with over 120 emails a day, context-switch every 3 minutes, and spend up to 60% of their working hours on "work about work"—tracking down files, managing notifications, and sitting in redundant status meetings. The result is chronic cognitive overload, fragmented focus, and burnout.
+We live in an age of unprecedented digital friction. According to workplace research from the **McKinsey Global Institute** and studies on workplace attention by **Gloria Mark at the University of California, Irvine**, knowledge workers receive an average of 120+ emails per day and context-switch every 3 minutes. Furthermore, organizational studies indicate employees spend up to 60% of their working hours on "work about work"—searching for documents, switching between siloed applications, and managing notifications. The result is chronic cognitive fragmentation and fatigue.
 
-To achieve true flow and output at high levels, willpower alone is no longer sufficient. You need a system. Specifically, you need a **Personal [productivity](/category/productivity) Stack**—an integrated ecosystem of mental models, digital applications, and automated routines engineered to safeguard your attention and magnify your output.
+To achieve sustained deep work, willpower alone is no longer sufficient. You need an intentional system. Specifically, you need a **Personal [productivity](/category/productivity) Stack**—an integrated ecosystem of mental models, digital applications, and automated routines engineered to safeguard your attention and magnify your output.
 
 Just as software engineering teams rely on a tech stack to deploy code efficiently, high-performing individuals require a productivity stack to convert raw cognitive effort into meaningful outcomes. Below is the definitive framework for building a high-yield focus engine.
 

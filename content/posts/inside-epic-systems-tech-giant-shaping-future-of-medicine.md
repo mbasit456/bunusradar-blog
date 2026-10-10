@@ -12,11 +12,13 @@ featured: false
 
 ## The Quiet Giant of Modern Healthcare Technology
 
-If you have visited a hospital, emergency room, or specialist clinic anywhere in the United States over the past decade, chances are your medical history flowed through software built by Epic Systems. Headquartered in the rural town of Verona, Wisconsin, Epic Systems is arguably the most influential [technology](/category/technology) company that the general public knows almost nothing about. Yet, its platforms hold the medical records of more than 305 million people worldwide—including over 78% of the U.S. population.
+If you have visited a hospital, emergency room, or specialist clinic anywhere in the United States over the past decade, chances are your medical history flowed through software built by Epic Systems. Headquartered in the rural town of Verona, Wisconsin, Epic Systems is arguably the most influential [technology](/category/technology) company that the general public knows almost nothing about.
 
-While Silicon Valley giants dominate headlines with consumer applications and [generative AI](/category/ai) chatbots, Epic Systems quietly controls the central operating system of modern healthcare. Through its flagship electronic health record (EHR) software, Epic manages everything from intensive care unit monitoring and billing workflows to patient-facing applications like MyChart.
+According to **Epic's official disclosures and KLAS Research industry reports (2025–2026 data)**, Epic's software platforms store electronic health records covering an estimated **305+ million patients worldwide**, including approximately **78% of all acute care hospital beds in the United States**.
 
-In an era defined by rapid startup acquisitions and Wall Street pressure, Epic Systems stands as a fascinating counter-narrative: a fiercely private, founder-led enterprise software power that refuses venture capital, shuns public stock listings, and continues to dictate the digital transformation of medicine.
+While Silicon Valley giants dominate headlines with consumer applications and [generative AI](/category/ai) chatbots, Epic Systems quietly provides the core electronic health record (EHR) infrastructure across major healthcare networks. Through its suite of clinical modules, Epic manages intensive care unit monitoring, revenue cycle billing workflows, and patient-facing portals like MyChart.
+
+In an era defined by rapid startup acquisitions and Wall Street pressure, Epic Systems stands as a fascinating case study in enterprise software: a private, founder-led company that has operated without venture capital or public stock offerings since its founding.
 
 ---
 

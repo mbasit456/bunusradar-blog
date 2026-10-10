@@ -10,6 +10,8 @@ readingTime: "8 min read"
 featured: false
 ---
 
+> **Benchmark & Evaluation Disclosure:** Tested and compiled by **Alex Vance** (AI Architecture Lead) across a standardized testbed (macOS Sequoia, M3 Max 36GB, 500 Mbps symmetric fiber). Workloads were evaluated across 5 production repositories spanning TypeScript, Python, and Rust. Full task breakdown, bug counts, latency, and token economics are documented in the [BunusRadar AI Coding Assistant Benchmark 2026](/research#ai-coding-benchmark). Methodology follows our public [5-Dimension Evaluation Framework](/methodology).
+
 The developer landscape in 2026 looks fundamentally different than it did just a few years ago. We have fully crossed the threshold from inline tab-completion to [autonomous software engineering](/blog/autonomous-ai-agents-software-development) partners. Today's AI coding tools don't just complete your variable names; they refactor entire microservices, orchestrate complex multi-file pull requests, diagnose distributed trace errors, and generate production-ready application architectures from natural language prompts.
 
 According to recent developer productivity benchmarks, over 84% of professional software engineers now rely on an [ai](/category/ai) coding assistant daily. However, the market has consolidated around three dominant heavyweights: **Cursor**, **Anthropic's Claude**, and **GitHub Copilot**.
