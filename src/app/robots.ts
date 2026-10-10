@@ -5,6 +5,15 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
+      // Google AdSense Crawlers — explicit full access
+      {
+        userAgent: 'Mediapartners-Google',
+        allow: '/',
+      },
+      {
+        userAgent: 'AdsBot-Google',
+        allow: '/',
+      },
       // Standard search engines — full access
       {
         userAgent: 'Googlebot',

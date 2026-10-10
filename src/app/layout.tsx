@@ -49,6 +49,9 @@ export const metadata: Metadata = {
     shortcut: '/icon.svg',
     apple: '/icon.svg',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-6911732447309638',
+  },
 };
 
 export default function RootLayout({
@@ -60,11 +63,10 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Google AdSense */}
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6911732447309638"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
         {/* Google Analytics */}
         <Script
