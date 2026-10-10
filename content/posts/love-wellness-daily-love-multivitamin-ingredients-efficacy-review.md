@@ -70,7 +70,7 @@ When reviewing any multivitamin, the forms of the nutrients matter far more than
 
 When taken consistently as part of a balanced nutritional routine, Daily Love offers several physiological benefits:
 
-1. **Sustained Cellular Energy:** The methylated B-complex acts as cofactors for mitochondrial ATP generation, reducing afternoon fatigue without the crash of caffeine.
+1. **Sustained Cellular Energy:** The methylated B-complex acts as cofactors for mitochondrial ATP generation, reducing afternoon fatigue and supporting sustained cognitive output as outlined in our [10x focus productivity stack](/blog/ultimate-personal-productivity-stack-10x-focus).
 2. **Hormonal and Mood Stability:** The inclusion of active B6 and standardized Chasteberry provides targeted support for premenstrual balance.
 3. **Enhanced Digestive Tolerance:** Because minerals are bonded to amino acids, users rarely report the stomach upset common with competing products.
 

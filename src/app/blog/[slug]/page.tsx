@@ -73,9 +73,9 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   const allPosts = getAllPosts();
-  const relatedPosts = getPostsByCategory(post.category)
-    .filter((p) => p.slug !== post.slug)
-    .slice(0, 2);
+  const categoryPosts = getPostsByCategory(post.category).filter((p) => p.slug !== post.slug);
+  const fallbackPosts = allPosts.filter((p) => p.slug !== post.slug && !categoryPosts.some((cp) => cp.slug === p.slug));
+  const relatedPosts = [...categoryPosts, ...fallbackPosts].slice(0, 4);
 
   const baseUrl = 'https://bunusradar.site';
   const articleUrl = `${baseUrl}/blog/${post.slug}`;
@@ -85,7 +85,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const authorData = getAuthorBySlug(authorSlug);
   const authorUrl = `${baseUrl}/author/${authorSlug}`;
 
-  // JSON-LD structured data for rich snippets — full Person schema for AI attribution
+  // JSON-LD structured data for rich snippets - full Person schema for AI attribution
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
