@@ -281,10 +281,6 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-
-            <div className="pt-2 text-[11px] text-slate-400 bg-black/20 p-2.5 rounded border border-white/5 leading-relaxed">
-              Google AdSense certified publisher. Compliant with GDPR, CCPA, and FTC disclosure guidelines.
-            </div>
           </div>
         </div>
 
