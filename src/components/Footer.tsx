@@ -66,6 +66,21 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/methodology" className="hover:text-[#f9b44d] transition-colors">
+                  Testing Methodology
+                </Link>
+              </li>
+              <li>
+                <Link href="/research" className="hover:text-[#f9b44d] transition-colors">
+                  Research Hub
+                </Link>
+              </li>
+              <li>
+                <Link href="/authors" className="hover:text-[#f9b44d] transition-colors">
+                  Our Authors
+                </Link>
+              </li>
+              <li>
                 <Link href="/latest-publications" className="hover:text-[#f9b44d] transition-colors">
                   Latest Publications
                 </Link>

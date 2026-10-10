@@ -1,5 +1,6 @@
 import { getAllPosts } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
+import { getAllAuthors } from '@/lib/authors';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60;
@@ -7,16 +8,28 @@ export const revalidate = 60;
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts();
+  const authors = getAllAuthors();
   const nowIso = new Date().toISOString();
 
   // Static Pages
   const staticPages = [
     { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0', lastmod: nowIso },
     { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9', lastmod: nowIso },
-    { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8', lastmod: '2026-09-22T00:00:00+00:00' },
+    { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.9', lastmod: nowIso },
+    { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.9', lastmod: nowIso },
+    { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8', lastmod: nowIso },
+    { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8', lastmod: nowIso },
     { url: `${baseUrl}/editorial-standards`, changefreq: 'monthly', priority: '0.8', lastmod: '2026-09-23T00:00:00+00:00' },
     { url: `${baseUrl}/privacy-terms`, changefreq: 'monthly', priority: '0.7', lastmod: '2026-09-23T00:00:00+00:00' },
   ];
+
+  // Author Profile Pages
+  const authorPages = authors.map((author) => ({
+    url: `${baseUrl}/author/${author.slug}`,
+    changefreq: 'weekly',
+    priority: '0.8',
+    lastmod: nowIso,
+  }));
 
   // Category Pages
   const categoryPages = Object.values(CATEGORIES).map((cat) => ({
@@ -38,7 +51,7 @@ export async function GET() {
     };
   });
 
-  const allUrls = [...staticPages, ...categoryPages, ...articlePages];
+  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...articlePages];
 
   const xmlEntries = allUrls
     .map(

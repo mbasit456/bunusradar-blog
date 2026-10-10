@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, getPostsByCategory } from '@/lib/posts';
+import { getAuthorBySlug, resolveAuthorSlug } from '@/lib/authors';
 import ShareButtons from '@/components/ShareButtons';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
@@ -79,7 +80,12 @@ export default async function PostPage({ params }: PostPageProps) {
   const baseUrl = 'https://bunusradar.site';
   const articleUrl = `${baseUrl}/blog/${post.slug}`;
 
-  // JSON-LD structured data for rich snippets
+  // Resolve rich author data from the authors registry
+  const authorSlug = post.authorSlug || resolveAuthorSlug(post.author.name);
+  const authorData = getAuthorBySlug(authorSlug);
+  const authorUrl = `${baseUrl}/author/${authorSlug}`;
+
+  // JSON-LD structured data for rich snippets — full Person schema for AI attribution
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -88,10 +94,20 @@ export default async function PostPage({ params }: PostPageProps) {
     image: post.coverImage ? [post.coverImage] : [],
     datePublished: post.date,
     dateModified: post.date,
+    wordCount: post.content?.split(/\s+/).length,
     author: {
       '@type': 'Person',
-      name: post.author.name,
-      url: baseUrl,
+      '@id': authorUrl,
+      name: authorData?.name || post.author.name,
+      url: authorUrl,
+      image: authorData?.avatar || post.author.avatar,
+      jobTitle: authorData?.role || post.author.role,
+      worksFor: {
+        '@type': 'Organization',
+        name: 'BunusRadar',
+        url: baseUrl,
+      },
+      sameAs: authorData?.sameAs || [],
     },
     publisher: {
       '@type': 'Organization',
@@ -99,7 +115,7 @@ export default async function PostPage({ params }: PostPageProps) {
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/logo.png`,
+        url: `${baseUrl}/icon.svg`,
       },
     },
     mainEntityOfPage: {
@@ -164,7 +180,10 @@ export default async function PostPage({ params }: PostPageProps) {
               <div className="flex items-center gap-4 flex-wrap">
                 <span className="flex items-center gap-1.5 font-bold text-zinc-800">
                   <User className="w-3.5 h-3.5 text-[#1b2e67]" />
-                  BY <span className="uppercase text-[#1b2e67]">{post.author.name}</span>
+                  BY{' '}
+                  <Link href={authorUrl} className="uppercase text-[#1b2e67] hover:underline">
+                    {authorData?.name || post.author.name}
+                  </Link>
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">

@@ -80,6 +80,20 @@ export default function Navbar() {
             >
               About
             </Link>
+
+            <Link
+              href="/research"
+              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
+            >
+              Research
+            </Link>
+
+            <Link
+              href="/authors"
+              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
+            >
+              Authors
+            </Link>
           </nav>
 
           {/* Search Trigger & Mobile Menu Toggle */}
@@ -151,6 +165,20 @@ export default function Navbar() {
             className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
             About
+          </Link>
+          <Link
+            href="/research"
+            onClick={() => setIsOpen(false)}
+            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            Research
+          </Link>
+          <Link
+            href="/authors"
+            onClick={() => setIsOpen(false)}
+            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            Authors
           </Link>
         </div>
       )}

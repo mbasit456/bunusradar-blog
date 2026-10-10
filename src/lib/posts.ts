@@ -3,8 +3,78 @@ import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
 import { marked } from 'marked';
+import { AUTHORS, resolveAuthorSlug, Author } from '@/lib/authors';
 
 const POSTS_DIRECTORY = path.join(process.cwd(), 'content', 'posts');
+
+// Topic/Slug to Author assignment map
+export const POST_AUTHOR_ASSIGNMENT: Record<string, string> = {
+  // AI & Architecture - Alex Vance
+  'best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot': 'alex-vance',
+  'deepseek-ai-vs-chatgpt-vs-claude-ultimate-showdown': 'alex-vance',
+  'best-free-midjourney-alternatives-ai-art-generators': 'alex-vance',
+  'best-free-chatgpt-alternatives-2026': 'alex-vance',
+  'best-free-ai-video-generators-text-to-video-2026': 'alex-vance',
+  'top-free-ai-video-generators-2026': 'alex-vance',
+  'top-character-ai-alternatives-free-conversational-ai': 'alex-vance',
+  'autonomous-ai-agents-software-development': 'alex-vance',
+  'inside-epic-systems-tech-giant-shaping-future-of-medicine': 'alex-vance',
+  
+  // Software Engineering & Performance - Sarah Chen
+  'mastering-nextjs-performance-2026': 'sarah-chen',
+  'building-high-impact-developer-portfolios': 'sarah-chen',
+  'bbc-tech-coverage-and-digital-media-trends': 'sarah-chen',
+  'tg-daily-tech-news-review-and-best-articles': 'sarah-chen',
+
+  // Productivity, Knowledge & Cognitive Systems - Elena Rostova
+  'ultimate-personal-productivity-stack-10x-focus': 'elena-rostova',
+  'best-free-notion-templates-productivity-life-organization': 'elena-rostova',
+  'hyper-focused-productivity-systems': 'elena-rostova',
+  'future-of-remote-work-digital-nomad-careers-2026': 'elena-rostova',
+  'future-of-remote-work-and-ambient-intelligence': 'elena-rostova',
+  'legitimate-work-from-home-jobs-high-paying-remote-careers-2026': 'elena-rostova',
+  'hypoallergenic-cats-ultimate-guide-allergy-friendly-breeds': 'elena-rostova',
+  'best-myfitnesspal-alternative-options': 'elena-rostova',
+
+  // SaaS, Fintech & Digital Wealth - Marcus Sterling
+  'most-profitable-digital-business-models-microsaas-2026': 'marcus-sterling',
+  'passive-income-ideas-8-proven-wealth-systems-2026': 'marcus-sterling',
+  'best-side-hustles-to-make-1000-a-month-2026': 'marcus-sterling',
+  'how-to-make-money-online-2026-legitimate-methods-beginners': 'marcus-sterling',
+  'how-to-scale-digital-micro-saas': 'marcus-sterling',
+  'forbes-top-business-and-wealth-tips-2026': 'marcus-sterling',
+};
+
+export function resolveAuthorForPost(slug: string, explicitAuthor?: any): {
+  slug: string;
+  name: string;
+  avatar: string;
+  role: string;
+} {
+  // If post has explicit object with name
+  const rawName = typeof explicitAuthor === 'string' ? explicitAuthor : explicitAuthor?.name;
+  
+  // 1. Check direct post mapping first
+  let authorSlug = POST_AUTHOR_ASSIGNMENT[slug];
+  
+  // 2. Fall back to name resolution if not in map
+  if (!authorSlug && rawName) {
+    authorSlug = resolveAuthorSlug(rawName);
+  }
+  
+  // 3. Fallback default
+  if (!authorSlug || !AUTHORS[authorSlug]) {
+    authorSlug = 'alex-vance';
+  }
+
+  const author = AUTHORS[authorSlug];
+  return {
+    slug: author.slug,
+    name: author.name,
+    avatar: author.avatar,
+    role: author.role,
+  };
+}
 
 export interface PostMetadata {
   slug: string;
@@ -15,6 +85,7 @@ export interface PostMetadata {
   category: string;
   tags: string[];
   coverImage?: string;
+  authorSlug: string;
   author: {
     name: string;
     avatar?: string;
@@ -57,6 +128,8 @@ export function getAllPosts(includeScheduled = false): PostMetadata[] {
         ? new Date().toISOString().split('T')[0]
         : dateObj.toISOString().split('T')[0];
 
+      const authorResolved = resolveAuthorForPost(slug, data.author);
+
       return {
         slug,
         title: data.title || 'Untitled Post',
@@ -66,10 +139,11 @@ export function getAllPosts(includeScheduled = false): PostMetadata[] {
         category: (data.category || 'general').toLowerCase(),
         tags: Array.isArray(data.tags) ? data.tags : [],
         coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+        authorSlug: authorResolved.slug,
         author: {
-          name: data.author?.name || 'Editorial Team',
-          avatar: data.author?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
-          role: data.author?.role || 'Staff Writer',
+          name: authorResolved.name,
+          avatar: authorResolved.avatar,
+          role: authorResolved.role,
         },
         readingTime: stats.text,
         featured: Boolean(data.featured),
@@ -188,6 +262,8 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
 
   const htmlContent = await marked.parse(content, { renderer });
 
+  const authorResolved = resolveAuthorForPost(slug, data.author);
+
   return {
     slug,
     title: data.title || 'Untitled Post',
@@ -196,10 +272,11 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
     category: (data.category || 'general').toLowerCase(),
     tags: Array.isArray(data.tags) ? data.tags : [],
     coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+    authorSlug: authorResolved.slug,
     author: {
-      name: data.author?.name || 'Editorial Team',
-      avatar: data.author?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
-      role: data.author?.role || 'Staff Writer',
+      name: authorResolved.name,
+      avatar: authorResolved.avatar,
+      role: authorResolved.role,
     },
     readingTime: stats.text,
     featured: Boolean(data.featured),
