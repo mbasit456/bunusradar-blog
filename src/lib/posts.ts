@@ -38,6 +38,8 @@ export const POST_AUTHOR_ASSIGNMENT: Record<string, string> = {
   'legitimate-work-from-home-jobs-high-paying-remote-careers-2026': 'elena-rostova',
   'hypoallergenic-cats-ultimate-guide-allergy-friendly-breeds': 'elena-rostova',
   'best-myfitnesspal-alternative-options': 'elena-rostova',
+  'sancerre-wine-french-appellation-tasting-notes-pairing-guide': 'elena-rostova',
+  'love-wellness-daily-love-multivitamin-ingredients-efficacy-review': 'elena-rostova',
 
   // SaaS, Fintech & Digital Wealth - Marcus Sterling
   'most-profitable-digital-business-models-microsaas-2026': 'marcus-sterling',
@@ -46,6 +48,7 @@ export const POST_AUTHOR_ASSIGNMENT: Record<string, string> = {
   'how-to-make-money-online-2026-legitimate-methods-beginners': 'marcus-sterling',
   'how-to-scale-digital-micro-saas': 'marcus-sterling',
   'forbes-top-business-and-wealth-tips-2026': 'marcus-sterling',
+  'owi-meaning-operating-while-intoxicated-legal-penalties-defense': 'marcus-sterling',
 };
 
 export function resolveAuthorForPost(slug: string, explicitAuthor?: any): {
