@@ -54,20 +54,15 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Research & Editorial */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#f9b44d] mb-3 pb-1 border-b border-white/10">
-              Editorial & Legal
+              Editorial & Research
             </h4>
             <ul className="space-y-1.5 text-xs text-zinc-300">
               <li>
-                <Link href="/editorial-standards" className="hover:text-[#f9b44d] transition-colors">
-                  Editorial Standards
-                </Link>
-              </li>
-              <li>
-                <Link href="/methodology" className="hover:text-[#f9b44d] transition-colors">
-                  Testing Methodology
+                <Link href="/about" className="hover:text-[#f9b44d] transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
@@ -76,18 +71,57 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/methodology" className="hover:text-[#f9b44d] transition-colors">
+                  Testing Methodology
+                </Link>
+              </li>
+              <li>
+                <Link href="/editorial-standards" className="hover:text-[#f9b44d] transition-colors">
+                  Editorial Standards
+                </Link>
+              </li>
+              <li>
                 <Link href="/authors" className="hover:text-[#f9b44d] transition-colors">
                   Our Authors
                 </Link>
               </li>
               <li>
-                <Link href="/latest-publications" className="hover:text-[#f9b44d] transition-colors">
-                  Latest Publications
+                <Link href="/contact" className="hover:text-[#f9b44d] transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal & Compliance (AdSense Standard) */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#f9b44d] mb-3 pb-1 border-b border-white/10">
+              Legal & Policies
+            </h4>
+            <ul className="space-y-1.5 text-xs text-zinc-300">
+              <li>
+                <Link href="/privacy-policy" className="hover:text-[#f9b44d] transition-colors">
+                  Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-terms" className="hover:text-[#f9b44d] transition-colors">
-                  Privacy & Terms
+                <Link href="/terms-and-conditions" className="hover:text-[#f9b44d] transition-colors">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/disclaimer" className="hover:text-[#f9b44d] transition-colors">
+                  Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="hover:text-[#f9b44d] transition-colors">
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/latest-publications" className="hover:text-[#f9b44d] transition-colors">
+                  All Publications
                 </Link>
               </li>
             </ul>

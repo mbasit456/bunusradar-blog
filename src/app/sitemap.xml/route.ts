@@ -20,7 +20,12 @@ export async function GET() {
     { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8', lastmod: nowIso },
     { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8', lastmod: nowIso },
     { url: `${baseUrl}/editorial-standards`, changefreq: 'monthly', priority: '0.8', lastmod: '2026-09-23T00:00:00+00:00' },
-    { url: `${baseUrl}/privacy-terms`, changefreq: 'monthly', priority: '0.7', lastmod: '2026-09-23T00:00:00+00:00' },
+    { url: `${baseUrl}/privacy-policy`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
+    { url: `${baseUrl}/terms-and-conditions`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
+    { url: `${baseUrl}/disclaimer`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
+    { url: `${baseUrl}/contact`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
+    { url: `${baseUrl}/cookie-policy`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
+    { url: `${baseUrl}/privacy-terms`, changefreq: 'monthly', priority: '0.5', lastmod: '2026-09-23T00:00:00+00:00' },
   ];
 
   // Author Profile Pages
