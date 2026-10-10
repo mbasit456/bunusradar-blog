@@ -116,9 +116,6 @@ export default function Footer() {
                 <span className="font-extrabold text-2xl tracking-tight text-white group-hover:text-[#f9b44d] transition-colors">
                   BUNUS<span className="text-[#f9b44d]">RADAR</span>
                 </span>
-                <span className="text-[10px] uppercase font-semibold tracking-widest text-slate-300 mt-1">
-                  More Than The News
-                </span>
               </div>
             </Link>
 
@@ -303,9 +300,6 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4 shrink-0">
-            <span className="text-[11px] text-slate-400 hidden sm:inline">
-              Edge-rendered on Next.js
-            </span>
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors cursor-pointer text-xs"

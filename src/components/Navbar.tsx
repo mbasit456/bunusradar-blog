@@ -22,11 +22,14 @@ export default function Navbar() {
       {/* Top Sub-Bar with Date & Trending */}
       <div className="bg-[#14234f] text-[11px] text-zinc-300 border-b border-white/10 py-1 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-[#f9b44d] font-bold uppercase tracking-wider">Trending:</span>
-            <span className="hidden sm:inline text-zinc-300 hover:text-white transition-colors truncate max-w-md">
-              Enterprise AI & Edge Computing hardware shifts in 2026
-            </span>
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="text-[#f9b44d] font-bold uppercase tracking-wider shrink-0">Trending:</span>
+            <Link
+              href="/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot"
+              className="hidden sm:inline text-zinc-300 hover:text-[#f9b44d] hover:underline transition-colors truncate max-w-md"
+            >
+              Best AI Coding Assistants in 2026: Cursor vs Claude vs GitHub Copilot
+            </Link>
           </div>
           <div className="flex items-center gap-4 text-zinc-400">
             <span>{new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
@@ -75,24 +78,10 @@ export default function Navbar() {
             ))}
 
             <Link
-              href="/about"
-              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
-            >
-              About
-            </Link>
-
-            <Link
               href="/research"
               className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
             >
               Research
-            </Link>
-
-            <Link
-              href="/authors"
-              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
-            >
-              Authors
             </Link>
           </nav>
 
@@ -160,25 +149,11 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/about"
-            onClick={() => setIsOpen(false)}
-            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
-          >
-            About
-          </Link>
-          <Link
             href="/research"
             onClick={() => setIsOpen(false)}
             className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
             Research
-          </Link>
-          <Link
-            href="/authors"
-            onClick={() => setIsOpen(false)}
-            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
-          >
-            Authors
           </Link>
         </div>
       )}
