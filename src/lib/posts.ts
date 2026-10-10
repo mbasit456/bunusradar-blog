@@ -25,6 +25,9 @@ export const POST_AUTHOR_ASSIGNMENT: Record<string, string> = {
   'building-high-impact-developer-portfolios': 'sarah-chen',
   'bbc-tech-coverage-and-digital-media-trends': 'sarah-chen',
   'tg-daily-tech-news-review-and-best-articles': 'sarah-chen',
+  'phone-prefix-702-location-time-zone-caller-identification': 'sarah-chen',
+  'vollebak-carbon-fibre-dyneema-pants-top-alternatives': 'sarah-chen',
+  'laptop-giveaway-scams-warning-signs-phishing-prevention': 'sarah-chen',
 
   // Productivity, Knowledge & Cognitive Systems - Elena Rostova
   'ultimate-personal-productivity-stack-10x-focus': 'elena-rostova',

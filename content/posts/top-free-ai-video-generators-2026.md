@@ -1,4 +1,4 @@
----
+﻿---
 title: "Top Free AI Video Generators in 2026: Create 4K Clips From Text"
 date: "2026-09-21"
 excerpt: "Discover the best free AI video generators in 2026. Turn text prompts into stunning 4K videos effortlessly with top tools analyzed by our tech experts."
@@ -84,7 +84,7 @@ Pika operates on a daily refresh model, providing 30 daily credits (equivalent t
 
 ### 4. Kling AI (Kuaishou Technology)
 
-Originating from East Asia and taking the global market by storm, Kling AI offers unparalleled human figure rendering and hyper-realistic facial motion. It is capable of producing continuous clips up to 10 seconds long on its base model—a rarity among free-tier platforms.
+Originating from East Asia and taking the global market by storm, Kling AI offers unparalleled human figure rendering and hyper-realistic facial motion. It is capable of producing continuous clips up to 10 seconds long on its base model - a rarity among free-tier platforms.
 
 **Key Features:**
 *   **Hyper-Realistic Human Motion:** Superior handling of complex human actions such as eating, running, dancing, and hand gestures.

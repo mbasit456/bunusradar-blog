@@ -1,4 +1,4 @@
----
+﻿---
 title: "Deep Work Protocols: Designing High-Output Days in an Age of Distraction"
 excerpt: "Practical tactics, time-blocking strategies, and asynchronous communication rules to reclaim 4+ hours of uninterrupted cognitive focus."
 date: "2026-09-05"
@@ -10,7 +10,7 @@ author:
   name: "Elena Rostova"
   avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80"
   role: "Cognitive Workflow Researcher"
----The modern knowledge worker spends an estimated 60% of their workday dealing with "work about work"—answering repetitive Slack messages, attending status sync meetings, and switching contexts between disconnected tabs.
+---The modern knowledge worker spends an estimated 60% of their workday dealing with "work about work" - answering repetitive Slack messages, attending status sync meetings, and switching contexts between disconnected tabs.
 
 Reclaiming deep creative leverage requires ruthless intentionality. Here are the core protocols used by top performers.
 
@@ -39,7 +39,7 @@ Do not use your working memory to remember tasks or meeting details. Maintain an
 
 ## The Result
 
-Adopting even two of these habits will consistently yield 3 to 4 hours of genuine deep work daily—often outproducing an entire standard 40-hour week of fragmented attention.
+Adopting even two of these habits will consistently yield 3 to 4 hours of genuine deep work daily - often outproducing an entire standard 40-hour week of fragmented attention.
 
 ---
 

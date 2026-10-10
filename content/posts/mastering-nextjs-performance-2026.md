@@ -1,4 +1,4 @@
----
+﻿---
 title: "Mastering Next.js Performance: Edge Rendering & Core Web Vitals"
 excerpt: "A comprehensive guide to squeezing maximum speed out of Next.js App Router, streaming SSR, and edge deployment."
 date: "2026-09-10"
@@ -10,7 +10,7 @@ author:
   name: "Sarah Chen"
   avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80"
   role: "Full-Stack Engineer"
----Speed is not just a vanity metric—it directly impacts user engagement, bounce rates, and organic Google search rankings. With modern Core Web Vitals (LCP, INP, and CLS) acting as first-class ranking signals, mastering performance in Next.js is essential for any serious web publisher.
+---Speed is not just a vanity metric - it directly impacts user engagement, bounce rates, and organic Google search rankings. With modern Core Web Vitals (LCP, INP, and CLS) acting as first-class ranking signals, mastering performance in Next.js is essential for any serious web publisher.
 
 In this guide, we break down actionable patterns to achieve perfect 100/100 Lighthouse performance using Next.js App Router.
 

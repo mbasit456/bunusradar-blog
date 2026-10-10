@@ -1,4 +1,4 @@
----
+﻿---
 title: "Passive Income Ideas: 8 Proven Wealth Systems to Build for 2026"
 date: "2026-10-02"
 excerpt: "Discover 8 scalable passive income systems for 2026. Learn how to leverage modern tech, digital assets, and automated platforms to build lasting wealth."
@@ -38,7 +38,7 @@ Focus on tools integrated into massive platform ecosystems (e.g., Shopify plugin
 
 ## 2. Tokenized Real-World Asset (RWA) Yield Portfolios
 
-Real estate has long been the crown jewel of passive income, but high interest rates and liquidity constraints have created entry barriers. Enter **Real-World Asset (RWA) tokenization**—a sector projected by Boston Consulting Group to become a $16 trillion industry by 2030.
+Real estate has long been the crown jewel of passive income, but high interest rates and liquidity constraints have created entry barriers. Enter **Real-World Asset (RWA) tokenization** - a sector projected by Boston Consulting Group to become a $16 trillion industry by 2030.
 
 Through blockchain-backed platforms like RealT and Centrifuge, investors can purchase fractional shares of institutional-grade commercial real estate, industrial warehouses, or corporate debt portfolios with minimal capital upfront.
 
@@ -71,7 +71,7 @@ Curated Insights + Automated Aggregation -> Daily Newsletter -> Paid Subscriptio
 
 Traditional stock portfolios offering a 2% to 3% dividend yield are insufficient against inflationary pressures. In response, modern financial markets have developed **DeFi and traditional Covered Call ETFs** (e.g., JEPI, QYLD) alongside option-vault strategies that generate yields between 7% and 14% annually.
 
-By leveraging automated options writing—selling call options against underlying equity holdings—investors generate premium income regardless of broader market appreciation.
+By leveraging automated options writing - selling call options against underlying equity holdings - investors generate premium income regardless of broader market appreciation.
 
 ### Portfolio Allocation Strategy
 1. **Core Holdings (50%):** Broad market ETFs (VOO, SCHD) for foundational stability.
