@@ -4,7 +4,7 @@ excerpt: "A tactical breakdown of what makes an engineering portfolio stand out:
 date: "2026-09-14"
 category: "technology"
 tags: ["career", "portfolio", "software-engineering", "web-development"]
-coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80"
 featured: false
 author:
   name: "Alex Vance"

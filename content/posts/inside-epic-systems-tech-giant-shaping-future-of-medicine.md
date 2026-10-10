@@ -5,7 +5,7 @@ excerpt: "Discover how Epic Systems built a healthcare software empire, leading 
 category: "Technology"
 tags: ["Epic Systems", "Healthcare Tech", "Artificial Intelligence", "EHR", "Enterprise Software"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

@@ -5,7 +5,7 @@ excerpt: "Investigate how viral laptop giveaway campaigns from 2020 established 
 category: "Technology"
 tags: ["Cybersecurity", "Phishing", "Hardware Scams", "Consumer Protection", "Social Engineering"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

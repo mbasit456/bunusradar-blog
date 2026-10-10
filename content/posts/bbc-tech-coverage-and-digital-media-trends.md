@@ -5,7 +5,7 @@ excerpt: "Discover how BBC technology reporting is driving digital media trends,
 category: "Technology"
 tags: ["Digital Media", "BBC Tech", "Media Trends", "AI Journalism", "Streaming"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

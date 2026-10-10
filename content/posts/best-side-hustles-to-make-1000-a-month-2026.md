@@ -5,7 +5,7 @@ excerpt: "Discover the top scalable side hustles to earn $1,000 extra per month 
 category: "Business & Growth"
 tags: ["Side Hustles", "Passive Income", "Freelancing", "Business Growth", "Financial Freedom"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

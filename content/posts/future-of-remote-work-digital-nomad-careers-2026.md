@@ -5,7 +5,7 @@ excerpt: "Discover the top remote work and digital nomad trends shaping 2026. Fr
 category: "Business & Growth"
 tags: ["Remote Work", "Digital Nomad", "Future of Work", "Productivity", "Global Trends"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

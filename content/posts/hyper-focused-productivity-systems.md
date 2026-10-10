@@ -4,7 +4,7 @@ excerpt: "Practical tactics, time-blocking strategies, and asynchronous communic
 date: "2026-09-05"
 category: "productivity"
 tags: ["productivity", "deep-work", "time-management", "focus", "habits"]
-coverImage: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80"
 featured: false
 author:
   name: "Elena Rostova"

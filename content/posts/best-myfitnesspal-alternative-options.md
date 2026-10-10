@@ -5,7 +5,7 @@ excerpt: "Looking for a top MyFitnessPal alternative? Compare the best calorie t
 category: "Lifestyle"
 tags: ["Fitness Apps", "Calorie Counter", "Health Tech", "MyFitnessPal Alternative", "Nutrition Tracking"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

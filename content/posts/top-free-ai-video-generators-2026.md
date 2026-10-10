@@ -5,7 +5,7 @@ excerpt: "Discover the best free AI video generators in 2026. Turn text prompts 
 category: "Artificial Intelligence"
 tags: ["AI Video", "Text to Video", "Artificial Intelligence", "Content Creation", "Generative AI"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

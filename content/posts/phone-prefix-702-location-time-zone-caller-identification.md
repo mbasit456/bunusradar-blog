@@ -5,7 +5,7 @@ excerpt: "Learn everything about phone prefix 702, including geographical covera
 category: "Technology"
 tags: ["Phone Prefix 702", "Telecommunications", "Area Code 702", "Las Vegas", "Caller ID Verification"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1581338834647-b0fb40704e21?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1506059612708-99d6c258160e?auto=format&fit=crop&w=1200&q=80"
 readingTime: "6 min read"
 featured: false
 ---

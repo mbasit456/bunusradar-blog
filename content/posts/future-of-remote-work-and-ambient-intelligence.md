@@ -4,7 +4,7 @@ excerpt: "How high-speed satellite internet, autonomous living spaces, and async
 date: "2026-09-01"
 category: "lifestyle"
 tags: ["lifestyle", "remote-work", "digital-nomad", "future-trends"]
-coverImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
 featured: false
 author:
   name: "Marcus Sterling"

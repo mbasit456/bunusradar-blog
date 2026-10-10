@@ -5,7 +5,7 @@ excerpt: "Discover 10 proven ways to build sustainable online income streams in 
 category: "Business & Growth"
 tags: ["Make Money Online", "Side Hustle", "Passive Income", "Remote Work", "Digital Economy"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

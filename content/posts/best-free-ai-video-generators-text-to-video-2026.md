@@ -5,7 +5,7 @@ excerpt: "Discover the top free AI video generators of 2026. Compare text-to-vid
 category: "Artificial Intelligence"
 tags: ["AI Video", "Text to Video", "Artificial Intelligence", "Content Creation", "Video Editing"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

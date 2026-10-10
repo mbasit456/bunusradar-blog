@@ -4,7 +4,7 @@ excerpt: "A comprehensive guide to squeezing maximum speed out of Next.js App Ro
 date: "2026-09-10"
 category: "technology"
 tags: ["nextjs", "web-development", "performance", "react", "vercel"]
-coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80"
 featured: false
 author:
   name: "Sarah Chen"

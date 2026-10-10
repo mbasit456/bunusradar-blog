@@ -5,7 +5,7 @@ excerpt: "Discover the ultimate personal productivity stack combining top softwa
 category: "Productivity"
 tags: ["Productivity", "Time Management", "Focus", "Workflow", "Digital Tools"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

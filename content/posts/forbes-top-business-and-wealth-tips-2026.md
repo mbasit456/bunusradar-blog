@@ -5,7 +5,7 @@ excerpt: "Discover Forbes' top business and wealth tips for 2026. Learn how AI t
 category: "Business & Growth"
 tags: ["Wealth Building", "Business Strategy", "Forbes 2026", "Investing Tips", "Financial Freedom"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

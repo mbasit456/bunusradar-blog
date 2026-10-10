@@ -5,7 +5,7 @@ excerpt: "Discover 8 scalable passive income systems for 2026. Learn how to leve
 category: "Business & Growth"
 tags: ["Passive Income", "Wealth Building", "Automated Business", "Financial Freedom", "Investments 2026"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80"
 readingTime: "9 min read"
 featured: false
 ---

@@ -4,7 +4,7 @@ excerpt: "How solo developers and small teams are building durable, profitable s
 date: "2026-09-08"
 category: "business"
 tags: ["business", "saas", "bootstrapping", "growth", "entrepreneurship"]
-coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
 featured: false
 author:
   name: "Marcus Sterling"

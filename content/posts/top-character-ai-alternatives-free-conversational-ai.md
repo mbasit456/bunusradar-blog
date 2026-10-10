@@ -5,7 +5,7 @@ excerpt: "Discover the best free Character AI alternatives for custom roleplay, 
 category: "Artificial Intelligence"
 tags: ["Character AI", "Conversational AI", "AI Chatbots", "Roleplay AI", "Artificial Intelligence"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

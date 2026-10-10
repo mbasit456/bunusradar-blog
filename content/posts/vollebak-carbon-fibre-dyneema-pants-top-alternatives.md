@@ -5,7 +5,7 @@ excerpt: "Explore high-performance technical apparel and the best alternatives t
 category: "Technology"
 tags: ["Technical Apparel", "Vollebak", "Dyneema", "Carbon Fibre", "Performance Gear", "Material Science"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---
