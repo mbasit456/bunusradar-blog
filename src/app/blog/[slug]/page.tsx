@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, getPostsByCategory } from '@/lib/posts';
 import { getAuthorBySlug, resolveAuthorSlug } from '@/lib/authors';
+import { getCategoryBySlug } from '@/lib/categories';
+import { resolveArticleEntities, formatEntityForSchema } from '@/lib/entities';
 import ShareButtons from '@/components/ShareButtons';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
@@ -86,6 +88,26 @@ export default async function PostPage({ params }: PostPageProps) {
   const authorData = getAuthorBySlug(authorSlug);
   const authorUrl = `${baseUrl}/author/${authorSlug}`;
 
+  // Resolve Semantic Entities for Knowledge Graph
+  const categoryMeta = getCategoryBySlug(post.category);
+  const { aboutEntities, mentionEntities } = resolveArticleEntities(
+    post.title,
+    post.category,
+    post.tags
+  );
+
+  const aboutList = aboutEntities.length > 0
+    ? aboutEntities.map(formatEntityForSchema)
+    : [
+        {
+          '@type': 'Thing',
+          name: categoryMeta.name,
+          ...(categoryMeta.wikidataUrl ? { sameAs: categoryMeta.wikidataUrl } : {}),
+        },
+      ];
+
+  const mentionsList = mentionEntities.map(formatEntityForSchema);
+
   // JSON-LD structured data for rich snippets - full Person or Organization schema for attribution
   const isOrgAuthor = authorSlug === 'bunusradar-editorial';
   const articleSchema = {
@@ -99,6 +121,14 @@ export default async function PostPage({ params }: PostPageProps) {
     wordCount: post.content?.split(/\s+/).length,
     inLanguage: 'en-US',
     isAccessibleForFree: true,
+    about: aboutList,
+    ...(mentionsList.length > 0 ? { mentions: mentionsList } : {}),
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${baseUrl}/#website`,
+      name: 'BunusRadar',
+      url: baseUrl,
+    },
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['.ai-quick-summary', '.article-headline'],
@@ -128,7 +158,15 @@ export default async function PostPage({ params }: PostPageProps) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': articleUrl,
+      '@id': `${articleUrl}#webpage`,
+      url: articleUrl,
+      name: post.title,
+      isPartOf: {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        name: 'BunusRadar',
+        url: baseUrl,
+      },
     },
     url: articleUrl,
     keywords: post.tags.join(', '),

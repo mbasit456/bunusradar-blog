@@ -3,6 +3,8 @@ export interface CategoryMeta {
   slug: string;
   description: string;
   color: string;
+  wikidataUrl?: string;
+  wikipediaUrl?: string;
 }
 
 export const CATEGORIES: Record<string, CategoryMeta> = {
@@ -11,30 +13,40 @@ export const CATEGORIES: Record<string, CategoryMeta> = {
     slug: "technology",
     description: "Deep dives into cutting-edge tech, frameworks, software engineering, and developer tools.",
     color: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200 dark:border-blue-800",
+    wikidataUrl: "https://www.wikidata.org/wiki/Q11016",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Technology",
   },
   ai: {
     name: "Artificial Intelligence",
     slug: "ai",
     description: "Exploring LLMs, autonomous agents, neural architectures, and intelligent workflows.",
     color: "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 border-purple-200 dark:border-purple-800",
+    wikidataUrl: "https://www.wikidata.org/wiki/Q11660",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Artificial_intelligence",
   },
   business: {
     name: "Business & Growth",
     slug: "business",
     description: "Actionable strategies for online businesses, monetization, startups, and product building.",
     color: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800",
+    wikidataUrl: "https://www.wikidata.org/wiki/Q4830453",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Business",
   },
   productivity: {
     name: "Productivity",
     slug: "productivity",
     description: "Systems, mindsets, automation hacks, and tools to supercharge personal and team output.",
     color: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border-amber-200 dark:border-amber-800",
+    wikidataUrl: "https://www.wikidata.org/wiki/Q193638",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Productivity",
   },
   lifestyle: {
     name: "Lifestyle & Future",
     slug: "lifestyle",
     description: "Reflections on modern living, remote work culture, and future societal trends.",
     color: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300 border-rose-200 dark:border-rose-800",
+    wikidataUrl: "https://www.wikidata.org/wiki/Q322302",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Lifestyle_(sociology)",
   },
 };
 

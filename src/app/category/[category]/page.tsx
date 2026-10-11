@@ -75,6 +75,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       name: 'BunusRadar',
       url: baseUrl,
     },
+    about: {
+      '@type': 'Thing',
+      name: meta.name,
+      ...(meta.wikidataUrl || meta.wikipediaUrl
+        ? {
+            sameAs: [meta.wikidataUrl, meta.wikipediaUrl].filter(Boolean) as string[],
+          }
+        : {}),
+    },
   };
 
   return (
