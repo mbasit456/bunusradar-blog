@@ -44,7 +44,7 @@ export default function EditorialStandardsPage() {
             </div>
             <h2 className="text-lg font-bold text-zinc-900 dark:text-white">1. Fact-Checking & Primary Sources</h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              We verify all claims against primary sources—including developer documentation, scientific journals, veterinary consensus, and regulatory filings. Speculative statements are explicitly identified as such.
+              We verify all claims against primary sources - including developer documentation, scientific journals, industry documentation, and regulatory filings. Speculative statements are explicitly identified as such.
             </p>
           </div>
 

@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
   const canonicalUrl = `https://bunusradar.site/author/${author.slug}`;
 
   return {
-    title: `${author.name} — ${author.role} | BunusRadar`,
+    title: `${author.name} - ${author.role} | BunusRadar`,
     description: author.shortBio,
     alternates: { canonical: canonicalUrl },
     openGraph: {
       url: canonicalUrl,
-      title: `${author.name} — ${author.role}`,
+      title: `${author.name} - ${author.role}`,
       description: author.shortBio,
       type: 'profile',
       images: [{ url: author.avatar, width: 400, height: 400, alt: author.name }],
@@ -59,7 +59,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
   const baseUrl = 'https://bunusradar.site';
   const authorUrl = `${baseUrl}/author/${author.slug}`;
 
-  // Person JSON-LD schema — the core entity signal for AI systems
+  // Person JSON-LD schema: core entity signal for AI systems
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -88,7 +88,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: 'Authors', item: `${baseUrl}/about` },
+      { '@type': 'ListItem', position: 2, name: 'Authors', item: `${baseUrl}/authors` },
       { '@type': 'ListItem', position: 3, name: author.name, item: authorUrl },
     ],
   };
@@ -116,7 +116,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             <div className="shrink-0">
               <img
                 src={author.avatar}
-                alt={`${author.name} — ${author.role} at BunusRadar`}
+                alt={`${author.name} - ${author.role} at BunusRadar`}
                 className="w-24 h-24 rounded-full object-cover border-4 border-[#1b2e67]/10 shadow"
               />
             </div>
@@ -242,7 +242,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             </div>
           ) : (
             <div className="text-center py-12 text-zinc-400">
-              <p className="text-sm">Articles are being published — check back soon.</p>
+              <p className="text-sm">Articles are being published - check back soon.</p>
               <Link href="/" className="mt-4 inline-block text-sm font-semibold text-[#1b2e67] hover:underline">
                 Browse all articles →
               </Link>

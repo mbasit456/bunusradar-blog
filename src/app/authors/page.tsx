@@ -5,14 +5,14 @@ import { Linkedin, Twitter, Github, Globe, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Our Authors & Editorial Team | BunusRadar',
-  description: 'Meet the experts behind BunusRadar — AI researchers, engineers, analysts, and productivity specialists who produce our daily technology journalism.',
+  description: 'Meet the team behind BunusRadar - editorial contributors and technology analysts producing daily technology journalism.',
   alternates: {
     canonical: 'https://bunusradar.site/authors',
   },
   openGraph: {
     url: 'https://bunusradar.site/authors',
     title: 'Meet the BunusRadar Editorial Team',
-    description: 'The expert authors and researchers who power BunusRadar\'s technology journalism.',
+    description: 'The editorial team and contributors who power BunusRadar\'s technology journalism.',
   },
 };
 
@@ -24,15 +24,15 @@ export default function AuthorsPage() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'BunusRadar Editorial Team',
-    description: 'The expert authors and researchers behind BunusRadar.',
+    description: 'The authors and editorial contributors behind BunusRadar.',
     itemListElement: authors.map((author, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       item: {
-        '@type': 'Person',
+        '@type': author.slug === 'bunusradar-editorial' ? 'Organization' : 'Person',
         name: author.name,
         url: `${baseUrl}/author/${author.slug}`,
-        jobTitle: author.role,
+        jobTitle: author.slug === 'bunusradar-editorial' ? undefined : author.role,
         worksFor: { '@type': 'Organization', name: 'BunusRadar', url: baseUrl },
         sameAs: author.sameAs,
       },
@@ -50,7 +50,7 @@ export default function AuthorsPage() {
           </div>
           <h1 className="text-4xl font-black text-zinc-900 dark:text-white">Meet Our Authors</h1>
           <p className="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
-            Every article on BunusRadar is written by a named expert with verifiable credentials and direct, hands-on experience in their field.
+            Every article on BunusRadar is produced by our core editorial desk and specialist contributors, adhering to published editorial standards.
           </p>
         </div>
 

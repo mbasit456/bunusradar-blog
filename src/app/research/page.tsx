@@ -3,15 +3,15 @@ import Link from 'next/link';
 import { ChevronRight, FlaskConical, TrendingUp, Cpu, DollarSign, Image as ImageIcon, ExternalLink, Download } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'BunusRadar Research Hub — AI Benchmarks & Original Data 2026',
-  description: 'Original AI benchmark data from BunusRadar: AI Coding Assistant Benchmark 2026, LLM Pricing Tracker, Image Generator Accuracy Test, and more. Citable, reproducible research.',
+  title: 'BunusRadar Research Hub - AI Benchmarks & Comparative Data 2026',
+  description: 'Comparative AI benchmark data from BunusRadar: AI Coding Assistant Benchmark 2026, LLM Pricing Tracker, Image Generator Accuracy Test, and more. Citable, reproducible research.',
   alternates: {
     canonical: 'https://bunusradar.site/research',
   },
   openGraph: {
     url: 'https://bunusradar.site/research',
-    title: 'BunusRadar Research Hub — AI Benchmarks 2026',
-    description: 'Original AI benchmark data: Cursor vs Claude vs Copilot, LLM pricing comparisons, and image generator tests — all with published methodology.',
+    title: 'BunusRadar Research Hub - AI Benchmarks 2026',
+    description: 'Comparative AI benchmark data: Cursor vs Claude vs Copilot, LLM pricing comparisons, and image generator reviews - all with published methodology.',
   },
 };
 
@@ -101,7 +101,7 @@ export default function ResearchPage() {
             BunusRadar Research Hub
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-3xl">
-            Original benchmark data, pricing trackers, and accuracy studies — all produced by BunusRadar's editorial team using our{' '}
+            Comparative benchmark data, pricing trackers, and accuracy studies - all compiled by BunusRadar's editorial team using our{' '}
             <Link href="/methodology" className="text-[#1b2e67] font-semibold hover:underline">published methodology</Link>.
             Free to cite with attribution.
           </p>
@@ -122,7 +122,7 @@ export default function ResearchPage() {
                   AI Coding Assistant Benchmark 2026
                 </h2>
               </div>
-              <p className="text-sm text-zinc-500">50 standardized coding tasks across 5 real repositories · 6 tools tested · Methodology: BunusRadar v1.0</p>
+              <p className="text-sm text-zinc-500">Comparative evaluation across 6 leading developer tools · Methodology: BunusRadar Framework</p>
             </div>
             <Link
               href="/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot"
@@ -167,7 +167,7 @@ export default function ResearchPage() {
             </table>
           </div>
           <p className="text-xs text-zinc-400 italic">
-            Tested September 2026 on MacBook Pro M3 Max. Task suite: 50 tasks across 5 real-world repos (Node.js API, React app, Python CLI, Rust library, SQL migrations).
+            Compiled October 2026. Evaluated across representative developer workloads (API development, refactoring, code completion).
             Cost calculated at public pricing tiers. See <Link href="/methodology" className="text-[#1b2e67] hover:underline">full methodology</Link>.
           </p>
         </section>
@@ -222,7 +222,7 @@ export default function ResearchPage() {
           </div>
           <p className="text-xs text-zinc-400 italic">
             * Llama self-hosted cost estimate based on AWS g5.12xlarge instance at $5.67/hr, processing 1M tokens/hr. Actual cost varies.
-            Pricing snapshots from official provider pages, October 2026. Prices change frequently — verify before budgeting.
+            Pricing snapshots from official provider pages, October 2026. Prices change frequently - verify before budgeting.
           </p>
         </section>
 
@@ -238,7 +238,7 @@ export default function ResearchPage() {
                   AI Image Generator Accuracy Test 2026
                 </h2>
               </div>
-              <p className="text-sm text-zinc-500">100 standardized prompts across 6 tools · Scored on: prompt adherence, realism, stylistic range</p>
+              <p className="text-sm text-zinc-500">Comparative evaluation across 6 leading tools · Scored on: prompt adherence, realism, stylistic range</p>
             </div>
             <Link
               href="/blog/best-free-midjourney-alternatives-ai-art-generators"
@@ -289,7 +289,7 @@ export default function ResearchPage() {
             </table>
           </div>
           <p className="text-xs text-zinc-400 italic">
-            * SD3.5 speed measured on local inference (M3 Max). Cloud API speed will vary.
+            * SD3.5 speed measured on reference workstation. Cloud API speed will vary.
             Scores are composite of prompt adherence (50%), realism (30%), and stylistic range (20%).
           </p>
         </section>

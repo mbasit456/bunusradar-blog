@@ -70,7 +70,7 @@ export function resolveAuthorForPost(slug: string, explicitAuthor?: any): {
   
   // 3. Fallback default
   if (!authorSlug || !AUTHORS[authorSlug]) {
-    authorSlug = 'alex-vance';
+    authorSlug = 'bunusradar-editorial';
   }
 
   const author = AUTHORS[authorSlug];
@@ -333,12 +333,12 @@ export function extractFaqsFromContent(markdown: string): FaqItem[] {
     const paragraphs = cleanBody
       .split(/\n\s*\n/)
       .map((p) => p.trim())
-      .filter((p) => p.length > 0 && !p.startsWith('#') && !p.startsWith('>'))
+      .filter((p) => p.length > 0 && !p.startsWith('#') && !p.startsWith('>') && !p.startsWith('|') && !p.includes('| ---'))
       .map((p) => p.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))
       .map((p) => p.replace(/[*_`]/g, ''))
       .map((p) => p.replace(/<[^>]*>/g, ''))
       .map((p) => p.trim())
-      .filter((p) => p.length > 20);
+      .filter((p) => p.length > 20 && !p.startsWith('|'));
 
     if (paragraphs.length > 0) {
       const answer = paragraphs.slice(0, 2).join(' ').slice(0, 450).trim();

@@ -85,7 +85,8 @@ export default async function PostPage({ params }: PostPageProps) {
   const authorData = getAuthorBySlug(authorSlug);
   const authorUrl = `${baseUrl}/author/${authorSlug}`;
 
-  // JSON-LD structured data for rich snippets - full Person schema for AI attribution
+  // JSON-LD structured data for rich snippets - full Person or Organization schema for attribution
+  const isOrgAuthor = authorSlug === 'bunusradar-editorial';
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -102,12 +103,12 @@ export default async function PostPage({ params }: PostPageProps) {
       cssSelector: ['.ai-quick-summary', '.article-headline'],
     },
     author: {
-      '@type': 'Person',
+      '@type': isOrgAuthor ? 'Organization' : 'Person',
       '@id': authorUrl,
       name: authorData?.name || post.author.name,
       url: authorUrl,
       image: authorData?.avatar || post.author.avatar,
-      jobTitle: authorData?.role || post.author.role,
+      jobTitle: isOrgAuthor ? undefined : (authorData?.role || post.author.role),
       worksFor: {
         '@type': 'Organization',
         name: 'BunusRadar',
@@ -233,7 +234,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             )}
 
-            {/* AEO / GEO / AIO Executive Intelligence & Key Takeaways Box */}
+            {/* Executive Intelligence & Key Takeaways Box */}
             <div className="ai-quick-summary bg-gradient-to-br from-blue-50/70 via-slate-50 to-amber-50/30 border border-blue-200/80 rounded-lg p-5 sm:p-6 shadow-sm space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-blue-100">
                 <div className="flex items-center gap-2">
@@ -241,33 +242,33 @@ export default async function PostPage({ params }: PostPageProps) {
                     <Sparkles className="w-4 h-4 text-[#f9b44d]" />
                   </span>
                   <span className="font-black text-xs uppercase tracking-wider text-[#1b2e67]">
-                    Executive Intelligence & Key Takeaways
+                    Executive Summary & Key Insights
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[11px] font-semibold text-zinc-600">
-                  <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Fact-Checked
+                  <span className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                    <CheckCircle2 className="w-3 h-3 text-blue-600" /> Editorial Review
                   </span>
                   <Link
-                    href="/methodology"
-                    className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 hover:underline"
+                    href="/editorial-standards"
+                    className="inline-flex items-center gap-1 text-zinc-700 bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200 hover:underline"
                   >
-                    <ShieldCheck className="w-3 h-3 text-blue-600" /> 2026 Methodology
+                    <ShieldCheck className="w-3 h-3 text-zinc-600" /> Editorial Standards
                   </Link>
                 </div>
               </div>
 
               {/* Direct Answer / Core Finding */}
               <div className="text-sm sm:text-base font-medium text-zinc-900 leading-relaxed">
-                <span className="font-bold text-[#1b2e67]">Direct Answer: </span>
+                <span className="font-bold text-[#1b2e67]">Core Finding: </span>
                 {post.excerpt}
               </div>
 
-              {/* Extracted Key Takeaways / Empirical Findings */}
+              {/* Extracted Key Takeaways */}
               {post.keyTakeaways && post.keyTakeaways.length > 0 && (
                 <div className="pt-2 space-y-2">
                   <div className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                    Core Findings & Actionable Points:
+                    Key Actionable Takeaways:
                   </div>
                   <ul className="space-y-1.5 text-xs sm:text-sm text-zinc-700">
                     {post.keyTakeaways.map((takeaway, idx) => (
@@ -283,10 +284,10 @@ export default async function PostPage({ params }: PostPageProps) {
               {/* Citation & Attribution Footer */}
               <div className="pt-3 border-t border-blue-100/70 flex flex-wrap items-center justify-between text-[11px] text-zinc-500 gap-2">
                 <span>
-                  Primary Source: <strong className="text-zinc-700">{authorData?.name || post.author.name}</strong> ({authorData?.role || post.author.role})
+                  Byline: <strong className="text-zinc-700">{authorData?.name || post.author.name}</strong> ({authorData?.role || post.author.role})
                 </span>
-                <span className="italic">
-                  Citable under CC BY 4.0 via BunusRadar Research
+                <span>
+                  Published under BunusRadar Editorial Guidelines
                 </span>
               </div>
             </div>

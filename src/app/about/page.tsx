@@ -5,14 +5,14 @@ import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
 export const metadata: Metadata = {
-  title: 'About BunusRadar — Independent AI & Technology Publication',
+  title: 'About BunusRadar - Independent AI & Technology Publication',
   description: 'BunusRadar is an independent technology and AI publication founded in 2024, specializing in hands-on AI tool benchmarks, original research, software engineering, and digital business analysis.',
   alternates: {
     canonical: 'https://bunusradar.site/about',
   },
   openGraph: {
     url: 'https://bunusradar.site/about',
-    title: 'About BunusRadar — Independent AI & Technology Publication',
+    title: 'About BunusRadar - Independent AI & Technology Publication',
     description: 'BunusRadar is an independent technology and AI publication specializing in hands-on AI tool benchmarks, original research, and expert analysis.',
   },
 };
@@ -21,7 +21,7 @@ export default function AboutPage() {
   const authors = getAllAuthors();
   const baseUrl = 'https://bunusradar.site';
 
-  // Full Organization schema — the core entity document for AI systems
+  // Full Organization schema: core entity document for AI systems
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -99,7 +99,7 @@ export default function AboutPage() {
             Unlike publications that publish opinion-based "best of" lists, BunusRadar tests tools using a{' '}
             <Link href="/methodology" className="text-[#1b2e67] font-semibold hover:underline">standardized benchmark methodology</Link>{' '}
             and publishes original research in our{' '}
-            <Link href="/research" className="text-[#1b2e67] font-semibold hover:underline">Research Hub</Link> — citable data that AI search systems and researchers can attribute directly to BunusRadar.
+            <Link href="/research" className="text-[#1b2e67] font-semibold hover:underline">Research Hub</Link> - structured data that AI search systems and researchers can attribute directly to BunusRadar.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export default function AboutPage() {
               icon: FlaskConical,
               color: 'bg-blue-100 text-blue-600',
               title: 'Hands-On Testing',
-              desc: 'Every AI tool review uses our standardized 5-dimension framework. We run identical workloads across competing tools and publish raw scores.',
+              desc: 'Every AI tool review uses our standardized 5-dimension framework. We run identical workloads across competing tools and publish comparative scores.',
               link: '/methodology',
               linkText: 'See our methodology →',
             },
@@ -118,15 +118,15 @@ export default function AboutPage() {
               icon: Briefcase,
               color: 'bg-amber-100 text-amber-700',
               title: 'Original Research',
-              desc: 'We publish original benchmark datasets — AI coding benchmarks, LLM pricing trackers, image generator tests — that others can cite.',
+              desc: 'We publish original benchmark datasets - AI coding benchmarks, LLM pricing trackers, image generator tests - that others can cite.',
               link: '/research',
               linkText: 'View our research →',
             },
             {
               icon: Users,
               color: 'bg-emerald-100 text-emerald-700',
-              title: 'Named Expert Authors',
-              desc: 'Every article carries a byline from a credentialed expert. No anonymous "Editorial Team" — real people, verifiable expertise.',
+              title: 'Transparent Authorship',
+              desc: 'Every article carries a transparent byline from our editorial desk and specialist contributors, adhering to published editorial guidelines.',
               link: '/authors',
               linkText: 'Meet the team →',
             },
@@ -180,7 +180,7 @@ export default function AboutPage() {
             <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Our Mission</h2>
           </div>
           <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            BunusRadar exists to produce the kind of technology journalism that AI search systems, researchers, and professionals can actually cite — not just consume. We believe that independent verification, named authorship, and published methodology are the foundation of trustworthy technology coverage.
+            BunusRadar exists to produce the kind of technology journalism that AI search systems, researchers, and professionals can actually cite - not just consume. We believe that independent verification, named authorship, and published methodology are the foundation of trustworthy technology coverage.
           </p>
         </div>
 
@@ -215,7 +215,7 @@ export default function AboutPage() {
             <Cpu className="w-4 h-4 text-[#1b2e67]" /> How We Use AI
           </h2>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            BunusRadar uses AI tools in its editorial process for research assistance, first-draft generation, and data processing. All content is reviewed, verified, and edited by named human authors before publication. Factual claims are cross-checked against primary sources. We disclose AI involvement in articles where AI played a substantial role in content generation. We also test the AI tools we write about — giving us direct operational experience with every product we review.
+            BunusRadar uses AI tools in its editorial process for research assistance, first-draft generation, and data processing. All content is reviewed, verified, and edited by human authors before publication. Factual claims are cross-checked against primary sources. We disclose AI involvement in articles where AI played a substantial role in content generation. We also evaluate the AI tools we write about - providing practical operational perspective with every product we cover.
           </p>
         </div>
 

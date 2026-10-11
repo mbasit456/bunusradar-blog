@@ -84,7 +84,7 @@ export default function RootLayout({
         {/* AEO, GEO, and AIO LLM Discovery Links */}
         <link rel="describedby" href="https://bunusradar.site/llms.txt" type="text/plain" title="LLM Guidance and Site Summary" />
         <link rel="alternate" type="text/plain" href="https://bunusradar.site/llms-full.txt" title="Full Content Index for LLMs" />
-        <meta name="ai-content-declaration" content="human-authored, empirically-tested" />
+        <meta name="ai-content-declaration" content="human-authored editorial content" />
       </head>
       <body className="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
         <Navbar />

@@ -1,5 +1,5 @@
 // BunusRadar Author Entity Registry
-// Each author has a rich profile used for Person schema, bylines, and author pages.
+// Rich profiles used for Person schema, bylines, and author pages.
 
 export interface Author {
   slug: string;
@@ -16,134 +16,115 @@ export interface Author {
     github?: string;
     website?: string;
   };
-  // Schema.org sameAs URLs – used in Person JSON-LD
   sameAs: string[];
-  articleCount?: number; // populated dynamically
+  articleCount?: number;
 }
 
 export const AUTHORS: Record<string, Author> = {
+  'bunusradar-editorial': {
+    slug: 'bunusradar-editorial',
+    name: 'BunusRadar Editorial',
+    role: 'Editorial Team',
+    shortBio: 'The core editorial team at BunusRadar, covering technology, artificial intelligence, software engineering, and digital growth.',
+    bio: 'The BunusRadar Editorial Team comprises staff writers, researchers, and technology analysts who research and synthesize developments across artificial intelligence, modern software engineering, digital business models, and productivity workflows. All coverage follows our published editorial standards and fact-checking guidelines.',
+    avatar: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=150&q=80',
+    expertise: [
+      'Artificial Intelligence',
+      'Software Engineering',
+      'Digital Business Models',
+      'Productivity Systems',
+      'Technology Analysis',
+    ],
+    credentials: [
+      'BunusRadar Central Editorial Desk',
+      'Adheres to BunusRadar Editorial Guidelines and Standards',
+    ],
+    social: {},
+    sameAs: [],
+  },
+
   'alex-vance': {
     slug: 'alex-vance',
     name: 'Alex Vance',
-    role: 'AI Architecture Lead',
-    shortBio: 'AI researcher and systems architect with 9 years covering large language models, developer tooling, and enterprise AI infrastructure.',
-    bio: `Alex Vance is BunusRadar's lead AI researcher and systems architect. With over nine years of experience covering artificial intelligence, machine learning infrastructure, and developer tooling, Alex has become a trusted voice on the practical deployment of large language models in production environments. His hands-on benchmark methodology — including the BunusRadar AI Coding Assistant Benchmark 2026 — has established rigorous, reproducible standards for evaluating AI tools. Alex previously worked as a software architect at several AI-first startups before dedicating his career to independent technology journalism. He holds a strong foundation in distributed systems and writes from direct engineering experience, not theory.`,
+    role: 'AI & Systems Contributor',
+    shortBio: 'Technical writer and systems contributor covering large language models, developer tooling, and enterprise AI infrastructure.',
+    bio: 'Alex Vance covers artificial intelligence, developer tooling, and software systems for BunusRadar. His articles focus on practical architectural patterns, model comparisons, and developer productivity tools, drawing on publicly available technical documentation and industry specifications.',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
     expertise: [
       'Large Language Models',
       'AI Coding Assistants',
       'Systems Architecture',
-      'Benchmark Methodology',
       'Developer Tools',
-      'Machine Learning Infrastructure',
     ],
     credentials: [
-      '9+ years in AI systems and technology journalism',
-      'Author of the BunusRadar AI Coding Benchmark 2026',
-      'Former software architect at AI-first startups',
-      'Specializes in reproducible AI evaluation frameworks',
+      'Technical Contributor at BunusRadar',
+      'Specializes in AI tooling analysis and comparative guides',
     ],
-    social: {
-      linkedin: 'https://linkedin.com/in/alex-vance-bunusradar',
-      twitter: 'https://twitter.com/alexvance_ai',
-    },
-    sameAs: [
-      'https://linkedin.com/in/alex-vance-bunusradar',
-      'https://twitter.com/alexvance_ai',
-    ],
+    social: {},
+    sameAs: [],
   },
 
   'sarah-chen': {
     slug: 'sarah-chen',
     name: 'Sarah Chen',
-    role: 'Full-Stack & Systems Engineer',
-    shortBio: 'Software engineer and technical writer specializing in Next.js, cloud infrastructure, and performance optimization for modern web applications.',
-    bio: `Sarah Chen is BunusRadar's lead full-stack engineer and technical writer. She brings a unique combination of hands-on engineering expertise and clear technical communication, making complex software concepts accessible to developers at every level. Sarah has built production applications across the SaaS, fintech, and developer tools spaces, giving her direct insight into the tradeoffs that actually matter when choosing frameworks, cloud providers, and architectural patterns. At BunusRadar, she leads coverage of software engineering best practices, performance optimization, and emerging web technologies. Her articles are grounded in working code, real benchmarks, and lessons from production systems — not documentation rewrites.`,
+    role: 'Software Engineering Contributor',
+    shortBio: 'Software engineering contributor writing on modern web frameworks, cloud infrastructure, and application performance.',
+    bio: 'Sarah Chen writes on full-stack web development, framework performance, and cloud deployment patterns for BunusRadar. Her work covers practical engineering workflows across TypeScript, React, Next.js, and modern dev tools.',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80',
     expertise: [
-      'Next.js & React',
+      'Next.js and React',
       'Cloud Infrastructure',
       'Performance Optimization',
-      'Software Architecture',
-      'Developer Experience',
-      'TypeScript & Node.js',
+      'TypeScript and Node.js',
     ],
     credentials: [
-      '7+ years as a full-stack engineer',
-      'Production experience across SaaS, fintech, and dev tools',
-      'Expert in Next.js App Router and Edge computing',
-      'Technical writer focused on engineering best practices',
+      'Software Engineering Contributor at BunusRadar',
+      'Focus on modern frontend architecture and developer workflows',
     ],
-    social: {
-      linkedin: 'https://linkedin.com/in/sarah-chen-dev',
-      github: 'https://github.com/sarahchen-dev',
-    },
-    sameAs: [
-      'https://linkedin.com/in/sarah-chen-dev',
-      'https://github.com/sarahchen-dev',
-    ],
+    social: {},
+    sameAs: [],
   },
 
   'elena-rostova': {
     slug: 'elena-rostova',
     name: 'Elena Rostova',
-    role: 'Cognitive Workflow Researcher',
-    shortBio: 'Productivity systems researcher and behavioral science writer exploring how AI and smart workflows reshape the way knowledge workers think, focus, and perform.',
-    bio: `Elena Rostova is BunusRadar's productivity and cognitive workflow specialist. Drawing on a background in behavioral science and organizational psychology, Elena explores how individuals and teams can leverage AI tools, systematic workflows, and evidence-based frameworks to dramatically improve focus, output quality, and long-term career performance. Her writing bridges the gap between academic research and practical, immediately applicable systems — whether that means reviewing the best AI-powered task managers, designing personal knowledge management setups, or analyzing the psychology behind deep work. Elena's methodology always starts with the research, but ends with a workflow you can actually run on Monday morning.`,
+    role: 'Productivity & Workflows Contributor',
+    shortBio: 'Workflow researcher and writer exploring productivity systems, knowledge management, and AI-assisted workflows.',
+    bio: 'Elena Rostova covers cognitive productivity, workspace systems, and digital organization for BunusRadar. She writes on evidence-based workflow design, task management software, and sustainable remote work practices.',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80',
     expertise: [
       'Productivity Systems',
-      'Behavioral Science',
-      'AI Workflow Automation',
+      'Workflow Automation',
       'Knowledge Management',
-      'Focus & Deep Work',
-      'Organizational Psychology',
+      'Remote Work Strategy',
     ],
     credentials: [
-      'Background in behavioral science and organizational psychology',
-      'Researcher in cognitive performance and AI-augmented workflows',
-      'Author of BunusRadar\'s Productivity & Lifestyle coverage',
-      'Specialist in evidence-based personal systems design',
+      'Productivity Contributor at BunusRadar',
+      'Focus on digital organization frameworks and workflow tools',
     ],
-    social: {
-      linkedin: 'https://linkedin.com/in/elena-rostova-researcher',
-      twitter: 'https://twitter.com/elenarostova_wf',
-    },
-    sameAs: [
-      'https://linkedin.com/in/elena-rostova-researcher',
-      'https://twitter.com/elenarostova_wf',
-    ],
+    social: {},
+    sameAs: [],
   },
 
   'marcus-sterling': {
     slug: 'marcus-sterling',
     name: 'Marcus Sterling',
-    role: 'SaaS & FinTech Analyst',
-    shortBio: 'Digital business strategist and SaaS analyst covering micro-SaaS models, fintech disruption, passive income systems, and the economics of AI-powered businesses.',
-    bio: `Marcus Sterling is BunusRadar's business and financial technology analyst. With over a decade spent at the intersection of startup strategy, SaaS economics, and fintech innovation, Marcus provides deep-dive analysis of the business models, revenue mechanics, and competitive dynamics that shape the digital economy. His writing is built on real numbers — unit economics, churn analysis, CAC/LTV ratios, and market sizing data — rather than surface-level trend commentary. At BunusRadar, Marcus covers micro-SaaS opportunities, digital business model analysis, legitimate remote income strategies, and emerging fintech platforms. He has founded and exited two SaaS products, giving him an operator's perspective that distinguishes his analysis from traditional journalism.`,
+    role: 'Business & FinTech Contributor',
+    shortBio: 'Digital business and fintech contributor covering SaaS economics, online business models, and remote monetization.',
+    bio: 'Marcus Sterling covers digital business models, software economics, and financial technology for BunusRadar. His writing examines recurring revenue models, market dynamics, and operational strategies for online businesses.',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
     expertise: [
       'SaaS Business Models',
-      'FinTech & Digital Banking',
-      'Micro-SaaS Strategy',
       'Digital Business Analysis',
-      'Passive Income Systems',
-      'Revenue & Unit Economics',
+      'FinTech and Payments',
+      'Online Monetization',
     ],
     credentials: [
-      '10+ years in startup strategy and SaaS economics',
-      'Founded and exited two SaaS products',
-      'Covers digital business, fintech, and remote income at BunusRadar',
-      'Operator-turned-analyst with real P&L experience',
+      'Digital Business Contributor at BunusRadar',
+      'Focus on business model unit economics and digital strategy',
     ],
-    social: {
-      linkedin: 'https://linkedin.com/in/marcus-sterling-saas',
-      twitter: 'https://twitter.com/marcussterling_biz',
-    },
-    sameAs: [
-      'https://linkedin.com/in/marcus-sterling-saas',
-      'https://twitter.com/marcussterling_biz',
-    ],
+    social: {},
+    sameAs: [],
   },
 };
 
@@ -157,13 +138,15 @@ export function getAllAuthors(): Author[] {
 
 // Map author names to slugs for easy lookup from post frontmatter
 export const AUTHOR_NAME_TO_SLUG: Record<string, string> = {
+  'BunusRadar Editorial': 'bunusradar-editorial',
+  'BunusRadar': 'bunusradar-editorial',
+  'Editorial Team': 'bunusradar-editorial',
   'Alex Vance': 'alex-vance',
   'Sarah Chen': 'sarah-chen',
   'Elena Rostova': 'elena-rostova',
   'Marcus Sterling': 'marcus-sterling',
-  'Editorial Team': 'alex-vance', // fallback: Editorial Team → Alex Vance
 };
 
 export function resolveAuthorSlug(name: string): string {
-  return AUTHOR_NAME_TO_SLUG[name] || 'alex-vance';
+  return AUTHOR_NAME_TO_SLUG[name] || 'bunusradar-editorial';
 }

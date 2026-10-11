@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: 'https://bunusradar.site/methodology',
-    title: 'BunusRadar Testing Methodology — How We Evaluate AI Tools',
-    description: 'Reproducible, standardized benchmarks for every AI tool review. Task accuracy, latency, cost, hallucination rate, and UX — all tested on identical workloads.',
+    title: 'BunusRadar Testing Methodology - How We Evaluate AI Tools',
+    description: 'Standardized evaluation frameworks for AI tool reviews. Task accuracy, latency, cost, hallucination rate, and UX - all evaluated with transparent criteria.',
   },
 };
 
@@ -30,11 +30,11 @@ export default function MethodologyPage() {
       url: baseUrl,
     },
     step: [
-      { '@type': 'HowToStep', position: 1, name: 'Define Task Suite', text: 'Select a standardized set of 20–50 representative tasks matched to the tool category.' },
-      { '@type': 'HowToStep', position: 2, name: 'Establish Baseline Environment', text: 'Deploy each tool on identical hardware and network conditions with default settings unless otherwise noted.' },
-      { '@type': 'HowToStep', position: 3, name: 'Run Task Suite', text: 'Execute all tasks three times. Record successful completions, failures, partial completions, and hallucinations.' },
+      { '@type': 'HowToStep', position: 1, name: 'Define Task Suite', text: 'Select a representative set of tasks matched to the tool category.' },
+      { '@type': 'HowToStep', position: 2, name: 'Establish Baseline Environment', text: 'Deploy each tool on standardized hardware and network conditions with default settings.' },
+      { '@type': 'HowToStep', position: 3, name: 'Run Task Suite', text: 'Execute tasks and record successful completions, failures, and hallucinations.' },
       { '@type': 'HowToStep', position: 4, name: 'Measure 5 Core Dimensions', text: 'Score each tool on: Task Accuracy, Speed/Latency, Cost per Task, Hallucination Rate, and User Experience.' },
-      { '@type': 'HowToStep', position: 5, name: 'Validate & Publish', text: 'Results reviewed by a second BunusRadar analyst before publication. Raw data retained for 12 months.' },
+      { '@type': 'HowToStep', position: 5, name: 'Validate & Publish', text: 'Results reviewed by an editorial analyst before publication.' },
     ],
   };
 
@@ -44,24 +44,24 @@ export default function MethodologyPage() {
       color: 'bg-blue-100 text-blue-600',
       title: 'Task Accuracy',
       weight: '35%',
-      description: 'The percentage of tasks completed correctly without manual correction. We define "correct" with explicit pass/fail criteria before testing begins — never retroactively.',
-      detail: 'For coding tools: does the code run, does it produce correct output, does it follow the specified requirements? For chatbots: factual accuracy verified against primary sources. For image generators: prompt adherence scored on a 5-point rubric.',
+      description: 'The percentage of tasks completed correctly without manual correction. We define explicit pass/fail criteria before evaluation begins.',
+      detail: 'For coding tools: does the code run, does it produce correct output, does it follow the specified requirements? For chatbots: factual accuracy verified against primary sources. For image generators: prompt adherence scored on a structured rubric.',
     },
     {
       icon: Clock,
       color: 'bg-emerald-100 text-emerald-600',
       title: 'Speed & Latency',
       weight: '20%',
-      description: 'Median time-to-first-token and total task completion time, measured across 3 runs and averaged. Network latency is normalized.',
-      detail: 'Tested on a standardized fiber connection (500 Mbps symmetric). Outliers (>2σ from median) are noted but excluded from the headline figure.',
+      description: 'Median time-to-first-token and total task completion time. Network latency is normalized across test runs.',
+      detail: 'Tested on a standardized connection. Outliers are noted but excluded from the headline figure.',
     },
     {
       icon: DollarSign,
       color: 'bg-amber-100 text-amber-600',
       title: 'Cost Per Task',
       weight: '20%',
-      description: 'Real-world cost to complete one standard task at the tool\'s listed pricing tier. Calculated as: (tokens consumed × price per token) + subscription cost amortized over task volume.',
-      detail: 'We report cost in USD at public pricing. Enterprise/negotiated pricing is noted separately. Pricing snapshots are dated — check the article date.',
+      description: 'Real-world cost to complete one standard task at the tool\'s listed pricing tier.',
+      detail: 'We report cost in USD at public pricing. Enterprise/negotiated pricing is noted separately. Pricing snapshots are dated - check the article date.',
     },
     {
       icon: AlertCircle,
@@ -129,7 +129,7 @@ export default function MethodologyPage() {
           <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
             The 5 Evaluation Dimensions
           </h2>
-          <p className="text-zinc-500 text-sm">Each AI tool is scored across these five dimensions. Weights are category-specific — see individual benchmark reports for category-adjusted weights.</p>
+          <p className="text-zinc-500 text-sm">Each AI tool is scored across these five dimensions. Weights are category-specific - see individual comparative reports for category-adjusted weights.</p>
 
           <div className="space-y-4">
             {criteria.map((c) => (
@@ -155,19 +155,19 @@ export default function MethodologyPage() {
         {/* Test Environment */}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-[#1b2e67]" /> Standard Test Environment
+            <Cpu className="w-5 h-5 text-[#1b2e67]" /> Editorial Evaluation Environment
           </h2>
           <div className="bg-zinc-900 text-zinc-100 rounded-2xl p-6 font-mono text-sm space-y-2 shadow-inner">
-            <div className="text-[#f9b44d] text-xs uppercase tracking-wider mb-4">BunusRadar Test Rig — Spec Sheet</div>
+            <div className="text-[#f9b44d] text-xs uppercase tracking-wider mb-4">BunusRadar Reference Review Environment</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-              <div><span className="text-zinc-400">Hardware:</span> MacBook Pro M3 Max, 36GB</div>
-              <div><span className="text-zinc-400">OS:</span> macOS Sequoia 15.x</div>
-              <div><span className="text-zinc-400">Network:</span> 500 Mbps symmetric fiber</div>
+              <div><span className="text-zinc-400">Environment:</span> Developer Workstation</div>
+              <div><span className="text-zinc-400">OS:</span> macOS / Linux</div>
+              <div><span className="text-zinc-400">Network:</span> High-speed broadband connection</div>
               <div><span className="text-zinc-400">Browser:</span> Chrome stable (latest)</div>
-              <div><span className="text-zinc-400">API Testing:</span> Cursor + direct API calls</div>
+              <div><span className="text-zinc-400">Testing Tools:</span> Official IDEs and CLI utilities</div>
               <div><span className="text-zinc-400">Pricing Snapshot:</span> Public tier, dated</div>
-              <div><span className="text-zinc-400">Run Count:</span> 3× per task, median reported</div>
-              <div><span className="text-zinc-400">Blind Review:</span> Second analyst validates</div>
+              <div><span className="text-zinc-400">Validation:</span> Cross-checked by editorial staff</div>
+              <div><span className="text-zinc-400">Standards:</span> Adheres to editorial policy</div>
             </div>
           </div>
         </div>
@@ -193,9 +193,9 @@ export default function MethodologyPage() {
 
         {/* CTA to Research */}
         <div className="p-8 rounded-3xl bg-[#1b2e67] text-white space-y-3">
-          <h2 className="text-xl font-bold">See the Methodology in Action</h2>
+          <h2 className="text-xl font-bold">See Comparative Research in Action</h2>
           <p className="text-zinc-300 text-sm leading-relaxed">
-            The BunusRadar Research Hub publishes our full benchmark datasets — including raw scores, per-task breakdowns, and reproducible results for every AI tool category we test.
+            The BunusRadar Research Hub publishes our comparative tool overviews - including scoring summaries, feature breakdowns, and pricing trackers across software tools.
           </p>
           <Link
             href="/research"
