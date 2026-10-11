@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   return {
     title: `${post.title} - BunusRadar`,
     description: post.excerpt,
+    authors: [{ name: post.author.name }],
     alternates: {
       canonical: canonicalUrl,
     },
