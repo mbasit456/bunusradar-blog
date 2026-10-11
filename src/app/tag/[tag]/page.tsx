@@ -26,6 +26,17 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   return {
     title: `#${decodedTag} | BunusRadar`,
     description: `Articles and guides tagged with #${decodedTag} on BunusRadar`,
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
       canonical: canonicalUrl,
     },

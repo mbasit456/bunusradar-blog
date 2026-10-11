@@ -49,8 +49,8 @@ export async function GET() {
     const lastmod = isNaN(postDate.getTime()) ? nowIso : postDate.toISOString();
     return {
       url: `${baseUrl}/blog/${post.slug}`,
-      changefreq: 'weekly',
-      priority: '0.8',
+      changefreq: 'daily',
+      priority: '0.9',
       lastmod,
     };
   });
