@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostsByCategory, getAllPosts } from '@/lib/posts';
 import { CATEGORIES, getCategoryBySlug } from '@/lib/categories';
+import { getAllClusters } from '@/lib/clusters';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Layers, ArrowRight } from 'lucide-react';
 
 interface CategoryPageProps {
   params: {
@@ -45,6 +46,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const baseUrl = 'https://bunusradar.site';
   const categoryUrl = `${baseUrl}/category/${params.category}`;
 
+  const categoryClusters = getAllClusters().filter(
+    (c) => c.pillarCategory.toLowerCase() === params.category.toLowerCase()
+  );
+
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -84,6 +89,16 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           }
         : {}),
     },
+    ...(categoryClusters.length > 0
+      ? {
+          hasPart: categoryClusters.flatMap((c) =>
+            c.articles.map((slug) => ({
+              '@type': 'Article',
+              url: `${baseUrl}/blog/${slug}`,
+            }))
+          ),
+        }
+      : {}),
   };
 
   return (
@@ -121,6 +136,51 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
         </div>
       </div>
+
+      {/* Topical Authority Cluster Blueprint */}
+      {categoryClusters.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="p-6 sm:p-7 rounded-2xl bg-gradient-to-br from-[#14234f]/5 via-[#1b2e67]/5 to-[#f9b44d]/10 border border-[#1b2e67]/15 shadow-sm space-y-4">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1b2e67]">
+              <Layers className="w-4 h-4 text-[#f9b44d]" />
+              <span>Topical Authority Pillar Architecture</span>
+            </div>
+            {categoryClusters.map((cluster) => (
+              <div key={cluster.id} className="space-y-3">
+                <div>
+                  <h2 className="text-xl font-black text-zinc-900 tracking-tight">
+                    {cluster.name}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-zinc-600 mt-1 max-w-2xl leading-relaxed">
+                    {cluster.description}
+                  </p>
+                </div>
+                <div className="pt-2">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 mb-2">
+                    Cluster Deep Dives ({cluster.articles.length} Core Guides):
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {cluster.articles.map((slug) => {
+                      const postMatch = allPosts.find((p) => p.slug === slug);
+                      if (!postMatch) return null;
+                      return (
+                        <Link
+                          key={slug}
+                          href={`/blog/${slug}`}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-white border border-zinc-200 hover:border-[#1b2e67] hover:shadow-xs text-zinc-800 hover:text-[#1b2e67] transition-all font-medium"
+                        >
+                          <span className="line-clamp-1">{postMatch.title}</span>
+                          <ArrowRight className="w-3 h-3 text-[#f9b44d] shrink-0" />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* 2-Column Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

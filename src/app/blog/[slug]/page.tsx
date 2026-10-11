@@ -5,8 +5,10 @@ import { getPostBySlug, getAllPosts, getPostsByCategory } from '@/lib/posts';
 import { getAuthorBySlug, resolveAuthorSlug } from '@/lib/authors';
 import { getCategoryBySlug } from '@/lib/categories';
 import { resolveArticleEntities, formatEntityForSchema } from '@/lib/entities';
+import { getClusterForPost } from '@/lib/clusters';
 import ShareButtons from '@/components/ShareButtons';
 import ArticleCard from '@/components/ArticleCard';
+import TopicClusterWidget from '@/components/TopicClusterWidget';
 import Sidebar from '@/components/Sidebar';
 import { ChevronRight, Calendar, Clock, User, CheckCircle2, ShieldCheck, Sparkles, HelpCircle } from 'lucide-react';
 
@@ -79,6 +81,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const categoryPosts = getPostsByCategory(post.category).filter((p) => p.slug !== post.slug);
   const fallbackPosts = allPosts.filter((p) => p.slug !== post.slug && !categoryPosts.some((cp) => cp.slug === p.slug));
   const relatedPosts = [...categoryPosts, ...fallbackPosts].slice(0, 4);
+  const cluster = getClusterForPost(post.slug);
 
   const baseUrl = 'https://bunusradar.site';
   const articleUrl = `${baseUrl}/blog/${post.slug}`;
@@ -123,12 +126,27 @@ export default async function PostPage({ params }: PostPageProps) {
     isAccessibleForFree: true,
     about: aboutList,
     ...(mentionsList.length > 0 ? { mentions: mentionsList } : {}),
-    isPartOf: {
-      '@type': 'WebSite',
-      '@id': `${baseUrl}/#website`,
-      name: 'BunusRadar',
-      url: baseUrl,
-    },
+    isPartOf: cluster
+      ? [
+          {
+            '@type': 'WebSite',
+            '@id': `${baseUrl}/#website`,
+            name: 'BunusRadar',
+            url: baseUrl,
+          },
+          {
+            '@type': 'CreativeWorkSeries',
+            name: cluster.name,
+            url: `${baseUrl}${cluster.pillarUrl}`,
+            description: cluster.description,
+          },
+        ]
+      : {
+          '@type': 'WebSite',
+          '@id': `${baseUrl}/#website`,
+          name: 'BunusRadar',
+          url: baseUrl,
+        },
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['.ai-quick-summary', '.article-headline'],
@@ -377,6 +395,15 @@ export default async function PostPage({ params }: PostPageProps) {
                   ))}
                 </div>
               </section>
+            )}
+
+            {/* Topic Authority Cluster Guide */}
+            {cluster && (
+              <TopicClusterWidget
+                cluster={cluster}
+                currentSlug={post.slug}
+                allPosts={allPosts}
+              />
             )}
 
             {/* Related Articles Box */}
