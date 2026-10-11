@@ -42,9 +42,53 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const meta = getCategoryBySlug(params.category);
   const posts = getPostsByCategory(params.category);
   const allPosts = getAllPosts();
+  const baseUrl = 'https://bunusradar.site';
+  const categoryUrl = `${baseUrl}/category/${params.category}`;
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: baseUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: meta.name,
+        item: categoryUrl,
+      },
+    ],
+  };
+
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${meta.name} - BunusRadar`,
+    url: categoryUrl,
+    description: meta.description,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'BunusRadar',
+      url: baseUrl,
+    },
+  };
 
   return (
     <div className="py-6 space-y-8">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+
       {/* Breadcrumb Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-1.5 text-xs text-zinc-500">

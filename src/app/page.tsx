@@ -33,13 +33,52 @@ const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'BunusRadar',
+  alternateName: ['Bunus Radar', 'BunusRadar.site'],
   url: baseUrl,
-  description: 'Daily insights on Technology, AI, Business & Growth, Productivity, and Lifestyle.',
+  description: 'Independent technology newsroom, practical AI benchmarks, and developer software evaluations.',
   potentialAction: {
     '@type': 'SearchAction',
     target: { '@type': 'EntryPoint', urlTemplate: `${baseUrl}/?search={search_term_string}` },
     'query-input': 'required name=search_term_string',
   },
+  hasPart: [
+    {
+      '@type': 'WebPage',
+      name: 'Artificial Intelligence',
+      url: `${baseUrl}/category/ai`,
+      description: 'LLM comparisons, autonomous agent architectures, and AI developer tools.',
+    },
+    {
+      '@type': 'WebPage',
+      name: 'Technology',
+      url: `${baseUrl}/category/technology`,
+      description: 'Web performance, modern frameworks, and software engineering deep dives.',
+    },
+    {
+      '@type': 'WebPage',
+      name: 'Business & Growth',
+      url: `${baseUrl}/category/business`,
+      description: 'Digital business models, Micro-SaaS unit economics, and monetization strategies.',
+    },
+    {
+      '@type': 'WebPage',
+      name: 'Productivity',
+      url: `${baseUrl}/category/productivity`,
+      description: 'System workflows, personal productivity stacks, and focus architectures.',
+    },
+    {
+      '@type': 'WebPage',
+      name: 'Research & Benchmarks',
+      url: `${baseUrl}/research`,
+      description: 'Comparative software evaluation matrices and AI tool pricing trackers.',
+    },
+    {
+      '@type': 'WebPage',
+      name: 'About BunusRadar',
+      url: `${baseUrl}/about`,
+      description: 'Independent editorial background, mission, and newsroom guidelines.',
+    },
+  ],
 };
 
 const orgSchema = {
@@ -47,7 +86,7 @@ const orgSchema = {
   '@type': 'Organization',
   name: 'BunusRadar',
   url: baseUrl,
-  logo: `${baseUrl}/logo.png`,
+  logo: `${baseUrl}/icon.svg`,
   sameAs: [],
 };
 
