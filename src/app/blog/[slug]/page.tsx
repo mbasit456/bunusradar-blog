@@ -6,7 +6,7 @@ import { getAuthorBySlug, resolveAuthorSlug } from '@/lib/authors';
 import ShareButtons from '@/components/ShareButtons';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
-import { ChevronRight, Calendar, Clock, User } from 'lucide-react';
+import { ChevronRight, Calendar, Clock, User, CheckCircle2, ShieldCheck, Sparkles, HelpCircle } from 'lucide-react';
 
 interface PostPageProps {
   params: {
@@ -95,6 +95,12 @@ export default async function PostPage({ params }: PostPageProps) {
     datePublished: post.date,
     dateModified: post.date,
     wordCount: post.content?.split(/\s+/).length,
+    inLanguage: 'en-US',
+    isAccessibleForFree: true,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.ai-quick-summary', '.article-headline'],
+    },
     author: {
       '@type': 'Person',
       '@id': authorUrl,
@@ -137,11 +143,27 @@ export default async function PostPage({ params }: PostPageProps) {
     ],
   };
 
+  const faqSchema = post.faqs && post.faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: post.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  } : null;
+
   return (
     <div className="py-6 space-y-8">
       {/* JSON-LD Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
       {/* Breadcrumb Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-1.5 text-xs text-zinc-500">
@@ -171,7 +193,7 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
 
             {/* Headline */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-zinc-900 leading-[1.25]">
+            <h1 className="article-headline text-2xl sm:text-3xl lg:text-4xl font-black text-zinc-900 leading-[1.25]">
               {post.title}
             </h1>
 
@@ -211,6 +233,64 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             )}
 
+            {/* AEO / GEO / AIO Executive Intelligence & Key Takeaways Box */}
+            <div className="ai-quick-summary bg-gradient-to-br from-blue-50/70 via-slate-50 to-amber-50/30 border border-blue-200/80 rounded-lg p-5 sm:p-6 shadow-sm space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-blue-100">
+                <div className="flex items-center gap-2">
+                  <span className="p-1 rounded bg-[#1b2e67] text-white">
+                    <Sparkles className="w-4 h-4 text-[#f9b44d]" />
+                  </span>
+                  <span className="font-black text-xs uppercase tracking-wider text-[#1b2e67]">
+                    Executive Intelligence & Key Takeaways
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-semibold text-zinc-600">
+                  <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Fact-Checked
+                  </span>
+                  <Link
+                    href="/methodology"
+                    className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 hover:underline"
+                  >
+                    <ShieldCheck className="w-3 h-3 text-blue-600" /> 2026 Methodology
+                  </Link>
+                </div>
+              </div>
+
+              {/* Direct Answer / Core Finding */}
+              <div className="text-sm sm:text-base font-medium text-zinc-900 leading-relaxed">
+                <span className="font-bold text-[#1b2e67]">Direct Answer: </span>
+                {post.excerpt}
+              </div>
+
+              {/* Extracted Key Takeaways / Empirical Findings */}
+              {post.keyTakeaways && post.keyTakeaways.length > 0 && (
+                <div className="pt-2 space-y-2">
+                  <div className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                    Core Findings & Actionable Points:
+                  </div>
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-zinc-700">
+                    {post.keyTakeaways.map((takeaway, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#1b2e67] mt-1.5 flex-shrink-0" />
+                        <span>{takeaway}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Citation & Attribution Footer */}
+              <div className="pt-3 border-t border-blue-100/70 flex flex-wrap items-center justify-between text-[11px] text-zinc-500 gap-2">
+                <span>
+                  Primary Source: <strong className="text-zinc-700">{authorData?.name || post.author.name}</strong> ({authorData?.role || post.author.role})
+                </span>
+                <span className="italic">
+                  Citable under CC BY 4.0 via BunusRadar Research
+                </span>
+              </div>
+            </div>
+
             {/* Article Content */}
             <div
               className="prose prose-zinc max-w-none text-zinc-800 leading-relaxed prose-headings:font-bold prose-headings:text-zinc-900 prose-a:text-[#1b2e67] prose-a:font-semibold"
@@ -231,6 +311,32 @@ export default async function PostPage({ params }: PostPageProps) {
                   </Link>
                 ))}
               </div>
+            )}
+
+            {/* Verified FAQ Section for Human Readers and AI Crawlers */}
+            {post.faqs && post.faqs.length > 0 && (
+              <section className="pt-8 border-t border-zinc-200 space-y-4">
+                <div className="tg-section-header flex items-center justify-between">
+                  <h2 className="tg-section-title flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4 text-[#1b2e67]" />
+                    Frequently Asked Questions
+                  </h2>
+                  <span className="text-xs text-zinc-400 font-semibold uppercase">Verified QA</span>
+                </div>
+                <div className="space-y-3">
+                  {post.faqs.map((faq, idx) => (
+                    <div key={idx} className="p-4 rounded-lg border border-zinc-200 bg-zinc-50/60 space-y-2">
+                      <h3 className="font-bold text-sm sm:text-base text-zinc-900 flex items-start gap-2">
+                        <span className="text-[#1b2e67] font-black">Q:</span>
+                        <span>{faq.question}</span>
+                      </h3>
+                      <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed pl-5">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
             )}
 
             {/* Related Articles Box */}

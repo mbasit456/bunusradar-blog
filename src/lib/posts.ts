@@ -101,10 +101,17 @@ export interface PostMetadata {
   featured?: boolean;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface PostWithContent extends PostMetadata {
   content: string;
   htmlContent: string;
   toc: { level: number; text: string; id: string }[];
+  faqs: FaqItem[];
+  keyTakeaways: string[];
 }
 
 // Ensure posts directory exists
@@ -269,6 +276,8 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
   const htmlContent = await marked.parse(content, { renderer });
 
   const authorResolved = resolveAuthorForPost(slug, data.author);
+  const faqs = extractFaqsFromContent(content);
+  const keyTakeaways = extractKeyTakeaways(content);
 
   return {
     slug,
@@ -289,5 +298,93 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
     content,
     htmlContent,
     toc,
+    faqs,
+    keyTakeaways,
   };
+}
+
+export function extractFaqsFromContent(markdown: string): FaqItem[] {
+  const faqs: FaqItem[] = [];
+  const headingRegex = /^(?:#{2,3})\s+(?:(?:\d+\.|\d+\))\s*)?([^#\n\r]+\?)\s*$/gm;
+  const matches: { question: string; index: number; length: number }[] = [];
+  let m: RegExpExecArray | null;
+
+  while ((m = headingRegex.exec(markdown)) !== null) {
+    const rawQuestion = m[1].trim();
+    const cleanQuestion = rawQuestion.replace(/[*_`]/g, '').trim();
+    if (cleanQuestion.length > 5) {
+      matches.push({
+        question: cleanQuestion,
+        index: m.index,
+        length: m[0].length,
+      });
+    }
+  }
+
+  for (let i = 0; i < matches.length; i++) {
+    const current = matches[i];
+    const startIndex = current.index + current.length;
+    const nextIndex = i + 1 < matches.length ? matches[i + 1].index : markdown.length;
+
+    const sectionBody = markdown.slice(startIndex, nextIndex);
+    const subHeadingMatch = sectionBody.search(/\n#{1,3}\s+/);
+    const cleanBody = subHeadingMatch !== -1 ? sectionBody.slice(0, subHeadingMatch) : sectionBody;
+
+    const paragraphs = cleanBody
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .filter((p) => p.length > 0 && !p.startsWith('#') && !p.startsWith('>'))
+      .map((p) => p.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))
+      .map((p) => p.replace(/[*_`]/g, ''))
+      .map((p) => p.replace(/<[^>]*>/g, ''))
+      .map((p) => p.trim())
+      .filter((p) => p.length > 20);
+
+    if (paragraphs.length > 0) {
+      const answer = paragraphs.slice(0, 2).join(' ').slice(0, 450).trim();
+      if (answer.length > 30) {
+        faqs.push({
+          question: current.question,
+          answer,
+        });
+      }
+    }
+  }
+
+  if (faqs.length === 0) {
+    const qaRegex = /\*\*(?:Q|Question):\s*([^*]+(?:\?|\.))\*\*\s*\n+([^#\n\r]+)/gi;
+    let qaMatch: RegExpExecArray | null;
+    while ((qaMatch = qaRegex.exec(markdown)) !== null) {
+      const q = qaMatch[1].replace(/[*_`]/g, '').trim();
+      const a = qaMatch[2].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '').trim();
+      if (q.length > 5 && a.length > 20) {
+        faqs.push({ question: q, answer: a.slice(0, 450) });
+      }
+    }
+  }
+
+  return faqs.slice(0, 8);
+}
+
+export function extractKeyTakeaways(markdown: string): string[] {
+  const bullets: string[] = [];
+  const lines = markdown.split('\n');
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if ((trimmed.startsWith('* ') || trimmed.startsWith('- ')) && trimmed.length > 25 && !trimmed.includes('http')) {
+      const clean = trimmed
+        .replace(/^[\*\-]\s+/, '')
+        .replace(/\*\*/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/<[^>]*>/g, '')
+        .trim();
+      if (clean.length > 30 && clean.length < 240) {
+        bullets.push(clean);
+        if (bullets.length >= 3) break;
+      }
+    }
+  }
+
+  return bullets;
 }

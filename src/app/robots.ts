@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      // Google AdSense Crawlers — explicit full access
+      // Google AdSense Crawlers: explicit full access
       {
         userAgent: 'Mediapartners-Google',
         allow: '/',
@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'AdsBot-Google',
         allow: '/',
       },
-      // Standard search engines — full access
+      // Standard search engines: full access
       {
         userAgent: 'Googlebot',
         allow: '/',
@@ -23,53 +23,71 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'Bingbot',
         allow: '/',
       },
-      // AI crawlers — explicitly welcome, full access
-      // GPTBot: ChatGPT and OpenAI training/retrieval
+      // AI and Generative Answer Crawlers: explicitly welcomed for AEO, GEO, and AIO
+      // OpenAI ChatGPT training and real-time retrieval
       {
         userAgent: 'GPTBot',
         allow: '/',
       },
-      // ChatGPT-User: real-time ChatGPT browsing
       {
         userAgent: 'ChatGPT-User',
         allow: '/',
       },
-      // ClaudeBot: Anthropic Claude AI
+      // Anthropic Claude
       {
         userAgent: 'ClaudeBot',
         allow: '/',
       },
-      // Claude-Web: Claude browser tool
       {
         userAgent: 'Claude-Web',
         allow: '/',
       },
-      // PerplexityBot: Perplexity AI search
+      // Perplexity AI Search
       {
         userAgent: 'PerplexityBot',
         allow: '/',
       },
-      // Google-Extended: Google AI products (Gemini, SGE, Bard)
+      // Google Gemini, AI Overviews, and SGE
       {
         userAgent: 'Google-Extended',
         allow: '/',
       },
-      // Applebot-Extended: Apple Intelligence, Siri
+      // Apple Intelligence and Siri
       {
         userAgent: 'Applebot-Extended',
         allow: '/',
       },
-      // YouBot: You.com AI search
+      // Meta AI
+      {
+        userAgent: 'Meta-ExternalAgent',
+        allow: '/',
+      },
+      // Common Crawl (primary foundation for LLM pretraining)
+      {
+        userAgent: 'CCBot',
+        allow: '/',
+      },
+      // ByteDance / TikTok AI Search
+      {
+        userAgent: 'Bytespider',
+        allow: '/',
+      },
+      // Diffbot Structured Knowledge Graph
+      {
+        userAgent: 'Diffbot',
+        allow: '/',
+      },
+      // You.com AI Search
       {
         userAgent: 'YouBot',
         allow: '/',
       },
-      // cohere-ai: Cohere AI
+      // Cohere AI
       {
         userAgent: 'cohere-ai',
         allow: '/',
       },
-      // Catch-all: all other bots — full access
+      // Catch-all: all other bots granted full crawl access
       {
         userAgent: '*',
         allow: '/',
