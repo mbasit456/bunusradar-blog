@@ -1,14 +1,63 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Search, ChevronDown, Rss } from 'lucide-react';
 import { CATEGORIES } from '@/lib/categories';
 
-export default function Navbar() {
+interface TrendingItem {
+  slug: string;
+  title: string;
+}
+
+interface NavbarProps {
+  trendingPosts?: TrendingItem[];
+}
+
+const THREE_HOURS_MS = 3 * 60 * 60 * 1000;
+
+const DEFAULT_TRENDING: TrendingItem[] = [
+  {
+    slug: 'best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot',
+    title: 'Best AI Coding Assistants in 2026: Cursor vs Claude vs GitHub Copilot',
+  },
+  {
+    slug: 'deepseek-ai-vs-chatgpt-vs-claude-ultimate-showdown',
+    title: 'DeepSeek AI vs ChatGPT vs Claude: The Ultimate AI Showdown (2026)',
+  },
+  {
+    slug: 'future-of-remote-work-digital-nomad-careers-2026',
+    title: 'The Future of Remote Work & Digital Nomad Careers in 2026',
+  },
+  {
+    slug: 'how-to-scale-digital-micro-saas',
+    title: 'How to Scale a Digital Micro-SaaS to $10k/Month',
+  },
+];
+
+function getTrendingIndex(total: number): number {
+  if (total <= 0) return 0;
+  return Math.floor(Date.now() / THREE_HOURS_MS) % total;
+}
+
+export default function Navbar({ trendingPosts = [] }: NavbarProps) {
+  const items = trendingPosts && trendingPosts.length > 0 ? trendingPosts : DEFAULT_TRENDING;
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [trendingIndex, setTrendingIndex] = useState(0);
+
+  useEffect(() => {
+    setTrendingIndex(getTrendingIndex(items.length));
+
+    const timer = setInterval(() => {
+      setTrendingIndex(getTrendingIndex(items.length));
+    }, 60 * 1000);
+
+    return () => clearInterval(timer);
+  }, [items.length]);
+
+  const currentTrending = items[trendingIndex] || items[0];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,10 +74,10 @@ export default function Navbar() {
           <div className="flex items-center gap-3 min-w-0">
             <span className="text-[#f9b44d] font-bold uppercase tracking-wider shrink-0">Trending:</span>
             <Link
-              href="/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot"
+              href={`/blog/${currentTrending.slug}`}
               className="hidden sm:inline text-zinc-300 hover:text-[#f9b44d] hover:underline transition-colors truncate max-w-md"
             >
-              Best AI Coding Assistants in 2026: Cursor vs Claude vs GitHub Copilot
+              {currentTrending.title}
             </Link>
           </div>
           <div className="flex items-center gap-4 text-zinc-400">

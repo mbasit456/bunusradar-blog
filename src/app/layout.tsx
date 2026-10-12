@@ -3,6 +3,7 @@ import Script from 'next/script';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { getAllPosts } from '@/lib/posts';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bunusradar.site'),
@@ -59,6 +60,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const posts = getAllPosts();
+  const trendingPosts = posts.map((post) => ({
+    slug: post.slug,
+    title: post.title,
+  }));
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
@@ -87,7 +94,7 @@ export default function RootLayout({
         <meta name="ai-content-declaration" content="human-authored editorial content" />
       </head>
       <body className="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
-        <Navbar />
+        <Navbar trendingPosts={trendingPosts} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
