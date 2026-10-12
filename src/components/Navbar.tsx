@@ -60,13 +60,6 @@ export default function Navbar() {
 
           {/* Desktop Nav Items */}
           <nav className="hidden lg:flex items-center space-x-1">
-            <Link
-              href="/"
-              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
-            >
-              Home
-            </Link>
-
             {Object.values(CATEGORIES).map((cat) => (
               <Link
                 key={cat.slug}
@@ -131,13 +124,6 @@ export default function Navbar() {
       {/* Mobile Navigation Drawer */}
       {isOpen && (
         <div className="lg:hidden bg-[#14234f] border-t border-white/10 px-4 pt-2 pb-6 space-y-1">
-          <Link
-            href="/"
-            onClick={() => setIsOpen(false)}
-            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded"
-          >
-            Home
-          </Link>
           {Object.values(CATEGORIES).map((cat) => (
             <Link
               key={cat.slug}
