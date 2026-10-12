@@ -209,7 +209,7 @@ Category pillars:
 4. NEVER use generic anchor text like "click here" or "read more".
 5. NEVER invent URLs. If a relevant destination is not available, leave text unlinked.
 
-STRICT OUTPUT FORMAT — Return ONLY a valid JSON object matching this schema:
+STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
 {
   "title": "Engaging, click-worthy article title containing the keyword naturally (55-70 chars)",
   "slug": "url-friendly-slug-with-hyphens",
@@ -250,7 +250,9 @@ function buildMarkdownFile(data, publishTimestamp, currentSlug) {
   const coverImage = randomItem(COVER_IMAGES);
   const tags = Array.isArray(data.tags) ? data.tags : [];
 
-  let body = data.body.trim();
+  const safeTitle = data.title.replace(/\u2014/g, ' - ');
+  const safeExcerpt = data.excerpt.replace(/\u2014/g, ' - ');
+  let body = data.body.replace(/\u2014/g, ' - ').trim();
 
   // STRICT RULE 1 & 12: Zero tolerance for hash or placeholder links
   body = body.replace(/\[([^\]]+)\]\(#[^)]*\)/g, '$1');
@@ -272,9 +274,9 @@ function buildMarkdownFile(data, publishTimestamp, currentSlug) {
   });
 
   const frontmatter = `---
-title: "${data.title.replace(/"/g, '\\"')}"
+title: "${safeTitle.replace(/"/g, '\\"')}"
 date: "${publishTimestamp}"
-excerpt: "${data.excerpt.replace(/"/g, '\\"')}"
+excerpt: "${safeExcerpt.replace(/"/g, '\\"')}"
 category: "${data.category}"
 tags: [${tags.map(t => `"${t}"`).join(', ')}]
 author: "${AUTHOR}"
@@ -293,6 +295,13 @@ function gitPush(filenames) {
     const gitCmdPath = path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Git', 'cmd');
     if (fs.existsSync(gitCmdPath) && !process.env.PATH.includes(gitCmdPath)) {
       process.env.PATH = `${process.env.PATH};${gitCmdPath}`;
+    }
+
+    console.log('\n  🔄 Regenerating public/llms-full.txt...');
+    try {
+      execSync('node scripts/generate-llms-full.cjs', { cwd: ROOT, stdio: 'inherit' });
+    } catch (e) {
+      console.warn('  ⚠️ Could not regenerate llms-full:', e.message);
     }
 
     console.log('\n  📦 Committing and pushing to GitHub...');
