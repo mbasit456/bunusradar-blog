@@ -1,6 +1,6 @@
 ---
 title: "Canine Benadryl: Safe Dosage, Uses, Side Effects, and Vet Guidelines"
-date: "2026-10-12T16:00:00Z"
+date: "2026-10-12T11:00:00Z"
 excerpt: "A comprehensive veterinary-reviewed guide to canine Benadryl (diphenhydramine), including exact weight-based dosages, safe uses, precautions, and side effects."
 category: "Lifestyle"
 tags: ["Canine Benadryl", "Pet Health", "Dog Care", "Veterinary Medicine", "Allergy Treatment"]

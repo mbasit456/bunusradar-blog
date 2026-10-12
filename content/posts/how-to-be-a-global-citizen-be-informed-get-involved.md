@@ -1,6 +1,6 @@
 ---
 title: "How to Be a Global Citizen: Be Informed. Get Involved."
-date: "2026-10-12T12:00:00Z"
+date: "2026-10-12T09:30:00Z"
 excerpt: "Discover how to be a global citizen: be informed. get involved. Learn actionable strategies to navigate modern news, build empathy, and drive lasting impact."
 category: "Lifestyle"
 tags: ["Global Citizenship", "Social Impact", "Digital Literacy", "Productivity", "Community Engagement"]
