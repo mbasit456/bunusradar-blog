@@ -88,6 +88,26 @@ export default function RootLayout({
             gtag('config', 'G-CGM08JT8KQ');
           `}
         </Script>
+        {/* Subscribe with Google (SwG Basic) */}
+        <script
+          async
+          type="application/javascript"
+          src="https://news.google.com/swg/js/v1/swg-basic.js"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+                basicSubscriptions.init({
+                  type: "NewsArticle",
+                  isPartOfType: ["Product"],
+                  isPartOfProductId: "CAow26rODA:openaccess",
+                  clientOptions: { theme: "light", lang: "en" },
+                });
+              });
+            `,
+          }}
+        />
         {/* AEO, GEO, and AIO LLM Discovery Links */}
         <link rel="describedby" href="https://bunusradar.site/llms.txt" type="text/plain" title="LLM Guidance and Site Summary" />
         <link rel="alternate" type="text/plain" href="https://bunusradar.site/llms-full.txt" title="Full Content Index for LLMs" />
