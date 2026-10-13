@@ -23,12 +23,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'content', 'posts');
 const KEYWORDS_FILE = path.join(__dirname, 'keywords.json');
+const AI_KEYWORDS_FILE = path.join(__dirname, 'ai-keywords.json');
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
 const SITE_NAME = 'BunusRadar';
 const AUTHOR = 'BunusRadar Editorial';
-const DAILY_SLOTS = ['08:00:00Z', '12:00:00Z', '16:00:00Z'];
+const DAILY_SLOTS = ['06:00:00Z', '10:00:00Z', '14:00:00Z', '18:00:00Z'];
 
 const COVER_IMAGES = [
   'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop',
@@ -139,14 +140,12 @@ function allocateNextSlots(count) {
 }
 
 /**
- * Loads keywords list from keywords.json and finds ones not yet covered in existing posts.
+ * Loads keywords list from a JSON file and finds ones not yet covered in existing posts.
  */
-function getUnusedKeywords(requestedCount) {
-  if (!fs.existsSync(KEYWORDS_FILE)) {
-    throw new Error(`Keywords file not found at ${KEYWORDS_FILE}`);
-  }
+function getUnusedFrom(filePath, requestedCount) {
+  if (!fs.existsSync(filePath)) return [];
 
-  const allKeywords = JSON.parse(fs.readFileSync(KEYWORDS_FILE, 'utf8'));
+  const allKeywords = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   const existingSlugs = fs.existsSync(POSTS_DIR)
     ? fs.readdirSync(POSTS_DIR).map(f => f.replace(/\.mdx?$/, ''))
     : [];
@@ -167,13 +166,37 @@ function getUnusedKeywords(requestedCount) {
     const kwLower = kw.toLowerCase();
     const alreadyExists = existingSlugs.some(slug => slug.includes(s) || s.includes(slug)) ||
                           existingTitles.some(title => title.includes(kwLower));
-    if (!alreadyExists) {
+    if (!alreadyExists && !unused.includes(kw)) {
       unused.push(kw);
       if (unused.length >= requestedCount) break;
     }
   }
 
   return unused;
+}
+
+/**
+ * Returns balanced daily keywords: 3 from keywords.json and 1 from ai-keywords.json per day.
+ */
+function getDailyKeywords(totalCount) {
+  const days = Math.ceil(totalCount / 4);
+  const generalKw = getUnusedFrom(KEYWORDS_FILE, days * 3);
+  const aiKw = getUnusedFrom(AI_KEYWORDS_FILE, days * 1);
+
+  const result = [];
+  let gIdx = 0;
+  let aIdx = 0;
+
+  for (let d = 0; d < days; d++) {
+    for (let i = 0; i < 3 && gIdx < generalKw.length; i++) {
+      if (result.length < totalCount) result.push(generalKw[gIdx++]);
+    }
+    if (aIdx < aiKw.length && result.length < totalCount) {
+      result.push(aiKw[aIdx++]);
+    }
+  }
+
+  return result;
 }
 
 // ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
@@ -319,12 +342,12 @@ function gitPush(filenames) {
 
 async function main() {
   const args = process.argv.slice(2);
-  let count = 3; // Default: 3 articles (1 day)
+  let count = 4; // Default: 4 articles daily (3 from keywords.json + 1 from ai-keywords.json)
   let explicitKeywords = [];
 
   for (const arg of args) {
     if (arg.startsWith('--count=')) {
-      count = parseInt(arg.split('=')[1], 10) || 3;
+      count = parseInt(arg.split('=')[1], 10) || 4;
     } else if (!arg.startsWith('--')) {
       explicitKeywords.push(arg);
     }
@@ -334,7 +357,7 @@ async function main() {
   if (explicitKeywords.length > 0) {
     keywordsToPublish = explicitKeywords;
   } else {
-    keywordsToPublish = getUnusedKeywords(count);
+    keywordsToPublish = getDailyKeywords(count);
   }
 
   if (keywordsToPublish.length === 0) {
@@ -347,7 +370,7 @@ async function main() {
     console.error('❌ GEMINI_API_KEY is missing! Set it in your environment or .env.local');
     process.exit(1);
   }
-  console.log(`\n🚀 BunusRadar AI Auto-Scheduler (3 Articles Daily, 4h Intervals)`);
+  console.log(`\n🚀 BunusRadar AI Auto-Scheduler (4 Articles Daily: 3 General + 1 AI/Tech)`);
   console.log(`   Preparing ${keywordsToPublish.length} article(s)...\n`);
 
   const allocatedSlots = allocateNextSlots(keywordsToPublish.length);

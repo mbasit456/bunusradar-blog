@@ -23,6 +23,7 @@ const POST_AUTHOR_ASSIGNMENT = {
   'top-character-ai-alternatives-free-conversational-ai': 'alex-vance',
   'autonomous-ai-agents-software-development': 'alex-vance',
   'inside-epic-systems-tech-giant-shaping-future-of-medicine': 'alex-vance',
+  'artificial-intelligence-in-business-implementation-roi-guide': 'alex-vance',
   
   'mastering-nextjs-performance-2026': 'sarah-chen',
   'building-high-impact-developer-portfolios': 'sarah-chen',
