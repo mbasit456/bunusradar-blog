@@ -1,6 +1,6 @@
 ---
 title: "Woolino Sleep Sack Review: Is Merino Wool the Ultimate Game-Changer?"
-date: "2026-10-14T10:00:00Z"
+date: "2026-10-14T07:30:00Z"
 excerpt: "Discover why the Woolino sleep sack is a cult favorite among parents. Explore merino wool benefits, TOG ratings, sizing, safety, and cost vs value breakdown."
 category: "Lifestyle"
 tags: ["Baby Gear", "Infant Sleep", "Parenting", "Sleep Sacks", "Nursery Essentials"]

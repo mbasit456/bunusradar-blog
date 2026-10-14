@@ -35,4 +35,4 @@ jobs:
       - name: Run Auto-Publish Script (4 Daily Articles)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node scripts/ai-publish.js
+        run: node scripts/ai-publish.mjs

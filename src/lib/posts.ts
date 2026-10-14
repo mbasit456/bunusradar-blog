@@ -29,6 +29,7 @@ export const POST_AUTHOR_ASSIGNMENT: Record<string, string> = {
   'phone-prefix-702-location-time-zone-caller-identification': 'sarah-chen',
   'vollebak-carbon-fibre-dyneema-pants-top-alternatives': 'sarah-chen',
   'laptop-giveaway-scams-warning-signs-phishing-prevention': 'sarah-chen',
+  'evolution-of-technology-future-trends': 'sarah-chen',
 
   // Productivity, Knowledge & Cognitive Systems - Elena Rostova
   'ultimate-personal-productivity-stack-10x-focus': 'elena-rostova',
