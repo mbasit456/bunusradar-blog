@@ -14,9 +14,13 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'AdsBot-Google',
         allow: '/',
       },
-      // Standard search engines: full access
+      // Standard search engines and Google News: full access
       {
         userAgent: 'Googlebot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Googlebot-News',
         allow: '/',
       },
       {
@@ -93,7 +97,10 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/sitemap-news.xml`,
+    ],
     host: baseUrl,
   };
 }
