@@ -201,10 +201,18 @@ function getDailyKeywords(totalCount) {
 
 // ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
 
+const MODEL_CANDIDATES = [
+  'gemini-3.8-flash',
+  'gemini-3.6-flash',
+  'gemini-flash-latest',
+  'gemini-2.5-flash-lite',
+];
+
 async function generateArticle(keyword, apiKey, availableArticles = [], attempt = 1) {
+  const currentModelName = MODEL_CANDIDATES[(attempt - 1) % MODEL_CANDIDATES.length];
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
-    model: 'gemini-3.6-flash',
+    model: currentModelName,
     generationConfig: {
       responseMimeType: 'application/json',
       maxOutputTokens: 8192,
@@ -328,8 +336,21 @@ function gitPush(filenames) {
     }
 
     console.log('\n  📦 Committing and pushing to GitHub...');
+    try {
+      execSync('git config user.name', { stdio: 'ignore' });
+    } catch {
+      execSync('git config user.name "github-actions[bot]"', { stdio: 'inherit' });
+      execSync('git config user.email "github-actions[bot]@users.noreply.github.com"', { stdio: 'inherit' });
+    }
+
     execSync('git add -A', { cwd: ROOT, stdio: 'inherit', env: process.env });
-    const msg = `ai: schedule ${filenames.length} article(s) (3 daily, 4h intervals)`;
+    const status = execSync('git status --porcelain', { cwd: ROOT }).toString().trim();
+    if (!status) {
+      console.log('  ℹ️ No changes detected to commit.');
+      return;
+    }
+
+    const msg = `ai: schedule ${filenames.length} article(s) (4 daily)`;
     execSync(`git commit -m "${msg}"`, { cwd: ROOT, stdio: 'inherit', env: process.env });
     execSync('git push origin main', { cwd: ROOT, stdio: 'inherit', env: process.env });
     console.log('  ✅ Pushed to GitHub! Vercel updated.');
