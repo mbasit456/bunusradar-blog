@@ -134,27 +134,11 @@ export default async function PostPage({ params }: PostPageProps) {
     isAccessibleForFree: true,
     about: aboutList,
     ...(mentionsList.length > 0 ? { mentions: mentionsList } : {}),
-    isPartOf: cluster
-      ? [
-          {
-            '@type': 'WebSite',
-            '@id': `${baseUrl}/#website`,
-            name: 'BunusRadar',
-            url: baseUrl,
-          },
-          {
-            '@type': 'CreativeWorkSeries',
-            name: cluster.name,
-            url: `${baseUrl}${cluster.pillarUrl}`,
-            description: cluster.description,
-          },
-        ]
-      : {
-          '@type': 'WebSite',
-          '@id': `${baseUrl}/#website`,
-          name: 'BunusRadar',
-          url: baseUrl,
-        },
+    isPartOf: {
+      '@type': ['CreativeWork', 'Product'],
+      name: 'BunusRadar',
+      productID: 'CAow26rODA:openaccess',
+    },
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['.ai-quick-summary', '.article-headline'],
@@ -189,12 +173,6 @@ export default async function PostPage({ params }: PostPageProps) {
       '@id': articleUrl,
       url: articleUrl,
       name: post.title,
-      isPartOf: {
-        '@type': 'WebSite',
-        '@id': `${baseUrl}/#website`,
-        name: 'BunusRadar',
-        url: baseUrl,
-      },
     },
     url: articleUrl,
     keywords: post.tags.join(', '),
@@ -226,6 +204,26 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="py-6 space-y-8">
+      {/* Subscribe with Google (SwG Basic) */}
+      <script
+        async
+        type="application/javascript"
+        src="https://news.google.com/swg/js/v1/swg-basic.js"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+              basicSubscriptions.init({
+                type: "NewsArticle",
+                isPartOfType: ["Product"],
+                isPartOfProductId: "CAow26rODA:openaccess",
+                clientOptions: { theme: "light", lang: "en" },
+              });
+            });
+          `,
+        }}
+      />
       {/* JSON-LD Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
