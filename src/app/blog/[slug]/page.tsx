@@ -206,7 +206,7 @@ export default async function PostPage({ params }: PostPageProps) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: post.category, item: `${baseUrl}/category/${post.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}` },
+      { '@type': 'ListItem', position: 2, name: categoryMeta.name, item: `${baseUrl}/category/${categoryMeta.slug}` },
       { '@type': 'ListItem', position: 3, name: post.title, item: articleUrl },
     ],
   };
@@ -237,8 +237,8 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="flex items-center gap-1.5 text-xs text-zinc-500">
           <Link href="/" className="hover:text-[#1b2e67] font-semibold">Home</Link>
           <ChevronRight className="w-3 h-3 text-zinc-400" />
-          <Link href={`/category/${post.category}`} className="hover:text-[#1b2e67] font-semibold uppercase">
-            {post.category}
+          <Link href={`/category/${categoryMeta.slug}`} className="hover:text-[#1b2e67] font-semibold uppercase">
+            {categoryMeta.name}
           </Link>
           <ChevronRight className="w-3 h-3 text-zinc-400" />
           <span className="truncate max-w-xs text-zinc-700">{post.title}</span>
@@ -253,10 +253,10 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* Category Tag */}
             <div>
               <Link
-                href={`/category/${post.category}`}
+                href={`/category/${categoryMeta.slug}`}
                 className="inline-block px-2.5 py-1 text-xs font-bold uppercase tracking-wider bg-[#1b2e67] text-[#f9b44d] rounded"
               >
-                {post.category}
+                {categoryMeta.name}
               </Link>
             </div>
 

@@ -50,14 +50,72 @@ export const CATEGORIES: Record<string, CategoryMeta> = {
   },
 };
 
+export function normalizeCategorySlug(rawSlug: string): string {
+  if (!rawSlug) return 'technology';
+  let cleaned = String(rawSlug).trim();
+  try {
+    cleaned = decodeURIComponent(cleaned);
+  } catch (e) {}
+
+  const normalized = cleaned
+    .toLowerCase()
+    .replace(/&/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  if (normalized === 'ai' || normalized === 'artificial-intelligence' || normalized === 'artificialintelligence') {
+    return 'ai';
+  }
+  if (normalized === 'tech' || normalized === 'technology') {
+    return 'technology';
+  }
+  if (
+    normalized === 'business' ||
+    normalized === 'business-growth' ||
+    normalized === 'businessgrowth' ||
+    normalized.startsWith('business')
+  ) {
+    return 'business';
+  }
+  if (normalized === 'productivity') {
+    return 'productivity';
+  }
+  if (
+    normalized === 'lifestyle' ||
+    normalized === 'lifestyle-future' ||
+    normalized === 'lifestylefuture' ||
+    normalized.startsWith('lifestyle')
+  ) {
+    return 'lifestyle';
+  }
+
+  return normalized || 'technology';
+}
+
 export function getCategoryBySlug(slug: string): CategoryMeta {
-  const normalized = slug.toLowerCase();
-  return (
-    CATEGORIES[normalized] || {
-      name: slug.charAt(0).toUpperCase() + slug.slice(1),
-      slug: normalized,
-      description: `Articles and guides related to ${slug}.`,
-      color: "bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700",
-    }
-  );
+  const normalized = normalizeCategorySlug(slug);
+  if (CATEGORIES[normalized]) {
+    return CATEGORIES[normalized];
+  }
+
+  let decoded = String(slug);
+  try {
+    decoded = decodeURIComponent(decoded);
+  } catch (e) {}
+
+  const cleanName = decoded
+    .replace(/%20/gi, ' ')
+    .replace(/%26/gi, '&')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const displayName = cleanName ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1) : 'General';
+
+  return {
+    name: displayName,
+    slug: normalized,
+    description: `Articles and guides exploring ${displayName} on BunusRadar.`,
+    color: "bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700",
+  };
 }

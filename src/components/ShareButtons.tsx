@@ -29,7 +29,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
 
   const shareTwitter = () => {
     const shareUrl = encodeURIComponent(getShareUrl());
-    const text = encodeURIComponent(`"${title}" via GravityPulse`);
+    const text = encodeURIComponent(`"${title}" via BunusRadar`);
     window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=${text}`, '_blank');
   };
 

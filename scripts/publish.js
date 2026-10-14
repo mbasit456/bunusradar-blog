@@ -18,7 +18,7 @@ function run(command) {
 }
 
 console.log('\n======================================');
-console.log('   GravityPulse Auto-Publish System   ');
+console.log('   BunusRadar Auto-Publish System     ');
 console.log('======================================\n');
 
 try {

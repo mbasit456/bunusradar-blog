@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { PostMetadata } from '@/lib/posts';
+import { getCategoryBySlug } from '@/lib/categories';
 
 interface ArticleCardProps {
   post: PostMetadata;
 }
 
 export default function ArticleCard({ post }: ArticleCardProps) {
+  const catMeta = getCategoryBySlug(post.category);
+
   return (
     <article className="bg-white border border-zinc-200/80 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-full group">
       {/* Thumbnail */}
@@ -23,10 +26,10 @@ export default function ArticleCard({ post }: ArticleCardProps) {
         <div>
           <div className="mb-1.5">
             <Link
-              href={`/category/${post.category}`}
+              href={`/category/${catMeta.slug}`}
               className="text-[11px] font-bold uppercase tracking-wider text-[#1b2e67] hover:text-[#f9b44d] transition-colors"
             >
-              {post.category}
+              {catMeta.name}
             </Link>
           </div>
 

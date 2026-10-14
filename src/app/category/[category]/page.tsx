@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { permanentRedirect } from 'next/navigation';
 import { getPostsByCategory, getAllPosts } from '@/lib/posts';
-import { CATEGORIES, getCategoryBySlug } from '@/lib/categories';
+import { CATEGORIES, getCategoryBySlug, normalizeCategorySlug } from '@/lib/categories';
 import { getAllClusters } from '@/lib/clusters';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
@@ -22,8 +23,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const meta = getCategoryBySlug(params.category);
-  const canonicalUrl = `https://bunusradar.site/category/${params.category}`;
+  const canonicalSlug = normalizeCategorySlug(params.category);
+  const meta = getCategoryBySlug(canonicalSlug);
+  const canonicalUrl = `https://bunusradar.site/category/${canonicalSlug}`;
   return {
     title: `${meta.name} News & Analysis - BunusRadar`,
     description: meta.description,
@@ -40,14 +42,19 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default function CategoryPage({ params }: CategoryPageProps) {
-  const meta = getCategoryBySlug(params.category);
-  const posts = getPostsByCategory(params.category);
+  const canonicalSlug = normalizeCategorySlug(params.category);
+  if (params.category !== canonicalSlug) {
+    permanentRedirect(`/category/${canonicalSlug}`);
+  }
+
+  const meta = getCategoryBySlug(canonicalSlug);
+  const posts = getPostsByCategory(canonicalSlug);
   const allPosts = getAllPosts();
   const baseUrl = 'https://bunusradar.site';
-  const categoryUrl = `${baseUrl}/category/${params.category}`;
+  const categoryUrl = `${baseUrl}/category/${canonicalSlug}`;
 
   const categoryClusters = getAllClusters().filter(
-    (c) => c.pillarCategory.toLowerCase() === params.category.toLowerCase()
+    (c) => normalizeCategorySlug(c.pillarCategory) === canonicalSlug
   );
 
   const breadcrumbSchema = {

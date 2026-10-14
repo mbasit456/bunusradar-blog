@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Automated Blog Post Generator for GravityPulse
+ * Automated Blog Post Generator for BunusRadar
  * Usage:
  *   node scripts/generate-post.js --title="My New Article" --category="technology" --tags="web,nextjs"
  * Or interactive mode:

@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import readingTime from 'reading-time';
 import { marked } from 'marked';
 import { AUTHORS, resolveAuthorSlug, Author } from '@/lib/authors';
+import { normalizeCategorySlug } from '@/lib/categories';
 
 const POSTS_DIRECTORY = path.join(process.cwd(), 'content', 'posts');
 
@@ -151,7 +152,7 @@ export function getAllPosts(includeScheduled = false): PostMetadata[] {
         excerpt: data.excerpt || data.description || '',
         date: dateDisplay,
         rawDate: rawDateStr,
-        category: (data.category || 'general').toLowerCase(),
+        category: normalizeCategorySlug(data.category || 'technology'),
         tags: Array.isArray(data.tags) ? data.tags : [],
         coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
         authorSlug: authorResolved.slug,
@@ -188,8 +189,9 @@ export function getFeaturedPost(): PostMetadata | null {
 }
 
 export function getPostsByCategory(categorySlug: string): PostMetadata[] {
+  const target = normalizeCategorySlug(categorySlug);
   const posts = getAllPosts();
-  return posts.filter((post) => post.category.toLowerCase() === categorySlug.toLowerCase());
+  return posts.filter((post) => post.category === target);
 }
 
 export function getPostsByTag(tag: string): PostMetadata[] {
@@ -286,7 +288,7 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
     title: data.title || 'Untitled Post',
     excerpt: data.excerpt || data.description || '',
     date: postDate,
-    category: (data.category || 'general').toLowerCase(),
+    category: normalizeCategorySlug(data.category || 'technology'),
     tags: Array.isArray(data.tags) ? data.tags : [],
     coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
     authorSlug: authorResolved.slug,

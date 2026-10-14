@@ -5,7 +5,9 @@ import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
 export const metadata: Metadata = {
-  title: 'About BunusRadar - Independent AI & Technology Publication',
+  title: {
+    absolute: 'About BunusRadar - Independent AI & Technology Publication',
+  },
   description: 'BunusRadar is an independent technology and AI publication founded in 2024, specializing in hands-on AI tool benchmarks, original research, software engineering, and digital business analysis.',
   alternates: {
     canonical: 'https://bunusradar.site/about',
