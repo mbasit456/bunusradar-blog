@@ -139,6 +139,21 @@ function allocateNextSlots(count) {
   return slots;
 }
 
+const OFF_TOPIC_TERMS = [
+  'dog', 'dogs', 'cat', 'cats', 'puppy', 'veterinar', 'rabies', 'pyometra', 'benadryl',
+  'gabapentin', 'solensia', 'cytopoint', 'doxycycline', 'ringworm', 'diarrhea',
+  'tequila', 'whiskey', 'scotch', 'bourbon', 'wine', 'cocktail', 'gin', 'champagne',
+  'sneakers', 'necklace', 'hair', 'blouse', 'pants', 'blanket', 'sofa', 'mattress',
+  'crib', 'sleep sack', 'baby', 'newborn', 'tooth fairy', 'aquarium fish', 'invisalign',
+  'barbecue', 'grill', 'accent chair', 'swivel chair', 'upholstered bed', 'pokemon',
+  'vikings', 'ugly love', 'maya angelou', 'sancerre', 'lapostolle', 'pinot noir', 'chardonnay'
+];
+
+function isOffTopicKeyword(kw) {
+  const lower = kw.toLowerCase();
+  return OFF_TOPIC_TERMS.some(term => lower.includes(term));
+}
+
 /**
  * Loads keywords list from a JSON file and finds ones not yet covered in existing posts.
  */
@@ -162,6 +177,9 @@ function getUnusedFrom(filePath, requestedCount) {
 
   const unused = [];
   for (const kw of allKeywords) {
+    if (filePath.includes('keywords.json') && isOffTopicKeyword(kw)) {
+      continue;
+    }
     const s = slugify(kw);
     const kwLower = kw.toLowerCase();
     const alreadyExists = existingSlugs.some(slug => slug.includes(s) || s.includes(slug)) ||
@@ -199,7 +217,7 @@ function getDailyKeywords(totalCount) {
   return result;
 }
 
-// ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
+// ─── ARTICLE GENERATION VIA GEMINI ─────────────────────────────────────────────
 
 const MODEL_CANDIDATES = [
   'gemini-3.5-flash-lite',
@@ -223,9 +241,22 @@ async function generateArticle(keyword, apiKey, availableArticles = [], attempt 
 
   const sampleArticles = availableArticles.slice(0, 10).map(a => `- [${a.title}](/blog/${a.slug})`).join('\n');
 
-  const prompt = `You are an expert journalist and authoritative writer writing for "${SITE_NAME}", a high-quality publication covering Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.
+  const prompt = `You are a senior tech journalist and industry analyst writing for "${SITE_NAME}" (https://bunusradar.site), a digital publication dedicated exclusively to Technology, Artificial Intelligence, Business & Growth, Productivity, and high-tech Lifestyle & Future trends.
 
-Write an in-depth, original, SEO-optimized blog article about: "${keyword}"
+CRITICAL EDITORIAL RULE - ZERO GENERAL/FLUFF CONTENT:
+Do NOT write generic lifestyle articles, superficial buyer guides, casual consumer reviews, pet advice, medical remedies, or entertainment gossip.
+Every single article MUST be authoritatively framed and analyzed through the lens of one of BunusRadar's official core categories:
+1. Technology: Software architectures, digital infrastructure, cloud platforms, developer tools, hardware innovations, enterprise data systems, or cybersecurity.
+2. Artificial Intelligence: Large language models, neural networks, autonomous agents, enterprise AI adoption, prompt engineering, or intelligent automation workflows.
+3. Business & Growth: Digital business strategies, startups, SaaS metrics, e-commerce infrastructure, monetization models, digital marketing, market dynamics, and financial analysis.
+4. Productivity: Workflow optimization, digital productivity tools, time management architectures, automation stacks, operational efficiency, and workplace systems.
+5. Lifestyle: High-tech modern living, remote work culture, distributed team operations, digital nomadism, ergonomic workspace design, and future societal tech trends.
+
+HOW TO FRAME THE KEYWORD "${keyword}":
+Even if "${keyword}" sounds like a company, tool, or product, you MUST examine it from a business, technological, architectural, or productivity perspective:
+- Explain the business model, market strategy, software stack, or workflow efficiency.
+- Deliver actionable insights, strategic takeaways, and structured analysis matching Harvard Business Review, MIT Technology Review, Wired, or TechCrunch.
+- Naturally include the keyword "${keyword}" in the title, first paragraph, and within subheadings.
 
 STRICT INTERNAL LINKING RULES:
 1. NEVER USE HASH LINKS (#, #section, javascript:void(0), placeholder URLs).
@@ -250,13 +281,7 @@ STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
   "readingTime": "estimated reading time like '7 min read'",
   "body": "Full article in markdown (1300-1800 words). Use ## for H2 headings, ### for H3. Include an engaging intro, 4-6 detailed sections with actionable insights, bullet points/tables where helpful, and a thoughtful conclusion. NO frontmatter, just the body content."
-}
-
-Content Guidelines:
-- High editorial quality, practical takeaways, and structured data.
-- Naturally include the keyword "${keyword}" in the title, first paragraph, and within subheadings.
-- If relevant (e.g. buying guides, comparison keywords, pet food, financial calculators), include comparison markdown tables.
-- Professional, engaging tone matching Wired, TechCrunch, or Healthline.`;
+}`;
 
   console.log(`  ✍️  Generating: "${keyword}" (Attempt ${attempt})...`);
 
