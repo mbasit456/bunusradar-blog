@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getAllTags } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
@@ -9,6 +9,7 @@ export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts();
   const authors = getAllAuthors();
+  const tags = getAllTags();
   const nowIso = new Date().toISOString();
 
   // Static Pages
@@ -43,6 +44,14 @@ export async function GET() {
     lastmod: nowIso,
   }));
 
+  // Tag Pages
+  const tagPages = tags.map(({ tag }) => ({
+    url: `${baseUrl}/tag/${encodeURIComponent(tag.trim())}`,
+    changefreq: 'weekly',
+    priority: '0.6',
+    lastmod: nowIso,
+  }));
+
   // Article Pages
   const articlePages = posts.map((post) => {
     const postDate = new Date(post.rawDate || post.date);
@@ -55,7 +64,7 @@ export async function GET() {
     };
   });
 
-  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...articlePages];
+  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...tagPages, ...articlePages];
 
   const xmlEntries = allUrls
     .map(

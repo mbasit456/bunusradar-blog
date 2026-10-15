@@ -21,16 +21,16 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
-  const decodedTag = decodeURIComponent(params.tag);
-  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(params.tag)}`;
+  const decodedTag = decodeURIComponent(params.tag).trim();
+  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(decodedTag)}`;
   return {
     title: `#${decodedTag} | BunusRadar`,
     description: `Articles and guides tagged with #${decodedTag} on BunusRadar`,
     robots: {
-      index: false,
+      index: true,
       follow: true,
       googleBot: {
-        index: false,
+        index: true,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',

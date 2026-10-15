@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy & Terms of Service | BunusRadar',
   description: 'BunusRadar privacy policy, cookie disclosures, data collection practices, and terms of service.',
   alternates: {
-    canonical: 'https://bunusradar.site/privacy-terms',
+    canonical: 'https://bunusradar.site/privacy-policy',
   },
   openGraph: {
     url: 'https://bunusradar.site/privacy-terms',
