@@ -19,13 +19,8 @@ export const metadata: Metadata = {
   },
 };
 
-interface HomePageProps {
-  searchParams?: {
-    search?: string;
-  };
-}
-
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const revalidate = 86400;
 
 const baseUrl = 'https://bunusradar.site';
 
@@ -90,22 +85,10 @@ const orgSchema = {
   sameAs: [],
 };
 
-export default function HomePage({ searchParams }: HomePageProps) {
+export default function HomePage() {
   const allPosts = getAllPosts();
-  const searchQuery = searchParams?.search?.toLowerCase().trim();
-
-  // If search query is provided via URL
-  const displayPosts = searchQuery
-    ? allPosts.filter(
-        (p) =>
-          p.title.toLowerCase().includes(searchQuery) ||
-          p.excerpt.toLowerCase().includes(searchQuery) ||
-          p.category.toLowerCase().includes(searchQuery)
-      )
-    : allPosts;
-
-  const heroPosts = displayPosts.slice(0, 5);
-  const latestArticles = displayPosts.slice(1);
+  const heroPosts = allPosts.slice(0, 5);
+  const latestArticles = allPosts.slice(1);
   const mustReadPosts = allPosts.slice(0, 5);
 
   return (
@@ -113,22 +96,9 @@ export default function HomePage({ searchParams }: HomePageProps) {
       {/* JSON-LD Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
-      {/* Search notification banner if search is active */}
-      {searchQuery && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-          <div className="bg-white p-4 rounded border border-zinc-200 flex items-center justify-between shadow-sm">
-            <p className="text-xs font-bold text-zinc-800">
-              Showing search results for: <span className="text-[#1b2e67]">&ldquo;{searchQuery}&rdquo;</span> ({displayPosts.length} found)
-            </p>
-            <Link href="/" className="text-xs text-[#1b2e67] font-semibold hover:underline">
-              Clear Search
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* 1. TG Daily Signature Magazine Hero (Top 5 Stories) */}
-      {!searchQuery && <MagazineHero posts={heroPosts} />}
+      <MagazineHero posts={heroPosts} />
 
       {/* 2. Main 2-Column Body (70% News Feed, 30% Sidebar) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

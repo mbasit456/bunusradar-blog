@@ -2,8 +2,8 @@ import { getAllPosts, getAllTags } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const revalidate = 86400;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
