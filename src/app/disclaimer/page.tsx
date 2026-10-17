@@ -31,7 +31,7 @@ export default function DisclaimerPage() {
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             The information provided by <strong>BunusRadar</strong> on <a href="https://bunusradar.site" className="text-[#1b2e67] dark:text-[#f9b44d] font-semibold underline">https://bunusradar.site</a> is published for general educational, analytical, and informational purposes only.
           </p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
             Last Updated: October 10, 2026
           </p>
         </div>

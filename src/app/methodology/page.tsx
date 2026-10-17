@@ -104,7 +104,7 @@ export default function MethodologyPage() {
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             Every AI tool reviewed on BunusRadar is tested using a standardized, reproducible evaluation framework. We define our criteria before testing, run identical workloads across competing tools, and publish our methodology so you can evaluate our conclusions.
           </p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
             Last updated: October 2026 · Maintained by{' '}
             <Link href="/author/alex-vance" className="text-[#1b2e67] font-semibold hover:underline">Alex Vance</Link>,{' '}
             AI Architecture Lead

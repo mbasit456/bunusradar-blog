@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             At <strong>BunusRadar</strong>, accessible from <a href="https://bunusradar.site" className="text-[#1b2e67] dark:text-[#f9b44d] font-semibold underline">https://bunusradar.site</a>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by BunusRadar and how we use it.
           </p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
             Last Updated: October 10, 2026 • Effective Date: January 1, 2024
           </p>
         </div>

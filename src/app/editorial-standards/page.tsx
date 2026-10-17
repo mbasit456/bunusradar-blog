@@ -31,7 +31,7 @@ export default function EditorialStandardsPage() {
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             At <strong>BunusRadar</strong>, our mission is to provide authoritative, actionable, and transparent intelligence across Technology, Artificial Intelligence, Business & Growth, Productivity, and Modern Lifestyle.
           </p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
             Last Updated: September 23, 2026 • Published by the BunusRadar Editorial Board
           </p>
         </div>

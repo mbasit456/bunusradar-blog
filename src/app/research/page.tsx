@@ -65,7 +65,6 @@ export default function ResearchPage() {
         description: 'Task success rate, bug count, latency, and cost for 6 leading AI coding assistants across 50 standardized repository tasks.',
         url: `${baseUrl}/research`,
         creator: { '@type': 'Organization', name: 'BunusRadar', url: baseUrl },
-        datePublished: '2026-09-01',
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
       {
@@ -74,7 +73,6 @@ export default function ResearchPage() {
         description: 'Current public pricing per million tokens for leading large language models, updated quarterly.',
         url: `${baseUrl}/research`,
         creator: { '@type': 'Organization', name: 'BunusRadar', url: baseUrl },
-        datePublished: '2026-10-01',
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
     ],
@@ -105,7 +103,7 @@ export default function ResearchPage() {
             <Link href="/methodology" className="text-[#1b2e67] font-semibold hover:underline">published methodology</Link>.
             Free to cite with attribution.
           </p>
-          <p className="text-xs text-zinc-400">
+          <p data-nosnippet="true" className="text-xs text-zinc-400">
             All data is collected under standardized conditions. See{' '}
             <Link href="/methodology" className="text-[#1b2e67] hover:underline">Methodology</Link>{' '}
             for full evaluation criteria. Last updated: October 2026.
@@ -184,7 +182,7 @@ export default function ResearchPage() {
                   LLM Pricing & Token Efficiency Tracker 2026
                 </h2>
               </div>
-              <p className="text-sm text-zinc-500">Public API pricing for leading LLMs · Updated: October 2026 · Context: per million tokens</p>
+              <p data-nosnippet="true" className="text-sm text-zinc-500">Public API pricing for leading LLMs · Updated: October 2026 · Context: per million tokens</p>
             </div>
             <Link
               href="/blog/deepseek-ai-vs-chatgpt-vs-claude-ultimate-showdown"
@@ -302,7 +300,7 @@ export default function ResearchPage() {
           <p className="text-sm text-zinc-500 mb-3">
             This data is published under Creative Commons Attribution 4.0 (CC BY 4.0). You may republish, quote, or summarize it with attribution.
           </p>
-          <div className="bg-zinc-900 text-zinc-100 rounded-xl p-4 font-mono text-xs">
+          <div data-nosnippet="true" className="bg-zinc-900 text-zinc-100 rounded-xl p-4 font-mono text-xs">
             BunusRadar Research Team. &quot;AI Coding Assistant Benchmark 2026.&quot; BunusRadar, September 2026, https://bunusradar.site/research#ai-coding-benchmark
           </div>
         </div>

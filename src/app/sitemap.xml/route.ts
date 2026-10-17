@@ -12,20 +12,20 @@ export async function GET() {
   const tags = getAllTags();
   const nowIso = new Date().toISOString();
 
-  // Static Pages
+  // Static Pages (no lastmod to prevent Google from showing snippet dates on evergreen pages)
   const staticPages = [
-    { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0', lastmod: nowIso },
-    { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9', lastmod: nowIso },
-    { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.9', lastmod: nowIso },
-    { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.9', lastmod: nowIso },
-    { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8', lastmod: nowIso },
-    { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8', lastmod: nowIso },
-    { url: `${baseUrl}/editorial-standards`, changefreq: 'monthly', priority: '0.8', lastmod: '2026-09-23T00:00:00+00:00' },
-    { url: `${baseUrl}/privacy-policy`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
-    { url: `${baseUrl}/terms-and-conditions`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
-    { url: `${baseUrl}/disclaimer`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
-    { url: `${baseUrl}/contact`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
-    { url: `${baseUrl}/cookie-policy`, changefreq: 'monthly', priority: '0.7', lastmod: nowIso },
+    { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0' },
+    { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9' },
+    { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.9' },
+    { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.9' },
+    { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8' },
+    { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8' },
+    { url: `${baseUrl}/editorial-standards`, changefreq: 'monthly', priority: '0.8' },
+    { url: `${baseUrl}/privacy-policy`, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/terms-and-conditions`, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/disclaimer`, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/contact`, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/cookie-policy`, changefreq: 'monthly', priority: '0.7' },
   ];
 
   // Author Profile Pages
@@ -33,7 +33,6 @@ export async function GET() {
     url: `${baseUrl}/author/${author.slug}`,
     changefreq: 'weekly',
     priority: '0.8',
-    lastmod: nowIso,
   }));
 
   // Category Pages
@@ -41,7 +40,6 @@ export async function GET() {
     url: `${baseUrl}/category/${cat.slug}`,
     changefreq: 'daily',
     priority: '0.8',
-    lastmod: nowIso,
   }));
 
   // Tag Pages
@@ -49,10 +47,9 @@ export async function GET() {
     url: `${baseUrl}/tag/${encodeURIComponent(tag.trim())}`,
     changefreq: 'weekly',
     priority: '0.6',
-    lastmod: nowIso,
   }));
 
-  // Article Pages
+  // Article Pages (retains lastmod for article freshness and Google News)
   const articlePages = posts.map((post) => {
     const postDate = new Date(post.rawDate || post.date);
     const lastmod = isNaN(postDate.getTime()) ? nowIso : postDate.toISOString();
@@ -68,9 +65,8 @@ export async function GET() {
 
   const xmlEntries = allUrls
     .map(
-      (item) => `  <url>
-    <loc>${item.url}</loc>
-    <lastmod>${item.lastmod}</lastmod>
+      (item: { url: string; changefreq: string; priority: string; lastmod?: string }) => `  <url>
+    <loc>${item.url}</loc>${item.lastmod ? `\n    <lastmod>${item.lastmod}</lastmod>` : ''}
     <changefreq>${item.changefreq}</changefreq>
     <priority>${item.priority}</priority>
   </url>`

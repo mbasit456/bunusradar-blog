@@ -31,7 +31,7 @@ export default function PrivacyTermsPage() {
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             This document outlines how <strong>BunusRadar</strong> (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) collects, uses, and protects your information when you visit <a href="https://bunusradar.site" className="text-[#1b2e67] dark:text-[#f9b44d] underline">bunusradar.site</a>, along with the terms governing your use of our publication.
           </p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
             Effective Date: September 23, 2026
           </p>
         </div>

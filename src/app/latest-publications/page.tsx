@@ -82,7 +82,7 @@ export default function LatestPublicationsPage() {
               {/* Content */}
               <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+                  <div data-nosnippet="true" className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5 text-[#f9b44d]" />
                       {post.date}

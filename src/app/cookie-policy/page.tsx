@@ -31,7 +31,7 @@ export default function CookiePolicyPage() {
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             This Cookie Policy explains what cookies are, how <strong>BunusRadar</strong> uses cookies and similar tracking technologies on <a href="https://bunusradar.site" className="text-[#1b2e67] dark:text-[#f9b44d] font-semibold underline">https://bunusradar.site</a>, and your choices regarding cookies.
           </p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
             Last Updated: October 10, 2026 • Compliant with ePrivacy Directive, GDPR, and Google AdSense
           </p>
         </div>
