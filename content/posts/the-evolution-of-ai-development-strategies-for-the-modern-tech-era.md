@@ -5,7 +5,7 @@ excerpt: "Discover how modern ai development is transforming industries through 
 category: "Artificial Intelligence"
 tags: ["ai development", "artificial intelligence", "software engineering", "coding assistants", "business technology"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/the-evolution-of-ai-development-strategies-for-the-modern-tech-era.jpg"
 readingTime: "8 min read"
 featured: false
 ---

@@ -5,7 +5,7 @@ excerpt: "Discover why the Woolino sleep sack is a cult favorite among parents. 
 category: "Lifestyle"
 tags: ["Baby Gear", "Infant Sleep", "Parenting", "Sleep Sacks", "Nursery Essentials"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/woolino-sleep-sack-merino-wool-review.jpg"
 readingTime: "8 min read"
 featured: false
 ---

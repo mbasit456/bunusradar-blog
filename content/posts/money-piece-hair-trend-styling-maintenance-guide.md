@@ -5,7 +5,7 @@ excerpt: "Explore money piece hair, the high-impact face-framing hair trend. Lea
 category: "Lifestyle"
 tags: ["money piece hair", "hair trends", "hair styling", "balayage", "beauty tips"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/money-piece-hair-trend-styling-maintenance-guide.jpg"
 readingTime: "7 min read"
 featured: false
 ---

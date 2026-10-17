@@ -5,7 +5,7 @@ excerpt: "Discover how high-growth organizations leverage digital infrastructure
 category: "Business & Growth"
 tags: ["Business & Growth", "Productivity", "Workflow Optimization", "Enterprise Infrastructure", "Market Dynamics"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/architecting-enterprise-scale-and-productivity-on-national-coffee-day.jpg"
 readingTime: "7 min read"
 featured: false
 ---

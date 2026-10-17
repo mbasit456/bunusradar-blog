@@ -5,7 +5,7 @@ excerpt: "Discover the evolution of the tooth fairy tradition, from folklore and
 category: "Lifestyle"
 tags: ["parenting", "childhood traditions", "family economics", "lifestyle trends", "modern family"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/modern-tooth-fairy-folklore-economics-tech.jpg"
 readingTime: "7 min read"
 featured: false
 ---

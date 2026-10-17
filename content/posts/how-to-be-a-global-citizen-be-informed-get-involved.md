@@ -5,7 +5,7 @@ excerpt: "Discover how to be a global citizen: be informed. get involved. Learn 
 category: "Lifestyle"
 tags: ["Global Citizenship", "Social Impact", "Digital Literacy", "Productivity", "Community Engagement"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/how-to-be-a-global-citizen-be-informed-get-involved.jpg"
 readingTime: "8 min read"
 featured: false
 ---

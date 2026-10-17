@@ -5,7 +5,7 @@ excerpt: "Discover how modern organizations leverage ai in business to optimize 
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Business & Growth", "Enterprise Architecture", "Workflow Automation", "Digital Transformation"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/scaling-operations-strategic-evolution-of-ai-in-business.jpg"
 readingTime: "8 min read"
 featured: false
 ---

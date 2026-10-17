@@ -5,7 +5,7 @@ excerpt: "Discover the enduring power of Maya Angelou poems. Explore thematic an
 category: "Lifestyle"
 tags: ["Maya Angelou", "Poetry", "Resilience", "Literature", "Personal Growth"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/maya-angelou-poems-resilience-hope-analysis.jpg"
 readingTime: "8 min read"
 featured: false
 ---

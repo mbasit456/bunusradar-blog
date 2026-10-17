@@ -5,7 +5,7 @@ excerpt: "Explore how the future of ai is reshaping enterprise software architec
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise Software", "Business & Growth", "Automation", "Technology"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/navigating-the-future-of-ai-in-enterprise-software-architectures.jpg"
 readingTime: "8 min read"
 featured: false
 ---

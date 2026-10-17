@@ -5,7 +5,7 @@ excerpt: "Analyze the operational and digital infrastructure failures behind why
 category: "Business & Growth"
 tags: ["Business Strategy", "Retail Technology", "Bankruptcy Analysis", "Supply Chain", "Digital Transformation"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/lugano-diamonds-and-jewelry-filed-for-chapter-11-bankruptcy-business-analysis.jpg"
 readingTime: "8 min read"
 featured: false
 ---

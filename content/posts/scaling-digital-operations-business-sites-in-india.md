@@ -5,7 +5,7 @@ excerpt: "Explore how enterprise architecture, cloud infrastructure, and modern 
 category: "Business & Growth"
 tags: ["Business & Growth", "Digital Infrastructure", "SaaS", "Enterprise Architecture", "Market Dynamics"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/scaling-digital-operations-business-sites-in-india.jpg"
 readingTime: "8 min read"
 featured: false
 ---
