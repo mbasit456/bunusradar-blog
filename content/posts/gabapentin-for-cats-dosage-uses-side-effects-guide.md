@@ -5,7 +5,7 @@ excerpt: "A veterinary-focused guide to gabapentin for cats, covering clinical u
 category: "Lifestyle"
 tags: ["Gabapentin for Cats", "Feline Health", "Pet Care", "Veterinary Medicine", "Cat Anxiety"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/gabapentin-for-cats-dosage-uses-side-effects-guide.jpg"
 readingTime: "7 min read"
 featured: false
 ---

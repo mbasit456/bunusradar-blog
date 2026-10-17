@@ -5,7 +5,7 @@ excerpt: "Discover how implementing a salary calculator arkansas revolutionizes 
 category: "Business & Growth"
 tags: ["Business & Growth", "Digital Infrastructure", "Enterprise Software", "Productivity", "Compensation Systems"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/optimizing-compensation-workflows-salary-calculator-arkansas.jpg"
 readingTime: "7 min read"
 featured: false
 ---

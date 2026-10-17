@@ -5,7 +5,7 @@ excerpt: "Analyze the SaaS acquisition metrics, unit economics, and digital funn
 category: "Business & Growth"
 tags: ["EdTech", "SaaS Metrics", "Customer Acquisition", "Business Strategy", "Digital Marketing"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/scaling-edtech-platforms-why-coursehero-promo-code-matters.jpg"
 readingTime: "8 min read"
 featured: false
 ---

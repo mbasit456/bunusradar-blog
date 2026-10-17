@@ -5,7 +5,7 @@ excerpt: "Discover how modern enterprises leverage advanced ai technology to opt
 category: "Artificial Intelligence"
 tags: ["ai technology", "enterprise ai", "business strategy", "digital transformation", "automation"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop"
+coverImage: "/images/posts/architecting-enterprise-growth-strategic-impact-ai-technology.jpg"
 readingTime: "8 min read"
 featured: false
 ---

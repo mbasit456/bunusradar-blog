@@ -104,7 +104,11 @@ function getUsedCoverImages() {
     try {
       const content = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8');
       const match = content.match(/^coverImage:\s*"([^"]+)"/m);
-      if (match) used.add(match[1].trim());
+      if (match) {
+        const raw = match[1].trim();
+        used.add(raw);
+        used.add(raw.split('?')[0]);
+      }
     } catch {}
   }
   return used;
@@ -115,20 +119,22 @@ function getUniqueCoverImage(category, slug) {
   const allUsed = new Set([...existingUsed, ...USED_IMAGES_IN_SESSION]);
 
   const pool = CATEGORY_IMAGE_POOLS[category] || CATEGORY_IMAGE_POOLS['Technology'];
-  const unusedInPool = pool.filter(url => !allUsed.has(url));
+  const unusedInPool = pool.filter(url => !allUsed.has(url) && !allUsed.has(url.split('?')[0]));
 
   if (unusedInPool.length > 0) {
     const selected = randomItem(unusedInPool);
     USED_IMAGES_IN_SESSION.add(selected);
+    USED_IMAGES_IN_SESSION.add(selected.split('?')[0]);
     return selected;
   }
 
   // Fallback to unused image in any category pool
   const allImages = Object.values(CATEGORY_IMAGE_POOLS).flat();
-  const unusedGeneral = allImages.filter(url => !allUsed.has(url));
+  const unusedGeneral = allImages.filter(url => !allUsed.has(url) && !allUsed.has(url.split('?')[0]));
   if (unusedGeneral.length > 0) {
     const selected = randomItem(unusedGeneral);
     USED_IMAGES_IN_SESSION.add(selected);
+    USED_IMAGES_IN_SESSION.add(selected.split('?')[0]);
     return selected;
   }
 
