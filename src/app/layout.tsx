@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     shortcut: '/icon.svg',
     apple: '/icon.svg',
   },
+  verification: {
+    google: '3QuKOWLDuDfl67wUic-ERPRFtN1eTinhVdO5pjn-O28',
+  },
   other: {
     'google-adsense-account': 'ca-pub-6911732447309638',
   },
