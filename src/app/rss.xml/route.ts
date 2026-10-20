@@ -19,6 +19,10 @@ export async function GET() {
       const pubDate = new Date(post.rawDate || post.date);
       const validDate = isNaN(pubDate.getTime()) ? new Date().toUTCString() : pubDate.toUTCString();
       const articleUrl = `${baseUrl}/blog/${post.slug}`;
+      const rawImage = post.coverImage || '';
+      const fullImageUrl = rawImage
+        ? (rawImage.startsWith('http') ? rawImage : `${baseUrl}${rawImage.startsWith('/') ? rawImage : `/${rawImage}`}`)
+        : '';
 
       return `
     <item>
@@ -29,12 +33,15 @@ export async function GET() {
       <pubDate>${validDate}</pubDate>
       <category><![CDATA[${post.category}]]></category>
       <author><![CDATA[${post.author?.name || 'BunusRadar Editorial'}]]></author>
+      ${fullImageUrl ? `<enclosure url="${fullImageUrl}" type="image/jpeg" length="0" />
+      <media:content url="${fullImageUrl}" medium="image" />
+      <media:thumbnail url="${fullImageUrl}" />` : ''}
     </item>`;
     })
     .join('');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>BunusRadar</title>
     <link>${baseUrl}</link>

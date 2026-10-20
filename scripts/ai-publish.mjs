@@ -18,6 +18,8 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { submitToIndexNow } from './submit-indexnow.mjs';
+import { pingSearchEngines } from './ping-search-engines.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -570,6 +572,15 @@ async function main() {
   published.forEach(p => console.log(`   • [${p.timestamp}] ${p.title}`));
 
   gitPush(published.map(p => p.filename));
+
+  // Programmatic rapid indexing notifications
+  try {
+    const urls = published.map(p => `https://bunusradar.site/blog/${p.filename.replace(/\.mdx?$/, '')}`);
+    await submitToIndexNow(urls);
+    await pingSearchEngines();
+  } catch (notifyErr) {
+    console.warn('  ⚠️ Search engine notification notice:', notifyErr.message);
+  }
 
   console.log(`\n🎉 Success! All articles scheduled with 4-hour intervals.`);
 }
