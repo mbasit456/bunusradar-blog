@@ -37,8 +37,6 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   }
 
   const canonicalUrl = `https://bunusradar.site/blog/${post.slug}`;
-  const postDate = new Date(post.rawDate || post.date);
-  const pubDateIso = isNaN(postDate.getTime()) ? new Date().toISOString() : postDate.toISOString();
 
   return {
     title: `${post.title} - BunusRadar`,
@@ -52,8 +50,6 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       title: post.title,
       description: post.excerpt,
       type: 'article',
-      publishedTime: pubDateIso,
-      modifiedTime: pubDateIso,
       authors: [post.author.name],
       images: [
         {
@@ -116,9 +112,6 @@ export default async function PostPage({ params }: PostPageProps) {
 
   // JSON-LD structured data for rich snippets - full Person or Organization schema for attribution
   const isOrgAuthor = authorSlug === 'bunusradar-editorial';
-  const postDate = new Date(post.rawDate || post.date);
-  const pubDateIso = isNaN(postDate.getTime()) ? new Date().toISOString() : postDate.toISOString();
-  const modDateIso = pubDateIso;
   const isNewsReporting = ['technology', 'ai', 'business'].includes(post.category?.toLowerCase());
 
   const articleSchema = {
@@ -127,8 +120,6 @@ export default async function PostPage({ params }: PostPageProps) {
     headline: post.title,
     description: post.excerpt,
     image: post.coverImage ? [post.coverImage] : [],
-    datePublished: pubDateIso,
-    dateModified: modDateIso,
     wordCount: post.content?.split(/\s+/).length,
     inLanguage: 'en-US',
     isAccessibleForFree: true,

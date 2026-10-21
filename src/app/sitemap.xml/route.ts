@@ -49,17 +49,12 @@ export async function GET() {
     priority: '0.6',
   }));
 
-  // Article Pages (retains lastmod for article freshness and Google News)
-  const articlePages = posts.map((post) => {
-    const postDate = new Date(post.rawDate || post.date);
-    const lastmod = isNaN(postDate.getTime()) ? nowIso : postDate.toISOString();
-    return {
-      url: `${baseUrl}/blog/${post.slug}`,
-      changefreq: 'daily',
-      priority: '0.9',
-      lastmod,
-    };
-  });
+  // Article Pages (no lastmod to prevent Google from prepending dates in search snippets)
+  const articlePages = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    changefreq: 'daily',
+    priority: '0.9',
+  }));
 
   const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...tagPages, ...articlePages];
 
