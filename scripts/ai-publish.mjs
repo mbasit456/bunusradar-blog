@@ -375,6 +375,13 @@ Category pillars:
 4. NEVER use generic anchor text like "click here" or "read more".
 5. NEVER invent URLs. If a relevant destination is not available, leave text unlinked.
 
+GENERATIVE ENGINE OPTIMIZATION (GEO) & GOOGLE AI OVERVIEW REQUIREMENTS:
+To ensure Google's Gemini and search AI Overviews cite this article as a primary source:
+1. Direct Answer Capsule: Immediately after the introduction, write a 40-50 word standalone, factual direct answer to the core question/topic.
+2. Key Takeaways: Include a clear bulleted list of 3-5 high-density insights.
+3. Structured Data Table: Include at least one markdown table (| Feature / Dimension | Details / Benchmark | Analysis |) comparing key aspects.
+4. FAQ Section: End with a "## Frequently Asked Questions" section containing 3 to 4 question subheadings ending with a question mark (e.g., "### What are the main benefits of ...?"), each followed by a concise 2-sentence direct answer.
+
 STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
 {
   "title": "Engaging, click-worthy article title containing the keyword naturally (55-70 chars)",
@@ -383,7 +390,7 @@ STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
   "category": "ONE of: Technology | Artificial Intelligence | Business & Growth | Productivity | Lifestyle",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
   "readingTime": "estimated reading time like '7 min read'",
-  "body": "Full article in markdown (1300-1800 words). Use ## for H2 headings, ### for H3. Include an engaging intro, 4-6 detailed sections with actionable insights, bullet points/tables where helpful, and a thoughtful conclusion. NO frontmatter, just the body content."
+  "body": "Full article in markdown (1300-1800 words). Use ## for H2 headings, ### for H3. Include an engaging intro, Direct Answer Capsule, Key Takeaways, 4-6 detailed analytical sections, at least one markdown comparison table, and a dedicated Frequently Asked Questions section with 3-4 questions ending in '?'. NO frontmatter, just the body content."
 }`;
 
   console.log(`  ✍️  Generating: "${keyword}" (Attempt ${attempt})...`);
