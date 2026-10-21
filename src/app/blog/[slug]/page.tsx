@@ -274,7 +274,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   </Link>
                 </span>
                 <span>•</span>
-                <span className="flex items-center gap-1">
+                <span data-nosnippet="true" className="flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />
                   {post.date}
                 </span>

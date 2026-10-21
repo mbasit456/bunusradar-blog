@@ -46,7 +46,7 @@ export default function ArticleCard({ post }: ArticleCardProps) {
 
         <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-500">
           <span className="font-semibold text-zinc-700">By {post.author.name}</span>
-          <span>{post.date}</span>
+          <span data-nosnippet="true">{post.date}</span>
         </div>
       </div>
     </article>
