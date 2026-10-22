@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getAllTags } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
@@ -47,8 +47,15 @@ export async function GET() {
     priority: '0.9',
   }));
 
-  // Tag archives are intentionally excluded from sitemap to prevent thin-content duplicate indexing
-  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...articlePages];
+  // Tag Hub Pages
+  const tags = getAllTags();
+  const tagPages = tags.map(({ tag }) => ({
+    url: `${baseUrl}/tag/${encodeURIComponent(tag.trim())}`,
+    changefreq: 'weekly',
+    priority: '0.6',
+  }));
+
+  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...articlePages, ...tagPages];
 
   const xmlEntries = allUrls
     .map(

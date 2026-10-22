@@ -19,28 +19,6 @@ const nextConfig = {
       },
     ],
   },
-  async headers() {
-    return [
-      {
-        source: '/llms.txt',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, follow' },
-        ],
-      },
-      {
-        source: '/llms-full.txt',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, follow' },
-        ],
-      },
-      {
-        source: '/rss.xml',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, follow' },
-        ],
-      },
-    ];
-  },
 };
 
 export default nextConfig;

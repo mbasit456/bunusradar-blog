@@ -40,11 +40,14 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     title: `#${cleanTag}`,
     description: `Articles and guides tagged with #${cleanTag} on BunusRadar`,
     robots: {
-      index: false,
+      index: true,
       follow: true,
       googleBot: {
-        index: false,
+        index: true,
         follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
       },
     },
     alternates: {
