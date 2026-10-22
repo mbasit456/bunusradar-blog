@@ -300,24 +300,8 @@ function getUnusedFrom(filePath, requestedCount) {
  * Returns balanced daily keywords: 3 from keywords.json and 1 from ai-keywords.json per day.
  */
 function getDailyKeywords(totalCount) {
-  const days = Math.ceil(totalCount / 4);
-  const generalKw = getUnusedFrom(KEYWORDS_FILE, days * 3);
-  const aiKw = getUnusedFrom(AI_KEYWORDS_FILE, days * 1);
-
-  const result = [];
-  let gIdx = 0;
-  let aIdx = 0;
-
-  for (let d = 0; d < days; d++) {
-    for (let i = 0; i < 3 && gIdx < generalKw.length; i++) {
-      if (result.length < totalCount) result.push(generalKw[gIdx++]);
-    }
-    if (aIdx < aiKw.length && result.length < totalCount) {
-      result.push(aiKw[aIdx++]);
-    }
-  }
-
-  return result;
+  // 100% of daily articles sourced exclusively from target keywords (ai-keywords.json)
+  return getUnusedFrom(AI_KEYWORDS_FILE, totalCount);
 }
 
 // ─── ARTICLE GENERATION VIA GEMINI ─────────────────────────────────────────────
@@ -499,7 +483,7 @@ function gitPush(filenames) {
 
 async function main() {
   const args = process.argv.slice(2);
-  let count = 4; // Default: 4 articles daily (3 from keywords.json + 1 from ai-keywords.json)
+  let count = 4; // Default: 4 articles daily (100% from ai-keywords.json)
   let explicitKeywords = [];
 
   for (const arg of args) {
