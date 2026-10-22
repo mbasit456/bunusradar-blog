@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Avista Typography: Inter, Geist Mono, Mona Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Space+Grotesk:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome & Flaticon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-min.css">
+  <link rel="stylesheet" href="assets/css/flaticon-avista.css">
+  
+  <!-- Bootstrap & Avista Core CSS -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/animate-min.css">
+  <link rel="stylesheet" href="assets/css/swiper.min.css">
+  <link rel="stylesheet" href="assets/css/avista-core.css">
+
+  <style>
+    :root {
+      --primary: #fd3f00;
+      --secondary: #7A5AF8;
+      --bg-dark: #0c0d12;
+      --bg-card: #14151e;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-muted: #9496a1;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #f0f2f7;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .as-h-1, .title, .logo-text {
+      font-family: 'Mona Sans', 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    code, .font-mono, .badge-tag {
+      font-family: 'Geist Mono', monospace;
+    }
+
+    /* Custom Cursor Styles from Avista */
+    .wa-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999999;
+      pointer-events: none;
+      width: 14px;
+      height: 14px;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, background-color 0.25s, opacity 0.25s;
+      mix-blend-mode: difference;
+    }
+    .wa-cursor.-pointer {
+      width: 48px;
+      height: 48px;
+      background: rgba(253, 63, 0, 0.35);
+      border: 1px solid var(--primary);
+      backdrop-filter: blur(2px);
+    }
+    .wa-cursor.-active {
+      transform: translate(-50%, -50%) scale(0.75);
+    }
+
+    /* Avista Home-03 Navigation */
+    .star-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(12, 13, 18, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 0;
+      transition: all 0.3s ease;
+    }
+    .star-nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .star-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .star-brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fd3f00, #7A5AF8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 0 24px rgba(253, 63, 0, 0.4);
+    }
+    .star-brand-text {
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .star-brand-text span {
+      color: var(--primary);
+    }
+    .star-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .star-nav-links a {
+      color: #c4c7d4;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    .star-nav-links a:hover, .star-nav-links a.active {
+      color: #fff;
+    }
+    .star-dropdown {
+      position: relative;
+    }
+    .star-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: -100px;
+      width: 600px;
+      background: #14151e;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.8);
+      z-index: 1001;
+    }
+    .star-dropdown:hover .star-dropdown-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .star-sub-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .star-sub-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .star-sub-item .icon {
+      color: var(--primary);
+      font-size: 16px;
+      margin-top: 2px;
+    }
+    .star-sub-item .title {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .star-sub-item .desc {
+      color: var(--text-muted);
+      font-size: 12px;
+      display: block;
+      line-height: 1.4;
+    }
+    .btn-cta-avista {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 100px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(253, 63, 0, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-cta-avista:hover {
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(253, 63, 0, 0.6);
+    }
+
+    /* Avista Rotating Circle Text Badge */
+    .rotating-circle-badge {
+      width: 140px;
+      height: 140px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rotating-circle-badge .circle-img {
+      width: 100%;
+      height: 100%;
+      animation: spinCircle 16s linear infinite;
+    }
+    .rotating-circle-badge .center-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+    }
+    @keyframes spinCircle {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Fixed Watermark Background Text */
+    .as-home-4-logo-fixed {
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.04;
+    }
+    .as-home-4-logo-fixed .logo-text {
+      font-size: 18vw;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: #fff;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    /* Hero Background Video */
+    .as-hero-4-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .as-hero-4-bg-img video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      filter: saturate(1.4) contrast(1.1);
+    }
+    .as-hero-4-bg-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(12, 13, 18, 0.4) 0%, rgba(12, 13, 18, 0.95) 85%);
+    }
+
+    /* Marquee Banners */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      padding: 16px 0;
+    }
+    .marquee-track {
+      display: inline-flex;
+      align-items: center;
+      animation: marqueeLeft 28s linear infinite;
+    }
+    .marquee-track-reverse {
+      display: inline-flex;
+      align-items: center;
+      animation: marqueeRight 28s linear infinite;
+    }
+    .marquee-container:hover .marquee-track,
+    .marquee-container:hover .marquee-track-reverse {
+      animation-play-state: paused;
+    }
+    @keyframes marqueeLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes marqueeRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+      padding: 0 24px;
+    }
+    .marquee-item i {
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    /* Pricing Cards (for subpages) */
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(253, 63, 0, 0.4);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
+    }
+    .pricing-card.featured {
+      border-color: var(--primary);
+      background: linear-gradient(180deg, rgba(253, 63, 0, 0.08) 0%, var(--bg-card) 60%);
+    }
+
+    /* Footer */
+    .as-footer {
+      background: #08090d;
+      border-top: 1px solid var(--border-color);
+      padding: 80px 0 40px;
+      position: relative;
+      z-index: 10;
+    }
+  </style>
+
+  <title>GMB Verified Listings - 100% Phone & Postcard Verified Google Maps Profiles | Star SEO | Star SEO</title>
+  <meta name="description" content="Verified Google Business Profiles from 1 listing ($400) to 50 listings ($20,000). Google login credentials provided with a 30-day replacement warranty.">
+</head>
+<body>
+  
+  <nav class="star-navbar">
+    <div class="container">
+      <div class="star-nav-wrap">
+        <!-- Logo -->
+        <a href="/" class="star-brand">
+          <div class="star-brand-logo">★</div>
+          <div class="star-brand-text">STAR <span>SEO</span></div>
+        </a>
+
+        <!-- Menu -->
+        <ul class="star-nav-links d-none d-lg-flex">
+          <li><a href="/">Home</a></li>
+          <li class="star-dropdown">
+            <a href="guest-posting.html" class="d-flex align-items-center gap-1">
+              Services <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>
+            </a>
+            <div class="star-dropdown-menu">
+              <a href="guest-posting.html" class="star-sub-item">
+                <i class="fa-solid fa-newspaper icon"></i>
+                <div>
+                  <span class="title">Guest Posting</span>
+                  <span class="desc">High DR real editorial blogs ($120–$3,450)</span>
+                </div>
+              </a>
+              <a href="niche-edit-backlinks.html" class="star-sub-item">
+                <i class="fa-solid fa-link icon"></i>
+                <div>
+                  <span class="title">Niche Edit Backlinks</span>
+                  <span class="desc">Curated contextual links with real traffic ($80–$2,800)</span>
+                </div>
+              </a>
+              <a href="foreign-links.html" class="star-sub-item">
+                <i class="fa-solid fa-earth-americas icon"></i>
+                <div>
+                  <span class="title">Foreign Country Links</span>
+                  <span class="desc">Country-specific TLDs ES, FR, DE, IT ($100–$2,450)</span>
+                </div>
+              </a>
+              <a href="white-hat-links.html" class="star-sub-item">
+                <i class="fa-solid fa-shield-halved icon"></i>
+                <div>
+                  <span class="title">White Hat Bundles</span>
+                  <span class="desc">Comprehensive multi-tier link campaigns ($350–$1,450)</span>
+                </div>
+              </a>
+              <a href="wikipedia-backlinks.html" class="star-sub-item">
+                <i class="fa-solid fa-book-bookmark icon"></i>
+                <div>
+                  <span class="title">Wikipedia Backlinks</span>
+                  <span class="desc">Permanent tier-1 citations ($89–$8,900)</span>
+                </div>
+              </a>
+              <a href="edu-backlinks.html" class="star-sub-item">
+                <i class="fa-solid fa-graduation-cap icon"></i>
+                <div>
+                  <span class="title">EDU &amp; GOV Backlinks</span>
+                  <span class="desc">University &amp; state authority links ($60–$2,700)</span>
+                </div>
+              </a>
+              <a href="gmb-verification.html" class="star-sub-item">
+                <i class="fa-solid fa-location-dot icon"></i>
+                <div>
+                  <span class="title">GMB Verification</span>
+                  <span class="desc">Guaranteed postcard/video verification ($400–$20k)</span>
+                </div>
+              </a>
+              <a href="gmb-accelerated-seo.html" class="star-sub-item">
+                <i class="fa-solid fa-bolt icon"></i>
+                <div>
+                  <span class="title">GMB Accelerated SEO</span>
+                  <span class="desc">Local 3-Pack rank takeover ($459–$1,628)</span>
+                </div>
+              </a>
+              <a href="local-citations.html" class="star-sub-item">
+                <i class="fa-solid fa-map-pin icon"></i>
+                <div>
+                  <span class="title">Local Citations</span>
+                  <span class="desc">100% NAP manual directory submissions ($25–$500)</span>
+                </div>
+              </a>
+              <a href="mini-networks.html" class="star-sub-item">
+                <i class="fa-solid fa-diagram-project icon"></i>
+                <div>
+                  <span class="title">Authority Mini Networks</span>
+                  <span class="desc">Private 5-site dedicated authority rings ($167)</span>
+                </div>
+              </a>
+              <a href="seo-plans.html" class="star-sub-item">
+                <i class="fa-solid fa-chart-line icon"></i>
+                <div>
+                  <span class="title">Monthly SEO Plans</span>
+                  <span class="desc">All-in-one recurring ranking retainer ($65–$170/mo)</span>
+                </div>
+              </a>
+              <a href="managed-link-building.html" class="star-sub-item">
+                <i class="fa-solid fa-handshake-angle icon"></i>
+                <div>
+                  <span class="title">Managed Link Building</span>
+                  <span class="desc">Dedicated outreach department ($999–$3,499/mo)</span>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <!-- Right CTA -->
+        <div class="d-flex align-items-center gap-3">
+          <a href="contact.html" class="btn-cta-avista">
+            <span>Free SEO Audit</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main style="padding-top: 80px;">
+    
+  <!-- Page Hero (Avista Signature Layout) -->
+  <section class="relative pt-16 pb-20 overflow-hidden bg-[#0c0d12] border-b border-white/[0.08]">
+    <!-- Ambient ambient glow -->
+    <div class="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#fd3f00]/10 blur-[130px] pointer-events-none"></div>
+    <div class="absolute top-1/2 -right-32 w-[500px] h-[500px] rounded-full bg-[#7A5AF8]/15 blur-[130px] pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.04] border border-white/10 text-[#fd3f00] text-xs font-mono font-bold tracking-widest uppercase mb-6">
+        <span class="w-2 h-2 rounded-full bg-[#fd3f00] animate-ping"></span>
+        ✦ Google Business Profiles
+      </div>
+      <h1 class="font-display font-black text-4xl sm:text-6xl text-white tracking-tight uppercase leading-[1.12] max-w-4xl mx-auto mb-6">
+        100% Phone & Postcard <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#fd3f00] via-[#ff7300] to-[#7A5AF8]">GMB Verified Listings</span>
+      </h1>
+      <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto mb-8">
+        Get verified, fully functional Google Business Profiles in any location or category. Ownership transferred safely to your own client Gmail account with a 30-day replacement guarantee.
+      </p>
+      
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#gmb-pricing"  class="px-8 py-4 rounded-full bg-gradient-to-r from-[#fd3f00] to-[#ff6a00] text-white font-display font-black text-xs uppercase tracking-wider shadow-[0_0_30px_rgba(253,63,0,0.4)] hover:scale-105 transition-all flex items-center gap-2">View Official GMB Verification Tiers <span>↗</span></a><a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="px-8 py-4 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-white font-mono text-xs font-bold border border-white/10 hover:border-[#fd3f00]/50 transition-all flex items-center gap-2">Order via Skype: starseo78 </a>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="pt-8 mt-10 border-t border-white/[0.08] flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-slate-300">
+        <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#fd3f00]/20 text-[#fd3f00] flex items-center justify-center text-[10px]">✓</span> 100% Real Vetted Websites</span>
+        <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#fd3f00]/20 text-[#fd3f00] flex items-center justify-center text-[10px]">✓</span> Zero PBNs or Spun Content</span>
+        <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#fd3f00]/20 text-[#fd3f00] flex items-center justify-center text-[10px]">✓</span> 90-Day Replacement Guarantee</span>
+        <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#fd3f00]/20 text-[#fd3f00] flex items-center justify-center text-[10px]">✓</span> Live Transparent Reporting</span>
+      </div>
+    </div>
+  </section>
+
+  
+    <div style="background: rgba(253, 63, 0, 0.04); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div class="marquee-container" style="padding: 18px 0;">
+        <div class="marquee-track">
+          
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+        </div>
+      </div>
+      <div class="marquee-container" style="padding: 18px 0; border-top: 1px dashed rgba(255,255,255,0.06); background: rgba(122, 90, 248, 0.04);">
+        <div class="marquee-track-reverse">
+          
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ GUEST POSTING</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ NICHE EDITS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ HIGH DR BACKLINKS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ WIKIPEDIA CITATIONS</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ EDU & GOV DOMINANCE</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>⚡ GOOGLE 3-PACK SEO</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+    <span class="marquee-item">
+      <span>★ 100% MANUAL OUTREACH</span>
+      <i class="fa-solid fa-sparkles"></i>
+    </span>
+  
+        </div>
+      </div>
+    </div>
+  
+
+  <!-- Pricing Table (Verbatim starseo78.com Catalog: $400 to $20,000) -->
+  <section id="gmb-pricing" class="py-20 bg-[#0c0d12]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-[#fd3f00]/15 text-[#fd3f00] border border-[#fd3f00]/30 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+          ★ Verbatim Catalog & Pricing
+        </span>
+        <h2 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight uppercase">
+          Official GMB Verified Listing Packages
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-2">
+          Exact pricing matching the live catalog on starseo78.com.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 1 GMB: $400 -->
+        <div class="bg-[#14151e] rounded-3xl p-7 border border-white/[0.08] hover:border-[#fd3f00]/50 transition-all flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-mono font-bold text-[#fd3f00] uppercase tracking-wider">Single Listing</span>
+            <h4 class="font-display font-black text-2xl text-white mt-1">1 GMB Listing</h4>
+            <div class="my-6"><span class="text-5xl font-display font-black text-white">$400</span> <span class="text-xs text-slate-400 font-mono">/ listing</span></div>
+            <ul class="space-y-2.5 text-xs text-slate-400 font-medium pb-6 border-b border-white/[0.08]">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 100% Fully Verified GMB Profile</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Google Login Credentials Provided</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Primary & Secondary Categories Set</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 30-Day Replacement Guarantee</li>
+            </ul>
+          </div>
+          <a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="mt-6 block w-full py-3.5 rounded-full bg-white/[0.05] hover:bg-[#fd3f00] text-white font-mono font-bold text-xs text-center border border-white/10 hover:border-transparent transition-all">Order 1 Listing on Skype</a>
+        </div>
+
+        <!-- 5 GMB: $2,000 -->
+        <div class="bg-[#14151e] rounded-3xl p-7 border-2 border-[#fd3f00]/40 shadow-[0_0_30px_rgba(253,63,0,0.15)] transition-all flex flex-col justify-between relative">
+          <span class="absolute -top-3 right-6 bg-[#fd3f00] text-white text-[10px] font-mono font-bold uppercase px-3 py-1 rounded-full">Multi-Location</span>
+          <div>
+            <span class="text-xs font-mono font-bold text-[#fd3f00] uppercase tracking-wider">Growth Pack</span>
+            <h4 class="font-display font-black text-2xl text-white mt-1">5 GMB Listings</h4>
+            <div class="my-6"><span class="text-5xl font-display font-black text-white">$2,000</span> <span class="text-xs text-slate-400 font-mono">/ package</span></div>
+            <ul class="space-y-2.5 text-xs text-slate-400 font-medium pb-6 border-b border-white/[0.08]">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 5 Verified Google Business Profiles</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Target 5 Distinct Cities / Suburbs</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Seamless Safe Ownership Handover</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 30-Day Replacement Warranty</li>
+            </ul>
+          </div>
+          <a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="mt-6 block w-full py-3.5 rounded-full bg-gradient-to-r from-[#fd3f00] to-[#ff6a00] text-white font-mono font-bold text-xs text-center shadow-lg hover:opacity-95 transition-all">Order 5 Listings on Skype</a>
+        </div>
+
+        <!-- 10 GMB: $4,000 -->
+        <div class="bg-[#14151e] rounded-3xl p-7 border-2 border-[#7A5AF8]/40 shadow-[0_0_30px_rgba(122,90,248,0.15)] transition-all flex flex-col justify-between relative">
+          <span class="absolute -top-3 right-6 bg-[#7A5AF8] text-white text-[10px] font-mono font-bold uppercase px-3 py-1 rounded-full">Scale Local</span>
+          <div>
+            <span class="text-xs font-mono font-bold text-[#7A5AF8] uppercase tracking-wider">Regional Domination</span>
+            <h4 class="font-display font-black text-2xl text-white mt-1">10 GMB Listings</h4>
+            <div class="my-6"><span class="text-5xl font-display font-black text-white">$4,000</span> <span class="text-xs text-slate-400 font-mono">/ package</span></div>
+            <p class="text-xs text-slate-400 mb-6">10 fully verified Google Maps listings to blanket an entire metropolitan region.</p>
+          </div>
+          <a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="mt-6 block w-full py-3.5 rounded-full bg-gradient-to-r from-[#7A5AF8] to-purple-700 text-white font-mono font-bold text-xs text-center shadow-lg hover:opacity-95 transition-all">Order 10 Listings on Skype</a>
+        </div>
+
+        <!-- 20 GMB: $8,000 -->
+        <div class="bg-[#14151e] rounded-3xl p-7 border border-white/[0.08] hover:border-[#fd3f00]/50 transition-all flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-mono font-bold text-[#fd3f00] uppercase tracking-wider">Enterprise Scale</span>
+            <h4 class="font-display font-black text-2xl text-white mt-1">20 GMB Listings</h4>
+            <div class="my-6"><span class="text-5xl font-display font-black text-white">$8,000</span></div>
+            <p class="text-xs text-slate-400 mb-6">20 verified listings for large multi-state franchise networks.</p>
+          </div>
+          <a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="mt-6 block w-full py-3.5 rounded-full bg-white/[0.05] hover:bg-[#fd3f00] text-white font-mono font-bold text-xs text-center border border-white/10 hover:border-transparent transition-all">Order 20 Listings on Skype</a>
+        </div>
+
+        <!-- 30 GMB: $12,000 -->
+        <div class="bg-[#14151e] rounded-3xl p-7 border border-white/[0.08] hover:border-[#fd3f00]/50 transition-all flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-mono font-bold text-[#fd3f00] uppercase tracking-wider">National Expansion</span>
+            <h4 class="font-display font-black text-2xl text-white mt-1">30 GMB Listings</h4>
+            <div class="my-6"><span class="text-5xl font-display font-black text-white">$12,000</span></div>
+            <p class="text-xs text-slate-400 mb-6">30 verified Google Business profiles with full white-label reporting.</p>
+          </div>
+          <a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="mt-6 block w-full py-3.5 rounded-full bg-white/[0.05] hover:bg-[#fd3f00] text-white font-mono font-bold text-xs text-center border border-white/10 hover:border-transparent transition-all">Order 30 Listings on Skype</a>
+        </div>
+
+        <!-- 50 GMB: $20,000 -->
+        <div class="bg-[#14151e] rounded-3xl p-7 border border-white/[0.08] hover:border-[#fd3f00]/50 transition-all flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-mono font-bold text-[#fd3f00] uppercase tracking-wider">Franchise Domination</span>
+            <h4 class="font-display font-black text-2xl text-white mt-1">50 GMB Listings</h4>
+            <div class="my-6"><span class="text-5xl font-display font-black text-white">$20,000</span></div>
+            <p class="text-xs text-slate-400 mb-6">50 verified Google Maps profiles nationwide for enterprise scale.</p>
+          </div>
+          <a href="https://join.skype.com/invite/pnCgYI1t88HB" target="_blank" class="mt-6 block w-full py-3.5 rounded-full bg-white/[0.05] hover:bg-[#fd3f00] text-white font-mono font-bold text-xs text-center border border-white/10 hover:border-transparent transition-all">Order 50 Listings on Skype</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  </main>
+  
+  <footer class="as-footer">
+    <div class="container">
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <a href="/" class="star-brand mb-3">
+            <div class="star-brand-logo">★</div>
+            <div class="star-brand-text">STAR <span>SEO</span></div>
+          </a>
+          <p style="color:var(--text-muted); font-size:14px; max-width:320px; margin-top:16px;">
+            Elite link building, niche edits, and search engine domination for modern enterprises, SaaS companies, and digital agencies worldwide.
+          </p>
+          <div class="d-flex gap-3 mt-4">
+            <a href="https://join.skype.com/invite/starseo78" class="text-white-50 hover-white" title="Skype: starseo78"><i class="fa-brands fa-skype fa-lg"></i></a>
+            <a href="mailto:contact@starseo78.com" class="text-white-50 hover-white" title="contact@starseo78.com"><i class="fa-solid fa-envelope fa-lg"></i></a>
+            <a href="#" class="text-white-50 hover-white"><i class="fa-brands fa-x-twitter fa-lg"></i></a>
+            <a href="#" class="text-white-50 hover-white"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5 style="color:#fff; font-size:16px; font-weight:700; margin-bottom:20px; text-transform:uppercase;">Outreach</h5>
+          <ul style="list-style:none; padding:0; margin:0; font-size:14px; display:flex; flex-direction:column; gap:12px;">
+            <li><a href="guest-posting.html" style="color:var(--text-muted); text-decoration:none;">Guest Posting</a></li>
+            <li><a href="niche-edit-backlinks.html" style="color:var(--text-muted); text-decoration:none;">Niche Edits</a></li>
+            <li><a href="foreign-links.html" style="color:var(--text-muted); text-decoration:none;">Foreign Country Links</a></li>
+            <li><a href="white-hat-links.html" style="color:var(--text-muted); text-decoration:none;">White Hat Bundles</a></li>
+            <li><a href="managed-link-building.html" style="color:var(--text-muted); text-decoration:none;">Managed Outreach</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5 style="color:#fff; font-size:16px; font-weight:700; margin-bottom:20px; text-transform:uppercase;">Authority</h5>
+          <ul style="list-style:none; padding:0; margin:0; font-size:14px; display:flex; flex-direction:column; gap:12px;">
+            <li><a href="wikipedia-backlinks.html" style="color:var(--text-muted); text-decoration:none;">Wikipedia Links</a></li>
+            <li><a href="edu-backlinks.html" style="color:var(--text-muted); text-decoration:none;">EDU &amp; GOV Backlinks</a></li>
+            <li><a href="press-releases.html" style="color:var(--text-muted); text-decoration:none;">Press Releases</a></li>
+            <li><a href="mini-networks.html" style="color:var(--text-muted); text-decoration:none;">Authority Mini Networks</a></li>
+            <li><a href="seo-plans.html" style="color:var(--text-muted); text-decoration:none;">Monthly SEO Plans</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5 style="color:#fff; font-size:16px; font-weight:700; margin-bottom:20px; text-transform:uppercase;">Contact Information</h5>
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; padding:20px;">
+            <p style="color:#fff; font-weight:600; margin-bottom:8px;">Direct Skype Outreach</p>
+            <p style="font-family:'Geist Mono',monospace; color:var(--primary); font-size:15px; margin-bottom:16px;">
+              <i class="fa-brands fa-skype me-2"></i>starseo78
+            </p>
+            <p style="color:#fff; font-weight:600; margin-bottom:8px;">Direct Email</p>
+            <p style="font-family:'Geist Mono',monospace; color:var(--primary); font-size:15px; margin-bottom:0;">
+              <i class="fa-solid fa-envelope me-2"></i>contact@starseo78.com
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid var(--border-color); padding-top: 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; color:var(--text-muted); font-size:13px;">
+        <p class="mb-0">© 2026 Star SEO. All Rights Reserved. Built with Avista Theme Engine.</p>
+        <p class="mb-0">Official Contact: Skype <strong>starseo78</strong> · Email <strong>contact@starseo78.com</strong></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fixed Watermark Logo -->
+  <div class="as-home-4-logo-fixed">
+    <div class="container">
+      <h2 class="logo-text">STAR SEO</h2>
+    </div>
+  </div>
+
+  <!-- Avista Magnetic Cursor Element -->
+  <div class="wa-cursor" id="wa-cursor"></div>
+
+  <!-- Core Scripts: jQuery, GSAP, Lenis, Swiper, Avista JS -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/scrollTrigger.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/lenis.min.js"></script>
+  <script src="assets/js/cursor.js"></script>
+
+  <script>
+    // Initialize Lenis Smooth Inertia Scroll
+    try {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    } catch (e) {
+      console.log('Lenis init:', e);
+    }
+
+    // Custom Cursor follower logic
+    const cursor = document.getElementById('wa-cursor');
+    if (cursor) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button, .clickable').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('-pointer'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('-pointer'));
+      });
+      document.addEventListener('mousedown', () => cursor.classList.add('-active'));
+      document.addEventListener('mouseup', () => cursor.classList.remove('-active'));
+    }
+  </script>
+
+</body>
+</html>
