@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { permanentRedirect } from 'next/navigation';
 import { getPostsByTag, getAllTags } from '@/lib/posts';
 import PostCard from '@/components/PostCard';
 import { ArrowLeft, Tag as TagIcon } from 'lucide-react';
@@ -13,28 +14,37 @@ interface TagPageProps {
 export const dynamicParams = true;
 export const revalidate = 60;
 
+function fullyDecode(str: string): string {
+  let decoded = str;
+  try {
+    while (decoded.includes('%')) {
+      const next = decodeURIComponent(decoded);
+      if (next === decoded) break;
+      decoded = next;
+    }
+  } catch {}
+  return decoded.trim();
+}
+
 export async function generateStaticParams() {
   const tags = getAllTags();
   return tags.map(({ tag }) => ({
-    tag: encodeURIComponent(tag),
+    tag: encodeURIComponent(tag.trim()),
   }));
 }
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
-  const decodedTag = decodeURIComponent(params.tag).trim();
-  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(decodedTag)}`;
+  const cleanTag = fullyDecode(params.tag);
+  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(cleanTag)}`;
   return {
-    title: `#${decodedTag} | BunusRadar`,
-    description: `Articles and guides tagged with #${decodedTag} on BunusRadar`,
+    title: `#${cleanTag}`,
+    description: `Articles and guides tagged with #${cleanTag} on BunusRadar`,
     robots: {
-      index: true,
+      index: false,
       follow: true,
       googleBot: {
-        index: true,
+        index: false,
         follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
       },
     },
     alternates: {
@@ -42,15 +52,22 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     },
     openGraph: {
       url: canonicalUrl,
-      title: `#${decodedTag} - BunusRadar`,
-      description: `Articles tagged with #${decodedTag}`,
+      title: `#${cleanTag}`,
+      description: `Articles tagged with #${cleanTag}`,
     },
   };
 }
 
 export default function TagPage({ params }: TagPageProps) {
-  const decodedTag = decodeURIComponent(params.tag);
-  const posts = getPostsByTag(decodedTag);
+  const cleanTag = fullyDecode(params.tag);
+  const canonicalSlug = encodeURIComponent(cleanTag);
+
+  // If incoming tag URL is multi-encoded or unnormalized, permanently redirect to canonical slug
+  if (params.tag !== canonicalSlug) {
+    permanentRedirect(`/tag/${canonicalSlug}`);
+  }
+
+  const posts = getPostsByTag(cleanTag);
 
   return (
     <div className="py-8 md:py-12 space-y-12">
@@ -69,10 +86,10 @@ export default function TagPage({ params }: TagPageProps) {
             Tag Filter
           </div>
           <h1 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
-            #{decodedTag}
+            #{cleanTag}
           </h1>
           <p className="text-xs font-semibold text-zinc-400">
-            Showing {posts.length} {posts.length === 1 ? 'article' : 'articles'} tagged with #{decodedTag}
+            Showing {posts.length} {posts.length === 1 ? 'article' : 'articles'} tagged with #{cleanTag}
           </p>
         </div>
       </div>

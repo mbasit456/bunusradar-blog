@@ -1,4 +1,4 @@
-import { getAllPosts, getAllTags } from '@/lib/posts';
+import { getAllPosts } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
@@ -9,8 +9,6 @@ export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts();
   const authors = getAllAuthors();
-  const tags = getAllTags();
-  const nowIso = new Date().toISOString();
 
   // Static Pages (no lastmod to prevent Google from showing snippet dates on evergreen pages)
   const staticPages = [
@@ -35,18 +33,11 @@ export async function GET() {
     priority: '0.8',
   }));
 
-  // Category Pages
+  // Category Hub Pages
   const categoryPages = Object.values(CATEGORIES).map((cat) => ({
     url: `${baseUrl}/category/${cat.slug}`,
     changefreq: 'daily',
     priority: '0.8',
-  }));
-
-  // Tag Pages
-  const tagPages = tags.map(({ tag }) => ({
-    url: `${baseUrl}/tag/${encodeURIComponent(tag.trim())}`,
-    changefreq: 'weekly',
-    priority: '0.6',
   }));
 
   // Article Pages (no lastmod to prevent Google from prepending dates in search snippets)
@@ -56,7 +47,8 @@ export async function GET() {
     priority: '0.9',
   }));
 
-  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...tagPages, ...articlePages];
+  // Tag archives are intentionally excluded from sitemap to prevent thin-content duplicate indexing
+  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...articlePages];
 
   const xmlEntries = allUrls
     .map(
@@ -68,16 +60,15 @@ export async function GET() {
     )
     .join('\n');
 
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${xmlEntries}
 </urlset>`;
 
-  return new Response(sitemapXml, {
+  return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 's-maxage=3600, stale-while-revalidate',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
     },
   });
 }

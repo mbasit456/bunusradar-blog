@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const canonicalUrl = `https://bunusradar.site/blog/${post.slug}`;
 
   return {
-    title: `${post.title} - BunusRadar`,
+    title: post.title,
     description: post.excerpt,
     authors: [{ name: post.author.name }],
     alternates: {

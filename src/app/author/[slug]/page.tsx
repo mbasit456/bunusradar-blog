@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
   const canonicalUrl = `https://bunusradar.site/author/${author.slug}`;
 
   return {
-    title: `${author.name} - ${author.role} | BunusRadar`,
+    title: `${author.name} - ${author.role}`,
     description: author.shortBio,
     alternates: { canonical: canonicalUrl },
     openGraph: {
