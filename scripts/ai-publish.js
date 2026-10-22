@@ -24,6 +24,7 @@ const ROOT = path.join(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'content', 'posts');
 const KEYWORDS_FILE = path.join(__dirname, 'keywords.json');
 const AI_KEYWORDS_FILE = path.join(__dirname, 'ai-keywords.json');
+const OPENAI_KEYWORDS_FILE = path.join(__dirname, 'openai-keywords.json');
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
@@ -179,8 +180,14 @@ function getUnusedFrom(filePath, requestedCount) {
  * Returns balanced daily keywords: 3 from keywords.json and 1 from ai-keywords.json per day.
  */
 function getDailyKeywords(totalCount) {
-  // 100% of daily articles sourced exclusively from target keywords (ai-keywords.json)
-  return getUnusedFrom(AI_KEYWORDS_FILE, totalCount);
+  // Primary priority: low-competition, high-search-volume OpenAI keywords
+  const openAiKw = getUnusedFrom(OPENAI_KEYWORDS_FILE, totalCount);
+  if (openAiKw.length >= totalCount) {
+    return openAiKw;
+  }
+  const remaining = totalCount - openAiKw.length;
+  const aiKw = getUnusedFrom(AI_KEYWORDS_FILE, remaining);
+  return [...openAiKw, ...aiKw];
 }
 
 // ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
