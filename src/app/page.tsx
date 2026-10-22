@@ -33,7 +33,7 @@ const websiteSchema = {
   description: 'Independent technology newsroom, practical AI benchmarks, and developer software evaluations.',
   potentialAction: {
     '@type': 'SearchAction',
-    target: { '@type': 'EntryPoint', urlTemplate: `${baseUrl}/?search={search_term_string}` },
+    target: { '@type': 'EntryPoint', urlTemplate: `${baseUrl}/search?q={search_term_string}` },
     'query-input': 'required name=search_term_string',
   },
   hasPart: [

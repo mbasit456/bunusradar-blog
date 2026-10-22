@@ -56,6 +56,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 's-maxage=3600, stale-while-revalidate',
+      'X-Robots-Tag': 'noindex, follow',
     },
   });
 }
