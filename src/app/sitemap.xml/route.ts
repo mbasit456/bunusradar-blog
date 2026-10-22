@@ -7,7 +7,7 @@ export const revalidate = 86400;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
-  const posts = getAllPosts();
+  const posts = getAllPosts(true);
   const authors = getAllAuthors();
 
   // Static Pages (no lastmod to prevent Google from showing snippet dates on evergreen pages)

@@ -1,6 +1,6 @@
 ---
 title: "How to Use ChatGPT Search for Market Research in Enterprise Strategy"
-date: "2026-10-24T18:00:00Z"
+date: "2026-10-22T14:15:00Z"
 excerpt: "Discover how to use ChatGPT search for market research to optimize enterprise intelligence workflows, analyze competitive landscapes, and drive growth."
 category: "Artificial Intelligence"
 tags: ["ChatGPT Search", "Market Research", "Enterprise AI", "Business Intelligence", "Data Strategy"]

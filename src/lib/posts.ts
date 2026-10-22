@@ -217,7 +217,7 @@ export function getAllTags(): { tag: string; count: number }[] {
     .sort((a, b) => b.count - a.count);
 }
 
-export async function getPostBySlug(slug: string, includeScheduled = false): Promise<PostWithContent | null> {
+export async function getPostBySlug(slug: string, includeScheduled = true): Promise<PostWithContent | null> {
   ensurePostsDir();
   const mdPath = path.join(POSTS_DIRECTORY, `${slug}.md`);
   const mdxPath = path.join(POSTS_DIRECTORY, `${slug}.mdx`);
@@ -239,17 +239,7 @@ export async function getPostBySlug(slug: string, includeScheduled = false): Pro
     ? new Date(rawDateStr).toISOString().split('T')[0]
     : today;
 
-  // Don't show scheduled articles before their date & time unless explicitly requested
-  if (!includeScheduled) {
-    if (rawDateStr && (rawDateStr.includes('T') || rawDateStr.includes(':'))) {
-      const postTime = new Date(rawDateStr).getTime();
-      if (!isNaN(postTime) && postTime > Date.now()) {
-        return null;
-      }
-    } else if (postDate > today) {
-      return null;
-    }
-  }
+  // All existing markdown files are always accessible to prevent 404 errors for search engines and users
 
   // Parse Table of Contents
   const headingRegex = /^(#{2,3})\s+(.*)$/gm;

@@ -22,7 +22,7 @@ export const dynamicParams = true;
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = getAllPosts(true);
   return posts.map((post) => ({
     slug: post.slug,
   }));
