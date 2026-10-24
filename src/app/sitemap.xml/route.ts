@@ -14,6 +14,7 @@ export async function GET() {
   const staticPages = [
     { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0' },
     { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9' },
+    { url: `${baseUrl}/tools/ai-token-calculator`, changefreq: 'weekly', priority: '0.95' },
     { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8' },

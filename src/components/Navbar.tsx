@@ -125,6 +125,14 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             >
               Research
             </Link>
+
+            <Link
+              href="/tools/ai-token-calculator"
+              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded transition-colors flex items-center gap-1.5"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
+              AI Cost Tool
+            </Link>
           </nav>
 
           {/* Search Trigger & Mobile Menu Toggle */}
@@ -189,6 +197,14 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
             Research
+          </Link>
+          <Link
+            href="/tools/ai-token-calculator"
+            onClick={() => setIsOpen(false)}
+            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded flex items-center gap-2"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
+            AI Cost Tool
           </Link>
         </div>
       )}

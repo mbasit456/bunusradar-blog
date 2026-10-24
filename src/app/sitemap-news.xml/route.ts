@@ -5,7 +5,7 @@ export const revalidate = 86400;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
-  const posts = getAllPosts();
+  const posts = getAllPosts(true);
   const now = Date.now();
   const FORTY_EIGHT_HOURS = 48 * 60 * 60 * 1000;
 
