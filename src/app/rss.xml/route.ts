@@ -3,36 +3,55 @@ import { getAllPosts } from '@/lib/posts';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+function escapeXmlAttr(str: unknown): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function sanitizeCdata(str: unknown): string {
+  if (typeof str !== 'string') return '';
+  return str.replace(/]]>/g, ']]&gt;');
+}
+
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts();
+  const buildDate = new Date().toUTCString();
 
   const rssItems = posts
     .slice(0, 50)
     .map((post) => {
       const pubDate = new Date(post.rawDate || post.date);
-      const validDate = isNaN(pubDate.getTime()) ? new Date().toUTCString() : pubDate.toUTCString();
+      const validDate = isNaN(pubDate.getTime()) ? buildDate : pubDate.toUTCString();
       const articleUrl = `${baseUrl}/blog/${post.slug}`;
+      const escapedArticleUrl = escapeXmlAttr(articleUrl);
       const rawImage = post.coverImage || '';
       const fullImageUrl = rawImage
         ? (rawImage.startsWith('http') ? rawImage : `${baseUrl}${rawImage.startsWith('/') ? rawImage : `/${rawImage}`}`)
         : '';
+      const escapedImageUrl = fullImageUrl ? escapeXmlAttr(fullImageUrl) : '';
       const authorName = post.author?.name || 'BunusRadar Editorial';
+      const escapedAuthorName = escapeXmlAttr(authorName);
 
       return `
     <item>
-      <title><![CDATA[${post.title}]]></title>
-      <link>${articleUrl}</link>
-      <guid isPermaLink="true">${articleUrl}</guid>
-      <description><![CDATA[${post.excerpt || post.title}]]></description>
-      <content:encoded><![CDATA[${post.excerpt || post.title}]]></content:encoded>
-      <dc:creator><![CDATA[${authorName}]]></dc:creator>
-      <author>editorial@bunusradar.site (${authorName})</author>
+      <title><![CDATA[${sanitizeCdata(post.title)}]]></title>
+      <link>${escapedArticleUrl}</link>
+      <guid isPermaLink="true">${escapedArticleUrl}</guid>
+      <description><![CDATA[${sanitizeCdata(post.excerpt || post.title)}]]></description>
+      <content:encoded><![CDATA[${sanitizeCdata(post.excerpt || post.title)}]]></content:encoded>
+      <dc:creator><![CDATA[${sanitizeCdata(authorName)}]]></dc:creator>
+      <author>editorial@bunusradar.site (${escapedAuthorName})</author>
       <pubDate>${validDate}</pubDate>
-      <category><![CDATA[${post.category}]]></category>
-      ${fullImageUrl ? `<enclosure url="${fullImageUrl}" type="image/jpeg" length="0" />
-      <media:content url="${fullImageUrl}" medium="image" />
-      <media:thumbnail url="${fullImageUrl}" />` : ''}
+      <category><![CDATA[${sanitizeCdata(post.category)}]]></category>
+      ${escapedImageUrl ? `<enclosure url="${escapedImageUrl}" type="image/jpeg" length="0" />
+      <media:content url="${escapedImageUrl}" medium="image" />
+      <media:thumbnail url="${escapedImageUrl}" />` : ''}
     </item>`;
     })
     .join('');
@@ -48,7 +67,18 @@ export async function GET() {
     <link>${baseUrl}</link>
     <description><![CDATA[Insights on Technology, AI Systems, Digital Business, and Productivity]]></description>
     <language>en-us</language>
+    <lastBuildDate>${buildDate}</lastBuildDate>
+    <copyright>Copyright (c) ${new Date().getFullYear()} BunusRadar. All rights reserved.</copyright>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>BunusRadar Custom Feed Generator</generator>
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>${baseUrl}/logos/square-logo.png</url>
+      <title>BunusRadar</title>
+      <link>${baseUrl}</link>
+      <width>144</width>
+      <height>144</height>
+    </image>
     ${rssItems}
   </channel>
 </rss>`;
