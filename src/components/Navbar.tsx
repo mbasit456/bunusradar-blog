@@ -137,11 +137,11 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             </Link>
 
             <Link
-              href="/tools/ai-token-calculator"
+              href="/tools"
               className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
-              AI Cost Tool
+              AI Tools
             </Link>
           </nav>
 
@@ -213,12 +213,12 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             Research
           </Link>
           <Link
-            href="/tools/ai-token-calculator"
+            href="/tools"
             onClick={() => setIsOpen(false)}
             className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
-            AI Cost Tool
+            Free AI Tools
           </Link>
         </div>
       )}

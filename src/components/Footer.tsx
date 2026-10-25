@@ -144,7 +144,15 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="flex items-center gap-4 pt-1">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
+              <Link
+                href="/tools"
+                className="inline-flex items-center gap-1.5 text-xs text-[#f9b44d] font-bold hover:underline transition-colors"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#f9b44d]" />
+                <span>Developer Tools Hub</span>
+              </Link>
+              <span className="text-slate-600">•</span>
               <Link
                 href="/rss.xml"
                 target="_blank"
@@ -242,6 +250,30 @@ export default function Footer() {
                 <Link href="/contact" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
                   <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
                   <span>Contact Our Newsroom</span>
+                </Link>
+              </li>
+              <li className="pt-2 border-t border-white/10 mt-2">
+                <Link href="/tools" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group font-medium text-white">
+                  <Sparkles className="w-3.5 h-3.5 text-[#f9b44d]" />
+                  <span>Free Developer Tools</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/ai-token-calculator" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group text-xs text-slate-400">
+                  <span className="text-slate-600 group-hover:text-[#f9b44d]">›</span>
+                  <span>AI Token & Cost Calculator</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/ai-prompt-optimizer" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group text-xs text-slate-400">
+                  <span className="text-slate-600 group-hover:text-[#f9b44d]">›</span>
+                  <span>AI Prompt Optimizer</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/ai-roi-calculator" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group text-xs text-slate-400">
+                  <span className="text-slate-600 group-hover:text-[#f9b44d]">›</span>
+                  <span>Enterprise AI ROI Calculator</span>
                 </Link>
               </li>
             </ul>
