@@ -80,7 +80,7 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
               {currentTrending.title}
             </Link>
           </div>
-          <div className="flex items-center gap-4 text-zinc-400">
+          <div className="flex items-center gap-4 text-zinc-300">
             <span>{new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
             <Link href="/rss.xml" target="_blank" className="hover:text-[#f9b44d] flex items-center gap-1 transition-colors">
               <Rss className="w-3 h-3 text-[#f9b44d]" /> RSS
@@ -149,7 +149,7 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
@@ -157,7 +157,7 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-white hover:text-[#f9b44d] hover:bg-white/10 rounded focus:outline-none"
+              className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-white hover:text-[#f9b44d] hover:bg-white/10 rounded focus:outline-none"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -200,7 +200,7 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
               key={cat.slug}
               href={`/category/${cat.slug}`}
               onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+              className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
             >
               {cat.name}
             </Link>

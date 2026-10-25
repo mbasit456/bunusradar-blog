@@ -44,7 +44,7 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
               >
                 {post.title}
               </Link>
-              <div className="flex items-center gap-2 text-[11px] text-zinc-500 mt-1">
+              <div className="flex items-center gap-2 text-[11px] text-zinc-600 mt-1">
                 <span>By {post.author.name}</span>
                 <span>•</span>
                 <span>{post.date}</span>
@@ -68,7 +68,7 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
             <Link
               key={cat.slug}
               href={`/category/${cat.slug}`}
-              className="flex items-center justify-between py-1.5 px-2 text-xs font-semibold text-zinc-700 hover:text-[#1b2e67] hover:bg-zinc-50 rounded transition-colors group"
+              className="flex items-center justify-between py-2.5 px-2.5 min-h-[40px] text-xs font-semibold text-zinc-700 hover:text-[#1b2e67] hover:bg-zinc-50 rounded transition-colors group"
             >
               <span>{cat.name}</span>
               <ArrowRight className="w-3 h-3 text-zinc-400 group-hover:translate-x-1 group-hover:text-[#1b2e67] transition-all" />

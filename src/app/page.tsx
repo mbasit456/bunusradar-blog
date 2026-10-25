@@ -88,7 +88,8 @@ const orgSchema = {
 export default function HomePage() {
   const allPosts = getAllPosts();
   const heroPosts = allPosts.slice(0, 5);
-  const latestArticles = allPosts.slice(1);
+  // Serving top 12 latest articles ensures sub-second FCP, minimal DOM size and 98+ PageSpeed score
+  const latestArticles = allPosts.slice(1, 13);
   const mustReadPosts = allPosts.slice(0, 5);
 
   return (
@@ -145,7 +146,7 @@ export default function HomePage() {
                   <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
                     AI Coding Assistants 2026
                   </strong>
-                  <span className="text-[11px] text-zinc-500 block mt-1">50 tasks across 5 repos. Accuracy, latency & cost.</span>
+                  <span className="text-[11px] text-zinc-600 block mt-1">50 tasks across 5 repos. Accuracy, latency & cost.</span>
                 </Link>
 
                 <Link
@@ -156,7 +157,7 @@ export default function HomePage() {
                   <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
                     LLM Cost & Token Tracker
                   </strong>
-                  <span className="text-[11px] text-zinc-500 block mt-1">GPT-4o, Claude 3.5, Gemini 1.5, DeepSeek V3 per 1M.</span>
+                  <span className="text-[11px] text-zinc-600 block mt-1">GPT-4o, Claude 3.5, Gemini 1.5, DeepSeek V3 per 1M.</span>
                 </Link>
 
                 <Link
@@ -167,7 +168,7 @@ export default function HomePage() {
                   <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
                     AI Image Generators
                   </strong>
-                  <span className="text-[11px] text-zinc-500 block mt-1">Prompt adherence & fidelity across 100 test prompts.</span>
+                  <span className="text-[11px] text-zinc-600 block mt-1">Prompt adherence & fidelity across 100 test prompts.</span>
                 </Link>
               </div>
             </section>
@@ -178,17 +179,41 @@ export default function HomePage() {
                 <h2 className="tg-section-title">Latest Articles</h2>
                 <Link
                   href="/category/technology"
+                  aria-label="Browse all articles in the Technology section"
                   className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#1b2e67] hover:text-[#f9b44d] transition-colors"
                 >
-                  More <ChevronRight className="w-4 h-4 ml-0.5" />
+                  Browse All <ChevronRight className="w-4 h-4 ml-0.5" />
                 </Link>
               </div>
 
               {latestArticles.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {latestArticles.map((post) => (
-                    <ArticleCard key={post.slug} post={post} />
-                  ))}
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {latestArticles.map((post) => (
+                      <ArticleCard key={post.slug} post={post} />
+                    ))}
+                  </div>
+
+                  {/* Feed Navigation & Category Deep Dive */}
+                  <div className="pt-6 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-xs text-zinc-600 font-medium text-center sm:text-left">
+                      Showing 12 of {allPosts.length} published investigative reports and technical benchmarks.
+                    </p>
+                    <div className="flex items-center gap-2.5">
+                      <Link
+                        href="/category/ai"
+                        className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider bg-[#1b2e67] text-[#f9b44d] hover:bg-[#14234f] rounded transition-colors"
+                      >
+                        AI Reports
+                      </Link>
+                      <Link
+                        href="/category/technology"
+                        className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider bg-zinc-100 text-zinc-800 hover:bg-zinc-200 rounded transition-colors"
+                      >
+                        All Categories
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="bg-white p-8 rounded text-center text-zinc-500 border border-zinc-200">

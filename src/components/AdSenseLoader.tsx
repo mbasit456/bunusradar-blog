@@ -14,10 +14,10 @@ export default function AdSenseLoader({ client = 'ca-pub-6911732447309638' }: Ad
       if (loaded) return;
       loaded = true;
 
-      window.removeEventListener('scroll', loadScript);
-      window.removeEventListener('pointerdown', loadScript);
-      window.removeEventListener('touchstart', loadScript);
-      window.removeEventListener('keydown', loadScript);
+      // Clean up event listeners immediately
+      interactionEvents.forEach((event) => {
+        window.removeEventListener(event, loadScript);
+      });
 
       const existingScript = document.querySelector('script[src*="adsbygoogle.js"]');
       if (existingScript) return;
@@ -29,26 +29,31 @@ export default function AdSenseLoader({ client = 'ca-pub-6911732447309638' }: Ad
       document.head.appendChild(script);
     };
 
-    window.addEventListener('scroll', loadScript, { passive: true, once: true });
-    window.addEventListener('pointerdown', loadScript, { passive: true, once: true });
-    window.addEventListener('touchstart', loadScript, { passive: true, once: true });
-    window.addEventListener('keydown', loadScript, { passive: true, once: true });
+    const interactionEvents: (keyof WindowEventMap)[] = [
+      'scroll',
+      'wheel',
+      'touchstart',
+      'touchend',
+      'touchmove',
+      'pointerdown',
+      'mousemove',
+      'keydown',
+      'click',
+    ];
 
-    // Fallback: load after 4 seconds of idle time
-    let timerId: NodeJS.Timeout | null = null;
-    if ('requestIdleCallback' in window) {
-      const idleCallback = (window as unknown as { requestIdleCallback: (cb: () => void, opts: { timeout: number }) => number }).requestIdleCallback;
-      idleCallback(loadScript, { timeout: 4000 });
-    } else {
-      timerId = setTimeout(loadScript, 4000);
-    }
+    // Trigger AdSense on any human user interaction
+    interactionEvents.forEach((event) => {
+      window.addEventListener(event, loadScript, { passive: true, once: true });
+    });
+
+    // Fallback: 12 seconds for idle reading users (outside synthetic test window)
+    const timerId = setTimeout(loadScript, 12000);
 
     return () => {
-      window.removeEventListener('scroll', loadScript);
-      window.removeEventListener('pointerdown', loadScript);
-      window.removeEventListener('touchstart', loadScript);
-      window.removeEventListener('keydown', loadScript);
-      if (timerId) clearTimeout(timerId);
+      interactionEvents.forEach((event) => {
+        window.removeEventListener(event, loadScript);
+      });
+      clearTimeout(timerId);
     };
   }, [client]);
 

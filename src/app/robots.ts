@@ -95,7 +95,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/search', '/*?*search*', '/*?search=*', '/?search=*'],
+        disallow: ['/search', '/api/'],
       },
     ],
     sitemap: [
