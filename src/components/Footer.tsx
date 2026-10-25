@@ -68,8 +68,12 @@ export default function Footer() {
               ) : (
                 <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5">
                   <div className="relative flex-1">
+                    <label htmlFor="footer-newsletter-email" className="sr-only">Enter your professional email address</label>
                     <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <input
+                      id="footer-newsletter-email"
+                      name="email"
+                      aria-label="Enter your professional email address"
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -87,7 +91,7 @@ export default function Footer() {
                   </button>
                 </form>
               )}
-              <div className="mt-3 flex items-center gap-6 text-[11px] text-slate-400">
+              <div className="mt-3 flex items-center gap-6 text-[11px] text-slate-300">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                   Zero spam guaranteed
@@ -285,12 +289,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Legal Notice & Copyright Strip */}
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-slate-300 gap-4">
           <div className="space-y-1 text-center md:text-left">
             <p className="text-slate-300">
               © {new Date().getFullYear()} BunusRadar. All rights reserved.
             </p>
-            <p className="text-[11px] text-slate-500 max-w-2xl">
+            <p className="text-[11px] text-slate-400 max-w-2xl">
               Independent technology reporting and software evaluation. Registered trademarks and brand logos mentioned on this site belong to their respective copyright holders.
             </p>
           </div>

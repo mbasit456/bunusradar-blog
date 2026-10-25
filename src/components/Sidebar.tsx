@@ -95,7 +95,11 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-2 pt-2">
+            <label htmlFor="sidebar-newsletter-email" className="sr-only">Your email address</label>
             <input
+              id="sidebar-newsletter-email"
+              name="email"
+              aria-label="Your email address"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

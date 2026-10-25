@@ -52,7 +52,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       <button
         onClick={shareTwitter}
         className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 transition-colors"
-        title="Share on X / Twitter"
+        title="Share on X / Twitter" aria-label="Share on X / Twitter"
       >
         <Twitter className="w-4 h-4" />
       </button>
@@ -60,7 +60,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       <button
         onClick={shareLinkedIn}
         className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 transition-colors"
-        title="Share on LinkedIn"
+        title="Share on LinkedIn" aria-label="Share on LinkedIn"
       >
         <Linkedin className="w-4 h-4" />
       </button>
@@ -68,7 +68,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       <button
         onClick={shareFacebook}
         className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 transition-colors"
-        title="Share on Facebook"
+        title="Share on Facebook" aria-label="Share on Facebook"
       >
         <Facebook className="w-4 h-4" />
       </button>
@@ -76,7 +76,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       <button
         onClick={copyToClipboard}
         className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 transition-colors relative"
-        title="Copy Link"
+        title="Copy Link" aria-label="Copy article link"
       >
         {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <LinkIcon className="w-4 h-4" />}
       </button>

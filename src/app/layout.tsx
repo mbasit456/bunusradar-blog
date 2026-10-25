@@ -1,9 +1,17 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import AdSenseLoader from '@/components/AdSenseLoader';
 import { getAllPosts } from '@/lib/posts';
+
+export const viewport: Viewport = {
+  themeColor: '#1b2e67',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bunusradar.site'),
@@ -72,18 +80,20 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Google AdSense */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6911732447309638"
-          crossOrigin="anonymous"
-        />
-        {/* Google Analytics */}
+        {/* Preconnect & DNS-Prefetch for Key Third Parties */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+        {/* Google Analytics via lazyOnload to protect Core Web Vitals */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CGM08JT8KQ"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -91,12 +101,14 @@ export default function RootLayout({
             gtag('config', 'G-CGM08JT8KQ');
           `}
         </Script>
+
         {/* AEO, GEO, and AIO LLM Discovery Links */}
         <link rel="describedby" href="https://bunusradar.site/llms.txt" type="text/plain" title="LLM Guidance and Site Summary" />
         <link rel="alternate" type="text/plain" href="https://bunusradar.site/llms-full.txt" title="Full Content Index for LLMs" />
         <meta name="ai-content-declaration" content="human-authored editorial content" />
       </head>
       <body className="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
+        <AdSenseLoader client="ca-pub-6911732447309638" />
         <Navbar trendingPosts={trendingPosts} />
         <main className="flex-1">{children}</main>
         <Footer />

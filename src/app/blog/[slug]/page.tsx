@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
+import { getOptimizedImageUrl, getResponsiveSrcSet } from '@/lib/images';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, getPostsByCategory } from '@/lib/posts';
@@ -196,25 +198,22 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <div className="py-6 space-y-8">
       {/* Subscribe with Google (SwG Basic) */}
-      <script
-        async
-        type="application/javascript"
+      <Script
+        strategy="lazyOnload"
         src="https://news.google.com/swg/js/v1/swg-basic.js"
       />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
-              basicSubscriptions.init({
-                type: "NewsArticle",
-                isPartOfType: ["Product"],
-                isPartOfProductId: "CAow26rODA:openaccess",
-                clientOptions: { theme: "light", lang: "en" },
-              });
+      <Script id="swg-basic-init" strategy="lazyOnload">
+        {`
+          (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+            basicSubscriptions.init({
+              type: "NewsArticle",
+              isPartOfType: ["Product"],
+              isPartOfProductId: "CAow26rODA:openaccess",
+              clientOptions: { theme: "light", lang: "en" },
             });
-          `,
-        }}
-      />
+          });
+        `}
+      </Script>
       {/* JSON-LD Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
@@ -283,8 +282,15 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.coverImage && (
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded bg-zinc-100">
                 <img
-                  src={post.coverImage}
+                  src={getOptimizedImageUrl(post.coverImage, 960)}
+                  srcSet={getResponsiveSrcSet(post.coverImage, [480, 720, 960, 1200]) || undefined}
+                  sizes="(max-width: 1024px) 100vw, 800px"
                   alt={post.title}
+                  width={960}
+                  height={540}
+                  fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>

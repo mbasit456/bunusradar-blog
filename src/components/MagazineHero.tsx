@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { PostMetadata } from '@/lib/posts';
+import { getOptimizedImageUrl, getResponsiveSrcSet } from '@/lib/images';
 
 interface MagazineHeroProps {
   posts: PostMetadata[];
@@ -14,7 +15,7 @@ export default function MagazineHero({ posts }: MagazineHeroProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Main Large Hero Post (7 Cols) */}
+        {/* Main Large Hero Post (7 Cols) - Primary LCP Candidate */}
         {mainPost && (
           <div className="lg:col-span-7">
             <Link
@@ -22,9 +23,16 @@ export default function MagazineHero({ posts }: MagazineHeroProps) {
               className="group relative block aspect-[16/11] sm:aspect-[16/10] w-full overflow-hidden rounded bg-zinc-900 shadow-md transition-all duration-300 hover:shadow-xl"
             >
               <img
-                src={mainPost.coverImage}
+                src={getOptimizedImageUrl(mainPost.coverImage, 960)}
+                srcSet={getResponsiveSrcSet(mainPost.coverImage, [480, 720, 960, 1280]) || undefined}
+                sizes="(max-width: 1024px) 100vw, 60vw"
                 alt={mainPost.title}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-95"
+                width={960}
+                height={600}
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
@@ -56,9 +64,15 @@ export default function MagazineHero({ posts }: MagazineHeroProps) {
               className="group relative block aspect-[16/10] w-full overflow-hidden rounded bg-zinc-900 shadow-sm transition-all duration-300 hover:shadow-lg"
             >
               <img
-                src={post.coverImage}
+                src={getOptimizedImageUrl(post.coverImage, 480)}
+                srcSet={getResponsiveSrcSet(post.coverImage, [320, 480, 640]) || undefined}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 alt={post.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-90"
+                width={480}
+                height={300}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-95"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
@@ -71,7 +85,7 @@ export default function MagazineHero({ posts }: MagazineHeroProps) {
                   {post.title}
                 </h2>
 
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-300">
                   {post.date}
                 </p>
               </div>

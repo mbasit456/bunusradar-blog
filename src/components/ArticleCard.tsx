@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PostMetadata } from '@/lib/posts';
 import { getCategoryBySlug } from '@/lib/categories';
+import { getOptimizedImageUrl, getResponsiveSrcSet } from '@/lib/images';
 
 interface ArticleCardProps {
   post: PostMetadata;
@@ -14,10 +15,15 @@ export default function ArticleCard({ post }: ArticleCardProps) {
       {/* Thumbnail */}
       <Link href={`/blog/${post.slug}`} className="block relative aspect-[16/9] w-full overflow-hidden bg-zinc-100">
         <img
-          src={post.coverImage}
+          src={getOptimizedImageUrl(post.coverImage, 480)}
+          srcSet={getResponsiveSrcSet(post.coverImage, [320, 480, 640]) || undefined}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           alt={post.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          width={480}
+          height={270}
           loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </Link>
 
@@ -44,7 +50,7 @@ export default function ArticleCard({ post }: ArticleCardProps) {
           </p>
         </div>
 
-        <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-500">
+        <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-600">
           <span className="font-semibold text-zinc-700">By {post.author.name}</span>
           <span data-nosnippet="true">{post.date}</span>
         </div>

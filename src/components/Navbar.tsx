@@ -170,7 +170,11 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
       {searchOpen && (
         <div className="bg-[#14234f] border-t border-white/10 px-4 py-3 animate-fadeIn">
           <form onSubmit={handleSearchSubmit} className="max-w-4xl mx-auto flex items-center gap-2">
+            <label htmlFor="navbar-search-input" className="sr-only">Search news, hardware, software, business, AI</label>
             <input
+              id="navbar-search-input"
+              name="q"
+              aria-label="Search news, hardware, software, business, AI"
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
