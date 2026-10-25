@@ -87,10 +87,12 @@ const orgSchema = {
 
 export default function HomePage() {
   const allPosts = getAllPosts();
+  // Posts 0 to 4 are reserved exclusively for the Hero magazine banner
   const heroPosts = allPosts.slice(0, 5);
-  // Serving top 12 latest articles ensures sub-second FCP, minimal DOM size and 98+ PageSpeed score
-  const latestArticles = allPosts.slice(1, 13);
-  const mustReadPosts = allPosts.slice(0, 5);
+  // Posts 5 to 16 are served in Latest Articles with zero duplication against the Hero
+  const latestArticles = allPosts.slice(5, 17);
+  // Posts 17 to 21 are served in Must Read with zero duplication across the entire homepage
+  const mustReadPosts = allPosts.slice(17, 22);
 
   return (
     <div className="space-y-6 pb-16">

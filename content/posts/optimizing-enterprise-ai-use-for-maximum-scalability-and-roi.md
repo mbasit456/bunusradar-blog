@@ -5,7 +5,7 @@ excerpt: "Discover how strategic enterprise ai use transforms software architect
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise AI", "Business Growth", "Software Architecture", "Productivity"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1680795456508-316262a78129?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

@@ -82,6 +82,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const categoryPosts = getPostsByCategory(post.category).filter((p) => p.slug !== post.slug);
   const fallbackPosts = allPosts.filter((p) => p.slug !== post.slug && !categoryPosts.some((cp) => cp.slug === p.slug));
   const relatedPosts = [...categoryPosts, ...fallbackPosts].slice(0, 4);
+  const sidebarPosts = allPosts.filter((p) => p.slug !== post.slug && !relatedPosts.some((rp) => rp.slug === p.slug)).slice(0, 5);
   const cluster = getClusterForPost(post.slug);
 
   const baseUrl = 'https://bunusradar.site';
@@ -428,7 +429,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
           {/* Sticky Sidebar (4 Cols) */}
           <aside className="lg:col-span-4 sticky top-24">
-            <Sidebar mustReadPosts={allPosts.slice(0, 5)} />
+            <Sidebar mustReadPosts={sidebarPosts} />
           </aside>
         </div>
       </div>

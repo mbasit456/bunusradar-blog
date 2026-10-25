@@ -5,7 +5,7 @@ excerpt: "Discover how the future of artificial intelligence is transforming ent
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Machine Learning", "Enterprise Architecture", "Autonomous Agents", "Cloud Computing"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1692607431198-a6e5b4b10fae?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---
