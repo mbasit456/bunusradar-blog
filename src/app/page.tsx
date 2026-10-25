@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-static';
-export const revalidate = 86400;
+export const revalidate = 60;
 
 const baseUrl = 'https://bunusradar.site';
 
