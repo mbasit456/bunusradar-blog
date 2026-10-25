@@ -122,6 +122,8 @@ export default async function PostPage({ params }: PostPageProps) {
     '@type': isNewsReporting ? ['Article', 'NewsArticle'] : 'Article',
     headline: post.title,
     description: post.excerpt,
+    datePublished: new Date(post.rawDate || post.date).toISOString(),
+    dateModified: new Date(post.rawDate || post.date).toISOString(),
     image: post.coverImage ? [post.coverImage] : [],
     wordCount: post.content?.split(/\s+/).length,
     inLanguage: 'en-US',
