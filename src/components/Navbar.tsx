@@ -220,6 +220,14 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
             Free AI Tools
           </Link>
+          <Link
+            href="/tools/free-ai-chat"
+            onClick={() => setIsOpen(false)}
+            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-amber-300 hover:bg-white/10 rounded flex items-center gap-2"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            AI Chat & Canvas
+          </Link>
         </div>
       )}
     </header>

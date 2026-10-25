@@ -11,7 +11,8 @@ import {
   Zap, 
   CheckCircle2,
   Terminal,
-  Layers
+  Layers,
+  Bot
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -38,6 +39,17 @@ export const metadata: Metadata = {
 };
 
 const TOOLS = [
+  {
+    title: 'Free AI Chat & Code Canvas Workspace',
+    slug: 'free-ai-chat',
+    category: 'Conversational AI & Canvas',
+    badge: 'Flagship',
+    badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
+    description: 'Multi-model reasoning playground with Claude-style interactive code canvases, step-by-step thinking processes, and live sandboxed web execution for Claude 3.5, GPT-4o, and DeepSeek.',
+    icon: Bot,
+    stats: 'Claude Artifacts • Code Canvas • DeepSeek Reasoning • Multi-Model',
+    cta: 'Launch AI Workspace',
+  },
   {
     title: 'AI Token & Model Cost Calculator',
     slug: 'ai-token-calculator',

@@ -259,6 +259,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/tools/free-ai-chat" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group text-xs text-amber-300 font-semibold">
+                  <span className="text-[#f9b44d]">›</span>
+                  <span>Free AI Chat & Code Canvas</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/tools/ai-token-calculator" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group text-xs text-slate-400">
                   <span className="text-slate-600 group-hover:text-[#f9b44d]">›</span>
                   <span>AI Token & Cost Calculator</span>
