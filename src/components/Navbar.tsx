@@ -108,27 +108,37 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
           </Link>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            {Object.values(CATEGORIES).map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
-              >
-                {cat.name}
-              </Link>
-            ))}
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 shrink-0">
+            {Object.values(CATEGORIES).map((cat) => {
+              const shortLabel =
+                cat.slug === 'ai' ? 'AI' :
+                cat.slug === 'business' ? 'Business' :
+                cat.slug === 'lifestyle' ? 'Lifestyle' :
+                cat.name;
+
+              return (
+                <Link
+                  key={cat.slug}
+                  href={`/category/${cat.slug}`}
+                  className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
+                  title={cat.name}
+                >
+                  <span className="2xl:hidden">{shortLabel}</span>
+                  <span className="hidden 2xl:inline">{cat.name}</span>
+                </Link>
+              );
+            })}
 
             <Link
               href="/research"
-              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
             >
               Research
             </Link>
 
             <Link
               href="/tools/ai-token-calculator"
-              className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded transition-colors flex items-center gap-1.5"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
               AI Cost Tool
