@@ -81,8 +81,12 @@ const orgSchema = {
   '@type': 'Organization',
   name: 'BunusRadar',
   url: baseUrl,
-  logo: `${baseUrl}/icon.svg`,
-  sameAs: [],
+  logo: {
+    '@type': 'ImageObject',
+    url: `${baseUrl}/logos/square-logo.png`,
+    width: 512,
+    height: 512,
+  },
 };
 
 export default function HomePage() {

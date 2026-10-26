@@ -9,16 +9,11 @@ export async function GET() {
   const now = Date.now();
   const FORTY_EIGHT_HOURS = 48 * 60 * 60 * 1000;
 
-  // Google News requirement: Articles published in the last 48 hours
-  let qualifyingPosts = posts.filter((post) => {
+  // Google News requirement: Articles published strictly in the last 48 hours
+  const qualifyingPosts = posts.filter((post) => {
     const postTime = new Date(post.rawDate || post.date).getTime();
     return !isNaN(postTime) && (now - postTime) <= FORTY_EIGHT_HOURS && postTime <= now;
   });
-
-  // Safe fallback: If no articles in exact 48h window, include latest 2 articles to ensure valid XML
-  if (qualifyingPosts.length === 0 && posts.length > 0) {
-    qualifyingPosts = posts.slice(0, 2);
-  }
 
   const xmlEntries = qualifyingPosts
     .map((post) => {

@@ -80,7 +80,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
       url: baseUrl,
     },
     knowsAbout: author.expertise,
-    sameAs: author.sameAs,
+    ...(author.sameAs && author.sameAs.length > 0 ? { sameAs: author.sameAs } : {}),
   };
 
   const breadcrumbSchema = {

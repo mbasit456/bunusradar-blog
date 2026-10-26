@@ -21,6 +21,30 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/feed',
+        destination: '/rss.xml',
+        permanent: true,
+      },
+      {
+        source: '/feed/',
+        destination: '/rss.xml',
+        permanent: true,
+      },
+      {
+        source: '/rss',
+        destination: '/rss.xml',
+        permanent: true,
+      },
+      {
+        source: '/rss/',
+        destination: '/rss.xml',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

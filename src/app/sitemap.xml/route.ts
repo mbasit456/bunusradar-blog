@@ -2,23 +2,24 @@ import { getAllPosts, getAllTags } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
-export const dynamic = 'force-static';
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts(true);
   const authors = getAllAuthors();
+  const today = new Date().toISOString().split('T')[0];
 
-  // Static Pages (no lastmod to prevent Google from showing snippet dates on evergreen pages)
+  // Static Pages with lastmod for Google Search Console freshness signals
   const staticPages = [
-    { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0' },
-    { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9' },
-    { url: `${baseUrl}/tools`, changefreq: 'weekly', priority: '0.95' },
-    { url: `${baseUrl}/tools/free-ai-chat`, changefreq: 'weekly', priority: '1.0' },
-    { url: `${baseUrl}/tools/ai-token-calculator`, changefreq: 'weekly', priority: '0.95' },
-    { url: `${baseUrl}/tools/ai-prompt-optimizer`, changefreq: 'weekly', priority: '0.95' },
-    { url: `${baseUrl}/tools/ai-roi-calculator`, changefreq: 'weekly', priority: '0.95' },
+    { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0', lastmod: today },
+    { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9', lastmod: today },
+    { url: `${baseUrl}/tools`, changefreq: 'weekly', priority: '0.95', lastmod: today },
+    { url: `${baseUrl}/tools/free-ai-chat`, changefreq: 'weekly', priority: '1.0', lastmod: today },
+    { url: `${baseUrl}/tools/ai-token-calculator`, changefreq: 'weekly', priority: '0.95', lastmod: today },
+    { url: `${baseUrl}/tools/ai-prompt-optimizer`, changefreq: 'weekly', priority: '0.95', lastmod: today },
+    { url: `${baseUrl}/tools/ai-roi-calculator`, changefreq: 'weekly', priority: '0.95', lastmod: today },
     { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8' },
@@ -43,19 +44,25 @@ export async function GET() {
     url: `${baseUrl}/category/${cat.slug}`,
     changefreq: 'daily',
     priority: '0.8',
+    lastmod: today,
   }));
 
-  // Article Pages (no lastmod to prevent Google from prepending dates in search snippets)
-  const articlePages = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    changefreq: 'daily',
-    priority: '0.9',
-  }));
+  // Article Pages with W3C YYYY-MM-DD lastmod
+  const articlePages = posts.map((post) => {
+    const d = new Date(post.rawDate || post.date);
+    const lastmod = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : undefined;
+    return {
+      url: `${baseUrl}/blog/${post.slug}`,
+      changefreq: 'weekly',
+      priority: '0.9',
+      lastmod,
+    };
+  });
 
-  // Tag Hub Pages
-  const tags = getAllTags();
-  const tagPages = tags.map(({ tag }) => ({
-    url: `${baseUrl}/tag/${encodeURIComponent(tag.trim())}`,
+  // Tag Hub Pages - only include substantial tags with 2 or more articles to avoid thin content indexing warnings
+  const substantialTags = getAllTags().filter(({ count }) => count >= 2);
+  const tagPages = substantialTags.map(({ tag }) => ({
+    url: `${baseUrl}/tag/${encodeURIComponent(tag.trim().toLowerCase())}`,
     changefreq: 'weekly',
     priority: '0.6',
   }));

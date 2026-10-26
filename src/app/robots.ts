@@ -99,6 +99,7 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: [
+      `${baseUrl}/sitemap_index.xml`,
       `${baseUrl}/sitemap.xml`,
       `${baseUrl}/sitemap-news.xml`,
     ],

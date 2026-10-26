@@ -38,7 +38,12 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     };
   }
 
-  const canonicalUrl = `https://bunusradar.site/blog/${post.slug}`;
+  const baseUrl = 'https://bunusradar.site';
+  const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
+  const rawCover = post.coverImage || '';
+  const fullCoverImageUrl = rawCover
+    ? (rawCover.startsWith('http') ? rawCover : `${baseUrl}${rawCover.startsWith('/') ? rawCover : `/${rawCover}`}`)
+    : `${baseUrl}/logos/rectangular-logo.png`;
 
   return {
     title: post.title,
@@ -55,7 +60,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       authors: [post.author.name],
       images: [
         {
-          url: post.coverImage || '',
+          url: fullCoverImageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -66,7 +71,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [post.coverImage || ''],
+      images: [fullCoverImageUrl],
     },
   };
 }
@@ -113,6 +118,15 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const mentionsList = mentionEntities.map(formatEntityForSchema);
 
+  // Ensure absolute cover image for Schema.org and OpenGraph compliance
+  const rawCover = post.coverImage || '';
+  const fullCoverImageUrl = rawCover
+    ? (rawCover.startsWith('http') ? rawCover : `${baseUrl}${rawCover.startsWith('/') ? rawCover : `/${rawCover}`}`)
+    : `${baseUrl}/logos/rectangular-logo.png`;
+
+  const parsedPubDate = new Date(post.rawDate || post.date);
+  const validIsoDate = !isNaN(parsedPubDate.getTime()) ? parsedPubDate.toISOString() : new Date().toISOString();
+
   // JSON-LD structured data for rich snippets - full Person or Organization schema for attribution
   const isOrgAuthor = authorSlug === 'bunusradar-editorial';
   const isNewsReporting = ['technology', 'ai', 'business'].includes(post.category?.toLowerCase());
@@ -122,9 +136,9 @@ export default async function PostPage({ params }: PostPageProps) {
     '@type': isNewsReporting ? ['Article', 'NewsArticle'] : 'Article',
     headline: post.title,
     description: post.excerpt,
-    datePublished: new Date(post.rawDate || post.date).toISOString(),
-    dateModified: new Date(post.rawDate || post.date).toISOString(),
-    image: post.coverImage ? [post.coverImage] : [],
+    datePublished: validIsoDate,
+    dateModified: validIsoDate,
+    image: [fullCoverImageUrl],
     wordCount: post.content?.split(/\s+/).length,
     inLanguage: 'en-US',
     isAccessibleForFree: true,
@@ -151,7 +165,7 @@ export default async function PostPage({ params }: PostPageProps) {
         name: 'BunusRadar',
         url: baseUrl,
       },
-      sameAs: authorData?.sameAs || [],
+      ...(authorData?.sameAs && authorData.sameAs.length > 0 ? { sameAs: authorData.sameAs } : {}),
     },
     publisher: {
       '@type': 'Organization',
@@ -159,9 +173,9 @@ export default async function PostPage({ params }: PostPageProps) {
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/icon.svg`,
-        width: 120,
-        height: 120,
+        url: `${baseUrl}/logos/square-logo.png`,
+        width: 512,
+        height: 512,
       },
     },
     mainEntityOfPage: {
@@ -179,21 +193,25 @@ export default async function PostPage({ params }: PostPageProps) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${baseUrl}/` },
       { '@type': 'ListItem', position: 2, name: categoryMeta.name, item: `${baseUrl}/category/${categoryMeta.slug}` },
       { '@type': 'ListItem', position: 3, name: post.title, item: articleUrl },
     ],
   };
 
-  const faqSchema = post.faqs && post.faqs.length > 0 ? {
+  const validFaqs = (post.faqs || []).filter(
+    (faq) => faq && faq.question && faq.question.trim().length > 3 && faq.answer && faq.answer.trim().length > 5
+  );
+
+  const faqSchema = validFaqs.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: post.faqs.map((faq) => ({
+    mainEntity: validFaqs.map((faq) => ({
       '@type': 'Question',
-      name: faq.question,
+      name: faq.question.trim(),
       acceptedAnswer: {
         '@type': 'Answer',
-        text: faq.answer,
+        text: faq.answer.trim(),
       },
     })),
   } : null;
