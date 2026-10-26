@@ -87,7 +87,7 @@ interface MessagePart {
 
 function parseMessageParts(text: string): MessagePart[] {
   const parts: MessagePart[] = [];
-  const regex = /(!\[(.*?)\]\((https:\/\/image\.pollinations\.ai\/[^\s)]+)\))|(```([a-zA-Z0-9_-]*)\n([\s\S]*?)```)/g;
+  const regex = /(!\[(.*?)\]\((https?:\/\/[^\s)]+)\))|(```([a-zA-Z0-9_-]*)\n([\s\S]*?)```)/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
@@ -270,7 +270,7 @@ export default function ChatPlaygroundClient() {
   // Extract artifacts from assistant reply (Images or Code)
   const extractArtifact = (text: string): Artifact | null => {
     // Check for Image Markdown first: ![alt](url)
-    const imgMatch = text.match(/!\[(.*?)\]\((https:\/\/image\.pollinations\.ai\/[^\s)]+)\)/);
+    const imgMatch = text.match(/!\[(.*?)\]\((https?:\/\/[^\s)]+)\)/);
     if (imgMatch) {
       return {
         id: 'art-img-' + Date.now(),

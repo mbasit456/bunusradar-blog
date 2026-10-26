@@ -79,16 +79,16 @@ function isImageQuery(text: string, imageMode = false): boolean {
   if (imageMode) return true;
   const t = text.toLowerCase();
   if (t.startsWith('/image') || t.startsWith('/img')) return true;
-  if (/\b(generate|create|draw|make|paint|illustrate|render|produce)\b.*\b(image|picture|photo|illustration|drawing|artwork|art|wallpaper|portrait|logo|visual)\b/i.test(text)) return true;
-  if (/\b(picture|photo|image|artwork|illustration) of\b/i.test(text)) return true;
+  if (/\b(generate|create|draw|make|paint|illustrate|render|produce)\b.*\b(image|picture|photo|photograph|illustration|drawing|artwork|art|wallpaper|portrait|logo|visual)\b/i.test(text)) return true;
+  if (/\b(picture|photo|image|artwork|illustration|drawing|painting) of\b/i.test(text)) return true;
   return false;
 }
 
 function extractImageSubject(prompt: string): string {
   let cleaned = prompt
     .replace(/^\/(image|img)\s*/i, '')
-    .replace(/\b(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me)\s+(an?\s+)?(image|picture|photo|illustration|artwork|drawing)\s+(of\s+)?/i, '')
-    .replace(/\b(a\s+)?(picture|photo|image|drawing|artwork)\s+of\s+/i, '')
+    .replace(/\b(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me|give me)\s+(an?\s+)?([a-zA-Z0-9\s-]*?)?(image|picture|photo|photograph|illustration|artwork|drawing|portrait|wallpaper|scene|render)\s+(of\s+)?/i, '')
+    .replace(/\b(a\s+)?([a-zA-Z0-9\s-]*?)?(picture|photo|image|drawing|artwork|render)\s+of\s+/i, '')
     .replace(/^(please\s+)?(draw|paint|sketch)\s+(me\s+)?(an?\s+)?/i, '')
     .trim();
 
@@ -98,7 +98,8 @@ function extractImageSubject(prompt: string): string {
 
 function cleanDisclaimers(text: string): string {
   return text
-    .replace(/(as an ai|i am an ai|i cannot directly generate|i do not have the capability to generate|i'm unable to create images|while i cannot directly generate|unfortunately, i cannot create|i can't generate images)[^.\n]*[.\n]?/gi, '')
+    .replace(/(as an ai|i am an ai|i cannot directly generate|i do not have the capability to generate|i'm unable to create images|while i cannot directly generate|unfortunately, i cannot create|i can't generate images|as a text-based ai|i am a text-based ai)[^.\n]*[.\n]?/gi, '')
+    .replace(/(however,?\s+)?(if you('d| would) like to use this prompt|you can use this prompt)[^:\n]*:?/gi, '')
     .trim();
 }
 
@@ -284,7 +285,10 @@ export async function POST(req: NextRequest) {
             const hasMarkdownImage = /!\[.*?\]\((https?:\/\/image\.pollinations\.ai\/[^\s)]+)\)/i.test(reply);
             if (!hasMarkdownImage) {
               const cleanSubject = extractImageSubject(latestUserMessage);
-              const imageUrl = buildImageUrl(cleanSubject);
+              // Check if model gave a detailed prompt in markdown
+              const promptMatch = reply.match(/\*\*Prompt:\*\*\s*([^\n\r]+)/i);
+              const finalSubject = promptMatch ? promptMatch[1].trim() : cleanSubject;
+              const imageUrl = buildImageUrl(finalSubject);
               reply = `![${cleanSubject}](${imageUrl})\n\n${reply || `Here is the AI artwork generated for "${cleanSubject}". You can explore the image details, change dimensions in the Canvas, or download it in high resolution.`}`;
             }
           }
