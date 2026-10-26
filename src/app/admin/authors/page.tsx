@@ -1,6 +1,6 @@
-import SafeImage from '@/components/SafeImage';
 'use client';
 
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { Users, ExternalLink, ShieldCheck, Award } from 'lucide-react';
 
