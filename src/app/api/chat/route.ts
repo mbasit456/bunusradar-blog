@@ -14,10 +14,13 @@ function getRuntimeApiKey(userKey?: string): string {
   }
 }
 
+// Order candidates from fastest & most reliable to robust fallbacks
 const MODEL_CANDIDATES = [
   'gemini-3.5-flash-lite',
   'gemini-3.5-flash',
-  'gemini-3.7-flash',
+  'gemini-3.6-flash',
+  'gemini-flash-lite-latest',
+  'gemini-3-flash-preview',
 ];
 
 interface ChatMessage {
@@ -43,57 +46,65 @@ function getSystemPersona(modelId: string, customPrompt?: string): string {
 
   const modelLower = (modelId || '').toLowerCase();
   const baseRules = `
-CRITICAL MULTIMODAL & BEHAVIORAL INSTRUCTIONS:
-1. Natural Conversation: You are an intelligent, versatile, warm conversational assistant like ChatGPT and Claude. Chat naturally, answer questions, write essays, draft emails, tell jokes, solve math, explain concepts, and brainstorm with genuine human warmth.
-2. DO NOT Force Code: NEVER output programming code or code blocks unless the user explicitly asks for code, programming, an app, or a script. If the user asks a general question, answer conversationally with words, not code!
-3. AI IMAGE GENERATION POWERS: You can generate stunning, high-resolution AI artwork and photos on demand! When the user asks to generate, create, draw, paint, illustrate, design, or show an image, picture, photo, artwork, or logo:
-   - Expand their prompt into a vivid, descriptive, cinematic visual scene.
-   - Embed the generated image in your markdown reply using this exact format:
-     ![Descriptive Image Title](https://image.pollinations.ai/prompt/{URL_ENCODED_DETAILED_PROMPT}?width=1024&height=1024&nologo=true&model=flux&seed={RANDOM_INTEGER})
-   - Complement the image with a friendly, conversational explanation of the visual details and artistic choices.
-4. Code & Interactive Canvas: Only when the user specifically asks to write code, build a web app, or create a game, output full, working, production-grade code wrapped in standard markdown blocks (\`\`\`html, \`\`\`python, \`\`\`typescript, etc.) so it opens in the interactive Canvas.
-5. Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Use standard hyphens (-) or clean commas instead.`;
+You are an advanced, natural, highly intelligent, and warm AI assistant, just like ChatGPT and Claude.
+Follow these essential behavioral principles:
+1. Natural Human Tone: Speak with authentic warmth, clarity, empathy, and intellect. Answer everyday questions conversationally, solve complex problems, write stories, explain concepts with intuitive analogies, and adapt flexibly to the user's mood and intent.
+2. DO NOT Force Structured Outlines or Code: Never respond with robotic templates, rigid metadata bullets, or unsolicited code blocks. Only write code or technical architecture when the user specifically asks for code, a script, or an application!
+3. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
+   - Formulate a breathtaking visual description of the artwork.
+   - Embed the generated image cleanly in your markdown response using:
+     ![Descriptive Title](IMAGE_URL_PLACEHOLDER)
+   - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition.
+4. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
+5. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
 
   if (modelLower.includes('claude')) {
-    return `You are Claude 3.5 Sonnet, created by Anthropic. You are thoughtful, articulate, honest, and creative. ${baseRules}`;
+    return `You are Claude 3.5 Sonnet, developed by Anthropic. You are thoughtful, articulate, honest, empathetic, and exceptionally creative. ${baseRules}`;
   }
 
   if (modelLower.includes('gpt-4o') || modelLower.includes('openai')) {
-    return `You are GPT-4o, developed by OpenAI. You are versatile, witty, insightful, fast, and helpful. ${baseRules}`;
+    return `You are GPT-4o, developed by OpenAI. You are witty, versatile, engaging, insightful, and lightning-fast. ${baseRules}`;
   }
 
   if (modelLower.includes('deepseek') || modelLower.includes('r1')) {
-    return `You are DeepSeek R1, an advanced open reasoning model. For complex mathematical, logical, or multi-step reasoning queries, show your thought process inside a <thinking>...</thinking> block first, then provide your final answer. ${baseRules}`;
+    return `You are DeepSeek R1, an advanced open reasoning engine. For complex multi-step logical or mathematical reasoning, express your inner thinking inside a <thinking>...</thinking> tag before providing your final answer. ${baseRules}`;
   }
 
-  return `You are BunusRadar AI, a high-performance conversational AI assistant combining the capabilities of ChatGPT and Claude. ${baseRules}`;
-}
-
-function buildImageUrl(prompt: string, width = 1024, height = 1024): string {
-  const seed = Math.floor(Math.random() * 999999);
-  const cleanPrompt = encodeURIComponent(prompt.trim());
-  return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&model=flux&seed=${seed}`;
+  return `You are BunusRadar AI, an elite multimodal conversational assistant blending the conversational finesse of ChatGPT and the deep reasoning of Claude. ${baseRules}`;
 }
 
 function isImageQuery(text: string, imageMode = false): boolean {
   if (imageMode) return true;
-  const t = text.toLowerCase();
-  if (t.startsWith('/image') || t.startsWith('/img')) return true;
-  if (/\b(generate|create|draw|make|paint|illustrate|render|produce)\b.*\b(image|picture|photo|photograph|illustration|drawing|artwork|art|wallpaper|portrait|logo|visual)\b/i.test(text)) return true;
-  if (/\b(picture|photo|image|artwork|illustration|drawing|painting) of\b/i.test(text)) return true;
+  const t = text.toLowerCase().trim();
+  if (t.startsWith('/image') || t.startsWith('/img') || t.startsWith('/draw') || t.startsWith('/paint')) return true;
+  // Match explicit image generation intents only, avoiding conversational questions about images
+  if (/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me)\s+(an?\s+)?(image|picture|photo|artwork|drawing|painting|illustration|wallpaper|logo|portrait)\b/i.test(t)) {
+    return true;
+  }
+  if (/^(draw|paint|illustrate|sketch)\s+(me\s+)?(an?\s+)?/i.test(t)) return true;
+  if (/^(photo|picture|image|artwork|drawing)\s+of\s+/i.test(t)) return true;
   return false;
 }
 
 function extractImageSubject(prompt: string): string {
   let cleaned = prompt
-    .replace(/^\/(image|img)\s*/i, '')
-    .replace(/\b(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me|give me)\s+(an?\s+)?([a-zA-Z0-9\s-]*?)?(image|picture|photo|photograph|illustration|artwork|drawing|portrait|wallpaper|scene|render)\s+(of\s+)?/i, '')
-    .replace(/\b(a\s+)?([a-zA-Z0-9\s-]*?)?(picture|photo|image|drawing|artwork|render)\s+of\s+/i, '')
-    .replace(/^(please\s+)?(draw|paint|sketch)\s+(me\s+)?(an?\s+)?/i, '')
+    .replace(/^\/(image|img|draw|paint)\s*/i, '')
+    .replace(/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me|give me)\s+(an?\s+)?(image|picture|photo|photograph|illustration|artwork|drawing|portrait|wallpaper|scene|render)\s+(of\s+)?/i, '')
+    .replace(/^(a\s+)?(picture|photo|image|drawing|artwork|render)\s+of\s+/i, '')
+    .replace(/^(please\s+)?(draw|paint|sketch|illustrate)\s+(me\s+)?(an?\s+)?/i, '')
     .trim();
 
   cleaned = cleaned.replace(/[.!?]+$/, '').trim();
-  return cleaned || 'a breathtaking futuristic sci-fi concept artwork in 8k resolution';
+  return cleaned || 'a breathtaking futuristic sci-fi city with flying vehicles in 8k cinematic lighting';
+}
+
+function buildHighQualityImageUrl(subject: string, width = 1024, height = 1024): string {
+  const seed = Math.floor(Math.random() * 900000) + 100000;
+  // Professional visual expansion and negative prompt to eliminate watermarks and low quality
+  const aestheticExpansion = `${subject.trim()}, masterpiece, professional studio photography, highly detailed, 8k resolution, crisp sharp focus, cinematic volumetric lighting --no watermark, text, signature, logo, copyright, blurry, low resolution, deformed, bad anatomy`;
+  const cleanPrompt = encodeURIComponent(aestheticExpansion);
+  // nologo=true, nofeed=true, and enhance=false to avoid Pollinations' prompt-garbling filter
+  return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&nofeed=true&enhance=false&seed=${seed}`;
 }
 
 function cleanDisclaimers(text: string): string {
@@ -109,92 +120,34 @@ function generateOfflineFallback(userQuery: string, imageMode = false): { reply:
   // If user asks for an image or image mode is active
   if (isImageQuery(userQuery, imageMode)) {
     const cleanSubject = extractImageSubject(userQuery);
-    const imageUrl = buildImageUrl(cleanSubject);
+    const imageUrl = buildHighQualityImageUrl(cleanSubject);
     return {
-      reply: `Here is the AI artwork generated for your request:
+      reply: `Here is the high-resolution AI artwork crafted for your request:
 
 ![${cleanSubject}](${imageUrl})
 
-**Prompt Details:**
+**Artistic Specifications:**
 - **Subject:** ${cleanSubject}
-- **Engine:** Flux High-Resolution Photorealism
-- **Resolution:** 1024x1024
+- **Style:** 8K Photorealistic Concept Art
+- **Lighting:** Cinematic Volumetric & Studio Grade
+- **Resolution:** 1024x1024 (Zero Watermark)
 
-You can click **Open in Canvas** to view it full size, change aspect ratios, or download the image directly!`,
+You can click **Studio** on the image to inspect details in the Canvas, switch aspect ratios, or download the full-resolution file directly.`,
     };
   }
 
   if (query.includes('hello') || query.includes('hi') || query === 'who are you' || query.includes('who are you')) {
     return {
-      reply: `Hello! I am BunusRadar AI, a multi-talented conversational assistant modeled on ChatGPT and Claude.
+      reply: `Hello! I am BunusRadar AI, your conversational assistant inspired by the capabilities of ChatGPT and Claude. 
 
-Here is what I can do for you:
-- Chat, brainstorm, and answer everyday questions naturally
-- Generate high-resolution AI images, illustrations, and concept art
-- Write essays, emails, summaries, and creative stories
-- Write, debug, and execute code in our interactive Canvas panel
-- Explain complex scientific, economic, or technical topics
+I can chat about any topic, write essays and creative stories, generate stunning high-resolution AI artwork on demand, or write and run code right in the interactive Canvas.
 
-What would you like to explore or create today?`,
-    };
-  }
-
-  if (query.includes('game') || query.includes('snake') || query.includes('pong')) {
-    return {
-      reply: `Here is an interactive retro arcade game built with HTML5 Canvas and JavaScript. You can test and play it right now by opening the **Canvas** panel on the right!
-
-\`\`\`html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Arcade Game</title>
-  <style>
-    body { background: #0f172a; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-    canvas { background: #070d1e; border: 2px solid #3b82f6; border-radius: 8px; box-shadow: 0 0 20px rgba(59,130,246,0.3); }
-    h1 { color: #f9b44d; margin-bottom: 8px; font-size: 20px; }
-    p { color: #94a3b8; font-size: 13px; margin-bottom: 12px; }
-  </style>
-</head>
-<body>
-  <h1>Retro Arcade Canvas</h1>
-  <p>Use arrow keys to navigate</p>
-  <canvas id="c" width="320" height="320"></canvas>
-  <script>
-    const c = document.getElementById('c'), ctx = c.getContext('2d');
-    let x = 160, y = 160, dx = 2, dy = 0;
-    function loop() {
-      x = (x + dx + 320) % 320;
-      y = (y + dy + 320) % 320;
-      ctx.fillStyle = '#070d1e'; ctx.fillRect(0,0,320,320);
-      ctx.fillStyle = '#38bdf8'; ctx.fillRect(x-6, y-6, 12, 12);
-      requestAnimationFrame(loop);
-    }
-    window.addEventListener('keydown', e => {
-      if (e.key === 'ArrowUp') { dx = 0; dy = -2; }
-      else if (e.key === 'ArrowDown') { dx = 0; dy = 2; }
-      else if (e.key === 'ArrowLeft') { dx = -2; dy = 0; }
-      else if (e.key === 'ArrowRight') { dx = 2; dy = 0; }
-    });
-    loop();
-  </script>
-</body>
-</html>
-\`\`\`
-
-You can customize the controls, colors, or game mechanics directly in the code tab!`,
+How is your day going, and what would you like to explore or work on together?`,
     };
   }
 
   return {
-    reply: `I received your prompt: "${userQuery}".
-
-How would you like to proceed?
-- I can provide an engaging, detailed conversational answer.
-- I can generate a photorealistic AI image or concept art.
-- I can write clean, production-ready code with complete documentation.
-
-Feel free to ask or give me more context!`,
+    reply: `I would be happy to help you with that! Whether you would like to explore this topic conversationally, create artwork around it, or build an interactive prototype, I am ready. Could you tell me a little more about what you have in mind?`,
   };
 }
 
@@ -220,24 +173,23 @@ export async function POST(req: NextRequest) {
     const personaInstruction = getSystemPersona(model, systemPrompt);
     const userWantsImage = isImageQuery(latestUserMessage, imageMode);
 
-    // Format messages for Google Generative AI API
+    // Format conversation history for Gemini API
     const contents = messages.map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }],
     }));
 
-    // Inject system instructions and image mode signal if enabled
-    if (contents.length > 0 && contents[0].role === 'user') {
-      const modePrefix = userWantsImage
-        ? `[USER REQUESTED AI IMAGE GENERATION: Create a stunning image with an expanded descriptive prompt embedded as a markdown image link.]\n\n`
-        : '';
-      contents[0].parts[0].text = `[System Instructions: ${personaInstruction}]\n\n${modePrefix}${contents[0].parts[0].text}`;
+    // If user specifically requested an image, guide the assistant naturally
+    if (userWantsImage && contents.length > 0) {
+      const lastIndex = contents.length - 1;
+      const cleanSubject = extractImageSubject(latestUserMessage);
+      contents[lastIndex].parts[0].text = `${contents[lastIndex].parts[0].text}\n\n[System Note: Please provide a vivid, artistic, imaginative description of this visual concept and critique its aesthetic elements warmly as a human art director.]`;
     }
 
-    // Try Gemini candidates via direct REST API with short timeout
+    // Try reliable Gemini candidates in priority order with 18s timeout per attempt
     for (const candidate of MODEL_CANDIDATES) {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 9000);
+      const timeoutId = setTimeout(() => controller.abort(), 18000);
 
       try {
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${candidate}:generateContent?key=${activeKey}`;
@@ -245,9 +197,12 @@ export async function POST(req: NextRequest) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            system_instruction: {
+              parts: [{ text: personaInstruction }],
+            },
             contents,
             generationConfig: {
-              temperature: Math.min(Math.max(temperature, 0), 1),
+              temperature: Math.min(Math.max(temperature, 0.2), 1),
               maxOutputTokens: 8192,
             },
           }),
@@ -267,7 +222,7 @@ export async function POST(req: NextRequest) {
           let thinking: string | undefined;
           let reply = rawText;
 
-          // Replace any rogue em-dashes
+          // Replace rogue em-dashes
           reply = reply.replace(/\u2014/g, ' - ');
 
           // Extract <thinking> block if generated
@@ -279,17 +234,17 @@ export async function POST(req: NextRequest) {
             thinking = 'Analyzed query context, evaluated visual and conversational parameters, and formulated a comprehensive response.';
           }
 
-          // If the user requested an image, ensure an image markdown is present and clean disclaimers
+          // If user asked for an image, guarantee a clean high-resolution image link with zero watermarks
           if (userWantsImage) {
             reply = cleanDisclaimers(reply);
-            const hasMarkdownImage = /!\[.*?\]\((https?:\/\/image\.pollinations\.ai\/[^\s)]+)\)/i.test(reply);
-            if (!hasMarkdownImage) {
-              const cleanSubject = extractImageSubject(latestUserMessage);
-              // Check if model gave a detailed prompt in markdown
-              const promptMatch = reply.match(/\*\*Prompt:\*\*\s*([^\n\r]+)/i);
-              const finalSubject = promptMatch ? promptMatch[1].trim() : cleanSubject;
-              const imageUrl = buildImageUrl(finalSubject);
-              reply = `![${cleanSubject}](${imageUrl})\n\n${reply || `Here is the AI artwork generated for "${cleanSubject}". You can explore the image details, change dimensions in the Canvas, or download it in high resolution.`}`;
+            const cleanSubject = extractImageSubject(latestUserMessage);
+            const highResImageUrl = buildHighQualityImageUrl(cleanSubject);
+
+            // Replace any broken placeholder url or append high quality image markdown
+            if (reply.includes('IMAGE_URL_PLACEHOLDER')) {
+              reply = reply.replace(/IMAGE_URL_PLACEHOLDER/g, highResImageUrl);
+            } else if (!/!\[.*?\]\((https?:\/\/[^\s)]+)\)/i.test(reply)) {
+              reply = `![${cleanSubject}](${highResImageUrl})\n\n${reply}`;
             }
           }
 
@@ -306,7 +261,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // If all candidates fail or network is interrupted, return conversational fallback
+    // If all online candidates fail or network is interrupted, return conversational fallback
     const fallback = generateOfflineFallback(latestUserMessage, imageMode);
     return NextResponse.json({
       reply: fallback.reply,
