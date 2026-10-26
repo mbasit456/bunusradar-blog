@@ -31,7 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
   // Exclude login page from admin sidebar wrapper
-  const isLoginPage = pathname === '/admin/login';
+  const isLoginPage = pathname === '/admin/starseo78';
 
   useEffect(() => {
     if (isLoginPage) {
@@ -45,7 +45,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     if (!token && !hasCookie) {
       setIsAuth(false);
-      router.push('/admin/login');
+      router.push('/admin/starseo78');
     } else {
       setIsAuth(true);
     }
@@ -56,7 +56,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       localStorage.removeItem('admin_token');
       document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     }
-    router.push('/admin/login');
+    router.push('/admin/starseo78');
   };
 
   if (isLoginPage) {
@@ -129,7 +129,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
           <div className="flex items-center gap-2 pl-3 border-l border-slate-700 text-xs">
             <span className="text-slate-400">Howdy,</span>
-            <span className="font-bold text-white">Admin</span>
+            <span className="font-bold text-white">eiland</span>
             <button
               onClick={handleLogout}
               title="Log Out"

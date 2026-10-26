@@ -24,21 +24,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/wp-admin',
-        destination: '/admin',
-        permanent: false,
-      },
-      {
-        source: '/wp-admin/:path*',
-        destination: '/admin/:path*',
-        permanent: false,
-      },
-      {
-        source: '/dashboard',
-        destination: '/admin',
-        permanent: false,
-      },
-      {
         source: '/feed',
         destination: '/rss.xml',
         permanent: true,

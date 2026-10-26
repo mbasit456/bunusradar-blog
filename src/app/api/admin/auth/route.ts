@@ -2,23 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const DEFAULT_ADMIN_PASS = process.env.ADMIN_PASSWORD || 'bunusradar2026';
+const VALID_USERNAME = process.env.ADMIN_USERNAME || 'eiland';
+const VALID_PASSWORD = process.env.ADMIN_PASSWORD || '$&SW%&#j%{)5';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { password } = body;
+    const { username, password } = body;
 
-    if (!password) {
-      return NextResponse.json({ error: 'Password is required' }, { status: 400 });
+    if (!username || !password) {
+      return NextResponse.json({ error: 'Username and password are required' }, { status: 400 });
     }
 
-    if (password === DEFAULT_ADMIN_PASS || password === 'admin' || password === 'admin123') {
-      const token = Buffer.from(`admin-session-${Date.now()}`).toString('base64');
+    if (username.trim() === VALID_USERNAME && password === VALID_PASSWORD) {
+      const token = Buffer.from(`auth-session-${Date.now()}-${Math.random()}`).toString('base64');
       const response = NextResponse.json({
         success: true,
         token,
-        user: { name: 'Admin', role: 'Administrator' },
+        user: { name: 'eiland', role: 'Administrator' },
       });
 
       response.cookies.set('admin_token', token, {
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
       return response;
     }
 
-    return NextResponse.json({ error: 'Invalid administrator password' }, { status: 401 });
+    return NextResponse.json({ error: 'Invalid administrator credentials' }, { status: 401 });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Internal error';
     return NextResponse.json({ error: msg }, { status: 500 });
