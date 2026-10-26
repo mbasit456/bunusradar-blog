@@ -338,6 +338,13 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4 shrink-0">
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-[#f9b44d] transition-colors"
+              title="CMS Admin Dashboard"
+            >
+              <span>CMS Admin</span>
+            </Link>
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors cursor-pointer text-xs"

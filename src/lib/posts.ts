@@ -382,3 +382,51 @@ export function extractKeyTakeaways(markdown: string): string[] {
 
   return bullets;
 }
+
+
+export function savePostFile(postData: {
+  slug: string;
+  title: string;
+  excerpt?: string;
+  date?: string;
+  category?: string;
+  tags?: string[];
+  coverImage?: string;
+  author?: { name: string; avatar?: string; role?: string } | string;
+  content: string;
+}): { success: boolean; path: string; slug: string } {
+  if (!fs.existsSync(POSTS_DIRECTORY)) {
+    fs.mkdirSync(POSTS_DIRECTORY, { recursive: true });
+  }
+
+  const cleanSlug = postData.slug
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-');
+
+  const frontmatter = {
+    title: postData.title,
+    excerpt: postData.excerpt || '',
+    date: postData.date || new Date().toISOString().split('T')[0],
+    category: postData.category || 'technology',
+    tags: Array.isArray(postData.tags) ? postData.tags : [],
+    coverImage: postData.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+    ...(postData.author ? { author: postData.author } : {}),
+  };
+
+  const fileContent = matter.stringify(postData.content || '', frontmatter);
+  const targetPath = path.join(POSTS_DIRECTORY, `${cleanSlug}.md`);
+  fs.writeFileSync(targetPath, fileContent, 'utf-8');
+
+  return { success: true, path: targetPath, slug: cleanSlug };
+}
+
+export function deletePostFile(slug: string): boolean {
+  const targetPath = path.join(POSTS_DIRECTORY, `${slug}.md`);
+  if (fs.existsSync(targetPath)) {
+    fs.unlinkSync(targetPath);
+    return true;
+  }
+  return false;
+}
