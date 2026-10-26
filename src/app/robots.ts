@@ -91,11 +91,11 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'cohere-ai',
         allow: '/',
       },
-      // Catch-all: all other bots granted full crawl access (excluding internal search, APIs, and CMS admin)
+      // Catch-all: all other bots granted full crawl access (excluding internal search and APIs)
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/search', '/api/', '/admin/'],
+        disallow: ['/search', '/api/'],
       },
     ],
     sitemap: [
