@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { permanentRedirect } from 'next/navigation';
 import { getPostsByTag, getAllTags } from '@/lib/posts';
 import PostCard from '@/components/PostCard';
 import { ArrowLeft, Tag as TagIcon } from 'lucide-react';
@@ -63,13 +62,6 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
 
 export default function TagPage({ params }: TagPageProps) {
   const cleanTag = fullyDecode(params.tag);
-  const canonicalSlug = encodeURIComponent(cleanTag);
-
-  // If incoming tag URL is multi-encoded or unnormalized, permanently redirect to canonical slug
-  if (params.tag !== canonicalSlug) {
-    permanentRedirect(`/tag/${canonicalSlug}`);
-  }
-
   const posts = getPostsByTag(cleanTag);
 
   return (

@@ -81,6 +81,33 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/rss.xml',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, follow',
+          },
+        ],
+      },
+      {
+        source: '/llms.txt',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, follow',
+          },
+        ],
+      },
+      {
+        source: '/llms-full.txt',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, follow',
+          },
+        ],
+      },
     ];
   },
 };

@@ -195,9 +195,13 @@ export function getPostsByCategory(categorySlug: string): PostMetadata[] {
 }
 
 export function getPostsByTag(tag: string): PostMetadata[] {
+  const normalizedTarget = tag.toLowerCase().replace(/[-\s]+/g, ' ').trim();
   const posts = getAllPosts();
   return posts.filter((post) =>
-    post.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase())
+    post.tags.some((t) => {
+      const normalizedTag = t.toLowerCase().replace(/[-\s]+/g, ' ').trim();
+      return normalizedTag === normalizedTarget;
+    })
   );
 }
 
