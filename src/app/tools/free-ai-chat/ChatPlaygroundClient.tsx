@@ -5,8 +5,6 @@ import {
   Sparkles,
   Send,
   Code2,
-  Play,
-  Square,
   Copy,
   Check,
   Download,
@@ -23,16 +21,18 @@ import {
   RefreshCw,
   Search,
   Cpu,
-  Layers,
   Terminal,
-  FileText,
   Sliders,
   ExternalLink,
   Bot,
   User,
   PanelLeftClose,
   PanelLeftOpen,
-  Eye
+  Eye,
+  Image as ImageIcon,
+  ZoomIn,
+  Wand2,
+  Ratio
 } from 'lucide-react';
 
 interface Message {
@@ -54,23 +54,73 @@ interface ChatSession {
 interface Artifact {
   id: string;
   title: string;
-  language: string;
-  code: string;
+  type: 'code' | 'image';
+  language?: string;
+  code?: string;
+  imageUrl?: string;
+  prompt?: string;
+  aspectRatio?: '1:1' | '16:9' | '9:16';
 }
 
 const DEFAULT_MODELS = [
-  { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet', desc: 'Artifacts, Code Canvas, Systems Architecture', icon: '⚡', color: 'border-amber-500/40 text-amber-300' },
-  { id: 'gpt-4o', name: 'GPT-4o', desc: 'Creative Reasoning, Technical Writing, Analysis', icon: '🚀', color: 'border-emerald-500/40 text-emerald-300' },
-  { id: 'deepseek-r1', name: 'DeepSeek R1', desc: 'Chain-of-Thought Deep Reasoning Engine', icon: '🧠', color: 'border-sky-500/40 text-sky-300' },
-  { id: 'gemini-3-flash', name: 'Gemini 3.8 Flash', desc: 'Ultra-Fast Low-Latency General Intelligence', icon: '⚡', color: 'border-purple-500/40 text-purple-300' },
+  { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet', desc: 'Artifacts, Code Canvas, Systems Architecture', icon: '⚡' },
+  { id: 'gpt-4o', name: 'GPT-4o', desc: 'Creative Reasoning, Technical Writing, Analysis', icon: '🚀' },
+  { id: 'deepseek-r1', name: 'DeepSeek R1', desc: 'Chain-of-Thought Deep Reasoning Engine', icon: '🧠' },
+  { id: 'gemini-3-flash', name: 'Gemini 3.8 Flash', desc: 'Ultra-Fast Low-Latency General Intelligence', icon: '⚡' },
 ];
 
 const QUICK_STARTERS = [
-  { title: 'Interactive Retro Game', prompt: 'Create an interactive retro arcade game in self-contained HTML, CSS, and Canvas JavaScript. Make it playable with arrow keys and colorful scoreboards.' },
-  { title: 'FastAPI Microservice', prompt: 'Write a complete production-ready FastAPI microservice with Pydantic v2 schemas, JWT auth middleware, and async database session management.' },
-  { title: 'React Data Table Component', prompt: 'Build a modular React data table component with client-side sorting, regex search filtering, pagination, and Tailwind CSS styling.' },
-  { title: 'Enterprise AI Strategy RFC', prompt: 'Draft a comprehensive Request for Comments (RFC) analyzing the security, unit economics, and architecture of deploying local LLMs vs cloud APIs.' },
+  { title: '🎨 Cyberpunk Neon Cat', prompt: 'Generate a photorealistic image of a futuristic cybernetic cat sitting on a rainy rooftop in neon Tokyo at night, cinematic lighting, 8k.' },
+  { title: '🌌 Cosmic Galaxy Artwork', prompt: 'Create a stunning image of a deep space nebula with swirling stardust, newborn stars, and vibrant purple and gold cosmic gas clouds, astrophotography.' },
+  { title: '🎮 Retro Arcade Game', prompt: 'Create an interactive retro arcade game in self-contained HTML, CSS, and Canvas JavaScript. Make it playable with arrow keys.' },
+  { title: '💡 Explain Quantum Computing', prompt: 'Explain how quantum computing works compared to classical computing in simple, engaging terms with real-world analogies.' },
 ];
+
+interface MessagePart {
+  type: 'text' | 'code' | 'image';
+  content?: string;
+  language?: string;
+  code?: string;
+  alt?: string;
+  url?: string;
+}
+
+function parseMessageParts(text: string): MessagePart[] {
+  const parts: MessagePart[] = [];
+  const regex = /(!\[(.*?)\]\((https:\/\/image\.pollinations\.ai\/[^\s)]+)\))|(```([a-zA-Z0-9_-]*)\n([\s\S]*?)```)/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ type: 'text', content: text.slice(lastIndex, match.index) });
+    }
+
+    if (match[1]) {
+      // Image match
+      parts.push({
+        type: 'image',
+        alt: match[2] || 'AI Generated Artwork',
+        url: match[3],
+      });
+    } else if (match[4]) {
+      // Code match
+      parts.push({
+        type: 'code',
+        language: match[5] || 'text',
+        code: match[6],
+      });
+    }
+
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push({ type: 'text', content: text.slice(lastIndex) });
+  }
+
+  return parts;
+}
 
 export default function ChatPlaygroundClient() {
   // Chat threads
@@ -83,16 +133,21 @@ export default function ChatPlaygroundClient() {
   const [loading, setLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState('claude-3-5-sonnet');
   const [webSearchEnabled, setWebSearchEnabled] = useState(false);
+  const [imageMode, setImageMode] = useState(false);
   
   // Canvas & Artifacts
   const [canvasOpen, setCanvasOpen] = useState(false);
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const [canvasTab, setCanvasTab] = useState<'preview' | 'code'>('preview');
   const [canvasFullscreen, setCanvasFullscreen] = useState(false);
+  const [selectedRatio, setSelectedRatio] = useState<'1:1' | '16:9' | '9:16'>('1:1');
+
+  // Lightbox Modal for Images
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
   // Settings Modal
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [systemPrompt, setSystemPrompt] = useState('You are an expert AI software engineer, architect, and technical advisor. Provide modular, production-ready code with complete explanations.');
+  const [systemPrompt, setSystemPrompt] = useState('You are an intelligent, versatile, warm conversational assistant like ChatGPT and Claude. Chat naturally, write code only when asked, and generate images with rich detail.');
   const [temperature, setTemperature] = useState(0.7);
   const [customApiKey, setCustomApiKey] = useState('');
 
@@ -212,16 +267,31 @@ export default function ChatPlaygroundClient() {
     }
   };
 
-  // Extract code artifacts from assistant reply
+  // Extract artifacts from assistant reply (Images or Code)
   const extractArtifact = (text: string): Artifact | null => {
+    // Check for Image Markdown first: ![alt](url)
+    const imgMatch = text.match(/!\[(.*?)\]\((https:\/\/image\.pollinations\.ai\/[^\s)]+)\)/);
+    if (imgMatch) {
+      return {
+        id: 'art-img-' + Date.now(),
+        title: (imgMatch[1] || 'AI Generated Artwork').slice(0, 36),
+        type: 'image',
+        imageUrl: imgMatch[2],
+        prompt: imgMatch[1] || 'AI Artwork',
+        aspectRatio: '1:1',
+      };
+    }
+
+    // Check for Code Block: ```lang ... ```
     const codeBlockRegex = /```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/;
     const match = text.match(codeBlockRegex);
     if (match) {
       const lang = match[1].toLowerCase() || 'text';
       const code = match[2];
       return {
-        id: 'art-' + Date.now(),
+        id: 'art-code-' + Date.now(),
         title: lang.toUpperCase() + ' Code Canvas',
+        type: 'code',
         language: lang,
         code: code,
       };
@@ -251,6 +321,8 @@ export default function ChatPlaygroundClient() {
 
     updateCurrentSessionMessages(newHistory, newTitle);
     setInput('');
+    const currentImageMode = imageMode;
+    if (imageMode) setImageMode(false); // Reset toggle after submit
     setLoading(true);
 
     try {
@@ -263,6 +335,7 @@ export default function ChatPlaygroundClient() {
           systemPrompt,
           temperature,
           webSearch: webSearchEnabled,
+          imageMode: currentImageMode,
           apiKey: customApiKey || undefined,
         }),
       });
@@ -287,12 +360,16 @@ export default function ChatPlaygroundClient() {
       const finalHistory = [...newHistory, assistantMsg];
       updateCurrentSessionMessages(finalHistory);
 
-      // Auto-open canvas if code block is generated
+      // Auto-open canvas if artifact (Image or Code) is generated
       const artifact = extractArtifact(assistantReply);
       if (artifact) {
         setActiveArtifact(artifact);
         setCanvasOpen(true);
-        setCanvasTab(artifact.language === 'html' || artifact.language === 'svg' ? 'preview' : 'code');
+        if (artifact.type === 'image') {
+          setCanvasTab('preview');
+        } else {
+          setCanvasTab(artifact.language === 'html' || artifact.language === 'svg' ? 'preview' : 'code');
+        }
       }
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to reach AI service';
@@ -325,7 +402,11 @@ export default function ChatPlaygroundClient() {
     }
 
     window.speechSynthesis.cancel();
-    const cleanText = text.replace(/```[\s\S]*?```/g, 'Code block omitted.').replace(/[#*_`]/g, '');
+    const cleanText = text
+      .replace(/!\[.*?\]\(.*?\)/g, 'Image generated.')
+      .replace(/```[\s\S]*?```/g, 'Code block omitted.')
+      .replace(/[#*_`]/g, '');
+
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.onend = () => setSpeakingId(null);
     utterance.onerror = () => setSpeakingId(null);
@@ -333,16 +414,77 @@ export default function ChatPlaygroundClient() {
     window.speechSynthesis.speak(utterance);
   };
 
+  const handleDownloadImage = async (url: string, filename = 'bunusradar-ai-art.jpg') => {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch (e) {
+      window.open(url, '_blank');
+    }
+  };
+
   const handleDownloadArtifact = () => {
     if (!activeArtifact) return;
-    const blob = new Blob([activeArtifact.code], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const ext = activeArtifact.language === 'html' ? 'html' : activeArtifact.language === 'python' ? 'py' : activeArtifact.language === 'typescript' ? 'ts' : 'txt';
-    a.download = `bunusradar-artifact.${ext}`;
-    a.click();
-    URL.revokeObjectURL(url);
+
+    if (activeArtifact.type === 'image' && activeArtifact.imageUrl) {
+      handleDownloadImage(activeArtifact.imageUrl);
+      return;
+    }
+
+    if (activeArtifact.code) {
+      const blob = new Blob([activeArtifact.code], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const ext = activeArtifact.language === 'html' ? 'html' : activeArtifact.language === 'python' ? 'py' : activeArtifact.language === 'typescript' ? 'ts' : 'txt';
+      a.download = `bunusradar-artifact.${ext}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const handleUpdateImageRatio = (ratio: '1:1' | '16:9' | '9:16') => {
+    setSelectedRatio(ratio);
+    if (!activeArtifact || activeArtifact.type !== 'image' || !activeArtifact.imageUrl) return;
+
+    let w = 1024;
+    let h = 1024;
+    if (ratio === '16:9') {
+      w = 1280;
+      h = 720;
+    } else if (ratio === '9:16') {
+      w = 720;
+      h = 1280;
+    }
+
+    // Update width and height query params
+    const updatedUrl = activeArtifact.imageUrl
+      .replace(/width=\d+/, `width=${w}`)
+      .replace(/height=\d+/, `height=${h}`);
+
+    setActiveArtifact({
+      ...activeArtifact,
+      imageUrl: updatedUrl,
+      aspectRatio: ratio,
+    });
+  };
+
+  const handleRegenerateImageVariant = () => {
+    if (!activeArtifact || activeArtifact.type !== 'image' || !activeArtifact.imageUrl) return;
+    const newSeed = Math.floor(Math.random() * 999999);
+    const updatedUrl = activeArtifact.imageUrl.replace(/seed=\d+/, `seed=${newSeed}`);
+    setActiveArtifact({
+      ...activeArtifact,
+      imageUrl: updatedUrl,
+    });
   };
 
   const handleExportChat = (format: 'markdown' | 'json') => {
@@ -435,7 +577,7 @@ export default function ChatPlaygroundClient() {
         <div className="p-3 border-t border-slate-800/80 bg-[#091126]/60">
           <div className="text-[10px] font-bold uppercase tracking-wider text-[#f9b44d] mb-2 flex items-center gap-1.5">
             <Sparkles className="w-3 h-3 text-[#f9b44d]" />
-            <span>Quick Workspaces</span>
+            <span>Prompt Shortcuts</span>
           </div>
           <div className="space-y-1.5">
             {QUICK_STARTERS.slice(0, 2).map((starter, idx) => (
@@ -486,7 +628,7 @@ export default function ChatPlaygroundClient() {
             {/* Active Model Indicator Tag */}
             <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Active
+              Live AI
             </span>
           </div>
 
@@ -500,10 +642,16 @@ export default function ChatPlaygroundClient() {
                   ? 'bg-[#f9b44d] text-[#1b2e67] border-[#f9b44d]'
                   : 'bg-slate-800/60 text-slate-200 border-slate-700 hover:text-white hover:bg-slate-800'
               }`}
-              title="Toggle Claude-style Canvas Panel"
+              title="Toggle Canvas & Artwork Panel"
             >
-              <Code2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Canvas</span>
+              {activeArtifact?.type === 'image' ? (
+                <ImageIcon className="w-3.5 h-3.5" />
+              ) : (
+                <Code2 className="w-3.5 h-3.5" />
+              )}
+              <span className="hidden sm:inline">
+                {activeArtifact?.type === 'image' ? 'Image Studio' : 'Canvas'}
+              </span>
             </button>
 
             {/* Export Dropdown */}
@@ -536,10 +684,10 @@ export default function ChatPlaygroundClient() {
               </div>
               <div className="space-y-2">
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                  BunusRadar AI Workspace
+                  BunusRadar AI Assistant
                 </h1>
                 <p className="text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">
-                  High-performance reasoning, interactive code canvases, and multi-model architectural intelligence powered by Claude, GPT-4o, and DeepSeek.
+                  Chat naturally, brainstorm ideas, generate high-resolution AI images, and build interactive web apps with live code execution.
                 </p>
               </div>
 
@@ -566,7 +714,7 @@ export default function ChatPlaygroundClient() {
             messages.map(msg => {
               const isUser = msg.role === 'user';
               const isThinkingOpen = expandedThinking[msg.id] ?? false;
-              const hasCode = !isUser && msg.content.includes('```');
+              const parts = isUser ? [{ type: 'text' as const, content: msg.content }] : parseMessageParts(msg.content);
 
               return (
                 <div
@@ -579,7 +727,7 @@ export default function ChatPlaygroundClient() {
                     </div>
                   )}
 
-                  <div className={`space-y-2 max-w-[88%] sm:max-w-[80%]`}>
+                  <div className="space-y-2 max-w-[88%] sm:max-w-[80%]">
                     {/* Collapsible Thinking Box (DeepSeek / Claude style) */}
                     {!isUser && msg.thinking && (
                       <div className="rounded-lg border border-sky-500/20 bg-sky-950/20 overflow-hidden text-xs">
@@ -608,36 +756,122 @@ export default function ChatPlaygroundClient() {
                       className={`p-4 rounded-2xl text-sm leading-relaxed ${
                         isUser
                           ? 'bg-[#1b2e67] text-white rounded-br-xs border border-blue-500/20 shadow'
-                          : 'bg-[#14234f]/80 text-slate-200 rounded-bl-xs border border-slate-700/60 shadow'
+                          : 'bg-[#14234f]/80 text-slate-200 rounded-bl-xs border border-slate-700/60 shadow space-y-4'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap font-sans">
-                        {msg.content}
-                      </div>
+                      {parts.map((part, pIdx) => {
+                        if (part.type === 'text') {
+                          return (
+                            <div key={pIdx} className="whitespace-pre-wrap font-sans">
+                              {part.content}
+                            </div>
+                          );
+                        }
 
-                      {/* Code Canvas Quick Trigger */}
-                      {hasCode && (
-                        <div className="mt-3 pt-3 border-t border-slate-700/60 flex items-center justify-between gap-2">
-                          <span className="text-[11px] text-slate-400 flex items-center gap-1">
-                            <Terminal className="w-3.5 h-3.5 text-[#f9b44d]" />
-                            Code Artifact Detected
-                          </span>
-                          <button
-                            onClick={() => {
-                              const art = extractArtifact(msg.content);
-                              if (art) {
-                                setActiveArtifact(art);
-                                setCanvasOpen(true);
-                                setCanvasTab(art.language === 'html' || art.language === 'svg' ? 'preview' : 'code');
-                              }
-                            }}
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] rounded-md transition"
-                          >
-                            <ExternalLink className="w-3 h-3" />
-                            <span>Open in Canvas</span>
-                          </button>
-                        </div>
-                      )}
+                        if (part.type === 'image' && part.url) {
+                          return (
+                            <div
+                              key={pIdx}
+                              className="rounded-xl overflow-hidden border border-slate-700/80 bg-[#071126] shadow-lg group relative"
+                            >
+                              <div className="relative aspect-square max-w-lg mx-auto overflow-hidden bg-slate-900 flex items-center justify-center">
+                                <img
+                                  src={part.url}
+                                  alt={part.alt || 'AI Artwork'}
+                                  loading="lazy"
+                                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                                />
+                              </div>
+
+                              {/* Image Action Bar */}
+                              <div className="p-3 bg-[#0d1838] border-t border-slate-800 flex items-center justify-between gap-2">
+                                <div className="truncate text-xs text-slate-300 font-medium">
+                                  {part.alt || 'AI Generated Image'}
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0">
+                                  <button
+                                    onClick={() => setLightboxUrl(part.url || null)}
+                                    className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded transition"
+                                    title="View Fullscreen"
+                                  >
+                                    <ZoomIn className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDownloadImage(part.url!)}
+                                    className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded transition"
+                                    title="Download image (.jpg)"
+                                  >
+                                    <Download className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      setActiveArtifact({
+                                        id: 'art-img-' + Date.now(),
+                                        title: (part.alt || 'AI Artwork').slice(0, 36),
+                                        type: 'image',
+                                        imageUrl: part.url,
+                                        prompt: part.alt,
+                                        aspectRatio: '1:1',
+                                      });
+                                      setCanvasOpen(true);
+                                    }}
+                                    className="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] rounded transition"
+                                  >
+                                    <ExternalLink className="w-3 h-3" />
+                                    <span>Studio</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+
+                        if (part.type === 'code' && part.code) {
+                          return (
+                            <div
+                              key={pIdx}
+                              className="rounded-xl overflow-hidden border border-slate-700/80 bg-[#071126] my-2"
+                            >
+                              <div className="px-3.5 py-1.5 bg-[#0e1938] border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                                <span className="font-bold text-[#f9b44d] uppercase tracking-wider text-[11px]">
+                                  {part.language || 'Code'}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => handleCopy(part.code!, `code-${pIdx}`)}
+                                    className="hover:text-white flex items-center gap-1 text-[11px] transition"
+                                  >
+                                    {copiedId === `code-${pIdx}` ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                                    <span>{copiedId === `code-${pIdx}` ? 'Copied' : 'Copy'}</span>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      setActiveArtifact({
+                                        id: 'art-code-' + Date.now(),
+                                        title: (part.language || 'CODE').toUpperCase() + ' Canvas',
+                                        type: 'code',
+                                        language: part.language,
+                                        code: part.code,
+                                      });
+                                      setCanvasOpen(true);
+                                      setCanvasTab(part.language === 'html' || part.language === 'svg' ? 'preview' : 'code');
+                                    }}
+                                    className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] rounded transition"
+                                  >
+                                    <ExternalLink className="w-3 h-3" />
+                                    <span>Canvas</span>
+                                  </button>
+                                </div>
+                              </div>
+                              <pre className="p-3.5 overflow-x-auto text-xs font-mono text-emerald-300 leading-relaxed bg-[#060a17]">
+                                <code>{part.code}</code>
+                              </pre>
+                            </div>
+                          );
+                        }
+
+                        return null;
+                      })}
                     </div>
 
                     {/* Actions Row */}
@@ -692,7 +926,7 @@ export default function ChatPlaygroundClient() {
               <div className="bg-[#14234f]/80 p-4 rounded-2xl rounded-bl-xs border border-slate-700/60 flex items-center gap-3">
                 <RefreshCw className="w-4 h-4 text-[#f9b44d] animate-spin" />
                 <span className="text-xs text-slate-300 font-medium">
-                  Synthesizing multi-step reasoning response...
+                  {imageMode ? 'Generating high-resolution AI artwork...' : 'Thinking and generating response...'}
                 </span>
               </div>
             </div>
@@ -704,6 +938,23 @@ export default function ChatPlaygroundClient() {
         {/* Input Bar */}
         <footer className="p-3 sm:p-4 bg-[#0e1938]/95 border-t border-slate-800 shrink-0">
           <div className="max-w-4xl mx-auto">
+            {/* Image Mode Alert Bar */}
+            {imageMode && (
+              <div className="mb-2 px-3 py-1.5 rounded-lg bg-pink-950/40 border border-pink-500/40 flex items-center justify-between text-xs text-pink-200">
+                <div className="flex items-center gap-2">
+                  <ImageIcon className="w-3.5 h-3.5 text-pink-400 animate-pulse" />
+                  <span><strong>Image Mode Active:</strong> Type what you want to visualize and AI will paint it!</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setImageMode(false)}
+                  className="text-pink-400 hover:text-white text-[11px]"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+
             <form
               onSubmit={e => {
                 e.preventDefault();
@@ -721,14 +972,33 @@ export default function ChatPlaygroundClient() {
                     handleSendMessage();
                   }
                 }}
-                placeholder="Ask anything, code a web app, analyze architecture, or generate Claude-style artifacts..."
+                placeholder={
+                  imageMode
+                    ? 'Describe the image you want to generate (e.g. A cyberpunk cat in neon Tokyo rain, photorealistic, 8k)...'
+                    : 'Chat about anything, ask questions, write stories, code web apps, or generate AI art...'
+                }
                 rows={2}
                 className="w-full bg-transparent p-3 pr-24 text-sm text-white placeholder-slate-400 focus:outline-none resize-none leading-relaxed"
               />
 
               {/* Bottom Input Controls */}
               <div className="px-3 pb-2 flex items-center justify-between border-t border-slate-800/60 pt-2 text-xs">
-                <div className="flex items-center gap-3 text-slate-400">
+                <div className="flex items-center gap-2 sm:gap-3 text-slate-400">
+                  {/* Image Mode Button */}
+                  <button
+                    type="button"
+                    onClick={() => setImageMode(!imageMode)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-semibold border transition ${
+                      imageMode
+                        ? 'bg-pink-600/30 text-pink-300 border-pink-500/60 shadow-sm'
+                        : 'hover:text-white border-transparent'
+                    }`}
+                  >
+                    <ImageIcon className="w-3.5 h-3.5 text-pink-400" />
+                    <span>Create Image</span>
+                  </button>
+
+                  {/* Web Search Button */}
                   <button
                     type="button"
                     onClick={() => setWebSearchEnabled(!webSearchEnabled)}
@@ -741,7 +1011,7 @@ export default function ChatPlaygroundClient() {
                     <Search className="w-3 h-3" />
                     <span>Search Web</span>
                   </button>
-                  <span className="text-[11px] hidden sm:inline">
+                  <span className="text-[11px] hidden sm:inline text-slate-500">
                     Shift+Enter for newline
                   </span>
                 </div>
@@ -765,7 +1035,7 @@ export default function ChatPlaygroundClient() {
         </footer>
       </div>
 
-      {/* ─── RIGHT CLAUDE-STYLE ARTIFACT CANVAS ───────────────────────── */}
+      {/* ─── RIGHT CANVAS / IMAGE STUDIO ──────────────────────────────── */}
       {canvasOpen && (
         <aside
           className={`${
@@ -775,38 +1045,44 @@ export default function ChatPlaygroundClient() {
           {/* Canvas Top Header */}
           <div className="h-14 border-b border-slate-800 px-4 bg-[#0e1938] flex items-center justify-between gap-3 shrink-0">
             <div className="flex items-center gap-2 min-w-0">
-              <Code2 className="w-4 h-4 text-[#f9b44d] shrink-0" />
+              {activeArtifact?.type === 'image' ? (
+                <ImageIcon className="w-4 h-4 text-pink-400 shrink-0" />
+              ) : (
+                <Code2 className="w-4 h-4 text-[#f9b44d] shrink-0" />
+              )}
               <div className="truncate text-xs font-bold text-white">
                 {activeArtifact?.title || 'Interactive Canvas'}
               </div>
             </div>
 
             <div className="flex items-center gap-1.5">
-              {/* Tabs: Preview vs Code */}
-              <div className="flex bg-slate-900 p-0.5 rounded-lg border border-slate-700">
-                <button
-                  onClick={() => setCanvasTab('preview')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded-md flex items-center gap-1 transition ${
-                    canvasTab === 'preview'
-                      ? 'bg-[#1b2e67] text-white'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Eye className="w-3 h-3" />
-                  <span>Preview</span>
-                </button>
-                <button
-                  onClick={() => setCanvasTab('code')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded-md flex items-center gap-1 transition ${
-                    canvasTab === 'code'
-                      ? 'bg-[#1b2e67] text-white'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Code2 className="w-3 h-3" />
-                  <span>Code</span>
-                </button>
-              </div>
+              {/* If code: show Preview / Code tabs */}
+              {activeArtifact?.type === 'code' && (
+                <div className="flex bg-slate-900 p-0.5 rounded-lg border border-slate-700">
+                  <button
+                    onClick={() => setCanvasTab('preview')}
+                    className={`px-2.5 py-1 text-xs font-semibold rounded-md flex items-center gap-1 transition ${
+                      canvasTab === 'preview'
+                        ? 'bg-[#1b2e67] text-white'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Eye className="w-3 h-3" />
+                    <span>Preview</span>
+                  </button>
+                  <button
+                    onClick={() => setCanvasTab('code')}
+                    className={`px-2.5 py-1 text-xs font-semibold rounded-md flex items-center gap-1 transition ${
+                      canvasTab === 'code'
+                        ? 'bg-[#1b2e67] text-white'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Code2 className="w-3 h-3" />
+                    <span>Code</span>
+                  </button>
+                </div>
+              )}
 
               {/* Download */}
               <button
@@ -840,7 +1116,93 @@ export default function ChatPlaygroundClient() {
           {/* Canvas Main Body */}
           <div className="flex-1 overflow-hidden relative bg-[#060a17]">
             {activeArtifact ? (
-              canvasTab === 'preview' ? (
+              activeArtifact.type === 'image' && activeArtifact.imageUrl ? (
+                /* AI Image Studio View */
+                <div className="h-full flex flex-col p-4 space-y-4 overflow-y-auto">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-400 flex items-center gap-1">
+                      <Wand2 className="w-3.5 h-3.5 text-pink-400" />
+                      <span>Flux High-Resolution Model</span>
+                    </span>
+                    <button
+                      onClick={handleRegenerateImageVariant}
+                      className="px-2.5 py-1 text-xs font-bold bg-[#1b2e67] hover:bg-[#253f8a] text-[#f9b44d] rounded-lg transition flex items-center gap-1"
+                    >
+                      <RefreshCw className="w-3 h-3" />
+                      <span>New Variant</span>
+                    </button>
+                  </div>
+
+                  {/* Artwork Container */}
+                  <div className="rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 shadow-2xl relative group flex items-center justify-center">
+                    <img
+                      src={activeArtifact.imageUrl}
+                      alt={activeArtifact.prompt || 'AI Artwork'}
+                      className="w-full h-auto max-h-[480px] object-contain"
+                    />
+                  </div>
+
+                  {/* Aspect Ratio Selector */}
+                  <div className="space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                      <Ratio className="w-3.5 h-3.5 text-pink-400" />
+                      <span>Aspect Ratio</span>
+                    </span>
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        onClick={() => handleUpdateImageRatio('1:1')}
+                        className={`py-2 px-3 rounded-lg text-xs font-semibold border transition ${
+                          selectedRatio === '1:1'
+                            ? 'bg-[#1b2e67] text-white border-blue-500'
+                            : 'bg-slate-800/40 text-slate-400 border-slate-700 hover:text-white'
+                        }`}
+                      >
+                        1:1 Square
+                      </button>
+                      <button
+                        onClick={() => handleUpdateImageRatio('16:9')}
+                        className={`py-2 px-3 rounded-lg text-xs font-semibold border transition ${
+                          selectedRatio === '16:9'
+                            ? 'bg-[#1b2e67] text-white border-blue-500'
+                            : 'bg-slate-800/40 text-slate-400 border-slate-700 hover:text-white'
+                        }`}
+                      >
+                        16:9 Cinema
+                      </button>
+                      <button
+                        onClick={() => handleUpdateImageRatio('9:16')}
+                        className={`py-2 px-3 rounded-lg text-xs font-semibold border transition ${
+                          selectedRatio === '9:16'
+                            ? 'bg-[#1b2e67] text-white border-blue-500'
+                            : 'bg-slate-800/40 text-slate-400 border-slate-700 hover:text-white'
+                        }`}
+                      >
+                        9:16 Story
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Prompt Details */}
+                  {activeArtifact.prompt && (
+                    <div className="p-3.5 rounded-xl bg-[#0e1938] border border-slate-800 space-y-1.5">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Prompt Directive
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                        {activeArtifact.prompt}
+                      </p>
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => handleDownloadImage(activeArtifact.imageUrl!)}
+                    className="w-full py-2.5 bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] font-bold text-xs uppercase tracking-wider rounded-xl transition shadow flex items-center justify-center gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Full Resolution Artwork</span>
+                  </button>
+                </div>
+              ) : canvasTab === 'preview' ? (
                 /* Interactive Live Sandboxed Iframe Preview */
                 <iframe
                   title="Canvas Live Preview"
@@ -848,7 +1210,7 @@ export default function ChatPlaygroundClient() {
                   srcDoc={
                     activeArtifact.language === 'html'
                       ? activeArtifact.code
-                      : `<!DOCTYPE html><html><head><style>body{background:#0f172a;color:#e2e8f0;font-family:sans-serif;padding:24px;line-height:1.6;}</style></head><body><h2>Code Artifact (${activeArtifact.language.toUpperCase()})</h2><p>Switch to the <strong>Code</strong> tab to inspect, copy, or export the source code.</p></body></html>`
+                      : `<!DOCTYPE html><html><head><style>body{background:#0f172a;color:#e2e8f0;font-family:sans-serif;padding:24px;line-height:1.6;}</style></head><body><h2>Code Artifact (${activeArtifact.language?.toUpperCase()})</h2><p>Switch to the <strong>Code</strong> tab to inspect, copy, or export the source code.</p></body></html>`
                   }
                   className="w-full h-full border-none bg-white"
                 />
@@ -858,7 +1220,7 @@ export default function ChatPlaygroundClient() {
                   <div className="px-4 py-2 border-b border-slate-800 bg-[#091126] flex items-center justify-between text-xs text-slate-400">
                     <span>Language: <span className="text-[#f9b44d] font-bold uppercase">{activeArtifact.language}</span></span>
                     <button
-                      onClick={() => handleCopy(activeArtifact.code, 'canvas-code')}
+                      onClick={() => handleCopy(activeArtifact.code || '', 'canvas-code')}
                       className="inline-flex items-center gap-1 text-slate-300 hover:text-white"
                     >
                       {copiedId === 'canvas-code' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -873,23 +1235,41 @@ export default function ChatPlaygroundClient() {
             ) : (
               /* No Active Artifact */
               <div className="h-full flex flex-col items-center justify-center p-6 text-center space-y-3 text-slate-400">
-                <Code2 className="w-10 h-10 text-slate-600" />
+                <ImageIcon className="w-10 h-10 text-slate-600" />
                 <div className="text-sm font-semibold text-slate-300">
-                  No Active Canvas Artifact
+                  No Active Artifact
                 </div>
                 <p className="text-xs max-w-xs text-slate-500">
-                  Ask the assistant to write an interactive web app, HTML canvas game, or Python service to view it live here.
+                  Ask the assistant to generate an AI image, write a web app, or build a game to view and interact with it here.
                 </p>
                 <button
-                  onClick={() => handleSendMessage('Create an interactive retro arcade game in HTML and Canvas.')}
-                  className="px-3 py-1.5 bg-[#1b2e67] hover:bg-[#253f8a] text-[#f9b44d] text-xs font-bold rounded-lg transition"
+                  onClick={() => handleSendMessage('Generate an image of a futuristic neon city at sunset.')}
+                  className="px-3.5 py-2 bg-[#1b2e67] hover:bg-[#253f8a] text-[#f9b44d] text-xs font-bold rounded-lg transition"
                 >
-                  Generate Sample Game
+                  Generate Sample Image
                 </button>
               </div>
             )}
           </div>
         </aside>
+      )}
+
+      {/* ─── LIGHTBOX MODAL FOR ZOOMED IMAGES ─────────────────────────── */}
+      {lightboxUrl && (
+        <div
+          onClick={() => setLightboxUrl(null)}
+          className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 cursor-pointer"
+        >
+          <div className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl" onClick={e => e.stopPropagation()}>
+            <img src={lightboxUrl} alt="Zoomed AI Artwork" className="w-full h-auto max-h-[85vh] object-contain rounded-2xl" />
+            <button
+              onClick={() => setLightboxUrl(null)}
+              className="absolute top-3 right-3 p-2 bg-black/60 hover:bg-black text-white rounded-full transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
       )}
 
       {/* ─── SETTINGS MODAL (BYOK & SYSTEM PROMPT) ────────────────────── */}

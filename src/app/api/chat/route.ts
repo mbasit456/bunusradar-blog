@@ -31,6 +31,7 @@ interface RequestBody {
   systemPrompt?: string;
   temperature?: number;
   webSearch?: boolean;
+  imageMode?: boolean;
   apiKey?: string;
   provider?: 'gemini' | 'openai' | 'anthropic';
 }
@@ -41,43 +42,86 @@ function getSystemPersona(modelId: string, customPrompt?: string): string {
   }
 
   const modelLower = (modelId || '').toLowerCase();
+  const baseRules = `
+CRITICAL MULTIMODAL & BEHAVIORAL INSTRUCTIONS:
+1. Natural Conversation: You are an intelligent, versatile, warm conversational assistant like ChatGPT and Claude. Chat naturally, answer questions, write essays, draft emails, tell jokes, solve math, explain concepts, and brainstorm with genuine human warmth.
+2. DO NOT Force Code: NEVER output programming code or code blocks unless the user explicitly asks for code, programming, an app, or a script. If the user asks a general question, answer conversationally with words, not code!
+3. AI IMAGE GENERATION POWERS: You can generate stunning, high-resolution AI artwork and photos on demand! When the user asks to generate, create, draw, paint, illustrate, design, or show an image, picture, photo, artwork, or logo:
+   - Expand their prompt into a vivid, descriptive, cinematic visual scene.
+   - Embed the generated image in your markdown reply using this exact format:
+     ![Descriptive Image Title](https://image.pollinations.ai/prompt/{URL_ENCODED_DETAILED_PROMPT}?width=1024&height=1024&nologo=true&model=flux&seed={RANDOM_INTEGER})
+   - Complement the image with a friendly, conversational explanation of the visual details and artistic choices.
+4. Code & Interactive Canvas: Only when the user specifically asks to write code, build a web app, or create a game, output full, working, production-grade code wrapped in standard markdown blocks (\`\`\`html, \`\`\`python, \`\`\`typescript, etc.) so it opens in the interactive Canvas.
+5. Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Use standard hyphens (-) or clean commas instead.`;
 
   if (modelLower.includes('claude')) {
-    return `You are Claude 3.5 Sonnet, an advanced AI assistant created by Anthropic.
-You are articulate, thoughtful, honest, and deeply skilled at programming, systems architecture, analysis, and creative writing.
-When writing code, scripts, or web apps, provide complete, functional, production-ready code wrapped in standard markdown code blocks (\`\`\`html, \`\`\`python, \`\`\`typescript, etc.) so it can be previewed directly in the side Canvas.
-Answer naturally, conversationally, and directly without unnecessary conversational filler.`;
+    return `You are Claude 3.5 Sonnet, created by Anthropic. You are thoughtful, articulate, honest, and creative. ${baseRules}`;
   }
 
   if (modelLower.includes('gpt-4o') || modelLower.includes('openai')) {
-    return `You are GPT-4o, an advanced multimodal intelligence model developed by OpenAI.
-You are versatile, conversational, insightful, and fast. You excel at debugging, brainstorming, natural conversation, and software engineering.
-Answer conversationally and directly. When writing code, provide clean, idiomatic code in markdown blocks.`;
+    return `You are GPT-4o, developed by OpenAI. You are versatile, witty, insightful, fast, and helpful. ${baseRules}`;
   }
 
   if (modelLower.includes('deepseek') || modelLower.includes('r1')) {
-    return `You are DeepSeek R1, an advanced open reasoning model.
-For complex algorithmic, mathematical, or architectural questions, reason through the problem step-by-step inside a <thinking>...</thinking> block first, then provide your concise, authoritative final answer.`;
+    return `You are DeepSeek R1, an advanced open reasoning model. For complex mathematical, logical, or multi-step reasoning queries, show your thought process inside a <thinking>...</thinking> block first, then provide your final answer. ${baseRules}`;
   }
 
-  return `You are a helpful, intelligent, and conversational AI assistant modeled on modern LLMs like ChatGPT and Claude.
-Answer questions directly, accurately, and naturally. When writing code, output full, runnable code in markdown code blocks.`;
+  return `You are BunusRadar AI, a high-performance conversational AI assistant combining the capabilities of ChatGPT and Claude. ${baseRules}`;
 }
 
-function generateOfflineFallback(userQuery: string): { reply: string; thinking?: string } {
+function buildImageUrl(prompt: string, width = 1024, height = 1024): string {
+  const seed = Math.floor(Math.random() * 999999);
+  const cleanPrompt = encodeURIComponent(prompt.trim());
+  return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&model=flux&seed=${seed}`;
+}
+
+function generateOfflineFallback(userQuery: string, imageMode = false): { reply: string; thinking?: string } {
   const query = userQuery.toLowerCase().trim();
+
+  // If user asks for an image or image mode is active
+  if (
+    imageMode ||
+    query.startsWith('/image') ||
+    query.includes('generate image') ||
+    query.includes('create image') ||
+    query.includes('draw ') ||
+    query.includes('picture of') ||
+    query.includes('photo of')
+  ) {
+    const cleanSubject = userQuery
+      .replace(/^\/image/i, '')
+      .replace(/generate (an )?image (of )?/i, '')
+      .replace(/create (an )?image (of )?/i, '')
+      .replace(/draw (a )?/i, '')
+      .trim() || 'A majestic futuristic landscape at sunset with glowing lights';
+
+    const imageUrl = buildImageUrl(cleanSubject);
+    return {
+      reply: `Here is the AI artwork generated for your request:
+
+![${cleanSubject}](${imageUrl})
+
+**Prompt Details:**
+- **Subject:** ${cleanSubject}
+- **Engine:** Flux High-Resolution Photorealism
+- **Resolution:** 1024x1024
+
+You can click **Open in Canvas** to view it full size, change aspect ratios, or download the image directly!`,
+    };
+  }
 
   if (query.includes('hello') || query.includes('hi') || query === 'who are you' || query.includes('who are you')) {
     return {
-      reply: `Hello! I am BunusRadar AI Workspace, an intelligent conversational assistant modeled on ChatGPT and Claude.
+      reply: `Hello! I am BunusRadar AI, a multi-talented conversational assistant modeled on ChatGPT and Claude.
 
-I can help you with:
-- Writing and debugging software (Python, TypeScript, HTML/JS, React)
-- Designing systems architecture and database schemas
-- Brainstorming ideas, drafting content, and solving complex problems
-- Creating interactive web apps and games you can run right here in the Canvas panel!
+Here is what I can do for you:
+- Chat, brainstorm, and answer everyday questions naturally
+- Generate high-resolution AI images, illustrations, and concept art
+- Write essays, emails, summaries, and creative stories
+- Write, debug, and execute code in our interactive Canvas panel
+- Explain complex scientific, economic, or technical topics
 
-How can I help you today?`,
+What would you like to explore or create today?`,
     };
   }
 
@@ -131,12 +175,12 @@ You can customize the controls, colors, or game mechanics directly in the code t
   return {
     reply: `I received your prompt: "${userQuery}".
 
-To help you most effectively, could you provide a bit more detail, or specify what format you would like? For example, I can:
-1. Provide a step-by-step conceptual explanation.
-2. Write production-ready code with complete documentation.
-3. Compare alternative approaches with trade-offs.
+How would you like to proceed?
+- I can provide an engaging, detailed conversational answer.
+- I can generate a photorealistic AI image or concept art.
+- I can write clean, production-ready code with complete documentation.
 
-Let me know what direction fits your project best!`,
+Feel free to ask or give me more context!`,
   };
 }
 
@@ -148,6 +192,7 @@ export async function POST(req: NextRequest) {
       model = 'claude-3-5-sonnet',
       systemPrompt,
       temperature = 0.7,
+      imageMode = false,
       apiKey,
       provider,
     } = body;
@@ -166,9 +211,12 @@ export async function POST(req: NextRequest) {
       parts: [{ text: m.content }],
     }));
 
-    // Inject system instructions into first user turn
+    // Inject system instructions and image mode signal if enabled
     if (contents.length > 0 && contents[0].role === 'user') {
-      contents[0].parts[0].text = `[System Instructions: ${personaInstruction}]\n\n${contents[0].parts[0].text}`;
+      const modePrefix = imageMode
+        ? `[USER REQUESTED AI IMAGE GENERATION: Create a stunning image with an expanded descriptive prompt embedded as a markdown image link.]\n\n`
+        : '';
+      contents[0].parts[0].text = `[System Instructions: ${personaInstruction}]\n\n${modePrefix}${contents[0].parts[0].text}`;
     }
 
     // Try Gemini candidates via direct REST API with short timeout
@@ -204,13 +252,16 @@ export async function POST(req: NextRequest) {
           let thinking: string | undefined;
           let reply = rawText;
 
+          // Replace any rogue em-dashes
+          reply = reply.replace(/\u2014/g, ' - ');
+
           // Extract <thinking> block if generated
           const thinkingMatch = rawText.match(/<thinking>([\s\S]*?)<\/thinking>/);
           if (thinkingMatch) {
-            thinking = thinkingMatch[1].trim();
+            thinking = thinkingMatch[1].trim().replace(/\u2014/g, ' - ');
             reply = rawText.replace(/<thinking>[\s\S]*?<\/thinking>/, '').trim();
           } else if (model.includes('deepseek') || model.includes('r1')) {
-            thinking = 'Analyzed constraints, identified key requirements, and structured a clean solution.';
+            thinking = 'Analyzed query context, evaluated visual and conversational parameters, and formulated a comprehensive response.';
           }
 
           return NextResponse.json({
@@ -227,7 +278,7 @@ export async function POST(req: NextRequest) {
     }
 
     // If all candidates fail or network is interrupted, return conversational fallback
-    const fallback = generateOfflineFallback(latestUserMessage);
+    const fallback = generateOfflineFallback(latestUserMessage, imageMode);
     return NextResponse.json({
       reply: fallback.reply,
       thinking: fallback.thinking,

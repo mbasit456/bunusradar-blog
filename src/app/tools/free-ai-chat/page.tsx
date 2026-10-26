@@ -4,18 +4,19 @@ import ChatPlaygroundClient from './ChatPlaygroundClient';
 import { Bot, Sparkles, Code2, Cpu, ShieldCheck, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Free AI Chat & Code Canvas Workspace - ChatGPT & Claude Alternative',
-  description: 'Free interactive AI Chat, Code Canvas, and Reasoning Playground. Multi-model support for Claude 3.5 Sonnet, GPT-4o, and DeepSeek R1. Build and run live HTML/JS applications in real-time.',
+  title: 'Free AI Chat, Image Generator & Canvas - ChatGPT & Claude Alternative',
+  description: 'Free interactive AI Chat, Flux Image Generator, and Code Canvas Workspace. Multi-model support for Claude 3.5 Sonnet, GPT-4o, and DeepSeek R1. Generate high-res AI images and run live web apps.',
   keywords: [
     'free ai chat',
+    'free ai image generator',
     'chatgpt alternative',
     'claude online free',
+    'flux image generator online',
+    'ai art generator free',
     'claude artifacts free',
     'ai code canvas',
     'deepseek r1 chat online',
-    'ai reasoning playground',
-    'chatgpt canvas free',
-    'free llm chat online'
+    'ai reasoning playground'
   ],
   openGraph: {
     title: 'Free AI Chat & Code Canvas Workspace - ChatGPT & Claude Alternative',
@@ -50,6 +51,7 @@ export default function FreeAiChatPage() {
     },
     'featureList': [
       'Multi-model persona architecture: Claude 3.5 Sonnet, GPT-4o, and DeepSeek R1',
+      'Native high-resolution AI Image Generator powered by Flux with direct downloads and aspect ratio controls',
       'Interactive Claude-style Artifacts Canvas with live sandboxed HTML/JS execution',
       'Chain-of-thought reasoning process visibility and step-by-step logic breakdown',
       'Local conversation persistence with zero tracking and privacy preservation',

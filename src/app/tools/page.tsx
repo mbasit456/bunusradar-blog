@@ -40,14 +40,14 @@ export const metadata: Metadata = {
 
 const TOOLS = [
   {
-    title: 'Free AI Chat & Code Canvas Workspace',
+    title: 'Free AI Chat, Image Studio & Canvas Workspace',
     slug: 'free-ai-chat',
-    category: 'Conversational AI & Canvas',
+    category: 'Conversational AI, Art & Code',
     badge: 'Flagship',
     badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
-    description: 'Multi-model reasoning playground with Claude-style interactive code canvases, step-by-step thinking processes, and live sandboxed web execution for Claude 3.5, GPT-4o, and DeepSeek.',
+    description: 'Conversational assistant with native Flux AI image generation, Claude-style interactive code canvases, step-by-step reasoning, and live sandboxed web execution.',
     icon: Bot,
-    stats: 'Claude Artifacts • Code Canvas • DeepSeek Reasoning • Multi-Model',
+    stats: 'Flux Image Generator • Claude Artifacts • DeepSeek Reasoning • Multi-Model',
     cta: 'Launch AI Workspace',
   },
   {
