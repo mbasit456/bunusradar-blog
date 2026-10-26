@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import { getOptimizedImageUrl, getResponsiveSrcSet } from '@/lib/images';
+import { getOptimizedImageUrl, getResponsiveSrcSet, getCategoryFallback } from '@/lib/images';
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, getPostsByCategory } from '@/lib/posts';
@@ -302,9 +303,10 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* Featured Hero Image */}
             {post.coverImage && (
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded bg-zinc-100">
-                <img
-                  src={getOptimizedImageUrl(post.coverImage, 960)}
-                  srcSet={getResponsiveSrcSet(post.coverImage, [480, 720, 960, 1200]) || undefined}
+                <SafeImage
+                  src={getOptimizedImageUrl(post.coverImage, 960, 75, post.category)}
+                  srcSet={getResponsiveSrcSet(post.coverImage, [480, 720, 960, 1200], post.category) || undefined}
+                  fallbackSrc={getCategoryFallback(post.category)}
                   sizes="(max-width: 1024px) 100vw, 800px"
                   alt={post.title}
                   width={960}

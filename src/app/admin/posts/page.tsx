@@ -14,8 +14,11 @@ import {
   ExternalLink,
   Calendar,
   User,
-  Tag
+  Tag,
+  ImageIcon
 } from 'lucide-react';
+import SafeImage from '@/components/SafeImage';
+import { getCategoryFallback } from '@/lib/images';
 
 interface PostSummary {
   slug: string;
@@ -25,6 +28,7 @@ interface PostSummary {
   author: { name: string };
   readingTime: string;
   wordCount: number;
+  coverImage?: string;
 }
 
 export default function AdminPostsListPage() {
@@ -167,6 +171,7 @@ export default function AdminPostsListPage() {
             <table className="w-full text-left text-xs">
               <thead>
                 <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider text-[10px] bg-slate-900/60">
+                  <th className="py-3 px-3 font-bold w-16">Cover</th>
                   <th className="py-3 px-4 font-bold">Title</th>
                   <th className="py-3 px-4 font-bold">Category</th>
                   <th className="py-3 px-4 font-bold">Author</th>
@@ -178,6 +183,17 @@ export default function AdminPostsListPage() {
               <tbody className="divide-y divide-slate-800/60">
                 {filteredPosts.map((post) => (
                   <tr key={post.slug} className="hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3 px-3">
+                      <div className="w-12 h-8 rounded-lg overflow-hidden bg-slate-800 border border-slate-700 flex-shrink-0">
+                        <SafeImage
+                          src={post.coverImage}
+                          fallbackSrc={getCategoryFallback(post.category)}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    </td>
                     <td className="py-3.5 px-4 font-semibold text-white max-w-[340px]">
                       <Link
                         href={`/admin/posts/edit/${post.slug}`}

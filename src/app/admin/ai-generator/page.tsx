@@ -15,6 +15,7 @@ import {
   Sliders,
   ExternalLink
 } from 'lucide-react';
+import SafeImage from '@/components/SafeImage';
 
 export default function AiContentStudioPage() {
   const router = useRouter();
@@ -192,7 +193,7 @@ export default function AiContentStudioPage() {
 
             {result.coverImage && (
               <div className="aspect-video max-w-md rounded-xl overflow-hidden border border-slate-800 bg-[#090d16] mt-3">
-                <img src={result.coverImage} alt="Cover Preview" className="w-full h-full object-cover" />
+                <SafeImage src={result.coverImage} alt="Cover Preview" className="w-full h-full object-cover" />
               </div>
             )}
           </div>

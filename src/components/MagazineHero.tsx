@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PostMetadata } from '@/lib/posts';
-import { getOptimizedImageUrl, getResponsiveSrcSet } from '@/lib/images';
+import { getOptimizedImageUrl, getResponsiveSrcSet, getCategoryFallback } from '@/lib/images';
+import SafeImage from '@/components/SafeImage';
 
 interface MagazineHeroProps {
   posts: PostMetadata[];
@@ -22,9 +23,10 @@ export default function MagazineHero({ posts }: MagazineHeroProps) {
               href={`/blog/${mainPost.slug}`}
               className="group relative block aspect-[16/11] sm:aspect-[16/10] w-full overflow-hidden rounded bg-zinc-900 shadow-md transition-all duration-300 hover:shadow-xl"
             >
-              <img
-                src={getOptimizedImageUrl(mainPost.coverImage, 960)}
-                srcSet={getResponsiveSrcSet(mainPost.coverImage, [480, 720, 960, 1280]) || undefined}
+              <SafeImage
+                src={getOptimizedImageUrl(mainPost.coverImage, 960, 75, mainPost.category)}
+                srcSet={getResponsiveSrcSet(mainPost.coverImage, [480, 720, 960, 1280], mainPost.category) || undefined}
+                fallbackSrc={getCategoryFallback(mainPost.category)}
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 alt={mainPost.title}
                 width={960}
@@ -63,9 +65,10 @@ export default function MagazineHero({ posts }: MagazineHeroProps) {
               href={`/blog/${post.slug}`}
               className="group relative block aspect-[16/10] w-full overflow-hidden rounded bg-zinc-900 shadow-sm transition-all duration-300 hover:shadow-lg"
             >
-              <img
-                src={getOptimizedImageUrl(post.coverImage, 480)}
-                srcSet={getResponsiveSrcSet(post.coverImage, [320, 480, 640]) || undefined}
+              <SafeImage
+                src={getOptimizedImageUrl(post.coverImage, 480, 75, post.category)}
+                srcSet={getResponsiveSrcSet(post.coverImage, [320, 480, 640], post.category) || undefined}
+                fallbackSrc={getCategoryFallback(post.category)}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 alt={post.title}
                 width={480}

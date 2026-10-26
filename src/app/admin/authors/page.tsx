@@ -1,3 +1,4 @@
+import SafeImage from '@/components/SafeImage';
 'use client';
 
 import Link from 'next/link';
@@ -69,7 +70,7 @@ export default function AdminAuthorsPage() {
           >
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <img
+                <SafeImage
                   src={author.avatar}
                   alt={author.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-slate-700 shadow-sm"

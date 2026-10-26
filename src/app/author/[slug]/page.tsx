@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { getAuthorBySlug, getAllAuthors } from '@/lib/authors';
 import { getAllPosts } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
+import SafeImage from '@/components/SafeImage';
 import { ChevronRight, Linkedin, Twitter, Github, Globe, Award, BookOpen } from 'lucide-react';
 
 interface AuthorPageProps {
@@ -114,7 +115,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
           <div className="flex flex-col sm:flex-row items-start gap-6">
             {/* Avatar */}
             <div className="shrink-0">
-              <img
+              <SafeImage
                 src={author.avatar}
                 alt={`${author.name} - ${author.role} at BunusRadar`}
                 className="w-24 h-24 rounded-full object-cover border-4 border-[#1b2e67]/10 shadow"

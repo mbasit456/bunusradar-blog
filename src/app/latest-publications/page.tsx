@@ -3,7 +3,8 @@ import { Metadata } from 'next';
 import { getAllPosts } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { Clock, Calendar, ArrowRight, BookOpen, Tag } from 'lucide-react';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
+import { getOptimizedImageUrl, getCategoryFallback } from '@/lib/images';
 
 export const metadata: Metadata = {
   title: 'Latest Publications | BunusRadar Archive',
@@ -68,8 +69,9 @@ export default function LatestPublicationsPage() {
             >
               {/* Cover Image */}
               <Link href={`/blog/${post.slug}`} className="relative h-48 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-                <img
-                  src={post.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80'}
+                <SafeImage
+                  src={getOptimizedImageUrl(post.coverImage, 600, 75, post.category)}
+                  fallbackSrc={getCategoryFallback(post.category)}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"

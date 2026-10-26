@@ -27,6 +27,8 @@ import {
   Table as TableIcon
 } from 'lucide-react';
 import Link from 'next/link';
+import { getCategoryFallback } from '@/lib/images';
+import SafeImage from '@/components/SafeImage';
 
 interface PostEditorProps {
   initialData?: {
@@ -105,15 +107,13 @@ export default function PostEditor({ initialData, isEditMode = false }: PostEdit
 
   const handleGenerateCover = () => {
     if (!title.trim()) {
-      alert('Please enter an article title first so we can generate a relevant visual scene.');
+      alert('Please enter an article title first so we can assign a relevant visual scene.');
       return;
     }
     setGeneratingCover(true);
-    const cleanPrompt = encodeURIComponent(title.trim() + ' photorealistic cinematic 8k wallpaper');
-    const seed = Math.floor(Math.random() * 999999);
-    const url = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1200&height=630&nologo=true&model=flux&seed=${seed}`;
-    setCoverImage(url);
-    setTimeout(() => setGeneratingCover(false), 500);
+    const fallback = getCategoryFallback(category);
+    setCoverImage(fallback);
+    setTimeout(() => setGeneratingCover(false), 300);
   };
 
   const handleInsertMarkdown = (prefix: string, suffix = '') => {
@@ -538,14 +538,11 @@ Add comparison tables, bullet points, and code blocks as needed."
 
             {coverImage && (
               <div className="relative aspect-video rounded-xl overflow-hidden border border-slate-800 bg-[#090d16]">
-                <img
+                <SafeImage
                   src={coverImage}
+                  fallbackSrc={getCategoryFallback(category)}
                   alt="Cover Preview"
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback on broken image
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
                 />
               </div>
             )}

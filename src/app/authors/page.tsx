@@ -1,3 +1,4 @@
+import SafeImage from '@/components/SafeImage';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllAuthors } from '@/lib/authors';
@@ -61,7 +62,7 @@ export default function AuthorsPage() {
               className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm hover:border-[#1b2e67] transition-colors group"
             >
               <div className="flex items-start gap-4">
-                <img
+                <SafeImage
                   src={author.avatar}
                   alt={author.name}
                   className="w-16 h-16 rounded-full object-cover border-2 border-zinc-100 shrink-0"

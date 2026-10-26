@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getCategoryFallback } from '@/lib/images';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,7 +38,7 @@ Return ONLY valid JSON with this exact schema (no markdown fences, just pure JSO
   "excerpt": "Engaging, SEO-optimized meta description / summary (140-160 characters)",
   "category": "${category}",
   "tags": ["3 to 5 relevant topical keywords"],
-  "coverImage": "https://image.pollinations.ai/prompt/${encodeURIComponent(cleanTopic)}%20photorealistic%20cinematic%208k?width=1200&height=630&nologo=true&model=flux",
+  "coverImage": "${getCategoryFallback(category)}",
   "content": "Full markdown content with ## Headings, detailed paragraphs, comparison tables, actionable insights, ## Frequently Asked Questions with bulleted Q&A, and a concluding summary. Strictly do not use any em-dash characters anywhere."
 }`;
 
@@ -92,7 +93,7 @@ Return ONLY valid JSON with this exact schema (no markdown fences, just pure JSO
         excerpt: `A comprehensive analysis and architectural breakdown of ${cleanTopic} for modern engineers and technology leaders.`,
         category,
         tags: [category, 'artificial-intelligence', 'technology', 'enterprise'],
-        coverImage: `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanTopic)}%20concept%20art%208k?width=1200&height=630&nologo=true&model=flux`,
+        coverImage: getCategoryFallback(category),
         content: `## Executive Overview
 
 Understanding ${cleanTopic} has become essential for organizations seeking to optimize digital infrastructure, streamline engineering velocity, and unlock compounding operational returns.

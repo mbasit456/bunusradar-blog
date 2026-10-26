@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { PostMetadata } from '@/lib/posts';
 import { getCategoryBySlug } from '@/lib/categories';
-import { getOptimizedImageUrl, getResponsiveSrcSet } from '@/lib/images';
+import { getOptimizedImageUrl, getResponsiveSrcSet, getCategoryFallback } from '@/lib/images';
+import SafeImage from '@/components/SafeImage';
 
 interface ArticleCardProps {
   post: PostMetadata;
@@ -14,9 +15,10 @@ export default function ArticleCard({ post }: ArticleCardProps) {
     <article className="bg-white border border-zinc-200/80 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-full group">
       {/* Thumbnail */}
       <Link href={`/blog/${post.slug}`} className="block relative aspect-[16/9] w-full overflow-hidden bg-zinc-100">
-        <img
-          src={getOptimizedImageUrl(post.coverImage, 480)}
-          srcSet={getResponsiveSrcSet(post.coverImage, [320, 480, 640]) || undefined}
+        <SafeImage
+          src={getOptimizedImageUrl(post.coverImage, 480, 75, post.category)}
+          srcSet={getResponsiveSrcSet(post.coverImage, [320, 480, 640], post.category) || undefined}
+          fallbackSrc={getCategoryFallback(post.category)}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           alt={post.title}
           width={480}

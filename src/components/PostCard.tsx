@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import CategoryBadge from './CategoryBadge';
 import { PostMetadata } from '@/lib/posts';
+import SafeImage from '@/components/SafeImage';
+import { getOptimizedImageUrl, getCategoryFallback } from '@/lib/images';
 
 interface PostCardProps {
   post: PostMetadata;
@@ -13,8 +15,9 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
     return (
       <article className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
         <div className="lg:col-span-7 relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-800">
-          <img
-            src={post.coverImage}
+          <SafeImage
+            src={getOptimizedImageUrl(post.coverImage, 800, 75, post.category)}
+            fallbackSrc={getCategoryFallback(post.category)}
             alt={post.title}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
@@ -77,8 +80,9 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
   return (
     <article className="group flex flex-col bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-        <img
-          src={post.coverImage}
+        <SafeImage
+          src={getOptimizedImageUrl(post.coverImage, 480, 75, post.category)}
+          fallbackSrc={getCategoryFallback(post.category)}
           alt={post.title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
