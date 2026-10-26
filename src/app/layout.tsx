@@ -3,7 +3,6 @@ import Script from 'next/script';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import AdSenseLoader from '@/components/AdSenseLoader';
 import { getAllPosts } from '@/lib/posts';
 
 export const viewport: Viewport = {
@@ -88,6 +87,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
+        {/* Google AdSense Official Verification & Auto Ads Tag */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6911732447309638"
+          crossOrigin="anonymous"
+        />
+
         {/* Google Analytics via lazyOnload to protect Core Web Vitals */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CGM08JT8KQ"
@@ -108,7 +114,6 @@ export default function RootLayout({
         <meta name="ai-content-declaration" content="human-authored editorial content" />
       </head>
       <body className="min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
-        <AdSenseLoader client="ca-pub-6911732447309638" />
         <Navbar trendingPosts={trendingPosts} />
         <main className="flex-1">{children}</main>
         <Footer />
