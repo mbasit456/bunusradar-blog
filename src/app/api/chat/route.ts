@@ -75,26 +75,39 @@ function buildImageUrl(prompt: string, width = 1024, height = 1024): string {
   return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&model=flux&seed=${seed}`;
 }
 
+function isImageQuery(text: string, imageMode = false): boolean {
+  if (imageMode) return true;
+  const t = text.toLowerCase();
+  if (t.startsWith('/image') || t.startsWith('/img')) return true;
+  if (/\b(generate|create|draw|make|paint|illustrate|render|produce)\b.*\b(image|picture|photo|illustration|drawing|artwork|art|wallpaper|portrait|logo|visual)\b/i.test(text)) return true;
+  if (/\b(picture|photo|image|artwork|illustration) of\b/i.test(text)) return true;
+  return false;
+}
+
+function extractImageSubject(prompt: string): string {
+  let cleaned = prompt
+    .replace(/^\/(image|img)\s*/i, '')
+    .replace(/\b(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me)\s+(an?\s+)?(image|picture|photo|illustration|artwork|drawing)\s+(of\s+)?/i, '')
+    .replace(/\b(a\s+)?(picture|photo|image|drawing|artwork)\s+of\s+/i, '')
+    .replace(/^(please\s+)?(draw|paint|sketch)\s+(me\s+)?(an?\s+)?/i, '')
+    .trim();
+
+  cleaned = cleaned.replace(/[.!?]+$/, '').trim();
+  return cleaned || 'a breathtaking futuristic sci-fi concept artwork in 8k resolution';
+}
+
+function cleanDisclaimers(text: string): string {
+  return text
+    .replace(/(as an ai|i am an ai|i cannot directly generate|i do not have the capability to generate|i'm unable to create images|while i cannot directly generate|unfortunately, i cannot create|i can't generate images)[^.\n]*[.\n]?/gi, '')
+    .trim();
+}
+
 function generateOfflineFallback(userQuery: string, imageMode = false): { reply: string; thinking?: string } {
   const query = userQuery.toLowerCase().trim();
 
   // If user asks for an image or image mode is active
-  if (
-    imageMode ||
-    query.startsWith('/image') ||
-    query.includes('generate image') ||
-    query.includes('create image') ||
-    query.includes('draw ') ||
-    query.includes('picture of') ||
-    query.includes('photo of')
-  ) {
-    const cleanSubject = userQuery
-      .replace(/^\/image/i, '')
-      .replace(/generate (an )?image (of )?/i, '')
-      .replace(/create (an )?image (of )?/i, '')
-      .replace(/draw (a )?/i, '')
-      .trim() || 'A majestic futuristic landscape at sunset with glowing lights';
-
+  if (isImageQuery(userQuery, imageMode)) {
+    const cleanSubject = extractImageSubject(userQuery);
     const imageUrl = buildImageUrl(cleanSubject);
     return {
       reply: `Here is the AI artwork generated for your request:
@@ -204,6 +217,7 @@ export async function POST(req: NextRequest) {
     const latestUserMessage = messages[messages.length - 1]?.content || '';
     const activeKey = getRuntimeApiKey(apiKey);
     const personaInstruction = getSystemPersona(model, systemPrompt);
+    const userWantsImage = isImageQuery(latestUserMessage, imageMode);
 
     // Format messages for Google Generative AI API
     const contents = messages.map(m => ({
@@ -213,7 +227,7 @@ export async function POST(req: NextRequest) {
 
     // Inject system instructions and image mode signal if enabled
     if (contents.length > 0 && contents[0].role === 'user') {
-      const modePrefix = imageMode
+      const modePrefix = userWantsImage
         ? `[USER REQUESTED AI IMAGE GENERATION: Create a stunning image with an expanded descriptive prompt embedded as a markdown image link.]\n\n`
         : '';
       contents[0].parts[0].text = `[System Instructions: ${personaInstruction}]\n\n${modePrefix}${contents[0].parts[0].text}`;
@@ -262,6 +276,17 @@ export async function POST(req: NextRequest) {
             reply = rawText.replace(/<thinking>[\s\S]*?<\/thinking>/, '').trim();
           } else if (model.includes('deepseek') || model.includes('r1')) {
             thinking = 'Analyzed query context, evaluated visual and conversational parameters, and formulated a comprehensive response.';
+          }
+
+          // If the user requested an image, ensure an image markdown is present and clean disclaimers
+          if (userWantsImage) {
+            reply = cleanDisclaimers(reply);
+            const hasMarkdownImage = /!\[.*?\]\((https?:\/\/image\.pollinations\.ai\/[^\s)]+)\)/i.test(reply);
+            if (!hasMarkdownImage) {
+              const cleanSubject = extractImageSubject(latestUserMessage);
+              const imageUrl = buildImageUrl(cleanSubject);
+              reply = `![${cleanSubject}](${imageUrl})\n\n${reply || `Here is the AI artwork generated for "${cleanSubject}". You can explore the image details, change dimensions in the Canvas, or download it in high resolution.`}`;
+            }
           }
 
           return NextResponse.json({
