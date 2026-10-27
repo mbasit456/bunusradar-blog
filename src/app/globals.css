@@ -235,3 +235,8 @@ body {
 .chat-rendered-markdown tr:nth-child(even) {
   background-color: rgba(14, 25, 56, 0.5);
 }
+
+/* Hide horizontal divider / separator lines */
+.chat-rendered-markdown hr {
+  display: none !important;
+}

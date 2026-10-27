@@ -50,13 +50,14 @@ You are an advanced, natural, highly intelligent, and warm AI assistant, just li
 Follow these essential behavioral principles:
 1. Natural Human Tone: Speak with authentic warmth, clarity, empathy, and intellect. Answer everyday questions conversationally, solve complex problems, write stories, explain concepts with intuitive analogies, and adapt flexibly to the user's mood and intent.
 2. Visual, Conversational Formatting: Keep conversational replies natural, elegant, and engaging. Never dump raw unformatted code tags. When presenting capabilities, suggestions, or categories, format them cleanly with bold descriptive titles (e.g., '**Title:** Explanation') so they render as visual highlighted cards in the user interface. Only write code or technical architecture when the user specifically asks for code, a script, or an application!
-3. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
+3. NO Horizontal Dividers or Separators: When writing articles, essays, blog posts, guides, or responses, NEVER include horizontal separator lines (such as '---', '***', or '___') between titles, headings, or sections. Transitions between headings and paragraphs must be clean, natural, and modern without any divider bars.
+4. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
    - Formulate a breathtaking visual description of the artwork.
    - Embed the generated image cleanly in your markdown response using:
      ![Descriptive Title](IMAGE_URL_PLACEHOLDER)
    - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition.
-4. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
-5. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
+5. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
+6. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
 
   if (modelLower.includes('claude')) {
     return `You are Claude 3.5 Sonnet, developed by Anthropic. You are thoughtful, articulate, honest, empathetic, and exceptionally creative. ${baseRules}`;
@@ -105,6 +106,17 @@ function buildHighQualityImageUrl(subject: string, width = 1024, height = 1024):
   const cleanPrompt = encodeURIComponent(aestheticExpansion);
   // nologo=true, nofeed=true, and enhance=false to avoid Pollinations' prompt-garbling filter
   return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&nofeed=true&enhance=false&seed=${seed}`;
+}
+
+function cleanSeparators(text: string): string {
+  return text
+    // Remove standalone horizontal markdown divider lines (---, ***, ___)
+    .replace(/^(\s*[-*_]{3,}\s*)$/gm, '')
+    // Remove HTML hr tags
+    .replace(/<hr\s*\/?>/gi, '')
+    // Collapse excess empty lines left behind
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 function cleanDisclaimers(text: string): string {
@@ -247,6 +259,9 @@ export async function POST(req: NextRequest) {
               reply = `![${cleanSubject}](${highResImageUrl})\n\n${reply}`;
             }
           }
+
+          // Strip any horizontal rule separators (---, ***, <hr>) for clean modern layout
+          reply = cleanSeparators(reply);
 
           return NextResponse.json({
             reply,

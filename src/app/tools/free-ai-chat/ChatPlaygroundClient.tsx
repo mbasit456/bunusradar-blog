@@ -147,7 +147,10 @@ marked.setOptions({
 function renderMarkdownToHtml(content: string): string {
   if (!content) return '';
   try {
-    return marked.parse(content) as string;
+    const cleaned = content
+      .replace(/^(\s*[-*_]{3,}\s*)$/gm, '')
+      .replace(/<hr\s*\/?>/gi, '');
+    return marked.parse(cleaned) as string;
   } catch {
     return content;
   }
