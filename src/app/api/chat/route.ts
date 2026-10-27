@@ -28,6 +28,19 @@ interface ChatMessage {
   content: string;
 }
 
+interface DocumentAttachment {
+  id: string;
+  name: string;
+  mimeType: string;
+  extension: string;
+  sizeFormatted: string;
+  pageCount?: number;
+  isPdf?: boolean;
+  extractedText?: string;
+  textSnippet?: string;
+  forensics?: any;
+}
+
 interface RequestBody {
   messages: ChatMessage[];
   model?: string;
@@ -37,6 +50,8 @@ interface RequestBody {
   imageMode?: boolean;
   apiKey?: string;
   provider?: 'gemini' | 'openai' | 'anthropic';
+  attachments?: DocumentAttachment[];
+  comparison?: any;
 }
 
 function getSystemPersona(modelId: string, customPrompt?: string): string {
@@ -53,13 +68,23 @@ Follow these essential behavioral principles:
 2. Natural Human Tone: Speak with authentic warmth, clarity, empathy, and intellect. Answer everyday questions conversationally, solve complex problems, write stories, explain concepts with intuitive analogies, and adapt flexibly to the user's mood and intent.
 3. Simple, Flowing Paragraphs for Articles: When asked to write an article, blog post, essay, guide, story, or content piece, write in natural, continuous, cohesive paragraphs just like ChatGPT and Claude. Do NOT turn articles into bullet lists, point-by-point outlines, or bolded key-value pairs unless the user explicitly asks for bullet points. Keep explanations simple, fluent, and naturally formatted without unsolicited bullet lists.
 4. NO Horizontal Dividers or Separators: NEVER include horizontal lines, dividers, or separators (such as '---', '***', or '___') between paragraphs, sections, or headings. Keep the flow completely clean and unbroken.
-5. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
+5. Document Analysis & PDF Authenticity Forensics: When documents or PDFs are attached:
+   - Ground your analysis exclusively in the extracted text, metadata, and structural forensic findings provided in the context.
+   - If the user asks whether a PDF has been edited, tampered with, or modified, or asks about authenticity:
+     Structure your report clearly into five sections:
+     1. **Document Overview**: Filename, file size, pages, creation/modification timestamps, and text extractability status.
+     2. **Analysis Summary**: Overall verdict, critical anomalies, confidence level, and technical limitations.
+     3. **Findings**: For each detected finding, present Title, Severity (Informational, Low, Medium, High), Page location, Evidence, Why it matters, Alternative explanations, and Recommended next steps.
+     4. **Technical Details**: Incremental revisions/re-saves, metadata dictionary vs XMP stream alignment, annotations/overlays, fonts, and digital signatures.
+     5. **Final Assessment**: Evidence-based judgment (No significant signs detected / Possible editing detected / Strong evidence of post-creation modifications / Inconclusive).
+   - If the user asks general questions or follow-ups (e.g. 'Summarize this', 'Extract dates and amounts', 'Why was page 2 flagged?'), reference specific pages and quote exact sections accurately.
+6. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
    - Formulate a breathtaking visual description of the artwork in the user's language.
    - Embed the generated image cleanly in your markdown response using:
      ![Descriptive Title](IMAGE_URL_PLACEHOLDER)
    - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition in the user's language.
-6. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
-7. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
+7. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
+8. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
 
   let persona = '';
   if (modelLower.includes('claude')) {
@@ -109,6 +134,21 @@ function isImageQuery(text: string, imageMode = false): boolean {
   return false;
 }
 
+function isAuthenticityQuery(text: string): boolean {
+  const t = text.toLowerCase();
+  return (
+    /edit|authenti|tamper|manipulat|modif|fake|real|check|origin|alter|chang|forg|verif|fraud|scrutin|revis|history|legit/i.test(
+      t
+    ) ||
+    t.includes('has this pdf') ||
+    t.includes('is this real') ||
+    t.includes('is this pdf genuine') ||
+    t.includes('was this changed') ||
+    t.includes('compare') ||
+    t.trim().length === 0
+  );
+}
+
 function extractImageSubject(prompt: string): string {
   let cleaned = prompt
     .replace(/^\/(image|img|draw|paint)\s*/i, '')
@@ -127,20 +167,15 @@ function extractImageSubject(prompt: string): string {
 
 function buildHighQualityImageUrl(subject: string, width = 1024, height = 1024): string {
   const seed = Math.floor(Math.random() * 900000) + 100000;
-  // Professional visual expansion and negative prompt to eliminate watermarks and low quality
   const aestheticExpansion = `${subject.trim()}, masterpiece, professional studio photography, highly detailed, 8k resolution, crisp sharp focus, cinematic volumetric lighting --no watermark, text, signature, logo, copyright, blurry, low resolution, deformed, bad anatomy`;
   const cleanPrompt = encodeURIComponent(aestheticExpansion);
-  // nologo=true, nofeed=true, and enhance=false to avoid Pollinations' prompt-garbling filter
   return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&nofeed=true&enhance=false&seed=${seed}`;
 }
 
 function cleanSeparators(text: string): string {
   return text
-    // Remove standalone horizontal markdown divider lines (---, ***, ___)
     .replace(/^(\s*[-*_]{3,}\s*)$/gm, '')
-    // Remove HTML hr tags
     .replace(/<hr\s*\/?>/gi, '')
-    // Collapse excess empty lines left behind
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 }
@@ -155,8 +190,181 @@ function cleanDisclaimers(text: string): string {
     .trim();
 }
 
-function generateOfflineFallback(userQuery: string, imageMode = false): { reply: string; thinking?: string } {
-  const query = userQuery.toLowerCase().trim();
+function buildDocumentContextPrompt(
+  attachments?: DocumentAttachment[],
+  comparison?: any
+): string {
+  if (!attachments || attachments.length === 0) return '';
+
+  let context = `\n\n[ATTACHED DOCUMENTS AND FORENSIC ANALYSIS DATA]:\n`;
+
+  attachments.forEach((doc, idx) => {
+    context += `\n=== Document ${idx + 1}: "${doc.name}" (${doc.sizeFormatted}, ${doc.extension.toUpperCase()}) ===\n`;
+    context += `Pages: ${doc.pageCount || 1}\n`;
+
+    if (doc.forensics) {
+      const f = doc.forensics;
+      context += `Forensic Assessment: ${f.summary?.verdictTitle || 'N/A'}\n`;
+      context += `Confidence Level: ${f.summary?.confidence || 'High'}\n`;
+      context += `PDF Version: ${f.overview?.pdfVersion || 'N/A'}\n`;
+      context += `Incremental Revisions Count: ${f.revisions?.revisionCount || 1}\n`;
+      context += `Creation Timestamp: ${f.overview?.metadata?.creationDateParsed || f.overview?.metadata?.creationDate || 'Unknown'}\n`;
+      context += `Modification Timestamp: ${f.overview?.metadata?.modDateParsed || f.overview?.metadata?.modDate || 'Unknown'}\n`;
+      context += `Creator Software: ${f.overview?.metadata?.creator || 'None recorded'}\n`;
+      context += `Producer Software: ${f.overview?.metadata?.producer || 'None recorded'}\n`;
+      context += `XMP History Events: ${JSON.stringify(f.overview?.metadata?.xmpHistory || [])}\n`;
+      context += `Annotations: ${f.annotations?.totalCount || 0} total (${f.annotations?.suspiciousCount || 0} suspicious overlay(s))\n`;
+      context += `Digital Signatures: ${f.signatures?.hasDigitalSignatures ? 'Present' : 'None detected'}\n`;
+      context += `Detected Fonts: ${(f.fonts?.fontFamilies || []).slice(0, 10).join(', ')}\n`;
+
+      if (f.findings && f.findings.length > 0) {
+        context += `\nObserved Forensic Findings:\n`;
+        f.findings.forEach((finding: any) => {
+          context += `* [${finding.severity}] ${finding.title}: ${finding.evidence} (Why: ${finding.whyItMatters})\n`;
+        });
+      }
+    }
+
+    if (doc.textSnippet) {
+      context += `\nExtracted Content Preview:\n${doc.textSnippet.slice(0, 4000)}\n`;
+    }
+  });
+
+  if (comparison) {
+    context += `\n=== Multi-Document Version Comparison ===\n`;
+    context += `Comparing "${comparison.doc1Name}" and "${comparison.doc2Name}":\n`;
+    context += `Page delta: ${comparison.pageCountDiff?.delta || 0}\n`;
+    context += `Added snippets: ${JSON.stringify(comparison.addedTextSnippets || [])}\n`;
+    context += `Removed snippets: ${JSON.stringify(comparison.removedTextSnippets || [])}\n`;
+    context += `Changed figures/dates: ${JSON.stringify(comparison.changedDatesAndNumbers || [])}\n`;
+    context += `Metadata differences: ${JSON.stringify(comparison.metadataDiff || {})}\n`;
+  }
+
+  return context;
+}
+
+function buildOfflineForensicReply(
+  userQuery: string,
+  attachments?: DocumentAttachment[],
+  comparison?: any
+): string {
+  if (comparison) {
+    return `### Multi-Document Version Comparison
+
+**Document 1:** ${comparison.doc1Name}
+**Document 2:** ${comparison.doc2Name}
+
+#### Key Structural Differences
+* **Page Count Delta:** ${comparison.pageCountDiff?.delta > 0 ? `+${comparison.pageCountDiff.delta}` : comparison.pageCountDiff?.delta || 0} page(s)
+* **Incremental Revisions:** Document 1 has ${comparison.revisionComparison?.doc1Revisions || 1} revision(s); Document 2 has ${comparison.revisionComparison?.doc2Revisions || 1} revision(s).
+
+#### Content Changes
+${
+  comparison.addedTextSnippets?.length > 0
+    ? `**Added Content:**\n` + comparison.addedTextSnippets.slice(0, 5).map((s: string) => `> ${s}`).join('\n\n')
+    : `No large text additions detected.`
+}
+
+${
+  comparison.removedTextSnippets?.length > 0
+    ? `\n**Removed Content:**\n` + comparison.removedTextSnippets.slice(0, 5).map((s: string) => `> ~~${s}~~`).join('\n\n')
+    : `\nNo large text deletions detected.`
+}
+
+#### Changed Figures, Dates, or Amounts
+${
+  comparison.changedDatesAndNumbers?.length > 0
+    ? comparison.changedDatesAndNumbers
+        .map((c: any) => `* **Before:** \`${c.original}\` -> **After:** \`${c.revised}\` (${c.context})`)
+        .join('\n')
+    : `No specific numeric discrepancies identified in standard tokens.`
+}
+
+#### Assessment
+${comparison.overallAssessment}`;
+  }
+
+  const primaryDoc = attachments?.[0];
+  if (primaryDoc?.forensics) {
+    const f = primaryDoc.forensics;
+    const ov = f.overview;
+    const sm = f.summary;
+
+    let report = `### 1. Document Overview
+* **Filename:** ${ov.fileName}
+* **File Size:** ${ov.fileSizeBytesFormatted} (${ov.fileSize.toLocaleString()} bytes)
+* **PDF Specification:** Version ${ov.pdfVersion}
+* **Page Count:** ${ov.pageCount} page(s)
+* **Text Extractability:** ${ov.hasExtractableText ? `Extractable vector text (${ov.totalTextCharacters.toLocaleString()} characters)` : 'Scanned raster image / No selectable vector text'}
+* **Creation Timestamp:** ${ov.metadata?.creationDateParsed || ov.metadata?.creationDate || 'Not specified'}
+* **Modification Timestamp:** ${ov.metadata?.modDateParsed || ov.metadata?.modDate || 'Not specified'}
+* **Producer / Creator:** ${ov.metadata?.producer || 'Unknown'} / ${ov.metadata?.creator || 'Unknown'}
+
+### 2. Analysis Summary
+* **Overall Assessment:** **${sm.verdictTitle}**
+* **Confidence Level:** ${sm.confidence}
+* **Critical Anomalies Identified:** ${sm.criticalAnomaliesCount}
+* **Executive Summary:** ${sm.executiveSummary}
+
+### 3. Detailed Findings
+`;
+
+    if (f.findings && f.findings.length > 0) {
+      f.findings.forEach((finding: any, i: number) => {
+        report += `#### Finding ${i + 1}: ${finding.title}
+* **Severity:** \`${finding.severity}\`
+* **Evidence:** ${finding.evidence}
+* **Why it Matters:** ${finding.whyItMatters}
+* **Alternative Explanations:** ${finding.alternativeExplanation}
+* **Recommended Next Steps:** ${finding.recommendedNextSteps}
+
+`;
+      });
+    } else {
+      report += `No suspicious structural or metadata anomalies were identified in this file.\n\n`;
+    }
+
+    report += `### 4. Technical Details
+* **Revision History:** ${f.revisions?.revisionCount || 1} revision slice(s) (${f.revisions?.hasIncrementalUpdates ? 'Incremental updates detected' : 'Single clean export'}).
+* **Annotations & Overlays:** ${f.annotations?.totalCount || 0} annotation object(s), with ${f.annotations?.suspiciousCount || 0} potential text or square overlay(s).
+* **Digital Signatures:** ${f.signatures?.hasDigitalSignatures ? `Present (${f.signatures.details.join('; ')})` : 'No cryptographic digital signature found'}.
+* **Detected Typography:** ${f.fonts?.fontFamilies?.length > 0 ? f.fonts.fontFamilies.slice(0, 8).join(', ') : 'Standard system fonts'}.
+
+### 5. Final Assessment
+${f.finalAssessment}`;
+
+    return report;
+  }
+
+  if (primaryDoc) {
+    return `### Document Analysis: ${primaryDoc.name}
+
+* **File Type:** ${primaryDoc.extension.toUpperCase()} (${primaryDoc.sizeFormatted})
+* **Pages / Length:** ${primaryDoc.pageCount || 1} page(s)
+* **Content Status:** Text successfully extracted.
+
+#### Content Summary
+${primaryDoc.textSnippet || 'No text content available.'}
+
+How would you like to explore or analyze this document further? You can ask for a summary, key date and amount extractions, or specific section questions.`;
+  }
+
+  return `I have reviewed the uploaded file context. What specific questions or analysis would you like me to perform on this document?`;
+}
+
+function generateOfflineFallback(
+  userQuery: string,
+  imageMode = false,
+  attachments?: DocumentAttachment[],
+  comparison?: any
+): { reply: string; thinking?: string } {
+  // If attachments are present, produce forensic document analysis
+  if (attachments && attachments.length > 0) {
+    return {
+      reply: buildOfflineForensicReply(userQuery, attachments, comparison),
+      thinking: 'Evaluated document binary structure, parsed revision markers, and synthesized findings.',
+    };
+  }
 
   // If user asks for an image or image mode is active
   if (isImageQuery(userQuery, imageMode)) {
@@ -172,34 +380,34 @@ function generateOfflineFallback(userQuery: string, imageMode = false): { reply:
     const isUrdu = /[\u0679\u0686\u0688\u0691\u06BA\u06D2]/.test(userQuery);
     if (isUrdu) {
       return {
-        reply: `خوش آمدید! میں BunusRadar AI ہوں، آپ کا ذہین کثیر اللسانی اسسٹنٹ۔ میں ہر زبان اور ہر موضوع پر گفتگو کر سکتا ہوں، مضامین اور تحریریں لکھ سکتا ہوں، اعلی معیار کی تصاویر تخلیق کر سکتا ہوں، اور کوڈنگ میں رہنمائی فراہم کر سکتا ہوں۔ بتائیے میں آج آپ کی کس طرح مدد کر سکتا ہوں؟`,
+        reply: `خوش آمدید! میں BunusRadar AI ہوں، آپ کا ذہین کثیر اللسانی اسسٹنٹ۔ میں ہر زبان اور ہر موضوع پر گفتگو کر سکتا ہوں، دستاویزات اور پی ڈی ایف فائلوں کی جانچ پڑتال کر سکتا ہوں، مضامین لکھ سکتا ہوں، اور کوڈنگ میں رہنمائی فراہم کر سکتا ہوں۔ بتائیے میں آج آپ کی کس طرح مدد کر سکتا ہوں؟`,
       };
     }
     return {
-      reply: `أهلاً بك! أنا BunusRadar AI، مساعدك الذكي متعدد اللغات. يمكنني التحدث بجميع اللغات وفي أي موضوع، وكتابة المقالات، وتوليد صور عالية الدقة، والمساعدة في كتابة وتشغيل البرمجيات. كيف يمكنني مساعدتك اليوم؟`,
+      reply: `أهلاً بك! أنا BunusRadar AI، مساعدك الذكي متعدد اللغات. يمكنني التحدث بجميع اللغات، وتحليل وفحص المستندات وملفات الـ PDF، وتوليد صور عالية الدقة، والمساعدة في كتابة وتشغيل البرمجيات. كيف يمكنني مساعدتك اليوم؟`,
     };
   }
 
-  if (/[¿¡áéíóúüñ]/i.test(userQuery) || /\b(hola|como|estas|que|hacer|puedes|ayuda)\b/i.test(query)) {
+  if (/[¿¡áéíóúüñ]/i.test(userQuery) || /\b(hola|como|estas|que|hacer|puedes|ayuda)\b/i.test(userQuery.toLowerCase())) {
     return {
-      reply: `¡Hola! Soy BunusRadar AI, tu asistente conversacional multilingüe. Puedo hablar fluidamente en cualquier idioma, redactar ensayos e historias, generar arte con IA en alta resolución y ejecutar código. ¿En qué puedo ayudarte hoy?`,
+      reply: `¡Hola! Soy BunusRadar AI, tu asistente conversacional multilingüe. Puedo hablar fluidamente en cualquier idioma, analizar documentos y archivos PDF en busca de modificaciones, redactar textos y generar arte con IA. ¿En qué puedo ayudarte hoy?`,
     };
   }
 
-  if (/[àâçéèêëîïôûùüÿœæ]/i.test(userQuery) || /\b(bonjour|salut|comment|peux-tu|merci)\b/i.test(query)) {
+  if (/[àâçéèêëîïôûùüÿœæ]/i.test(userQuery) || /\b(bonjour|salut|comment|peux-tu|merci)\b/i.test(userQuery.toLowerCase())) {
     return {
-      reply: `Bonjour ! Je suis BunusRadar AI, votre assistant conversationnel multilingue. Je peux communiquer dans toutes les langues, rédiger des articles et des récits, générer des images en haute résolution et exécuter du code. Comment puis-je vous aider aujourd'hui ?`,
+      reply: `Bonjour ! Je suis BunusRadar AI, votre assistant conversationnel multilingue. Je peux communiquer dans toutes les langues, analyser l'authenticité de vos documents PDF, rédiger des articles et exécuter du code. Comment puis-je vous aider aujourd'hui ?`,
     };
   }
 
-  if (/[äöüß]/i.test(userQuery) || /\b(hallo|guten|tag|wie|kannst|du)\b/i.test(query)) {
+  if (/[äöüß]/i.test(userQuery) || /\b(hallo|guten|tag|wie|kannst|du)\b/i.test(userQuery.toLowerCase())) {
     return {
-      reply: `Hallo! Ich bin BunusRadar AI, dein mehrsprachiger KI-Assistent. Ich beherrsche alle Sprachen fließend, verfasse Texte, erstelle hochauflösende KI-Bilder und unterstütze dich beim Programmieren. Wie kann ich dir heute behilflich sein?`,
+      reply: `Hallo! Ich bin BunusRadar AI, dein mehrsprachiger KI-Assistent. Ich beherrsche alle Sprachen fließend, analysiere PDF-Dokumente auf nachträgliche Bearbeitungen, verfasse Texte und unterstütze dich beim Programmieren. Wie kann ich dir heute behilflich sein?`,
     };
   }
 
   return {
-    reply: `Hello! I am BunusRadar AI, your conversational assistant inspired by the capabilities of ChatGPT and Claude. I am completely fluent in all human languages worldwide, write essays and creative stories, generate stunning high-resolution AI artwork on demand, or write and run code right in the interactive Canvas. How can I help you today?`,
+    reply: `Hello! I am BunusRadar AI, your conversational assistant inspired by the capabilities of ChatGPT and Claude. You can upload documents and PDFs to analyze whether they have been edited or modified, extract data, chat naturally in any language, or run code right in the interactive Canvas. How can I help you today?`,
   };
 }
 
@@ -214,6 +422,8 @@ export async function POST(req: NextRequest) {
       imageMode = false,
       apiKey,
       provider,
+      attachments,
+      comparison,
     } = body;
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -224,12 +434,30 @@ export async function POST(req: NextRequest) {
     const activeKey = getRuntimeApiKey(apiKey);
     const personaInstruction = getSystemPersona(model, systemPrompt);
     const userWantsImage = isImageQuery(latestUserMessage, imageMode);
+    const hasAttachments = attachments && attachments.length > 0;
+    const isAuthenticity = hasAttachments && isAuthenticityQuery(latestUserMessage);
 
     // Format conversation history for Gemini API
     const contents = messages.map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }],
     }));
+
+    // Inject document forensics & extracted content into the context of the latest message
+    if (hasAttachments && contents.length > 0) {
+      const lastIndex = contents.length - 1;
+      const documentContext = buildDocumentContextPrompt(attachments, comparison);
+      const userText = contents[lastIndex].parts[0].text;
+
+      let instructionNote = '';
+      if (isAuthenticity) {
+        instructionNote = `\n\n[System Instruction: The user is asking about document authenticity or signs of editing. Structure your answer using the five standard sections: 1. Document Overview, 2. Analysis Summary, 3. Findings (with Severity, Evidence, Why it matters, Alternative explanations, Recommended next steps), 4. Technical Details, 5. Final Assessment. Rely on the exact forensic evidence provided above.]`;
+      } else {
+        instructionNote = `\n\n[System Instruction: Ground your response in the attached document text and forensic metadata above. Cite specific pages and section numbers when answering the user's questions.]`;
+      }
+
+      contents[lastIndex].parts[0].text = `${userText}${documentContext}${instructionNote}`;
+    }
 
     // If user specifically requested an image, guide the assistant naturally
     if (userWantsImage && contents.length > 0) {
@@ -292,7 +520,6 @@ export async function POST(req: NextRequest) {
             const cleanSubject = extractImageSubject(latestUserMessage);
             const highResImageUrl = buildHighQualityImageUrl(cleanSubject);
 
-            // Replace any broken placeholder url or append high quality image markdown
             if (reply.includes('IMAGE_URL_PLACEHOLDER')) {
               reply = reply.replace(/IMAGE_URL_PLACEHOLDER/g, highResImageUrl);
             } else if (!/!\[.*?\]\((https?:\/\/[^\s)]+)\)/i.test(reply)) {
@@ -317,7 +544,7 @@ export async function POST(req: NextRequest) {
     }
 
     // If all online candidates fail or network is interrupted, return conversational fallback
-    const fallback = generateOfflineFallback(latestUserMessage, imageMode);
+    const fallback = generateOfflineFallback(latestUserMessage, imageMode, attachments, comparison);
     return NextResponse.json({
       reply: fallback.reply,
       thinking: fallback.thinking,

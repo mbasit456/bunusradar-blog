@@ -14,6 +14,7 @@ import {
   Settings,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Maximize2,
   Minimize2,
   X,
@@ -39,7 +40,34 @@ import {
   MessageSquare,
   Wand2,
   Square,
+  Paperclip,
+  FileText,
+  File,
+  ShieldAlert,
+  ShieldCheck,
+  Layers,
+  AlertTriangle,
+  FileSpreadsheet,
+  UploadCloud,
 } from 'lucide-react';
+
+export interface AttachedDocumentItem {
+  id: string;
+  name: string;
+  mimeType: string;
+  extension: string;
+  sizeFormatted: string;
+  sizeBytes: number;
+  pageCount?: number;
+  isPdf?: boolean;
+  isImage?: boolean;
+  forensics?: any;
+  extractedText?: string;
+  textSnippet?: string;
+  previewUrl?: string;
+  status: 'uploading' | 'processing' | 'ready' | 'error';
+  errorMessage?: string;
+}
 
 interface Message {
   id: string;
@@ -48,6 +76,8 @@ interface Message {
   thinking?: string;
   timestamp: string;
   model?: string;
+  attachments?: AttachedDocumentItem[];
+  comparison?: any;
 }
 
 interface ChatSession {
@@ -104,6 +134,12 @@ const DEFAULT_MODELS = [
 ];
 
 const QUICK_STARTERS = [
+  {
+    title: 'Analyze PDF Authenticity',
+    desc: 'Upload a document to check for edits, tampering, and revisions',
+    prompt: 'Check whether this uploaded PDF appears to have been edited, modified, or tampered with.',
+    icon: '🔍',
+  },
   {
     title: 'Generate an 8K Image',
     desc: 'A futuristic cybernetic cat in neon Tokyo rain, photorealistic',
@@ -240,6 +276,16 @@ export default function ChatPlaygroundClient() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const modelDropdownRef = useRef<HTMLDivElement>(null);
   const stopStreamingRef = useRef<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Document Attachments & Forensics State
+  const [pendingAttachments, setPendingAttachments] = useState<AttachedDocumentItem[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [activeComparison, setActiveComparison] = useState<any | null>(null);
+  const [viewerDocument, setViewerDocument] = useState<AttachedDocumentItem | null>(null);
+  const [viewerTab, setViewerTab] = useState<'findings' | 'metadata' | 'compare'>('findings');
+  const [viewerPage, setViewerPage] = useState<number>(1);
+  const [viewerZoom, setViewerZoom] = useState<number>(100);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -556,9 +602,110 @@ export default function ChatPlaygroundClient() {
     }, delayMs);
   };
 
+  // File Upload Handlers (ChatGPT & Claude Style)
+  const handleFiles = async (fileList: FileList | File[]) => {
+    const rawFiles = Array.from(fileList);
+    if (rawFiles.length === 0) return;
+
+    if (pendingAttachments.length + rawFiles.length > 5) {
+      alert('You can attach up to 5 files per message.');
+      return;
+    }
+
+    const newItems: AttachedDocumentItem[] = rawFiles.map(f => {
+      const ext = (f.name.split('.').pop() || '').toLowerCase();
+      return {
+        id: 'temp-' + Math.random().toString(36).slice(2, 9),
+        name: f.name,
+        mimeType: f.type,
+        extension: ext,
+        sizeFormatted: `${(f.size / 1024).toFixed(1)} KB`,
+        sizeBytes: f.size,
+        isPdf: ext === 'pdf',
+        isImage: ['png', 'jpg', 'jpeg', 'webp'].includes(ext),
+        status: 'uploading',
+      };
+    });
+
+    setPendingAttachments(prev => [...prev, ...newItems]);
+
+    try {
+      const formData = new FormData();
+      rawFiles.forEach(f => formData.append('files', f));
+
+      const res = await fetch('/api/chat/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error || 'Failed to upload files.');
+      }
+
+      const data = await res.json();
+      if (data.comparison) {
+        setActiveComparison(data.comparison);
+      }
+
+      const processed: any[] = data.documents || [];
+      setPendingAttachments(prev => {
+        return prev.map(p => {
+          const match = processed.find(doc => doc.name === p.name);
+          if (match) {
+            return {
+              ...p,
+              id: match.id,
+              status: 'ready',
+              forensics: match.forensics,
+              extractedText: match.extractedText,
+              textSnippet: match.textSnippet,
+              pageCount: match.pageCount,
+              previewUrl: `/api/chat/upload?fileId=${match.id}`,
+            };
+          }
+          return p;
+        });
+      });
+    } catch (err: any) {
+      setPendingAttachments(prev =>
+        prev.map(p =>
+          newItems.some(n => n.id === p.id)
+            ? { ...p, status: 'error', errorMessage: err.message || 'Upload error' }
+            : p
+        )
+      );
+    }
+  };
+
+  const removePendingAttachment = (id: string) => {
+    setPendingAttachments(prev => prev.filter(a => a.id !== id));
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length > 0) {
+      e.preventDefault();
+      handleFiles(e.clipboardData.files);
+    }
+  };
+
   // Send Message
   const handleSendMessage = async (textToSend?: string) => {
-    const messageContent = (textToSend || input).trim();
+    let messageContent = (textToSend || input).trim();
+    const readyAttachments = pendingAttachments.filter(a => a.status === 'ready');
+
+    // If user uploaded files without typing a message, supply an intuitive default request
+    if (!messageContent && readyAttachments.length > 0) {
+      if (readyAttachments.some(a => a.isPdf)) {
+        messageContent =
+          readyAttachments.length >= 2
+            ? 'Please compare these uploaded PDF documents, analyze their revisions, and check for any signs of tampering or editing.'
+            : 'Please inspect this uploaded PDF for authenticity and analyze whether it appears to have been edited, modified, or tampered with.';
+      } else {
+        messageContent = 'Please analyze the attached document(s) and provide a comprehensive overview.';
+      }
+    }
+
     if (!messageContent || loading || streamingMessageId) return;
 
     const userMsg: Message = {
@@ -566,6 +713,8 @@ export default function ChatPlaygroundClient() {
       role: 'user',
       content: messageContent,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      attachments: readyAttachments.length > 0 ? readyAttachments : undefined,
+      comparison: activeComparison || undefined,
     };
 
     const newHistory = [...messages, userMsg];
@@ -577,6 +726,7 @@ export default function ChatPlaygroundClient() {
 
     updateCurrentSessionMessages(newHistory, newTitle);
     setInput('');
+    setPendingAttachments([]);
     const currentImageMode = imageMode;
     if (imageMode) setImageMode(false);
     setLoading(true);
@@ -593,6 +743,8 @@ export default function ChatPlaygroundClient() {
           webSearch: webSearchEnabled,
           imageMode: currentImageMode,
           apiKey: customApiKey || undefined,
+          attachments: readyAttachments.length > 0 ? readyAttachments : undefined,
+          comparison: activeComparison || undefined,
         }),
       });
 
@@ -1173,13 +1325,73 @@ export default function ChatPlaygroundClient() {
                       {/* Message Content Container */}
                       {isUser ? (
                         /* ChatGPT User Bubble */
-                        <div
-                          dir={/[\u0600-\u06FF]/.test(msg.content) ? 'rtl' : 'ltr'}
-                          className={`px-4 py-2.5 rounded-3xl bg-[#1b2e67] text-white text-sm leading-relaxed border border-blue-500/20 shadow-sm whitespace-pre-wrap ${
-                            /[\u0600-\u06FF]/.test(msg.content) ? 'text-right' : 'text-left'
-                          }`}
-                        >
-                          {msg.content}
+                        <div className="space-y-2 flex flex-col items-end">
+                          {/* Attached Document Cards */}
+                          {msg.attachments && msg.attachments.length > 0 && (
+                            <div className="flex flex-wrap gap-2 justify-end w-full">
+                              {msg.attachments.map((att, attIdx) => (
+                                <div
+                                  key={att.id || attIdx}
+                                  onClick={() => {
+                                    setViewerDocument(att);
+                                    setViewerPage(1);
+                                    setViewerTab('findings');
+                                  }}
+                                  className="group/att flex items-center gap-2.5 px-3 py-2 rounded-2xl bg-[#0e1938] hover:bg-[#14234f] border border-blue-500/30 hover:border-[#f9b44d]/60 cursor-pointer shadow-md transition-all duration-200 text-left max-w-xs"
+                                  title="Click to view document and forensic analysis"
+                                >
+                                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[10px] shrink-0 ${
+                                    att.isPdf
+                                      ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                                      : att.extension === 'docx'
+                                      ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                                      : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                  }`}>
+                                    {att.extension ? att.extension.toUpperCase().slice(0, 4) : 'FILE'}
+                                  </div>
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-xs font-semibold text-white truncate group-hover/att:text-[#f9b44d] transition-colors">
+                                      {att.name}
+                                    </p>
+                                    <p className="text-[10px] text-slate-400 flex items-center gap-1.5">
+                                      <span>{att.sizeFormatted}</span>
+                                      {att.pageCount && <span>• {att.pageCount} pg</span>}
+                                      {att.isPdf && (
+                                        <span className="text-[#f9b44d] flex items-center gap-0.5">
+                                          <Eye className="w-2.5 h-2.5 inline" /> View
+                                        </span>
+                                      )}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {msg.comparison && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (msg.attachments && msg.attachments[0]) {
+                                  setViewerDocument(msg.attachments[0]);
+                                  setViewerTab('compare');
+                                }
+                              }}
+                              className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f9b44d]/10 hover:bg-[#f9b44d]/20 text-[#f9b44d] border border-[#f9b44d]/30 text-xs font-medium transition"
+                            >
+                              <Layers className="w-3.5 h-3.5" />
+                              <span>View Version Comparison</span>
+                            </button>
+                          )}
+
+                          <div
+                            dir={/[\u0600-\u06FF]/.test(msg.content) ? 'rtl' : 'ltr'}
+                            className={`px-4 py-2.5 rounded-3xl bg-[#1b2e67] text-white text-sm leading-relaxed border border-blue-500/20 shadow-sm whitespace-pre-wrap ${
+                              /[\u0600-\u06FF]/.test(msg.content) ? 'text-right' : 'text-left'
+                            }`}
+                          >
+                            {msg.content}
+                          </div>
                         </div>
                       ) : (
                         /* ChatGPT Assistant Flow */
@@ -1445,12 +1657,103 @@ export default function ChatPlaygroundClient() {
                 e.preventDefault();
                 handleSendMessage();
               }}
+              onDragOver={e => {
+                e.preventDefault();
+                setIsDragging(true);
+              }}
+              onDragLeave={e => {
+                e.preventDefault();
+                setIsDragging(false);
+              }}
+              onDrop={e => {
+                e.preventDefault();
+                setIsDragging(false);
+                if (e.dataTransfer.files) {
+                  handleFiles(e.dataTransfer.files);
+                }
+              }}
               className="relative rounded-3xl border border-slate-700/80 bg-[#0e1938] focus-within:border-[#f9b44d] focus-within:ring-1 focus-within:ring-[#f9b44d]/40 shadow-2xl transition-all duration-200 p-2.5"
             >
+              {/* Hidden File Input */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                multiple
+                onChange={e => {
+                  if (e.target.files) handleFiles(e.target.files);
+                  e.target.value = '';
+                }}
+                className="hidden"
+                accept=".pdf,.docx,.txt,.csv,.md,.tsv,.png,.jpg,.jpeg,.webp"
+              />
+
+              {/* Drag & Drop Visual Overlay */}
+              {isDragging && (
+                <div className="absolute inset-0 z-30 bg-[#070d1e]/95 backdrop-blur-sm border-2 border-dashed border-[#f9b44d] rounded-3xl flex flex-col items-center justify-center pointer-events-none animate-in fade-in">
+                  <UploadCloud className="w-9 h-9 text-[#f9b44d] mb-1.5 animate-bounce" />
+                  <p className="text-sm font-bold text-white">Drop your files here</p>
+                  <p className="text-[11px] text-slate-400">PDF, DOCX, TXT, CSV, or Images for deep analysis & authenticity verification</p>
+                </div>
+              )}
+
+              {/* Staged Attachment Cards (ChatGPT / Claude Style) */}
+              {pendingAttachments.length > 0 && (
+                <div className="flex flex-wrap gap-2 px-3 pt-1 pb-2.5 border-b border-slate-700/60 mb-1.5">
+                  {pendingAttachments.map(att => (
+                    <div
+                      key={att.id}
+                      className="relative flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-[#070d1e] border border-slate-700/80 text-xs shadow-sm"
+                    >
+                      <div
+                        className={`w-6 h-6 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 ${
+                          att.isPdf
+                            ? 'bg-rose-500/20 text-rose-300'
+                            : att.extension === 'docx'
+                            ? 'bg-blue-500/20 text-blue-300'
+                            : 'bg-emerald-500/20 text-emerald-300'
+                        }`}
+                      >
+                        {att.extension ? att.extension.toUpperCase().slice(0, 4) : 'FILE'}
+                      </div>
+                      <div className="min-w-0 max-w-[140px] sm:max-w-[200px]">
+                        <p className="text-slate-200 font-medium truncate text-[11px]">{att.name}</p>
+                        <p className="text-[10px] text-slate-400">
+                          {att.status === 'uploading' && (
+                            <span className="text-[#f9b44d] flex items-center gap-1">
+                              <RefreshCw className="w-2.5 h-2.5 animate-spin" /> Uploading...
+                            </span>
+                          )}
+                          {att.status === 'ready' && (
+                            <span className="text-emerald-400 flex items-center gap-1">
+                              <Check className="w-2.5 h-2.5" />
+                              {att.isPdf ? `Forensics ready (${att.pageCount || 1} pg)` : 'Ready'}
+                            </span>
+                          )}
+                          {att.status === 'error' && (
+                            <span className="text-rose-400 flex items-center gap-1">
+                              <AlertTriangle className="w-2.5 h-2.5" /> {att.errorMessage || 'Error'}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removePendingAttachment(att.id)}
+                        className="p-1 text-slate-400 hover:text-white rounded-md hover:bg-slate-800 transition"
+                        title="Remove attachment"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <textarea
                 ref={textareaRef}
                 value={input}
                 onChange={e => setInput(e.target.value)}
+                onPaste={handlePaste}
                 onKeyDown={e => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -1460,9 +1763,11 @@ export default function ChatPlaygroundClient() {
                   }
                 }}
                 placeholder={
-                  imageMode
+                  pendingAttachments.length > 0
+                    ? 'Ask questions about this file (e.g. Has this PDF been edited? Check authenticity, summarize, or extract dates)...'
+                    : imageMode
                     ? 'Describe the image you want to generate (e.g. A cyberpunk cat in neon Tokyo rain, photorealistic, 8k)...'
-                    : 'Message BunusRadar AI...'
+                    : 'Message BunusRadar AI or attach a document...'
                 }
                 rows={1}
                 className="w-full bg-transparent px-3 py-1.5 text-sm text-white placeholder-slate-400 focus:outline-none resize-none leading-relaxed min-h-[44px] max-h-[180px]"
@@ -1472,6 +1777,24 @@ export default function ChatPlaygroundClient() {
               <div className="flex items-center justify-between pt-1 px-1 text-xs">
                 {/* Left Action Buttons */}
                 <div className="flex items-center gap-1.5 sm:gap-2">
+                  {/* File Attachment Button (Paperclip) */}
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition ${
+                      pendingAttachments.length > 0
+                        ? 'bg-[#f9b44d]/20 text-[#f9b44d] border-[#f9b44d]/50 shadow-sm'
+                        : 'bg-[#121f45] text-slate-300 border-slate-700 hover:text-white hover:border-[#f9b44d]/40'
+                    }`}
+                    title="Attach files (PDF, DOCX, TXT, CSV, Images) for analysis & authenticity checking"
+                  >
+                    <Paperclip className="w-3.5 h-3.5" />
+                    <span>
+                      Attach
+                      {pendingAttachments.length > 0 && ` (${pendingAttachments.length})`}
+                    </span>
+                  </button>
+
                   {/* Create Image Toggle */}
                   <button
                     type="button"
@@ -1519,9 +1842,9 @@ export default function ChatPlaygroundClient() {
                   ) : (
                     <button
                       type="submit"
-                      disabled={!input.trim() || loading}
+                      disabled={(!input.trim() && pendingAttachments.filter(a => a.status === 'ready').length === 0) || loading}
                       className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
-                        input.trim() && !loading
+                        (input.trim() || pendingAttachments.filter(a => a.status === 'ready').length > 0) && !loading
                           ? 'bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] shadow-md transform hover:scale-105 active:scale-95 cursor-pointer'
                           : 'bg-slate-700/60 text-slate-400 cursor-not-allowed'
                       }`}
@@ -1831,6 +2154,314 @@ export default function ChatPlaygroundClient() {
               >
                 Apply & Save
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── INTERACTIVE PDF & DOCUMENT FORENSICS VIEWER MODAL ────── */}
+      {viewerDocument && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-[#0a1435] border border-slate-700/80 rounded-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+            {/* Modal Header */}
+            <div className="px-4 sm:px-6 py-3 border-b border-slate-800 flex items-center justify-between bg-[#070d1e] shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <div
+                  className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
+                    viewerDocument.isPdf
+                      ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                      : viewerDocument.extension === 'docx'
+                      ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                      : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                  }`}
+                >
+                  {viewerDocument.extension ? viewerDocument.extension.toUpperCase().slice(0, 4) : 'DOC'}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-white truncate max-w-xs sm:max-w-md">
+                    {viewerDocument.name}
+                  </h3>
+                  <div className="text-[11px] text-slate-400 flex flex-wrap items-center gap-2">
+                    <span>{viewerDocument.sizeFormatted}</span>
+                    <span>•</span>
+                    <span>{viewerDocument.pageCount || 1} page(s)</span>
+                    {viewerDocument.forensics && (
+                      <>
+                        <span>•</span>
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                            viewerDocument.forensics.summary.verdict === 'NO_SIGNIFICANT_SIGNS'
+                              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                              : viewerDocument.forensics.summary.verdict === 'STRONG_EVIDENCE_OF_MODIFICATION'
+                              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                              : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                          }`}
+                        >
+                          {viewerDocument.forensics.summary.verdictTitle}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href={`/api/chat/upload?fileId=${viewerDocument.id}&download=true`}
+                  download={viewerDocument.name}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition"
+                  title="Download original file"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Download Original</span>
+                </a>
+                <button
+                  onClick={() => setViewerDocument(null)}
+                  className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
+                  title="Close viewer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body: Left Preview & Right Forensics Inspector */}
+            <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+              {/* Left: Document View */}
+              <div className="flex-1 flex flex-col bg-[#070d1e] overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
+                {/* Page and Zoom Navigation Bar */}
+                <div className="px-4 py-2 bg-[#0e1938] border-b border-slate-800 flex items-center justify-between text-xs text-slate-300 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setViewerPage(p => Math.max(1, p - 1))}
+                      disabled={viewerPage <= 1}
+                      className="p-1 rounded hover:bg-slate-800 disabled:opacity-40 transition"
+                      title="Previous page"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <span className="font-mono text-xs">
+                      Page {viewerPage} of {viewerDocument.pageCount || 1}
+                    </span>
+                    <button
+                      onClick={() => setViewerPage(p => Math.min(viewerDocument.pageCount || 1, p + 1))}
+                      disabled={viewerPage >= (viewerDocument.pageCount || 1)}
+                      className="p-1 rounded hover:bg-slate-800 disabled:opacity-40 transition"
+                      title="Next page"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setViewerZoom(z => Math.max(50, z - 25))}
+                      className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono"
+                      title="Zoom out"
+                    >
+                      -
+                    </button>
+                    <span className="text-xs font-mono text-slate-400">{viewerZoom}%</span>
+                    <button
+                      onClick={() => setViewerZoom(z => Math.min(200, z + 25))}
+                      className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono"
+                      title="Zoom in"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => setViewerZoom(100)}
+                      className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs"
+                      title="Reset zoom"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+
+                {/* Main Render Area */}
+                <div className="flex-1 bg-slate-950 p-2 sm:p-4 overflow-auto flex items-center justify-center">
+                  {viewerDocument.isPdf ? (
+                    <iframe
+                      src={`/api/chat/upload?fileId=${viewerDocument.id}#page=${viewerPage}&zoom=${viewerZoom}`}
+                      title={viewerDocument.name}
+                      className="w-full h-full rounded border border-slate-800 bg-white"
+                      style={{
+                        transform: viewerZoom !== 100 ? `scale(${viewerZoom / 100})` : 'none',
+                        transformOrigin: 'top center',
+                      }}
+                    />
+                  ) : viewerDocument.isImage ? (
+                    <img
+                      src={`/api/chat/upload?fileId=${viewerDocument.id}`}
+                      alt={viewerDocument.name}
+                      className="max-h-full max-w-full object-contain rounded shadow-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-full p-4 overflow-auto font-mono text-xs text-slate-200 whitespace-pre-wrap bg-[#070d1e] rounded border border-slate-800">
+                      {viewerDocument.extractedText || 'No text content available.'}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: Forensics Inspector & Structural Data */}
+              <div className="w-full lg:w-96 flex flex-col bg-[#0e1938] shrink-0 overflow-hidden">
+                {/* Tab Navigation */}
+                <div className="flex border-b border-slate-800 text-xs font-medium bg-[#070d1e]">
+                  <button
+                    onClick={() => setViewerTab('findings')}
+                    className={`flex-1 py-2.5 px-3 text-center border-b-2 transition ${
+                      viewerTab === 'findings'
+                        ? 'border-[#f9b44d] text-[#f9b44d] bg-[#0e1938]'
+                        : 'border-transparent text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Findings ({viewerDocument.forensics?.findings?.length || 0})
+                  </button>
+                  <button
+                    onClick={() => setViewerTab('metadata')}
+                    className={`flex-1 py-2.5 px-3 text-center border-b-2 transition ${
+                      viewerTab === 'metadata'
+                        ? 'border-[#f9b44d] text-[#f9b44d] bg-[#0e1938]'
+                        : 'border-transparent text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Structure & Metadata
+                  </button>
+                  {activeComparison && (
+                    <button
+                      onClick={() => setViewerTab('compare')}
+                      className={`flex-1 py-2.5 px-3 text-center border-b-2 transition ${
+                        viewerTab === 'compare'
+                          ? 'border-[#f9b44d] text-[#f9b44d] bg-[#0e1938]'
+                          : 'border-transparent text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      Version Diff
+                    </button>
+                  )}
+                </div>
+
+                {/* Tab Panel Body */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 text-xs leading-relaxed">
+                  {viewerTab === 'findings' && (
+                    <>
+                      {viewerDocument.forensics?.findings?.length ? (
+                        viewerDocument.forensics.findings.map((f: any, idx: number) => (
+                          <div
+                            key={f.id || idx}
+                            className="p-3 rounded-xl border border-slate-700/80 bg-[#070d1e] space-y-2"
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <span className="font-semibold text-white text-xs">{f.title}</span>
+                              <span
+                                className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                  f.severity === 'High'
+                                    ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                                    : f.severity === 'Medium'
+                                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                    : f.severity === 'Low'
+                                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                                    : 'bg-slate-700 text-slate-300'
+                                }`}
+                              >
+                                {f.severity}
+                              </span>
+                            </div>
+                            <p className="text-slate-300 text-[11.5px]">{f.evidence}</p>
+                            <div className="pt-1 text-[11px] text-slate-400 space-y-1">
+                              <p>
+                                <strong className="text-slate-300">Why it matters:</strong> {f.whyItMatters}
+                              </p>
+                              <p>
+                                <strong className="text-slate-300">Alternative explanation:</strong> {f.alternativeExplanation}
+                              </p>
+                              <p>
+                                <strong className="text-slate-300">Recommended action:</strong> {f.recommendedNextSteps}
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8 text-slate-400 space-y-2">
+                          <ShieldCheck className="w-8 h-8 text-emerald-400 mx-auto" />
+                          <p className="font-semibold text-slate-200">No Overt Anomalies Detected</p>
+                          <p className="text-[11px]">The document structure matches standard single-pass creation patterns.</p>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {viewerTab === 'metadata' && viewerDocument.forensics && (
+                    <div className="space-y-3">
+                      <div className="p-3 rounded-xl bg-[#070d1e] border border-slate-700/80 space-y-1.5">
+                        <h4 className="font-semibold text-white text-xs">Document Properties</h4>
+                        <div className="space-y-1 text-slate-300 font-mono text-[11px]">
+                          <p><span className="text-slate-400">PDF Version:</span> {viewerDocument.forensics.overview.pdfVersion}</p>
+                          <p><span className="text-slate-400">Creation Date:</span> {viewerDocument.forensics.overview.metadata.creationDateParsed || viewerDocument.forensics.overview.metadata.creationDate || 'None'}</p>
+                          <p><span className="text-slate-400">Modification Date:</span> {viewerDocument.forensics.overview.metadata.modDateParsed || viewerDocument.forensics.overview.metadata.modDate || 'None'}</p>
+                          <p><span className="text-slate-400">Creator Tool:</span> {viewerDocument.forensics.overview.metadata.creator || 'None'}</p>
+                          <p><span className="text-slate-400">Producer:</span> {viewerDocument.forensics.overview.metadata.producer || 'None'}</p>
+                        </div>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-[#070d1e] border border-slate-700/80 space-y-1.5">
+                        <h4 className="font-semibold text-white text-xs">Incremental Revision Slices</h4>
+                        <p className="text-slate-400 text-[11px]">
+                          Total Revisions: {viewerDocument.forensics.revisions.revisionCount}
+                        </p>
+                        <div className="space-y-1 pt-1">
+                          {viewerDocument.forensics.revisions.history.map((rev: any, idx: number) => (
+                            <div key={idx} className="p-1.5 rounded bg-slate-900 border border-slate-800 text-[10.5px] font-mono text-slate-300 flex justify-between">
+                              <span>Revision #{rev.revisionIndex}</span>
+                              <span className="text-slate-400">{rev.byteLength} bytes</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-[#070d1e] border border-slate-700/80 space-y-1.5">
+                        <h4 className="font-semibold text-white text-xs">Annotations & Overlays</h4>
+                        <p className="text-slate-300 text-[11.5px]">
+                          Total annotations: {viewerDocument.forensics.annotations.totalCount} ({viewerDocument.forensics.annotations.suspiciousCount} potential text or shape overlay)
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-[#070d1e] border border-slate-700/80 space-y-1.5">
+                        <h4 className="font-semibold text-white text-xs">Typography & Fonts</h4>
+                        <p className="text-slate-300 text-[11px] font-mono">
+                          {viewerDocument.forensics.fonts.fontFamilies.join(', ') || 'System default fonts'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {viewerTab === 'compare' && activeComparison && (
+                    <div className="space-y-3">
+                      <div className="p-3 rounded-xl bg-[#070d1e] border border-slate-700/80 space-y-2">
+                        <h4 className="font-semibold text-white text-xs">Comparison Overview</h4>
+                        <p className="text-slate-300 text-[11.5px]">{activeComparison.overallAssessment}</p>
+                      </div>
+
+                      {activeComparison.changedDatesAndNumbers?.length > 0 && (
+                        <div className="p-3 rounded-xl bg-[#070d1e] border border-slate-700/80 space-y-1.5">
+                          <h4 className="font-semibold text-amber-300 text-xs">Changed Figures & Dates</h4>
+                          <div className="space-y-1 text-[11px]">
+                            {activeComparison.changedDatesAndNumbers.map((c: any, i: number) => (
+                              <div key={i} className="p-1.5 bg-slate-900 rounded font-mono text-slate-200">
+                                <span className="line-through text-rose-400">{c.original}</span>
+                                <span className="mx-2 text-slate-500">→</span>
+                                <span className="text-emerald-400 font-bold">{c.revised}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
