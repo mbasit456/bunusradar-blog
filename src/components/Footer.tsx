@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { CATEGORIES } from '@/lib/categories';
 import { 
   Rss, 
@@ -32,6 +33,13 @@ export default function Footer() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  const pathname = usePathname();
+
+  // Hide footer completely on AI Chatbot page
+  if (pathname === '/tools/free-ai-chat') {
+    return null;
+  }
 
   return (
     <footer className="bg-[#121f45] text-white mt-20 border-t border-slate-800 relative">

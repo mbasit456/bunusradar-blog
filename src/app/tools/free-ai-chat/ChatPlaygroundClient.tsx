@@ -717,7 +717,7 @@ export default function ChatPlaygroundClient() {
   const currentModelMeta = DEFAULT_MODELS.find(m => m.id === selectedModel) || DEFAULT_MODELS[0];
 
   return (
-    <div className="flex h-[calc(100vh-68px)] min-h-[640px] w-full bg-[#070d1e] text-slate-100 overflow-hidden font-sans border-b border-slate-800">
+    <div className="flex h-full w-full bg-[#070d1e] text-slate-100 overflow-hidden font-sans">
 
       {/* ─── LEFT SIDEBAR (CHATGPT STYLE CONVERSATION HISTORY) ─────────── */}
       <aside
