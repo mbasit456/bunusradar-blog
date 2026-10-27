@@ -38,6 +38,7 @@ import {
   Globe,
   MessageSquare,
   Wand2,
+  Square,
 } from 'lucide-react';
 
 interface Message {
@@ -232,10 +233,12 @@ export default function ChatPlaygroundClient() {
   const [expandedThinking, setExpandedThinking] = useState<Record<string, boolean>>({});
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [feedbackState, setFeedbackState] = useState<Record<string, 'like' | 'dislike'>>({});
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const modelDropdownRef = useRef<HTMLDivElement>(null);
+  const stopStreamingRef = useRef<boolean>(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -287,10 +290,21 @@ export default function ChatPlaygroundClient() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Scroll to bottom
+  // Scroll to bottom smoothly or instantly during active streaming
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, loading]);
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: streamingMessageId ? 'auto' : 'smooth',
+      });
+    }
+  }, [messages, loading, streamingMessageId]);
+
+  // Clean up streaming on unmount
+  useEffect(() => {
+    return () => {
+      stopStreamingRef.current = true;
+    };
+  }, []);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -319,6 +333,8 @@ export default function ChatPlaygroundClient() {
   };
 
   const handleCreateNewChat = () => {
+    stopStreamingRef.current = true;
+    setStreamingMessageId(null);
     const newSession: ChatSession = {
       id: 'session-' + Date.now(),
       title: 'New Conversation',
@@ -337,6 +353,8 @@ export default function ChatPlaygroundClient() {
   };
 
   const handleSwitchSession = (id: string) => {
+    stopStreamingRef.current = true;
+    setStreamingMessageId(null);
     const target = sessions.find(s => s.id === id);
     if (target) {
       setActiveSessionId(id);
@@ -456,10 +474,91 @@ export default function ChatPlaygroundClient() {
     return null;
   };
 
+  // Progressive Word-by-Word Streamer (ChatGPT Real-Time Typing Effect)
+  const streamAssistantResponse = (
+    fullReply: string,
+    thinkingText: string | undefined,
+    historyBase: Message[]
+  ) => {
+    const assistantMsgId = 'msg-' + (Date.now() + 1);
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // If an image markdown is at the very beginning, render it immediately
+    let initialContent = '';
+    let textToStream = fullReply;
+
+    const imageMatch = fullReply.match(/^(!\[.*?\]\(https?:\/\/[^\s)]+\)\n*)/);
+    if (imageMatch) {
+      initialContent = imageMatch[1];
+      textToStream = fullReply.slice(imageMatch[1].length);
+    }
+
+    const newAssistantMsg: Message = {
+      id: assistantMsgId,
+      role: 'assistant',
+      content: initialContent,
+      thinking: thinkingText,
+      timestamp,
+      model: selectedModel,
+    };
+
+    setMessages([...historyBase, newAssistantMsg]);
+    setStreamingMessageId(assistantMsgId);
+    stopStreamingRef.current = false;
+
+    // Tokenize text into words, whitespace, and punctuation
+    const tokens = textToStream.match(/(\s+|\S+)/g) || [textToStream];
+
+    let chunkSize = 1;
+    if (tokens.length > 800) chunkSize = 6;
+    else if (tokens.length > 400) chunkSize = 4;
+    else if (tokens.length > 150) chunkSize = 2;
+
+    let currentIndex = 0;
+    let accumulated = initialContent;
+    const delayMs = 18;
+
+    const timer = setInterval(() => {
+      if (stopStreamingRef.current || currentIndex >= tokens.length) {
+        clearInterval(timer);
+        setStreamingMessageId(null);
+
+        const finalContent = stopStreamingRef.current ? accumulated : fullReply;
+        const finalizedMsg: Message = {
+          ...newAssistantMsg,
+          content: finalContent,
+        };
+        const finalHistory = [...historyBase, finalizedMsg];
+        updateCurrentSessionMessages(finalHistory);
+
+        // Auto-open canvas if artifact (Image or Code) is generated
+        const artifact = extractArtifact(finalContent);
+        if (artifact) {
+          setActiveArtifact(artifact);
+          setCanvasOpen(true);
+          if (artifact.type === 'image') {
+            setCanvasTab('preview');
+          } else {
+            setCanvasTab(artifact.language === 'html' || artifact.language === 'svg' ? 'preview' : 'code');
+          }
+        }
+        return;
+      }
+
+      const nextChunk = tokens.slice(currentIndex, currentIndex + chunkSize).join('');
+      accumulated += nextChunk;
+      currentIndex += chunkSize;
+
+      setMessages(prev =>
+        prev.map(m => (m.id === assistantMsgId ? { ...m, content: accumulated } : m))
+      );
+    }, delayMs);
+  };
+
   // Send Message
   const handleSendMessage = async (textToSend?: string) => {
     const messageContent = (textToSend || input).trim();
-    if (!messageContent || loading) return;
+    if (!messageContent || loading || streamingMessageId) return;
 
     const userMsg: Message = {
       id: 'msg-' + Date.now(),
@@ -504,30 +603,10 @@ export default function ChatPlaygroundClient() {
       const assistantReply = data.reply || 'No response returned from the model.';
       const thinkingText = data.thinking;
 
-      const assistantMsg: Message = {
-        id: 'msg-' + (Date.now() + 1),
-        role: 'assistant',
-        content: assistantReply,
-        thinking: thinkingText,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        model: selectedModel,
-      };
-
-      const finalHistory = [...newHistory, assistantMsg];
-      updateCurrentSessionMessages(finalHistory);
-
-      // Auto-open canvas if artifact (Image or Code) is generated
-      const artifact = extractArtifact(assistantReply);
-      if (artifact) {
-        setActiveArtifact(artifact);
-        setCanvasOpen(true);
-        if (artifact.type === 'image') {
-          setCanvasTab('preview');
-        } else {
-          setCanvasTab(artifact.language === 'html' || artifact.language === 'svg' ? 'preview' : 'code');
-        }
-      }
+      setLoading(false);
+      streamAssistantResponse(assistantReply, thinkingText, newHistory);
     } catch (err: unknown) {
+      setLoading(false);
       const errorMessage = err instanceof Error ? err.message : 'Failed to reach AI service';
       const fallbackMsg: Message = {
         id: 'msg-' + (Date.now() + 1),
@@ -544,7 +623,7 @@ export default function ChatPlaygroundClient() {
 
   // Regenerate Response
   const handleRegenerate = async () => {
-    if (loading || messages.length === 0) return;
+    if (loading || streamingMessageId || messages.length === 0) return;
     // Find the last user message
     const lastUserIdx = messages.map(m => m.role).lastIndexOf('user');
     if (lastUserIdx === -1) return;
@@ -571,18 +650,13 @@ export default function ChatPlaygroundClient() {
       if (!response.ok) throw new Error('API error');
       const data = await response.json();
 
-      const assistantMsg: Message = {
-        id: 'msg-' + Date.now(),
-        role: 'assistant',
-        content: data.reply || 'No response returned.',
-        thinking: data.thinking,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        model: selectedModel,
-      };
+      const assistantReply = data.reply || 'No response returned.';
+      const thinkingText = data.thinking;
 
-      updateCurrentSessionMessages([...trimmedHistory, assistantMsg]);
+      setLoading(false);
+      streamAssistantResponse(assistantReply, thinkingText, trimmedHistory);
     } catch (e) {
-      // ignore
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -1080,16 +1154,30 @@ export default function ChatPlaygroundClient() {
                       ) : (
                         /* ChatGPT Assistant Flow */
                         <div className="text-slate-100 text-[14.5px] leading-relaxed space-y-4 font-sans">
+                          {msg.id === streamingMessageId && (!msg.content || msg.content.trim().length === 0) && (
+                            <div className="flex items-center gap-2 py-1">
+                              <span className="inline-block w-2 h-4 bg-[#f9b44d] rounded-sm animate-pulse shadow-[0_0_8px_rgba(249,180,77,0.8)]" />
+                              <span className="text-xs text-slate-400 italic">Formulating response...</span>
+                            </div>
+                          )}
                           {parts.map((part, pIdx) => {
                             if (part.type === 'text') {
+                              const isCurrentlyStreaming = msg.id === streamingMessageId;
                               return (
-                                <div
-                                  key={pIdx}
-                                  className="chat-rendered-markdown font-sans leading-relaxed"
-                                  dangerouslySetInnerHTML={{
-                                    __html: renderMarkdownToHtml(part.content || ''),
-                                  }}
-                                />
+                                <div key={pIdx} className="relative">
+                                  <div
+                                    className="chat-rendered-markdown font-sans leading-relaxed"
+                                    dangerouslySetInnerHTML={{
+                                      __html: renderMarkdownToHtml(part.content || ''),
+                                    }}
+                                  />
+                                  {isCurrentlyStreaming && pIdx === parts.length - 1 && (
+                                    <span
+                                      className="inline-block w-2 h-4 ml-1.5 bg-[#f9b44d] rounded-sm animate-pulse align-middle shadow-[0_0_8px_rgba(249,180,77,0.8)]"
+                                      title="Writing..."
+                                    />
+                                  )}
+                                </div>
                               );
                             }
 
@@ -1210,7 +1298,7 @@ export default function ChatPlaygroundClient() {
                       )}
 
                       {/* ChatGPT Action Toolbar below assistant responses */}
-                      {!isUser && (
+                      {!isUser && msg.id !== streamingMessageId && msg.content && (
                         <div className="flex items-center gap-1.5 text-slate-400 pt-1 text-xs">
                           <button
                             onClick={() => handleCopy(msg.content, msg.id)}
@@ -1331,7 +1419,9 @@ export default function ChatPlaygroundClient() {
                 onKeyDown={e => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
-                    handleSendMessage();
+                    if (!loading && !streamingMessageId) {
+                      handleSendMessage();
+                    }
                   }
                 }}
                 placeholder={
@@ -1378,20 +1468,33 @@ export default function ChatPlaygroundClient() {
                   </button>
                 </div>
 
-                {/* Right Circular Send Button (Signature ChatGPT Style) */}
+                {/* Right Circular Send / Stop Button (Signature ChatGPT Style) */}
                 <div className="flex items-center gap-2">
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || loading}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
-                      input.trim() && !loading
-                        ? 'bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] shadow-md transform hover:scale-105 active:scale-95 cursor-pointer'
-                        : 'bg-slate-700/60 text-slate-400 cursor-not-allowed'
-                    }`}
-                    title="Send message"
-                  >
-                    <ArrowUp className="w-4 h-4 stroke-[2.5]" />
-                  </button>
+                  {streamingMessageId ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        stopStreamingRef.current = true;
+                      }}
+                      className="w-8 h-8 rounded-full bg-white hover:bg-slate-200 text-slate-900 flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer transform hover:scale-105 active:scale-95"
+                      title="Stop generating"
+                    >
+                      <Square className="w-3.5 h-3.5 fill-slate-900 text-slate-900" />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={!input.trim() || loading}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
+                        input.trim() && !loading
+                          ? 'bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] shadow-md transform hover:scale-105 active:scale-95 cursor-pointer'
+                          : 'bg-slate-700/60 text-slate-400 cursor-not-allowed'
+                      }`}
+                      title="Send message"
+                    >
+                      <ArrowUp className="w-4 h-4 stroke-[2.5]" />
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
