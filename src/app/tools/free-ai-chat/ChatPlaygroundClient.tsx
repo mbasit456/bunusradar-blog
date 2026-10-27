@@ -224,9 +224,7 @@ export default function ChatPlaygroundClient() {
 
   // Settings Modal
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [systemPrompt, setSystemPrompt] = useState(
-    'You are an intelligent, versatile, warm conversational assistant like ChatGPT and Claude. Chat naturally, write code only when asked, and generate images with rich detail.'
-  );
+  const [systemPrompt, setSystemPrompt] = useState('');
   const [temperature, setTemperature] = useState(0.7);
   const [customApiKey, setCustomApiKey] = useState('');
 
@@ -694,6 +692,30 @@ export default function ChatPlaygroundClient() {
       .replace(/[#*_`]/g, '');
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
+
+    // Multilingual speech synthesis language matching
+    if (/[\u0600-\u06FF]/.test(cleanText)) {
+      utterance.lang = /[\u0679\u0686\u0688\u0691\u06BA\u06D2]/.test(cleanText) ? 'ur-PK' : 'ar-SA';
+    } else if (/[\u0900-\u097F]/.test(cleanText)) {
+      utterance.lang = 'hi-IN';
+    } else if (/[\u4E00-\u9FFF]/.test(cleanText)) {
+      utterance.lang = 'zh-CN';
+    } else if (/[\u3040-\u30FF]/.test(cleanText)) {
+      utterance.lang = 'ja-JP';
+    } else if (/[\u0400-\u04FF]/.test(cleanText)) {
+      utterance.lang = 'ru-RU';
+    } else if (/[¿¡áéíóúüñ]/i.test(cleanText)) {
+      utterance.lang = 'es-ES';
+    } else if (/[àâçéèêëîïôûùüÿœæ]/i.test(cleanText)) {
+      utterance.lang = 'fr-FR';
+    } else if (/[äöüß]/i.test(cleanText)) {
+      utterance.lang = 'de-DE';
+    } else if (/[ãõáéíóúç]/i.test(cleanText)) {
+      utterance.lang = 'pt-BR';
+    } else {
+      utterance.lang = 'en-US';
+    }
+
     utterance.onend = () => setSpeakingId(null);
     utterance.onerror = () => setSpeakingId(null);
     setSpeakingId(id);
@@ -1151,12 +1173,22 @@ export default function ChatPlaygroundClient() {
                       {/* Message Content Container */}
                       {isUser ? (
                         /* ChatGPT User Bubble */
-                        <div className="px-4 py-2.5 rounded-3xl bg-[#1b2e67] text-white text-sm leading-relaxed border border-blue-500/20 shadow-sm whitespace-pre-wrap">
+                        <div
+                          dir={/[\u0600-\u06FF]/.test(msg.content) ? 'rtl' : 'ltr'}
+                          className={`px-4 py-2.5 rounded-3xl bg-[#1b2e67] text-white text-sm leading-relaxed border border-blue-500/20 shadow-sm whitespace-pre-wrap ${
+                            /[\u0600-\u06FF]/.test(msg.content) ? 'text-right' : 'text-left'
+                          }`}
+                        >
                           {msg.content}
                         </div>
                       ) : (
                         /* ChatGPT Assistant Flow */
-                        <div className="text-slate-100 text-[14.5px] leading-relaxed space-y-4 font-sans">
+                        <div
+                          dir={/[\u0600-\u06FF]/.test(msg.content) ? 'rtl' : 'ltr'}
+                          className={`text-slate-100 text-[14.5px] leading-relaxed space-y-4 font-sans ${
+                            /[\u0600-\u06FF]/.test(msg.content) ? 'text-right' : 'text-left'
+                          }`}
+                        >
                           {msg.id === streamingMessageId && (!msg.content || msg.content.trim().length === 0) && (
                             <div className="flex items-center gap-2 py-1">
                               <span className="inline-block w-2 h-4 bg-[#f9b44d] rounded-sm animate-pulse shadow-[0_0_8px_rgba(249,180,77,0.8)]" />
@@ -1746,9 +1778,13 @@ export default function ChatPlaygroundClient() {
               <textarea
                 value={systemPrompt}
                 onChange={e => setSystemPrompt(e.target.value)}
+                placeholder="Optional custom instructions (e.g. Always respond in Spanish, or act as a senior software architect)..."
                 rows={3}
-                className="w-full bg-[#070d1e] border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#f9b44d] leading-relaxed"
+                className="w-full bg-[#070d1e] border border-slate-700 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#f9b44d] leading-relaxed"
               />
+              <p className="text-[11px] text-slate-400">
+                Leave blank to use native multi-model persona and automatic multilingual detection for all languages.
+              </p>
             </div>
 
             <div className="space-y-1.5">

@@ -40,50 +40,72 @@ interface RequestBody {
 }
 
 function getSystemPersona(modelId: string, customPrompt?: string): string {
-  if (customPrompt && customPrompt.trim()) {
-    return customPrompt.trim();
-  }
-
   const modelLower = (modelId || '').toLowerCase();
   const baseRules = `
-You are an advanced, natural, highly intelligent, and warm AI assistant, just like ChatGPT and Claude.
+You are an advanced, natural, highly intelligent, and warm AI assistant, just like ChatGPT, Claude, and Gemini.
 Follow these essential behavioral principles:
-1. Natural Human Tone: Speak with authentic warmth, clarity, empathy, and intellect. Answer everyday questions conversationally, solve complex problems, write stories, explain concepts with intuitive analogies, and adapt flexibly to the user's mood and intent.
-2. Visual, Conversational Formatting: Keep conversational replies natural, elegant, and engaging. Never dump raw unformatted code tags. When presenting capabilities, suggestions, or categories, format them cleanly with bold descriptive titles (e.g., '**Title:** Explanation') so they render as visual highlighted cards in the user interface. Only write code or technical architecture when the user specifically asks for code, a script, or an application!
-3. NO Horizontal Dividers or Separators: When writing articles, essays, blog posts, guides, or responses, NEVER include horizontal separator lines (such as '---', '***', or '___') between titles, headings, or sections. Transitions between headings and paragraphs must be clean, natural, and modern without any divider bars.
-4. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
-   - Formulate a breathtaking visual description of the artwork.
+1. Universal Native Multilingual Mastery: You possess complete native fluency in EVERY human language worldwide (including English, Spanish, French, German, Italian, Portuguese, Russian, Arabic, Urdu, Hindi, Bengali, Punjabi, Chinese, Japanese, Korean, Turkish, Persian, Dutch, Polish, and all others).
+   MANDATORY LANGUAGE MATCHING: You MUST ALWAYS detect the language, script, and dialect of the user's latest message and respond in that EXACT same language with native fluency, cultural nuance, and idiomatic accuracy.
+   - If the user addresses you in Urdu script (اردو), respond in fluent Urdu script.
+   - If the user addresses you in Roman Urdu or Hinglish (e.g. 'mujhe ek essay likh kar do' or 'kya hal hai'), respond naturally in fluent Roman Urdu / Hinglish.
+   - If the user addresses you in Spanish, respond in fluent Spanish; if French, French; if German, German; if Arabic, Arabic; if Hindi, Hindi.
+   - NEVER default or switch back to English unless the user explicitly requests an English response or writes in English.
+2. Natural Human Tone: Speak with authentic warmth, clarity, empathy, and intellect. Answer everyday questions conversationally, solve complex problems, write stories, explain concepts with intuitive analogies, and adapt flexibly to the user's mood and intent.
+3. Simple, Flowing Paragraphs for Articles: When asked to write an article, blog post, essay, guide, story, or content piece, write in natural, continuous, cohesive paragraphs just like ChatGPT and Claude. Do NOT turn articles into bullet lists, point-by-point outlines, or bolded key-value pairs unless the user explicitly asks for bullet points. Keep explanations simple, fluent, and naturally formatted without unsolicited bullet lists.
+4. NO Horizontal Dividers or Separators: NEVER include horizontal lines, dividers, or separators (such as '---', '***', or '___') between paragraphs, sections, or headings. Keep the flow completely clean and unbroken.
+5. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
+   - Formulate a breathtaking visual description of the artwork in the user's language.
    - Embed the generated image cleanly in your markdown response using:
      ![Descriptive Title](IMAGE_URL_PLACEHOLDER)
-   - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition.
-5. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
-6. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
+   - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition in the user's language.
+6. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
+7. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
 
+  let persona = '';
   if (modelLower.includes('claude')) {
-    return `You are Claude 3.5 Sonnet, developed by Anthropic. You are thoughtful, articulate, honest, empathetic, and exceptionally creative. ${baseRules}`;
+    persona = `You are Claude 3.5 Sonnet, developed by Anthropic. You are thoughtful, articulate, honest, empathetic, and exceptionally creative.`;
+  } else if (modelLower.includes('gpt-4o') || modelLower.includes('openai')) {
+    persona = `You are GPT-4o, developed by OpenAI. You are witty, versatile, engaging, insightful, and lightning-fast.`;
+  } else if (modelLower.includes('deepseek') || modelLower.includes('r1')) {
+    persona = `You are DeepSeek R1, an advanced open reasoning engine. For complex multi-step logical or mathematical reasoning, express your inner thinking inside a <thinking>...</thinking> tag before providing your final answer.`;
+  } else {
+    persona = `You are BunusRadar AI, an elite multimodal conversational assistant blending the conversational finesse of ChatGPT and the deep reasoning of Claude.`;
   }
 
-  if (modelLower.includes('gpt-4o') || modelLower.includes('openai')) {
-    return `You are GPT-4o, developed by OpenAI. You are witty, versatile, engaging, insightful, and lightning-fast. ${baseRules}`;
+  if (customPrompt && customPrompt.trim()) {
+    return `${persona}\nUser custom instructions: ${customPrompt.trim()}\n${baseRules}`;
   }
 
-  if (modelLower.includes('deepseek') || modelLower.includes('r1')) {
-    return `You are DeepSeek R1, an advanced open reasoning engine. For complex multi-step logical or mathematical reasoning, express your inner thinking inside a <thinking>...</thinking> tag before providing your final answer. ${baseRules}`;
-  }
-
-  return `You are BunusRadar AI, an elite multimodal conversational assistant blending the conversational finesse of ChatGPT and the deep reasoning of Claude. ${baseRules}`;
+  return `${persona}\n${baseRules}`;
 }
 
 function isImageQuery(text: string, imageMode = false): boolean {
   if (imageMode) return true;
   const t = text.toLowerCase().trim();
   if (t.startsWith('/image') || t.startsWith('/img') || t.startsWith('/draw') || t.startsWith('/paint')) return true;
-  // Match explicit image generation intents only, avoiding conversational questions about images
+
+  // English
   if (/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me)\s+(an?\s+)?(image|picture|photo|artwork|drawing|painting|illustration|wallpaper|logo|portrait)\b/i.test(t)) {
     return true;
   }
   if (/^(draw|paint|illustrate|sketch)\s+(me\s+)?(an?\s+)?/i.test(t)) return true;
   if (/^(photo|picture|image|artwork|drawing)\s+of\s+/i.test(t)) return true;
+
+  // Spanish / Portuguese
+  if (/(genera|crea|dibuja|haz|muestrame|crie|gere|desenhe)\s+(una?\s+)?(imagen|foto|cuadro|dibujo|desenho)/i.test(t)) return true;
+
+  // French
+  if (/(génère|genere|crée|cree|dessine|fais-moi|montre-moi)\s+(une?\s+)?(image|photo|dessin)/i.test(t)) return true;
+
+  // German
+  if (/(generiere|erstelle|zeichne|male|mach)\s+(ein\s+)?(bild|foto|zeichnung)/i.test(t)) return true;
+
+  // Urdu / Arabic / Hindi
+  if (/(تصویر|فوٹو|عکس|صورة|رسمة|لوحة)\s*(بناؤ|بنائیں|کھینچیں|ارسم|أنشئ|اصنع)/.test(t)) return true;
+  if (/(تصویر|عکس|صورة)\s*(کی|کا)/.test(t)) return true;
+  if (/(tasveer|photo|image|picture)\s*(banao|banayein|bana do)/i.test(t)) return true;
+  if (/(तस्वीर|चित्र|फोटो)\s*(बनाओ|बनाइए)/.test(t)) return true;
+
   return false;
 }
 
@@ -93,10 +115,14 @@ function extractImageSubject(prompt: string): string {
     .replace(/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me|give me)\s+(an?\s+)?(image|picture|photo|photograph|illustration|artwork|drawing|portrait|wallpaper|scene|render)\s+(of\s+)?/i, '')
     .replace(/^(a\s+)?(picture|photo|image|drawing|artwork|render)\s+of\s+/i, '')
     .replace(/^(please\s+)?(draw|paint|sketch|illustrate)\s+(me\s+)?(an?\s+)?/i, '')
+    .replace(/(genera|crea|dibuja|haz|muestrame|crie|gere|desenhe)\s+(una?\s+)?(imagen|foto|cuadro|dibujo)?(\s+de\s+)?/gi, '')
+    .replace(/(génère|genere|crée|cree|dessine)\s+(une?\s+)?(image|photo)?(\s+de\s+)?/gi, '')
+    .replace(/(تصویر|فوٹو|عکس|صورة|رسمة)\s*(بناؤ|بنائیں|کھینچیں|ارسم|أنشئ|اصنع)?/g, '')
+    .replace(/(tasveer|photo|image)\s*(banao|banayein|bana do)?/gi, '')
     .trim();
 
-  cleaned = cleaned.replace(/[.!?]+$/, '').trim();
-  return cleaned || 'a breathtaking futuristic sci-fi city with flying vehicles in 8k cinematic lighting';
+  cleaned = cleaned.replace(/[.!?؟]+$/, '').trim();
+  return cleaned || prompt.trim() || 'a breathtaking futuristic sci-fi city with flying vehicles in 8k cinematic lighting';
 }
 
 function buildHighQualityImageUrl(subject: string, width = 1024, height = 1024): string {
@@ -122,6 +148,9 @@ function cleanSeparators(text: string): string {
 function cleanDisclaimers(text: string): string {
   return text
     .replace(/(as an ai|i am an ai|i cannot directly generate|i do not have the capability to generate|i'm unable to create images|while i cannot directly generate|unfortunately, i cannot create|i can't generate images|as a text-based ai|i am a text-based ai)[^.\n]*[.\n]?/gi, '')
+    .replace(/(como ia|soy una ia|no puedo generar directamente|no tengo la capacidad de generar|no puedo crear imagenes)[^.\n]*[.\n]?/gi, '')
+    .replace(/(en tant qu'ia|je suis une ia|je ne peux pas generer directement)[^.\n]*[.\n]?/gi, '')
+    .replace(/(als ki|ich bin eine ki|ich kann nicht direkt generieren)[^.\n]*[.\n]?/gi, '')
     .replace(/(however,?\s+)?(if you('d| would) like to use this prompt|you can use this prompt)[^:\n]*:?/gi, '')
     .trim();
 }
@@ -134,32 +163,43 @@ function generateOfflineFallback(userQuery: string, imageMode = false): { reply:
     const cleanSubject = extractImageSubject(userQuery);
     const imageUrl = buildHighQualityImageUrl(cleanSubject);
     return {
-      reply: `Here is the high-resolution AI artwork crafted for your request:
-
-![${cleanSubject}](${imageUrl})
-
-**Artistic Specifications:**
-- **Subject:** ${cleanSubject}
-- **Style:** 8K Photorealistic Concept Art
-- **Lighting:** Cinematic Volumetric & Studio Grade
-- **Resolution:** 1024x1024 (Zero Watermark)
-
-You can click **Studio** on the image to inspect details in the Canvas, switch aspect ratios, or download the full-resolution file directly.`,
+      reply: `![${cleanSubject}](${imageUrl})\n\n**Visual Concept:** ${cleanSubject}`,
     };
   }
 
-  if (query.includes('hello') || query.includes('hi') || query === 'who are you' || query.includes('who are you')) {
+  // Detect language family for natural fallback
+  if (/[\u0600-\u06FF]/.test(userQuery)) {
+    const isUrdu = /[\u0679\u0686\u0688\u0691\u06BA\u06D2]/.test(userQuery);
+    if (isUrdu) {
+      return {
+        reply: `خوش آمدید! میں BunusRadar AI ہوں، آپ کا ذہین کثیر اللسانی اسسٹنٹ۔ میں ہر زبان اور ہر موضوع پر گفتگو کر سکتا ہوں، مضامین اور تحریریں لکھ سکتا ہوں، اعلی معیار کی تصاویر تخلیق کر سکتا ہوں، اور کوڈنگ میں رہنمائی فراہم کر سکتا ہوں۔ بتائیے میں آج آپ کی کس طرح مدد کر سکتا ہوں؟`,
+      };
+    }
     return {
-      reply: `Hello! I am BunusRadar AI, your conversational assistant inspired by the capabilities of ChatGPT and Claude. 
+      reply: `أهلاً بك! أنا BunusRadar AI، مساعدك الذكي متعدد اللغات. يمكنني التحدث بجميع اللغات وفي أي موضوع، وكتابة المقالات، وتوليد صور عالية الدقة، والمساعدة في كتابة وتشغيل البرمجيات. كيف يمكنني مساعدتك اليوم؟`,
+    };
+  }
 
-I can chat about any topic, write essays and creative stories, generate stunning high-resolution AI artwork on demand, or write and run code right in the interactive Canvas.
+  if (/[¿¡áéíóúüñ]/i.test(userQuery) || /\b(hola|como|estas|que|hacer|puedes|ayuda)\b/i.test(query)) {
+    return {
+      reply: `¡Hola! Soy BunusRadar AI, tu asistente conversacional multilingüe. Puedo hablar fluidamente en cualquier idioma, redactar ensayos e historias, generar arte con IA en alta resolución y ejecutar código. ¿En qué puedo ayudarte hoy?`,
+    };
+  }
 
-How is your day going, and what would you like to explore or work on together?`,
+  if (/[àâçéèêëîïôûùüÿœæ]/i.test(userQuery) || /\b(bonjour|salut|comment|peux-tu|merci)\b/i.test(query)) {
+    return {
+      reply: `Bonjour ! Je suis BunusRadar AI, votre assistant conversationnel multilingue. Je peux communiquer dans toutes les langues, rédiger des articles et des récits, générer des images en haute résolution et exécuter du code. Comment puis-je vous aider aujourd'hui ?`,
+    };
+  }
+
+  if (/[äöüß]/i.test(userQuery) || /\b(hallo|guten|tag|wie|kannst|du)\b/i.test(query)) {
+    return {
+      reply: `Hallo! Ich bin BunusRadar AI, dein mehrsprachiger KI-Assistent. Ich beherrsche alle Sprachen fließend, verfasse Texte, erstelle hochauflösende KI-Bilder und unterstütze dich beim Programmieren. Wie kann ich dir heute behilflich sein?`,
     };
   }
 
   return {
-    reply: `I would be happy to help you with that! Whether you would like to explore this topic conversationally, create artwork around it, or build an interactive prototype, I am ready. Could you tell me a little more about what you have in mind?`,
+    reply: `Hello! I am BunusRadar AI, your conversational assistant inspired by the capabilities of ChatGPT and Claude. I am completely fluent in all human languages worldwide, write essays and creative stories, generate stunning high-resolution AI artwork on demand, or write and run code right in the interactive Canvas. How can I help you today?`,
   };
 }
 
@@ -195,7 +235,7 @@ export async function POST(req: NextRequest) {
     if (userWantsImage && contents.length > 0) {
       const lastIndex = contents.length - 1;
       const cleanSubject = extractImageSubject(latestUserMessage);
-      contents[lastIndex].parts[0].text = `${contents[lastIndex].parts[0].text}\n\n[System Note: Please provide a vivid, artistic, imaginative description of this visual concept and critique its aesthetic elements warmly as a human art director.]`;
+      contents[lastIndex].parts[0].text = `${contents[lastIndex].parts[0].text}\n\n[System Note: Provide a vivid, artistic description of this visual concept and critique its aesthetic elements warmly in the exact same language as the user's prompt.]`;
     }
 
     // Try reliable Gemini candidates in priority order with 18s timeout per attempt

@@ -71,47 +71,31 @@ body {
   margin-bottom: 0;
 }
 
-/* Visual Bullet Lists - Replaces raw asterisks (*) with sleek glowing badges */
+/* Clean, Simple Lists matching ChatGPT & Claude */
 .chat-rendered-markdown ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0.85rem 0;
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  margin: 0.65rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.35rem;
 }
 
 .chat-rendered-markdown ul > li {
-  position: relative;
-  padding: 0.55rem 0.85rem 0.55rem 2.2rem;
-  background: rgba(14, 25, 56, 0.4);
-  border: 1px solid rgba(59, 130, 246, 0.12);
-  border-radius: 0.75rem;
-  transition: all 0.15s ease;
-  line-height: 1.6;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  line-height: 1.65;
   color: #e2e8f0;
 }
 
-.chat-rendered-markdown ul > li:hover {
-  background: rgba(14, 25, 56, 0.7);
-  border-color: rgba(249, 180, 77, 0.35);
-}
-
 .chat-rendered-markdown ul > li::before {
-  content: "";
-  position: absolute;
-  left: 0.85rem;
-  top: 0.85rem;
-  width: 7px;
-  height: 7px;
-  border-radius: 9999px;
-  background-color: #f9b44d;
-  box-shadow: 0 0 10px rgba(249, 180, 77, 0.8);
-  transition: transform 0.2s ease;
+  display: none !important;
 }
 
-.chat-rendered-markdown ul > li:hover::before {
-  transform: scale(1.3);
+.chat-rendered-markdown ul > li::marker {
+  color: #94a3b8;
 }
 
 .chat-rendered-markdown li > p {
@@ -122,38 +106,37 @@ body {
 /* Numbered Lists */
 .chat-rendered-markdown ol {
   list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 0.85rem 0;
+  padding-left: 1.25rem;
+  margin: 0.65rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.35rem;
 }
 
 .chat-rendered-markdown ol > li {
-  position: relative;
-  padding: 0.55rem 0.85rem 0.55rem 0.5rem;
-  background: rgba(14, 25, 56, 0.4);
-  border: 1px solid rgba(59, 130, 246, 0.12);
-  border-radius: 0.75rem;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  line-height: 1.65;
   color: #e2e8f0;
 }
 
 .chat-rendered-markdown ol > li::marker {
-  color: #f9b44d;
-  font-weight: 700;
+  color: #94a3b8;
+  font-weight: 600;
 }
 
-/* Strong / Bold Text Highlights */
+/* Clean High-Contrast Bold Text */
 .chat-rendered-markdown strong {
   color: #ffffff;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .chat-rendered-markdown li > strong:first-child,
 .chat-rendered-markdown li > p > strong:first-child {
-  color: #f9b44d;
-  font-weight: 700;
-  margin-right: 0.25rem;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 /* Headings */
@@ -239,4 +222,25 @@ body {
 /* Hide horizontal divider / separator lines */
 .chat-rendered-markdown hr {
   display: none !important;
+}
+
+/* Multilingual Right-To-Left (RTL) Support for Arabic, Urdu, Persian, Hebrew */
+[dir="rtl"] .chat-rendered-markdown {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .chat-rendered-markdown ul,
+[dir="rtl"] .chat-rendered-markdown ol {
+  padding-left: 0;
+  padding-right: 1.25rem;
+  text-align: right;
+}
+
+[dir="rtl"] .chat-rendered-markdown blockquote {
+  border-left: none;
+  border-right: 3px solid #f9b44d;
+  padding-left: 0.5rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
