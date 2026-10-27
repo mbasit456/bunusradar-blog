@@ -12,7 +12,8 @@
     "post:new": "node scripts/generate-post.js",
     "publish:auto": "node scripts/publish.js",
     "ai:publish": "node --experimental-vm-modules scripts/ai-publish.js",
-    "test:forensics": "npx tsx scripts/test-pdf-forensics.js"
+    "test:forensics": "npx tsx scripts/test-pdf-forensics.js",
+    "test:images": "npx tsx scripts/test-image-generator.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

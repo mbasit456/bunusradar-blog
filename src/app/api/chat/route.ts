@@ -110,11 +110,14 @@ function isImageQuery(text: string, imageMode = false): boolean {
   if (t.startsWith('/image') || t.startsWith('/img') || t.startsWith('/draw') || t.startsWith('/paint')) return true;
 
   // English
-  if (/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me)\s+(an?\s+)?(image|picture|photo|artwork|drawing|painting|illustration|wallpaper|logo|portrait)\b/i.test(t)) {
+  if (/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|illustrate|render|show me)\s+(an?\s+)?(image|picture|photo|artwork|drawing|painting|illustration|wallpaper|logo|portrait|thumbnail|poster)\b/i.test(t)) {
     return true;
   }
   if (/^(draw|paint|illustrate|sketch)\s+(me\s+)?(an?\s+)?/i.test(t)) return true;
   if (/^(photo|picture|image|artwork|drawing)\s+of\s+/i.test(t)) return true;
+  if (/(generate|create|make|design)\s+(a|an)?\s*(realistic|futuristic|cinematic|professional|cartoon|3d|anime)?\s*(portrait|thumbnail|landscape|cityscape|wallpaper|illustration|artwork|drawing|logo|poster|image|photo)/i.test(t)) return true;
+  if (/turn\s+(my|this|the)?\s*(uploaded\s+)?(photo|image|picture)\s+into\s+(a\s+)?/i.test(t)) return true;
+  if (/\b(16:9|9:16|4:3|1:1)\s+(format|aspect\s*ratio|image|photo)\b/i.test(t)) return true;
 
   // Spanish / Portuguese
   if (/(genera|crea|dibuja|haz|muestrame|crie|gere|desenhe)\s+(una?\s+)?(imagen|foto|cuadro|dibujo|desenho)/i.test(t)) return true;
@@ -165,9 +168,27 @@ function extractImageSubject(prompt: string): string {
   return cleaned || prompt.trim() || 'a breathtaking futuristic sci-fi city with flying vehicles in 8k cinematic lighting';
 }
 
-function buildHighQualityImageUrl(subject: string, width = 1024, height = 1024): string {
+function buildHighQualityImageUrl(subject: string, customWidth?: number, customHeight?: number): string {
   const seed = Math.floor(Math.random() * 900000) + 100000;
-  const aestheticExpansion = `${subject.trim()}, masterpiece, professional studio photography, highly detailed, 8k resolution, crisp sharp focus, cinematic volumetric lighting --no watermark, text, signature, logo, copyright, blurry, low resolution, deformed, bad anatomy`;
+  const s = subject.toLowerCase();
+
+  let width = customWidth || 1024;
+  let height = customHeight || 1024;
+
+  if (!customWidth && !customHeight) {
+    if (s.includes('16:9') || s.includes('thumbnail') || s.includes('landscape') || s.includes('wallpaper') || s.includes('banner')) {
+      width = 1280;
+      height = 720;
+    } else if (s.includes('9:16') || s.includes('story') || s.includes('tiktok') || s.includes('reel')) {
+      width = 720;
+      height = 1280;
+    } else if (s.includes('4:3')) {
+      width = 1024;
+      height = 768;
+    }
+  }
+
+  const aestheticExpansion = `${subject.trim()}, masterpiece, ultra detailed, crisp sharp focus, cinematic lighting --no watermark, text, signature, logo, copyright, blurry, low resolution, deformed, bad anatomy`;
   const cleanPrompt = encodeURIComponent(aestheticExpansion);
   return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&nofeed=true&enhance=false&seed=${seed}`;
 }

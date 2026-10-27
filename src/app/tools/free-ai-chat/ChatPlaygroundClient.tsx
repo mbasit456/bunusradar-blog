@@ -95,7 +95,7 @@ interface Artifact {
   code?: string;
   imageUrl?: string;
   prompt?: string;
-  aspectRatio?: '1:1' | '16:9' | '9:16';
+  aspectRatio?: '1:1' | '16:9' | '9:16' | '4:3';
 }
 
 const DEFAULT_MODELS = [
@@ -253,7 +253,9 @@ export default function ChatPlaygroundClient() {
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const [canvasTab, setCanvasTab] = useState<'preview' | 'code'>('preview');
   const [canvasFullscreen, setCanvasFullscreen] = useState(false);
-  const [selectedRatio, setSelectedRatio] = useState<'1:1' | '16:9' | '9:16'>('1:1');
+  const [selectedRatio, setSelectedRatio] = useState<'1:1' | '16:9' | '9:16' | '4:3'>('1:1');
+  const [selectedStyle, setSelectedStyle] = useState<'photorealistic' | 'cinematic' | 'anime' | 'illustration' | '3d' | 'digital-art'>('photorealistic');
+  const [regeneratingImageUrl, setRegeneratingImageUrl] = useState<string | null>(null);
 
   // Lightbox Modal for Images
   const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
@@ -708,6 +710,14 @@ export default function ChatPlaygroundClient() {
 
     if (!messageContent || loading || streamingMessageId) return;
 
+    const currentImageMode = imageMode;
+    if (imageMode) setImageMode(false);
+
+    let finalPrompt = messageContent;
+    if (currentImageMode && !messageContent.toLowerCase().includes(selectedStyle)) {
+      finalPrompt = `${messageContent} in ${selectedStyle} style, ${selectedRatio} aspect ratio`;
+    }
+
     const userMsg: Message = {
       id: 'msg-' + Date.now(),
       role: 'user',
@@ -727,8 +737,6 @@ export default function ChatPlaygroundClient() {
     updateCurrentSessionMessages(newHistory, newTitle);
     setInput('');
     setPendingAttachments([]);
-    const currentImageMode = imageMode;
-    if (imageMode) setImageMode(false);
     setLoading(true);
 
     try {
@@ -736,7 +744,10 @@ export default function ChatPlaygroundClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: newHistory.map(m => ({ role: m.role, content: m.content })),
+          messages: newHistory.map((m, idx) => ({
+            role: m.role,
+            content: idx === newHistory.length - 1 && currentImageMode ? finalPrompt : m.content,
+          })),
           model: selectedModel,
           systemPrompt,
           temperature,
@@ -889,6 +900,49 @@ export default function ChatPlaygroundClient() {
     } catch (e) {
       window.open(url, '_blank');
     }
+  };
+
+  const handleRegenerateImage = async (promptText: string, oldUrl: string) => {
+    setRegeneratingImageUrl(oldUrl);
+    try {
+      const res = await fetch('/api/chat/image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: promptText,
+          style: selectedStyle,
+          aspectRatio: selectedRatio,
+          seed: Math.floor(Math.random() * 900000000) + 100000000,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.image?.imageUrl) {
+          const newUrl = data.image.imageUrl;
+          setMessages(prev =>
+            prev.map(m => {
+              if (m.content.includes(oldUrl)) {
+                return {
+                  ...m,
+                  content: m.content.replace(oldUrl, newUrl),
+                };
+              }
+              return m;
+            })
+          );
+        }
+      }
+    } catch {
+      // Keep old image if regeneration fails
+    } finally {
+      setRegeneratingImageUrl(null);
+    }
+  };
+
+  const handleRevisePrompt = (promptText: string) => {
+    setInput(promptText);
+    setImageMode(true);
+    textareaRef.current?.focus();
   };
 
   const handleDownloadArtifact = () => {
@@ -1450,6 +1504,25 @@ export default function ChatPlaygroundClient() {
                                     </div>
                                     <div className="flex items-center gap-1.5 shrink-0">
                                       <button
+                                        onClick={() => handleRevisePrompt(part.alt || '')}
+                                        className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
+                                        title="Revise prompt & recreate"
+                                      >
+                                        <Edit2 className="w-3.5 h-3.5" />
+                                      </button>
+                                      <button
+                                        onClick={() => handleRegenerateImage(part.alt || 'AI Artwork', part.url!)}
+                                        disabled={regeneratingImageUrl === part.url}
+                                        className="p-1.5 text-slate-400 hover:text-[#f9b44d] hover:bg-slate-800 rounded-lg transition disabled:opacity-50"
+                                        title="Regenerate image"
+                                      >
+                                        <RefreshCw
+                                          className={`w-3.5 h-3.5 ${
+                                            regeneratingImageUrl === part.url ? 'animate-spin text-[#f9b44d]' : ''
+                                          }`}
+                                        />
+                                      </button>
+                                      <button
                                         onClick={() => setLightboxUrl(part.url || null)}
                                         className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
                                         title="View Fullscreen"
@@ -1459,7 +1532,7 @@ export default function ChatPlaygroundClient() {
                                       <button
                                         onClick={() => handleDownloadImage(part.url!)}
                                         className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
-                                        title="Download (.jpg)"
+                                        title="Download Image"
                                       >
                                         <Download className="w-3.5 h-3.5" />
                                       </button>
@@ -1471,7 +1544,7 @@ export default function ChatPlaygroundClient() {
                                             type: 'image',
                                             imageUrl: part.url,
                                             prompt: part.alt,
-                                            aspectRatio: '1:1',
+                                            aspectRatio: selectedRatio,
                                           });
                                           setCanvasOpen(true);
                                         }}
@@ -1634,20 +1707,97 @@ export default function ChatPlaygroundClient() {
         {/* ─── CHATGPT SIGNATURE FLOATING INPUT PILL ───────────────────── */}
         <footer className="p-3 sm:p-4 bg-gradient-to-t from-[#070d1e] via-[#070d1e]/95 to-transparent shrink-0">
           <div className="max-w-3xl mx-auto space-y-2">
-            {/* Active Image Mode Banner */}
+            {/* ChatGPT-Style AI Image Generator Studio Bar */}
             {imageMode && (
-              <div className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/10 to-blue-500/10 border border-[#f9b44d]/30 flex items-center justify-between text-xs text-amber-200">
-                <span className="flex items-center gap-2">
-                  <Wand2 className="w-3.5 h-3.5 text-[#f9b44d] animate-pulse" />
-                  <span><strong>AI Image Generator Active:</strong> Describe what you want to visualize in high definition.</span>
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setImageMode(false)}
-                  className="text-slate-400 hover:text-white text-xs underline"
-                >
-                  Cancel
-                </button>
+              <div className="p-3 rounded-2xl bg-gradient-to-b from-[#0e1938] to-[#070d1e] border border-[#f9b44d]/40 shadow-xl space-y-2.5 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Wand2 className="w-4 h-4 text-[#f9b44d] animate-pulse" />
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      AI Image Studio (No API Key Required)
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setImageMode(false)}
+                    className="p-1 text-slate-400 hover:text-white rounded hover:bg-slate-800 text-xs"
+                    title="Close studio"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Style Selector */}
+                <div className="space-y-1">
+                  <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                    Visual Style
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 text-xs">
+                    {(
+                      [
+                        { id: 'photorealistic', label: 'Photorealistic', icon: '📸' },
+                        { id: 'cinematic', label: 'Cinematic', icon: '🎬' },
+                        { id: 'anime', label: 'Anime', icon: '🎌' },
+                        { id: 'illustration', label: 'Illustration', icon: '🎨' },
+                        { id: '3d', label: '3D Render', icon: '🧊' },
+                        { id: 'digital-art', label: 'Digital Art', icon: '✨' },
+                      ] as const
+                    ).map(st => (
+                      <button
+                        key={st.id}
+                        type="button"
+                        onClick={() => setSelectedStyle(st.id)}
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition ${
+                          selectedStyle === st.id
+                            ? 'bg-[#f9b44d] text-[#1b2e67] border-[#f9b44d] font-bold shadow-sm'
+                            : 'bg-[#070d1e] text-slate-300 border-slate-700/80 hover:text-white hover:border-slate-500'
+                        }`}
+                      >
+                        <span>{st.icon}</span>
+                        <span>{st.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Aspect Ratio Selector */}
+                <div className="space-y-1">
+                  <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                    Aspect Ratio
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 text-xs">
+                    {(
+                      [
+                        { id: '1:1', label: '1:1 Square', sub: 'Instagram / Avatar' },
+                        { id: '16:9', label: '16:9 Landscape', sub: 'YouTube / Desktop' },
+                        { id: '9:16', label: '9:16 Portrait', sub: 'Mobile / Reels / TikTok' },
+                        { id: '4:3', label: '4:3 Standard', sub: 'Classic Photo' },
+                      ] as const
+                    ).map(ar => (
+                      <button
+                        key={ar.id}
+                        type="button"
+                        onClick={() => setSelectedRatio(ar.id)}
+                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border transition ${
+                          selectedRatio === ar.id
+                            ? 'bg-blue-600 text-white border-blue-500 font-bold shadow-sm'
+                            : 'bg-[#070d1e] text-slate-300 border-slate-700/80 hover:text-white hover:border-slate-500'
+                        }`}
+                        title={ar.sub}
+                      >
+                        <span>{ar.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Image to Image Reference Notice */}
+                {pendingAttachments.some(a => a.isImage) && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-pink-500/10 border border-pink-500/30 text-[11px] text-pink-300">
+                    <ImageIcon className="w-3.5 h-3.5 text-pink-400" />
+                    <span>Attached image will be used as image-to-image reference.</span>
+                  </div>
+                )}
               </div>
             )}
 
