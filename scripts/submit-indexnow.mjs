@@ -50,6 +50,7 @@ export async function submitToIndexNow(urlsToSubmit = null) {
       'https://api.indexnow.org/indexnow',
       {
         method: 'POST',
+        timeout: 10000,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'Content-Length': Buffer.byteLength(payload),
@@ -68,6 +69,12 @@ export async function submitToIndexNow(urlsToSubmit = null) {
         });
       }
     );
+
+    req.on('timeout', () => {
+      console.warn('  ⚠️ IndexNow request timed out after 10s');
+      req.destroy();
+      resolve(null);
+    });
 
     req.on('error', (err) => {
       console.warn('  ⚠️ IndexNow request failed:', err.message);
