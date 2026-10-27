@@ -55,3 +55,183 @@ body {
   background: #cbd5e1;
   border-radius: 4px;
 }
+
+/* AI Chatbot Markdown Visual System */
+.chat-rendered-markdown {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+}
+
+.chat-rendered-markdown p {
+  margin-bottom: 0.75rem;
+}
+
+.chat-rendered-markdown p:last-child {
+  margin-bottom: 0;
+}
+
+/* Visual Bullet Lists - Replaces raw asterisks (*) with sleek glowing badges */
+.chat-rendered-markdown ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.85rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.chat-rendered-markdown ul > li {
+  position: relative;
+  padding: 0.55rem 0.85rem 0.55rem 2.2rem;
+  background: rgba(14, 25, 56, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 0.75rem;
+  transition: all 0.15s ease;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.chat-rendered-markdown ul > li:hover {
+  background: rgba(14, 25, 56, 0.7);
+  border-color: rgba(249, 180, 77, 0.35);
+}
+
+.chat-rendered-markdown ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.85rem;
+  top: 0.85rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: #f9b44d;
+  box-shadow: 0 0 10px rgba(249, 180, 77, 0.8);
+  transition: transform 0.2s ease;
+}
+
+.chat-rendered-markdown ul > li:hover::before {
+  transform: scale(1.3);
+}
+
+.chat-rendered-markdown li > p {
+  margin: 0;
+  display: inline;
+}
+
+/* Numbered Lists */
+.chat-rendered-markdown ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.85rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.chat-rendered-markdown ol > li {
+  position: relative;
+  padding: 0.55rem 0.85rem 0.55rem 0.5rem;
+  background: rgba(14, 25, 56, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 0.75rem;
+  color: #e2e8f0;
+}
+
+.chat-rendered-markdown ol > li::marker {
+  color: #f9b44d;
+  font-weight: 700;
+}
+
+/* Strong / Bold Text Highlights */
+.chat-rendered-markdown strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.chat-rendered-markdown li > strong:first-child,
+.chat-rendered-markdown li > p > strong:first-child {
+  color: #f9b44d;
+  font-weight: 700;
+  margin-right: 0.25rem;
+}
+
+/* Headings */
+.chat-rendered-markdown h1,
+.chat-rendered-markdown h2,
+.chat-rendered-markdown h3,
+.chat-rendered-markdown h4 {
+  color: #ffffff;
+  font-weight: 800;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.chat-rendered-markdown h1 { font-size: 1.35rem; }
+.chat-rendered-markdown h2 { font-size: 1.2rem; }
+.chat-rendered-markdown h3 { font-size: 1.05rem; }
+
+/* Inline Code */
+.chat-rendered-markdown code:not(pre code) {
+  background-color: rgba(27, 46, 103, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #f9b44d;
+  font-size: 0.85em;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.375rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Blockquotes */
+.chat-rendered-markdown blockquote {
+  border-left: 3px solid #f9b44d;
+  padding-left: 1rem;
+  margin: 0.85rem 0;
+  color: #94a3b8;
+  font-style: italic;
+  background-color: rgba(249, 180, 77, 0.05);
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+/* Links */
+.chat-rendered-markdown a {
+  color: #60a5fa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.chat-rendered-markdown a:hover {
+  color: #93c5fd;
+}
+
+/* Tables */
+.chat-rendered-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+  border: 1px solid #1e293b;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.chat-rendered-markdown th,
+.chat-rendered-markdown td {
+  border: 1px solid #1e293b;
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+}
+
+.chat-rendered-markdown th {
+  background-color: #0e1938;
+  color: #f9b44d;
+  font-weight: 700;
+}
+
+.chat-rendered-markdown tr:nth-child(even) {
+  background-color: rgba(14, 25, 56, 0.5);
+}

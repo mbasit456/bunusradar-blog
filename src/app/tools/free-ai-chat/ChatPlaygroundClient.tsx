@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { marked } from 'marked';
 import {
   Sparkles,
   ArrowUp,
@@ -135,6 +136,20 @@ interface MessagePart {
   code?: string;
   alt?: string;
   url?: string;
+}
+
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+});
+
+function renderMarkdownToHtml(content: string): string {
+  if (!content) return '';
+  try {
+    return marked.parse(content) as string;
+  } catch {
+    return content;
+  }
 }
 
 function parseMessageParts(text: string): MessagePart[] {
@@ -1068,9 +1083,13 @@ export default function ChatPlaygroundClient() {
                           {parts.map((part, pIdx) => {
                             if (part.type === 'text') {
                               return (
-                                <div key={pIdx} className="whitespace-pre-wrap font-sans leading-relaxed">
-                                  {part.content}
-                                </div>
+                                <div
+                                  key={pIdx}
+                                  className="chat-rendered-markdown font-sans leading-relaxed"
+                                  dangerouslySetInnerHTML={{
+                                    __html: renderMarkdownToHtml(part.content || ''),
+                                  }}
+                                />
                               );
                             }
 
