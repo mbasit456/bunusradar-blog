@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
 import { marked } from 'marked';
 import {
   Sparkles,
@@ -49,6 +50,9 @@ import {
   AlertTriangle,
   FileSpreadsheet,
   UploadCloud,
+  SquarePen,
+  Home,
+  Menu,
 } from 'lucide-react';
 
 export interface AttachedDocumentItem {
@@ -267,7 +271,14 @@ export default function ChatPlaygroundClient() {
   const [customApiKey, setCustomApiKey] = useState('');
 
   // UI helpers
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Set initial desktop sidebar open state on client mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      setSidebarOpen(true);
+    }
+  }, []);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedThinking, setExpandedThinking] = useState<Record<string, boolean>>({});
   const [speakingId, setSpeakingId] = useState<string | null>(null);
@@ -1056,14 +1067,14 @@ export default function ChatPlaygroundClient() {
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-30 md:hidden transition-opacity"
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden transition-opacity"
         />
       )}
 
       {/* ─── LEFT SIDEBAR (CHATGPT STYLE CONVERSATION HISTORY) ─────────── */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 md:static md:z-20 ${
-          sidebarOpen ? 'w-72 sm:w-80 translate-x-0' : 'w-0 -translate-x-full md:translate-x-0 md:w-0'
+        className={`fixed inset-y-0 left-0 z-50 md:static md:z-20 ${
+          sidebarOpen ? 'w-[82vw] max-w-[300px] sm:w-80 translate-x-0' : 'w-0 -translate-x-full md:translate-x-0 md:w-0'
         } transition-all duration-300 ease-in-out bg-[#0a1226] border-r border-slate-800/80 flex flex-col shrink-0 overflow-hidden select-none shadow-2xl md:shadow-none`}
       >
         {/* Sidebar Header: New Chat & Toggle */}
@@ -1186,85 +1197,100 @@ export default function ChatPlaygroundClient() {
       {/* ─── CENTER CHAT CONTAINER (CHATGPT STREAM VIEW) ────────────────── */}
       <div className="flex-1 flex flex-col min-w-0 bg-[#070d1e] relative overflow-hidden">
 
-        {/* Top Control Header (ChatGPT Pill Model Switcher) */}
-        <header className="h-14 border-b border-slate-800/70 bg-[#0a1226]/80 backdrop-blur-md px-2.5 sm:px-4 md:px-6 flex items-center justify-between gap-2 sm:gap-3 shrink-0 z-10">
-          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-            {!sidebarOpen && (
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="p-1.5 sm:p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl transition shrink-0"
-                title="Open sidebar"
-              >
-                <PanelLeftOpen className="w-4 h-4" />
-              </button>
-            )}
-
-            {/* ChatGPT-Style Model Switcher Pill */}
-            <div className="relative" ref={modelDropdownRef}>
-              <button
-                onClick={() => setModelDropdownOpen(!modelDropdownOpen)}
-                className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#121f45] hover:bg-[#1b2e67] border border-slate-700/80 hover:border-[#f9b44d]/50 text-xs font-bold text-white transition shadow-sm"
-              >
-                <span>{currentModelMeta.icon}</span>
-                <span className="truncate max-w-[95px] xs:max-w-[130px] sm:max-w-none">{currentModelMeta.name}</span>
-                <ChevronDown
-                  className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0 ${
-                    modelDropdownOpen ? 'rotate-180 text-[#f9b44d]' : ''
-                  }`}
-                />
-              </button>
-
-              {/* Model Dropdown Menu */}
-              {modelDropdownOpen && (
-                <div className="absolute left-0 top-full mt-1.5 w-72 max-w-[calc(100vw-1.5rem)] bg-[#0e1938] border border-slate-700 rounded-2xl p-1.5 shadow-2xl z-50 space-y-1 animate-fadeIn">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5">
-                    Model Intelligence
-                  </div>
-                  {DEFAULT_MODELS.map(m => {
-                    const isSelected = m.id === selectedModel;
-                    return (
-                      <button
-                        key={m.id}
-                        onClick={() => {
-                          setSelectedModel(m.id);
-                          setModelDropdownOpen(false);
-                        }}
-                        className={`w-full flex items-start gap-2.5 p-2.5 rounded-xl text-left transition ${
-                          isSelected
-                            ? 'bg-[#1b2e67] text-white border border-blue-500/30'
-                            : 'hover:bg-slate-800/60 text-slate-200'
-                        }`}
-                      >
-                        <span className="text-base mt-0.5">{m.icon}</span>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="text-xs font-bold text-white">{m.name}</span>
-                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-slate-800 text-[#f9b44d] font-semibold border border-slate-700">
-                              {m.badge}
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-slate-400 truncate mt-0.5">{m.tagline}</p>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+        {/* Top Control Header (ChatGPT Pill Model Switcher with Unified Brand Logo) */}
+        <header className="h-13 sm:h-14 border-b border-slate-800/80 bg-[#0a1226]/90 backdrop-blur-md px-2 sm:px-4 md:px-6 flex items-center justify-between gap-1.5 sm:gap-3 shrink-0 z-20">
+          {/* Left Group: Menu Toggle + Brand Logo */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="p-1.5 sm:p-2 text-slate-300 hover:text-white hover:bg-slate-800/70 rounded-xl transition shrink-0"
+              title={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+              aria-label="Toggle navigation menu"
+            >
+              {sidebarOpen ? (
+                <PanelLeftClose className="w-5 h-5 text-slate-300" />
+              ) : (
+                <PanelLeftOpen className="w-5 h-5 text-slate-300" />
               )}
-            </div>
+            </button>
 
-            {/* Online Indicator */}
-            <span className="hidden lg:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              High Speed
-            </span>
+            {/* Brand Logo (Visible on mobile & desktop) */}
+            <Link
+              href="/"
+              className="flex items-center gap-1.5 sm:gap-2 group shrink-0"
+              title="Return to BunusRadar Home"
+            >
+              <div className="bg-white text-[#1b2e67] font-black text-xs sm:text-sm tracking-tighter px-1.5 sm:px-2 py-0.5 rounded shadow-xs group-hover:bg-[#f9b44d] transition-all">
+                BR
+              </div>
+              <div className="hidden sm:flex flex-col leading-tight">
+                <span className="font-extrabold text-xs sm:text-sm tracking-tight text-white group-hover:text-[#f9b44d] transition-colors">
+                  BUNUS<span className="text-[#f9b44d]">RADAR</span>
+                </span>
+              </div>
+            </Link>
           </div>
 
-          {/* Top Right Actions */}
+          {/* Center: ChatGPT Model Switcher Pill */}
+          <div className="relative flex justify-center flex-1 min-w-0" ref={modelDropdownRef}>
+            <button
+              onClick={() => setModelDropdownOpen(!modelDropdownOpen)}
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full bg-[#121f45] hover:bg-[#1b2e67] border border-slate-700/80 hover:border-[#f9b44d]/50 text-xs font-bold text-white transition shadow-sm"
+              aria-label="Select AI model"
+            >
+              <span>{currentModelMeta.icon}</span>
+              <span className="truncate max-w-[85px] sm:max-w-none">{currentModelMeta.name}</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0 ${
+                  modelDropdownOpen ? 'rotate-180 text-[#f9b44d]' : ''
+                }`}
+              />
+            </button>
+
+            {/* Model Dropdown Menu */}
+            {modelDropdownOpen && (
+              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 max-w-[calc(100vw-1.5rem)] bg-[#0e1938] border border-slate-700 rounded-2xl p-1.5 shadow-2xl z-50 space-y-1 animate-fadeIn">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5">
+                  Model Intelligence
+                </div>
+                {DEFAULT_MODELS.map(m => {
+                  const isSelected = m.id === selectedModel;
+                  return (
+                    <button
+                      key={m.id}
+                      onClick={() => {
+                        setSelectedModel(m.id);
+                        setModelDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-start gap-2.5 p-2.5 rounded-xl text-left transition ${
+                        isSelected
+                          ? 'bg-[#1b2e67] text-white border border-blue-500/30'
+                          : 'hover:bg-slate-800/60 text-slate-200'
+                      }`}
+                    >
+                      <span className="text-base mt-0.5">{m.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="text-xs font-bold text-white">{m.name}</span>
+                          <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-slate-800 text-[#f9b44d] font-semibold border border-slate-700">
+                            {m.badge}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 truncate mt-0.5">{m.tagline}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Right Group: Canvas (if active) + New Chat + Exit */}
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             {/* Canvas Toggle */}
             <button
               onClick={() => setCanvasOpen(!canvasOpen)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl border transition ${
+              className={`flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 text-xs font-bold rounded-xl border transition ${
                 canvasOpen
                   ? 'bg-[#f9b44d] text-[#1b2e67] border-[#f9b44d] shadow-md'
                   : 'bg-[#121f45] text-slate-200 border-slate-700 hover:text-white hover:bg-[#1b2e67]'
@@ -1281,25 +1307,25 @@ export default function ChatPlaygroundClient() {
               </span>
             </button>
 
-            {/* Export conversation */}
+            {/* Signature ChatGPT Mobile New Chat Button */}
             <button
-              onClick={() => handleExportChat('markdown')}
-              className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl transition"
-              title="Export as Markdown"
+              onClick={handleCreateNewChat}
+              className="p-1.5 sm:p-2 text-slate-300 hover:text-[#f9b44d] hover:bg-slate-800/70 rounded-xl transition"
+              title="New chat"
+              aria-label="Start new chat"
             >
-              <Download className="w-4 h-4" />
+              <SquarePen className="w-4 h-4" />
             </button>
 
-            {/* Mobile New Chat shortcut */}
-            {!sidebarOpen && (
-              <button
-                onClick={handleCreateNewChat}
-                className="p-2 text-slate-400 hover:text-[#f9b44d] hover:bg-slate-800/60 rounded-xl transition"
-                title="New chat"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-            )}
+            {/* Exit to Home */}
+            <Link
+              href="/"
+              className="p-1.5 sm:p-2 text-slate-400 hover:text-white hover:bg-slate-800/70 rounded-xl transition"
+              title="Exit to BunusRadar Home"
+              aria-label="Exit to BunusRadar Home"
+            >
+              <Home className="w-4 h-4" />
+            </Link>
           </div>
         </header>
 
@@ -1726,7 +1752,7 @@ export default function ChatPlaygroundClient() {
         </div>
 
         {/* ─── CHATGPT SIGNATURE FLOATING INPUT PILL ───────────────────── */}
-        <footer className="p-3 sm:p-4 bg-gradient-to-t from-[#070d1e] via-[#070d1e]/95 to-transparent shrink-0">
+        <footer className="p-2 sm:p-4 pb-3 sm:pb-4 bg-gradient-to-t from-[#070d1e] via-[#070d1e]/95 to-transparent shrink-0">
           <div className="max-w-3xl mx-auto space-y-2">
             {/* ChatGPT-Style AI Image Generator Studio Bar */}
             {imageMode && (
@@ -1941,7 +1967,7 @@ export default function ChatPlaygroundClient() {
                     : 'Message BunusRadar AI or attach a document...'
                 }
                 rows={1}
-                className="w-full bg-transparent px-3 py-1.5 text-sm text-white placeholder-slate-400 focus:outline-none resize-none leading-relaxed min-h-[44px] max-h-[180px]"
+                className="w-full bg-transparent px-3 py-1.5 text-[16px] sm:text-sm text-white placeholder-slate-400 focus:outline-none resize-none leading-relaxed min-h-[44px] max-h-[180px]"
               />
 
               {/* Bottom Row Tools inside the Pill */}
