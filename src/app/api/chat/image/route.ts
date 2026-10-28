@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
       seed,
       negativePrompt,
       referenceImage,
+      apiKey,
     } = body;
 
     if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
@@ -25,6 +26,9 @@ export async function POST(req: NextRequest) {
     const validRatios: AspectRatio[] = ['1:1', '16:9', '9:16', '4:3'];
     const chosenRatio: AspectRatio = validRatios.includes(aspectRatio) ? aspectRatio : '1:1';
 
+    const headerApiKey = req.headers.get('x-api-key') || undefined;
+    const effectiveKey = typeof apiKey === 'string' && apiKey.trim() ? apiKey.trim() : headerApiKey;
+
     const result = await generateAiImage({
       prompt: prompt.trim(),
       style: chosenStyle,
@@ -32,6 +36,7 @@ export async function POST(req: NextRequest) {
       seed: typeof seed === 'number' ? seed : undefined,
       negativePrompt: typeof negativePrompt === 'string' ? negativePrompt.trim() : undefined,
       referenceImage,
+      apiKey: effectiveKey,
     });
 
     return NextResponse.json({
@@ -60,7 +65,16 @@ export async function GET(req: NextRequest) {
     const cached = getCachedImage(safeId);
 
     if (cached) {
-      const disposition = isDownload ? `attachment; filename="generated_${safeId}.webp"` : 'inline';
+      const ext = cached.mimeType.includes('svg')
+        ? 'svg'
+        : cached.mimeType.includes('png')
+        ? 'png'
+        : cached.mimeType.includes('jpeg')
+        ? 'jpg'
+        : 'webp';
+
+      const disposition = isDownload ? `attachment; filename="generated_${safeId}.${ext}"` : 'inline';
+
       return new NextResponse(new Uint8Array(cached.buffer), {
         status: 200,
         headers: {

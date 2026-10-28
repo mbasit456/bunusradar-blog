@@ -996,39 +996,61 @@ export default function ChatPlaygroundClient() {
     }
   };
 
-  const handleUpdateImageRatio = (ratio: '1:1' | '16:9' | '9:16') => {
+  const handleUpdateImageRatio = async (ratio: '1:1' | '16:9' | '9:16') => {
     setSelectedRatio(ratio);
-    if (!activeArtifact || activeArtifact.type !== 'image' || !activeArtifact.imageUrl) return;
+    if (!activeArtifact || activeArtifact.type !== 'image' || !activeArtifact.prompt) return;
 
-    let w = 1024;
-    let h = 1024;
-    if (ratio === '16:9') {
-      w = 1280;
-      h = 720;
-    } else if (ratio === '9:16') {
-      w = 720;
-      h = 1280;
+    try {
+      const res = await fetch('/api/chat/image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: activeArtifact.prompt,
+          style: selectedStyle,
+          aspectRatio: ratio,
+          seed: Math.floor(Math.random() * 900000000) + 100000000,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.image?.imageUrl) {
+          setActiveArtifact({
+            ...activeArtifact,
+            imageUrl: data.image.imageUrl,
+            aspectRatio: ratio,
+          });
+        }
+      }
+    } catch {
+      // Keep existing
     }
-
-    const updatedUrl = activeArtifact.imageUrl
-      .replace(/width=\d+/, `width=${w}`)
-      .replace(/height=\d+/, `height=${h}`);
-
-    setActiveArtifact({
-      ...activeArtifact,
-      imageUrl: updatedUrl,
-      aspectRatio: ratio,
-    });
   };
 
-  const handleRegenerateImageVariant = () => {
-    if (!activeArtifact || activeArtifact.type !== 'image' || !activeArtifact.imageUrl) return;
-    const newSeed = Math.floor(Math.random() * 999999);
-    const updatedUrl = activeArtifact.imageUrl.replace(/seed=\d+/, `seed=${newSeed}`);
-    setActiveArtifact({
-      ...activeArtifact,
-      imageUrl: updatedUrl,
-    });
+  const handleRegenerateImageVariant = async () => {
+    if (!activeArtifact || activeArtifact.type !== 'image' || !activeArtifact.prompt) return;
+    try {
+      const res = await fetch('/api/chat/image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: activeArtifact.prompt,
+          style: selectedStyle,
+          aspectRatio: selectedRatio,
+          seed: Math.floor(Math.random() * 900000000) + 100000000,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.image?.imageUrl) {
+          setActiveArtifact({
+            ...activeArtifact,
+            imageUrl: data.image.imageUrl,
+          });
+        }
+      }
+    } catch {
+      // Keep existing
+    }
   };
 
   const handleExportChat = (format: 'markdown' | 'json') => {

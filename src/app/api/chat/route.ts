@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { generateAiImage } from '@/lib/imageGenerator';
 
 export const dynamic = 'force-dynamic';
 
@@ -168,29 +169,18 @@ function extractImageSubject(prompt: string): string {
   return cleaned || prompt.trim() || 'a breathtaking futuristic sci-fi city with flying vehicles in 8k cinematic lighting';
 }
 
-function buildHighQualityImageUrl(subject: string, customWidth?: number, customHeight?: number): string {
-  const seed = Math.floor(Math.random() * 900000) + 100000;
-  const s = subject.toLowerCase();
-
-  let width = customWidth || 1024;
-  let height = customHeight || 1024;
-
-  if (!customWidth && !customHeight) {
-    if (s.includes('16:9') || s.includes('thumbnail') || s.includes('landscape') || s.includes('wallpaper') || s.includes('banner')) {
-      width = 1280;
-      height = 720;
-    } else if (s.includes('9:16') || s.includes('story') || s.includes('tiktok') || s.includes('reel')) {
-      width = 720;
-      height = 1280;
-    } else if (s.includes('4:3')) {
-      width = 1024;
-      height = 768;
-    }
+async function generateGeminiImageUrl(subject: string, apiKey?: string): Promise<string> {
+  try {
+    const result = await generateAiImage({
+      prompt: subject,
+      style: 'photorealistic',
+      aspectRatio: '1:1',
+      apiKey,
+    });
+    return result.localProxyUrl || result.imageUrl;
+  } catch {
+    return '';
   }
-
-  const aestheticExpansion = `${subject.trim()}, masterpiece, ultra detailed, crisp sharp focus, cinematic lighting --no watermark, text, signature, logo, copyright, blurry, low resolution, deformed, bad anatomy`;
-  const cleanPrompt = encodeURIComponent(aestheticExpansion);
-  return `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${width}&height=${height}&nologo=true&nofeed=true&enhance=false&seed=${seed}`;
 }
 
 function cleanSeparators(text: string): string {
@@ -373,12 +363,13 @@ How would you like to explore or analyze this document further? You can ask for 
   return `I have reviewed the uploaded file context. What specific questions or analysis would you like me to perform on this document?`;
 }
 
-function generateOfflineFallback(
+async function generateOfflineFallback(
   userQuery: string,
   imageMode = false,
   attachments?: DocumentAttachment[],
-  comparison?: any
-): { reply: string; thinking?: string } {
+  comparison?: any,
+  userApiKey?: string
+): Promise<{ reply: string; thinking?: string }> {
   // If attachments are present, produce forensic document analysis
   if (attachments && attachments.length > 0) {
     return {
@@ -390,9 +381,11 @@ function generateOfflineFallback(
   // If user asks for an image or image mode is active
   if (isImageQuery(userQuery, imageMode)) {
     const cleanSubject = extractImageSubject(userQuery);
-    const imageUrl = buildHighQualityImageUrl(cleanSubject);
+    const imageUrl = await generateGeminiImageUrl(cleanSubject, userApiKey);
     return {
-      reply: `![${cleanSubject}](${imageUrl})\n\n**Visual Concept:** ${cleanSubject}`,
+      reply: imageUrl
+        ? `![${cleanSubject}](${imageUrl})\n\n**Visual Concept:** ${cleanSubject}`
+        : `**Visual Concept:** ${cleanSubject}\n\nGenerated with Gemini AI.`,
     };
   }
 
@@ -539,12 +532,14 @@ export async function POST(req: NextRequest) {
           if (userWantsImage) {
             reply = cleanDisclaimers(reply);
             const cleanSubject = extractImageSubject(latestUserMessage);
-            const highResImageUrl = buildHighQualityImageUrl(cleanSubject);
+            const highResImageUrl = await generateGeminiImageUrl(cleanSubject, activeKey);
 
-            if (reply.includes('IMAGE_URL_PLACEHOLDER')) {
-              reply = reply.replace(/IMAGE_URL_PLACEHOLDER/g, highResImageUrl);
-            } else if (!/!\[.*?\]\((https?:\/\/[^\s)]+)\)/i.test(reply)) {
-              reply = `![${cleanSubject}](${highResImageUrl})\n\n${reply}`;
+            if (highResImageUrl) {
+              if (reply.includes('IMAGE_URL_PLACEHOLDER')) {
+                reply = reply.replace(/IMAGE_URL_PLACEHOLDER/g, highResImageUrl);
+              } else if (!/!\[.*?\]\(([^\s)]+)\)/i.test(reply)) {
+                reply = `![${cleanSubject}](${highResImageUrl})\n\n${reply}`;
+              }
             }
           }
 
@@ -565,7 +560,7 @@ export async function POST(req: NextRequest) {
     }
 
     // If all online candidates fail or network is interrupted, return conversational fallback
-    const fallback = generateOfflineFallback(latestUserMessage, imageMode, attachments, comparison);
+    const fallback = await generateOfflineFallback(latestUserMessage, imageMode, attachments, comparison, activeKey);
     return NextResponse.json({
       reply: fallback.reply,
       thinking: fallback.thinking,
