@@ -339,6 +339,13 @@ export default function ChatPlaygroundClient() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Auto-close sidebar on smaller screens on initial mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+  }, []);
+
   // Scroll to bottom smoothly or instantly during active streaming
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -396,6 +403,9 @@ export default function ChatPlaygroundClient() {
     setInput('');
     setActiveArtifact(null);
     setCanvasOpen(false);
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
     if (textareaRef.current) {
       textareaRef.current.focus();
     }
@@ -410,6 +420,9 @@ export default function ChatPlaygroundClient() {
       setMessages(target.messages);
       setActiveArtifact(null);
       setCanvasOpen(false);
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        setSidebarOpen(false);
+      }
     }
   };
 
@@ -1037,13 +1050,21 @@ export default function ChatPlaygroundClient() {
   const currentModelMeta = DEFAULT_MODELS.find(m => m.id === selectedModel) || DEFAULT_MODELS[0];
 
   return (
-    <div className="flex h-full w-full bg-[#070d1e] text-slate-100 overflow-hidden font-sans">
+    <div className="relative flex h-full w-full bg-[#070d1e] text-slate-100 overflow-hidden font-sans">
+
+      {/* Mobile Backdrop Overlay for Sidebar */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-30 md:hidden transition-opacity"
+        />
+      )}
 
       {/* ─── LEFT SIDEBAR (CHATGPT STYLE CONVERSATION HISTORY) ─────────── */}
       <aside
-        className={`${
-          sidebarOpen ? 'w-64 sm:w-72' : 'w-0'
-        } transition-all duration-300 ease-in-out bg-[#0a1226] border-r border-slate-800/80 flex flex-col shrink-0 overflow-hidden z-20 select-none`}
+        className={`fixed inset-y-0 left-0 z-40 md:static md:z-20 ${
+          sidebarOpen ? 'w-72 sm:w-80 translate-x-0' : 'w-0 -translate-x-full md:translate-x-0 md:w-0'
+        } transition-all duration-300 ease-in-out bg-[#0a1226] border-r border-slate-800/80 flex flex-col shrink-0 overflow-hidden select-none shadow-2xl md:shadow-none`}
       >
         {/* Sidebar Header: New Chat & Toggle */}
         <div className="p-3 border-b border-slate-800/80 flex items-center justify-between gap-2">
@@ -1166,12 +1187,12 @@ export default function ChatPlaygroundClient() {
       <div className="flex-1 flex flex-col min-w-0 bg-[#070d1e] relative overflow-hidden">
 
         {/* Top Control Header (ChatGPT Pill Model Switcher) */}
-        <header className="h-14 border-b border-slate-800/70 bg-[#0a1226]/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between gap-3 shrink-0 z-10">
-          <div className="flex items-center gap-2">
+        <header className="h-14 border-b border-slate-800/70 bg-[#0a1226]/80 backdrop-blur-md px-2.5 sm:px-4 md:px-6 flex items-center justify-between gap-2 sm:gap-3 shrink-0 z-10">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl transition"
+                className="p-1.5 sm:p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-xl transition shrink-0"
                 title="Open sidebar"
               >
                 <PanelLeftOpen className="w-4 h-4" />
@@ -1182,12 +1203,12 @@ export default function ChatPlaygroundClient() {
             <div className="relative" ref={modelDropdownRef}>
               <button
                 onClick={() => setModelDropdownOpen(!modelDropdownOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#121f45] hover:bg-[#1b2e67] border border-slate-700/80 hover:border-[#f9b44d]/50 text-xs font-bold text-white transition shadow-sm"
+                className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#121f45] hover:bg-[#1b2e67] border border-slate-700/80 hover:border-[#f9b44d]/50 text-xs font-bold text-white transition shadow-sm"
               >
                 <span>{currentModelMeta.icon}</span>
-                <span>{currentModelMeta.name}</span>
+                <span className="truncate max-w-[95px] xs:max-w-[130px] sm:max-w-none">{currentModelMeta.name}</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                  className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0 ${
                     modelDropdownOpen ? 'rotate-180 text-[#f9b44d]' : ''
                   }`}
                 />
@@ -1195,7 +1216,7 @@ export default function ChatPlaygroundClient() {
 
               {/* Model Dropdown Menu */}
               {modelDropdownOpen && (
-                <div className="absolute left-0 top-full mt-1.5 w-72 bg-[#0e1938] border border-slate-700 rounded-2xl p-1.5 shadow-2xl z-50 space-y-1 animate-fadeIn">
+                <div className="absolute left-0 top-full mt-1.5 w-72 max-w-[calc(100vw-1.5rem)] bg-[#0e1938] border border-slate-700 rounded-2xl p-1.5 shadow-2xl z-50 space-y-1 animate-fadeIn">
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5">
                     Model Intelligence
                   </div>
@@ -1232,14 +1253,14 @@ export default function ChatPlaygroundClient() {
             </div>
 
             {/* Online Indicator */}
-            <span className="hidden md:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+            <span className="hidden lg:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               High Speed
             </span>
           </div>
 
           {/* Top Right Actions */}
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             {/* Canvas Toggle */}
             <button
               onClick={() => setCanvasOpen(!canvasOpen)}
@@ -1566,11 +1587,11 @@ export default function ChatPlaygroundClient() {
                                   className="rounded-2xl overflow-hidden border border-slate-700/80 bg-[#060a17] my-3 max-w-2xl shadow-lg"
                                 >
                                   {/* Code Header Bar */}
-                                  <div className="px-4 py-2 bg-[#0e1938] border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
-                                    <span className="font-bold text-[#f9b44d] uppercase tracking-wider text-[11px]">
+                                  <div className="px-3 sm:px-4 py-2 bg-[#0e1938] border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 gap-2">
+                                    <span className="font-bold text-[#f9b44d] uppercase tracking-wider text-[11px] truncate">
                                       {part.language || 'Code'}
                                     </span>
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                                       <button
                                         onClick={() => handleCopy(part.code!, `code-${pIdx}`)}
                                         className="hover:text-white flex items-center gap-1 text-[11px] transition"
@@ -1580,7 +1601,7 @@ export default function ChatPlaygroundClient() {
                                         ) : (
                                           <Copy className="w-3 h-3" />
                                         )}
-                                        <span>{copiedId === `code-${pIdx}` ? 'Copied' : 'Copy code'}</span>
+                                        <span>{copiedId === `code-${pIdx}` ? 'Copied' : 'Copy'}</span>
                                       </button>
                                       <button
                                         onClick={() => {
@@ -1601,7 +1622,7 @@ export default function ChatPlaygroundClient() {
                                         className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] rounded-md transition"
                                       >
                                         <ExternalLink className="w-3 h-3" />
-                                        <span>Open in Canvas</span>
+                                        <span><span className="hidden sm:inline">Open in </span>Canvas</span>
                                       </button>
                                     </div>
                                   </div>
@@ -1732,7 +1753,7 @@ export default function ChatPlaygroundClient() {
                   <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                     Visual Style
                   </div>
-                  <div className="flex flex-wrap gap-1.5 text-xs">
+                  <div className="flex items-center gap-1.5 text-xs overflow-x-auto no-scrollbar pb-0.5 sm:flex-wrap">
                     {(
                       [
                         { id: 'photorealistic', label: 'Photorealistic', icon: '📸' },
@@ -1747,7 +1768,7 @@ export default function ChatPlaygroundClient() {
                         key={st.id}
                         type="button"
                         onClick={() => setSelectedStyle(st.id)}
-                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition ${
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition shrink-0 ${
                           selectedStyle === st.id
                             ? 'bg-[#f9b44d] text-[#1b2e67] border-[#f9b44d] font-bold shadow-sm'
                             : 'bg-[#070d1e] text-slate-300 border-slate-700/80 hover:text-white hover:border-slate-500'
@@ -1765,7 +1786,7 @@ export default function ChatPlaygroundClient() {
                   <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                     Aspect Ratio
                   </div>
-                  <div className="flex flex-wrap gap-1.5 text-xs">
+                  <div className="flex items-center gap-1.5 text-xs overflow-x-auto no-scrollbar pb-0.5 sm:flex-wrap">
                     {(
                       [
                         { id: '1:1', label: '1:1 Square', sub: 'Instagram / Avatar' },
@@ -1778,7 +1799,7 @@ export default function ChatPlaygroundClient() {
                         key={ar.id}
                         type="button"
                         onClick={() => setSelectedRatio(ar.id)}
-                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border transition ${
+                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border transition shrink-0 ${
                           selectedRatio === ar.id
                             ? 'bg-blue-600 text-white border-blue-500 font-bold shadow-sm'
                             : 'bg-[#070d1e] text-slate-300 border-slate-700/80 hover:text-white hover:border-slate-500'
@@ -1924,14 +1945,14 @@ export default function ChatPlaygroundClient() {
               />
 
               {/* Bottom Row Tools inside the Pill */}
-              <div className="flex items-center justify-between pt-1 px-1 text-xs">
+              <div className="flex items-center justify-between pt-1 px-1 text-xs gap-1.5">
                 {/* Left Action Buttons */}
-                <div className="flex items-center gap-1.5 sm:gap-2">
+                <div className="min-w-0 flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
                   {/* File Attachment Button (Paperclip) */}
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold border transition shrink-0 ${
                       pendingAttachments.length > 0
                         ? 'bg-[#f9b44d]/20 text-[#f9b44d] border-[#f9b44d]/50 shadow-sm'
                         : 'bg-[#121f45] text-slate-300 border-slate-700 hover:text-white hover:border-[#f9b44d]/40'
@@ -1949,7 +1970,7 @@ export default function ChatPlaygroundClient() {
                   <button
                     type="button"
                     onClick={() => setImageMode(!imageMode)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold border transition shrink-0 ${
                       imageMode
                         ? 'bg-[#f9b44d] text-[#1b2e67] border-[#f9b44d] shadow-sm'
                         : 'bg-[#121f45] text-slate-300 border-slate-700 hover:text-white hover:border-[#f9b44d]/40'
@@ -1957,14 +1978,14 @@ export default function ChatPlaygroundClient() {
                     title="Toggle AI Image Generation Mode"
                   >
                     <ImageIcon className="w-3.5 h-3.5" />
-                    <span>Create Image</span>
+                    <span><span className="hidden sm:inline">Create </span>Image</span>
                   </button>
 
                   {/* Web Search Toggle */}
                   <button
                     type="button"
                     onClick={() => setWebSearchEnabled(!webSearchEnabled)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold border transition shrink-0 ${
                       webSearchEnabled
                         ? 'bg-sky-500/20 text-sky-300 border-sky-400/50'
                         : 'bg-[#121f45] text-slate-300 border-slate-700 hover:text-white hover:border-slate-600'
@@ -1972,12 +1993,12 @@ export default function ChatPlaygroundClient() {
                     title="Toggle Web Search grounding"
                   >
                     <Globe className="w-3.5 h-3.5" />
-                    <span>Search</span>
+                    <span className="hidden xs:inline sm:inline">Search</span>
                   </button>
                 </div>
 
                 {/* Right Circular Send / Stop Button (Signature ChatGPT Style) */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {streamingMessageId ? (
                     <button
                       type="button"
@@ -2020,9 +2041,9 @@ export default function ChatPlaygroundClient() {
         <aside
           className={`${
             canvasFullscreen
-              ? 'absolute inset-0 z-50'
-              : 'w-full md:w-[460px] lg:w-[560px] xl:w-[640px]'
-          } bg-[#080e1e] border-l border-slate-800 flex flex-col shrink-0 shadow-2xl transition-all duration-200 z-30`}
+              ? 'fixed inset-0 z-50'
+              : 'fixed inset-0 z-40 md:relative md:inset-auto md:z-30 md:w-[460px] lg:w-[560px] xl:w-[640px]'
+          } bg-[#080e1e] border-l border-slate-800 flex flex-col shrink-0 shadow-2xl transition-all duration-200`}
         >
           {/* Canvas Top Header */}
           <div className="h-14 border-b border-slate-800 px-4 bg-[#0e1938] flex items-center justify-between gap-3 shrink-0">
@@ -2229,8 +2250,8 @@ export default function ChatPlaygroundClient() {
 
       {/* ─── SETTINGS MODAL (BYOK & CUSTOM SYSTEM PROMPT) ─────────────── */}
       {settingsOpen && (
-        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0e1938] border border-slate-700 rounded-3xl max-w-lg w-full p-6 space-y-5 shadow-2xl animate-fadeIn">
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-[#0e1938] border border-slate-700 rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-2xl animate-fadeIn max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-slate-700/80 pb-3">
               <div className="flex items-center gap-2 font-bold text-white text-base">
                 <Sliders className="w-5 h-5 text-[#f9b44d]" />
@@ -2312,12 +2333,12 @@ export default function ChatPlaygroundClient() {
       {/* ─── INTERACTIVE PDF & DOCUMENT FORENSICS VIEWER MODAL ────── */}
       {viewerDocument && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-200">
-          <div className="bg-[#0a1435] border border-slate-700/80 rounded-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+          <div className="bg-[#0a1435] border border-slate-700/80 rounded-2xl w-full max-w-6xl h-[96dvh] max-h-[96dvh] flex flex-col overflow-hidden shadow-2xl">
             {/* Modal Header */}
-            <div className="px-4 sm:px-6 py-3 border-b border-slate-800 flex items-center justify-between bg-[#070d1e] shrink-0">
-              <div className="flex items-center gap-3 min-w-0">
+            <div className="px-3 sm:px-6 py-2.5 sm:py-3 border-b border-slate-800 flex items-center justify-between bg-[#070d1e] shrink-0 gap-2">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 <div
-                  className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
+                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
                     viewerDocument.isPdf
                       ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
                       : viewerDocument.extension === 'docx'
@@ -2328,18 +2349,18 @@ export default function ChatPlaygroundClient() {
                   {viewerDocument.extension ? viewerDocument.extension.toUpperCase().slice(0, 4) : 'DOC'}
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-sm font-semibold text-white truncate max-w-xs sm:max-w-md">
+                  <h3 className="text-xs sm:text-sm font-semibold text-white truncate max-w-[120px] xs:max-w-xs sm:max-w-md">
                     {viewerDocument.name}
                   </h3>
-                  <div className="text-[11px] text-slate-400 flex flex-wrap items-center gap-2">
+                  <div className="text-[10px] sm:text-[11px] text-slate-400 flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <span>{viewerDocument.sizeFormatted}</span>
                     <span>•</span>
-                    <span>{viewerDocument.pageCount || 1} page(s)</span>
+                    <span>{viewerDocument.pageCount || 1} pg</span>
                     {viewerDocument.forensics && (
                       <>
                         <span>•</span>
                         <span
-                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                          className={`px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold truncate max-w-[120px] sm:max-w-none ${
                             viewerDocument.forensics.summary.verdict === 'NO_SIGNIFICANT_SIGNS'
                               ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                               : viewerDocument.forensics.summary.verdict === 'STRONG_EVIDENCE_OF_MODIFICATION'
@@ -2355,11 +2376,11 @@ export default function ChatPlaygroundClient() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <a
                   href={`/api/chat/upload?fileId=${viewerDocument.id}&download=true`}
                   download={viewerDocument.name}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition"
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition"
                   title="Download original file"
                 >
                   <Download className="w-3.5 h-3.5" />
@@ -2378,7 +2399,7 @@ export default function ChatPlaygroundClient() {
             {/* Modal Body: Left Preview & Right Forensics Inspector */}
             <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
               {/* Left: Document View */}
-              <div className="flex-1 flex flex-col bg-[#070d1e] overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
+              <div className="h-[42vh] lg:h-auto flex-1 flex flex-col bg-[#070d1e] overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
                 {/* Page and Zoom Navigation Bar */}
                 <div className="px-4 py-2 bg-[#0e1938] border-b border-slate-800 flex items-center justify-between text-xs text-slate-300 shrink-0">
                   <div className="flex items-center gap-2">
@@ -2456,7 +2477,7 @@ export default function ChatPlaygroundClient() {
               </div>
 
               {/* Right: Forensics Inspector & Structural Data */}
-              <div className="w-full lg:w-96 flex flex-col bg-[#0e1938] shrink-0 overflow-hidden">
+              <div className="w-full lg:w-96 flex flex-col bg-[#0e1938] shrink-0 overflow-hidden flex-1 lg:flex-initial min-h-0">
                 {/* Tab Navigation */}
                 <div className="flex border-b border-slate-800 text-xs font-medium bg-[#070d1e]">
                   <button

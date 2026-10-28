@@ -88,17 +88,17 @@ export default function TokenCalculatorPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors mb-4 sm:mb-6"
         >
           <ArrowLeft className="w-4 h-4" /> Back to BunusRadar Home
         </Link>
 
-        <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-[#1b2e67] via-[#14234f] to-zinc-900 text-white shadow-xl space-y-4 border border-blue-500/20">
+        <div className="p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#1b2e67] via-[#14234f] to-zinc-900 text-white shadow-xl space-y-4 border border-blue-500/20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-[#f9b44d] border border-white/10">
             <Sparkles className="w-3.5 h-3.5" />
             Free Developer Tool
           </div>
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
             AI Token & Model Cost Calculator
           </h1>
           <p className="text-zinc-300 max-w-2xl text-sm md:text-base leading-relaxed">
@@ -122,7 +122,7 @@ export default function TokenCalculatorPage() {
           <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             Large Language Model APIs bill developers based on token volume rather than character count or server execution seconds. Because generation requires iterative next-token prediction, output tokens are priced between 3x to 4x higher than input prompt tokens across nearly all major model providers.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-2">
             <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
               <span className="text-xs font-bold uppercase text-zinc-400">Word Ratio</span>
               <p className="text-xl font-black text-zinc-900 dark:text-white mt-1">1k Tokens</p>

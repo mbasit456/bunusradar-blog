@@ -98,7 +98,7 @@ export default function FreeAiChatPage() {
   };
 
   return (
-    <div className="h-[calc(100vh-53px)] w-full bg-[#070d1e] text-slate-100 flex flex-col overflow-hidden">
+    <div className="h-[calc(100dvh-53px)] max-h-[100dvh] w-full bg-[#070d1e] text-slate-100 flex flex-col overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

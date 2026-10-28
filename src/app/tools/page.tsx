@@ -112,7 +112,7 @@ export default function ToolsIndexPage() {
 
       {/* Hero Header */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-[#1b2e67] via-[#14234f] to-zinc-900 text-white shadow-xl space-y-4 border border-blue-500/20">
+        <div className="p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#1b2e67] via-[#14234f] to-zinc-900 text-white shadow-xl space-y-4 border border-blue-500/20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-[#f9b44d] border border-white/10">
             <Sparkles className="w-3.5 h-3.5" />
             Developer Utilities Hub
@@ -124,7 +124,7 @@ export default function ToolsIndexPage() {
             Evidence-based interactive calculators, system prompt architects, and economic models designed for developers, engineering leaders, and digital founders.
           </p>
 
-          <div className="pt-2 flex flex-wrap gap-6 text-xs text-zinc-400">
+          <div className="pt-2 flex flex-wrap gap-3 sm:gap-6 text-xs text-zinc-400">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" /> 100% Free Forever
             </span>
@@ -140,18 +140,18 @@ export default function ToolsIndexPage() {
 
       {/* Tools Grid */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
           {TOOLS.map((tool) => {
             const Icon = tool.icon;
             return (
               <div
                 key={tool.slug}
-                className="bg-white border border-zinc-200/90 rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md hover:border-[#1b2e67] transition-all flex flex-col justify-between group space-y-6"
+                className="bg-white border border-zinc-200/90 rounded-2xl p-5 sm:p-7 shadow-sm hover:shadow-md hover:border-[#1b2e67] transition-all flex flex-col justify-between group space-y-5 sm:space-y-6"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="p-3 rounded-xl bg-blue-50 text-[#1b2e67] group-hover:bg-[#1b2e67] group-hover:text-white transition-all shadow-xs">
-                      <Icon className="w-6 h-6" />
+                    <span className="p-2.5 sm:p-3 rounded-xl bg-blue-50 text-[#1b2e67] group-hover:bg-[#1b2e67] group-hover:text-white transition-all shadow-xs">
+                      <Icon className="w-5 h-5 sm:w-6 h-6" />
                     </span>
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${tool.badgeColor}`}>
                       {tool.badge}
@@ -162,7 +162,7 @@ export default function ToolsIndexPage() {
                     <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-600 block mb-1">
                       {tool.category}
                     </span>
-                    <h2 className="text-lg font-black text-zinc-900 group-hover:text-[#1b2e67] transition-colors leading-snug">
+                    <h2 className="text-base sm:text-lg font-black text-zinc-900 group-hover:text-[#1b2e67] transition-colors leading-snug">
                       {tool.title}
                     </h2>
                     <p className="mt-2 text-xs text-zinc-600 leading-relaxed">
@@ -172,7 +172,7 @@ export default function ToolsIndexPage() {
                 </div>
 
                 <div className="pt-4 border-t border-zinc-100 space-y-3">
-                  <div className="text-[11px] font-semibold text-zinc-600">
+                  <div className="text-[11px] font-semibold text-zinc-600 break-words">
                     {tool.stats}
                   </div>
                   <Link

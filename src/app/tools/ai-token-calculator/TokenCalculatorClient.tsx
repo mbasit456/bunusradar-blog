@@ -87,19 +87,19 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white dark:bg-zinc-950 p-6 md:p-10 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 bg-white dark:bg-zinc-950 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
       {/* Controls Column */}
       <div className="lg:col-span-7 space-y-8">
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
             1. Select AI Model
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
             {MODELS.map(m => (
               <button
                 key={m.id}
                 onClick={() => setSelectedModelId(m.id)}
-                className={`p-3 rounded-2xl text-left border transition-all ${
+                className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl text-left border transition-all ${
                   selectedModelId === m.id
                     ? 'border-blue-600 bg-blue-50/50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 shadow-sm'
                     : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400'
@@ -150,9 +150,9 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
         <div className="space-y-6 pt-2">
           {/* Input Tokens */}
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 text-xs">
               <span className="font-bold text-zinc-700 dark:text-zinc-300">Prompt / Input Tokens per Request</span>
-              <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md">
+              <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md w-fit">
                 {inputTokens.toLocaleString()} tokens
               </span>
             </div>
@@ -175,9 +175,9 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
 
           {/* Output Tokens */}
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 text-xs">
               <span className="font-bold text-zinc-700 dark:text-zinc-300">Generated / Completion Tokens per Request</span>
-              <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md">
+              <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md w-fit">
                 {outputTokens.toLocaleString()} tokens
               </span>
             </div>
@@ -200,9 +200,9 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
 
           {/* Monthly Requests */}
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 text-xs">
               <span className="font-bold text-zinc-700 dark:text-zinc-300">Monthly API Requests</span>
-              <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md">
+              <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md w-fit">
                 {monthlyRequests.toLocaleString()} calls
               </span>
             </div>
@@ -255,7 +255,7 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
       </div>
 
       {/* Results Dashboard Column */}
-      <div className="lg:col-span-5 flex flex-col justify-between space-y-6 bg-gradient-to-br from-zinc-50 to-blue-50/30 dark:from-zinc-900 dark:to-zinc-900/60 p-6 md:p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800">
+      <div className="lg:col-span-5 flex flex-col justify-between space-y-6 bg-gradient-to-br from-zinc-50 to-blue-50/30 dark:from-zinc-900 dark:to-zinc-900/60 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-zinc-200 dark:border-zinc-800">
         <div>
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Monthly Projection</span>
@@ -265,7 +265,7 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
           </div>
 
           <div className="space-y-1">
-            <div className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tight">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tight break-words">
               ${currentResult.totalCost < 1 ? currentResult.totalCost.toFixed(3) : currentResult.totalCost.toFixed(2)}
             </div>
             <p className="text-xs text-zinc-500 font-medium">
@@ -276,25 +276,25 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
           <div className="grid grid-cols-2 gap-3 mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
             <div>
               <span className="text-[10px] font-bold uppercase text-zinc-400">Input Tokens Cost</span>
-              <p className="text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5">
+              <p className="text-xs sm:text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5 truncate">
                 ${currentResult.inputCost.toFixed(2)}
               </p>
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase text-zinc-400">Output Tokens Cost</span>
-              <p className="text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5">
+              <p className="text-xs sm:text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5 truncate">
                 ${currentResult.outputCost.toFixed(2)}
               </p>
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase text-zinc-400">Cost / 1k Requests</span>
-              <p className="text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5">
+              <p className="text-xs sm:text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5 truncate">
                 ${currentResult.costPerThousand.toFixed(3)}
               </p>
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase text-zinc-400">Monthly Token Volume</span>
-              <p className="text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5">
+              <p className="text-xs sm:text-sm font-extrabold text-zinc-800 dark:text-zinc-200 mt-0.5 truncate">
                 {(currentResult.totalTokens / 1_000_000).toFixed(1)}M tokens
               </p>
             </div>
@@ -315,7 +315,7 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
                   onClick={() => setSelectedModelId(m.id)}
                   className="flex items-center justify-between text-xs p-2 rounded-xl hover:bg-white dark:hover:bg-zinc-800 transition-colors cursor-pointer group"
                 >
-                  <span className="font-semibold text-zinc-700 dark:text-zinc-300 group-hover:text-blue-600 transition-colors">
+                  <span className="font-semibold text-zinc-700 dark:text-zinc-300 group-hover:text-blue-600 transition-colors truncate min-w-0 pr-2">
                     {m.name}
                   </span>
                   <span className="font-mono font-bold text-zinc-900 dark:text-white">

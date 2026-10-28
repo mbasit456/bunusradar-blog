@@ -86,12 +86,12 @@ export default function RoiCalculatorPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/tools"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-colors mb-4 sm:mb-6"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Free Developer Tools
         </Link>
 
-        <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-[#1b2e67] via-[#14234f] to-zinc-900 text-white shadow-xl space-y-4 border border-blue-500/20">
+        <div className="p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#1b2e67] via-[#14234f] to-zinc-900 text-white shadow-xl space-y-4 border border-blue-500/20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-[#f9b44d] border border-white/10">
             <Sparkles className="w-3.5 h-3.5" />
             Free Financial Analysis Tool
@@ -103,7 +103,7 @@ export default function RoiCalculatorPage() {
             Quantify the exact dollar return and annual hours saved from deploying modern AI coding assistants and LLM workspaces across engineering, design, and product teams.
           </p>
 
-          <div className="pt-2 flex flex-wrap gap-6 text-xs text-zinc-400">
+          <div className="pt-2 flex flex-wrap gap-3 sm:gap-6 text-xs text-zinc-400">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Evidence-Based Methodology
             </span>

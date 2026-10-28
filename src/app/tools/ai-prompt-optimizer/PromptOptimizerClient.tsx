@@ -153,12 +153,12 @@ export default function PromptOptimizerClient() {
           <Wand2 className="w-4 h-4" />
           <span>Curated Prompt Blueprints</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
           {PRESET_TEMPLATES.map((tmpl) => (
             <button
               key={tmpl.name}
               onClick={() => applyTemplate(tmpl)}
-              className="p-3.5 rounded-xl border border-zinc-200 bg-white hover:border-[#1b2e67] hover:shadow-sm text-left transition-all group"
+              className="p-3 sm:p-3.5 rounded-xl border border-zinc-200 bg-white hover:border-[#1b2e67] hover:shadow-sm text-left transition-all group"
             >
               <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-zinc-600 mb-1">
                 <span>{tmpl.category}</span>
@@ -173,9 +173,9 @@ export default function PromptOptimizerClient() {
       </div>
 
       {/* Main 2-Column Builder Interface */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Controls Column (5 Cols) */}
-        <div className="lg:col-span-5 bg-white border border-zinc-200/90 rounded-2xl p-6 shadow-sm space-y-6">
+        <div className="lg:col-span-5 bg-white border border-zinc-200/90 rounded-2xl p-4 sm:p-6 shadow-sm space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
             <h2 className="text-sm font-black uppercase tracking-wider text-[#1b2e67] flex items-center gap-2">
               <Sliders className="w-4 h-4 text-[#f9b44d]" /> Prompt Parameters
@@ -302,7 +302,7 @@ export default function PromptOptimizerClient() {
         </div>
 
         {/* Output Column (7 Cols) */}
-        <div className="lg:col-span-7 bg-[#14234f] text-white rounded-2xl p-6 shadow-xl space-y-4 border border-blue-500/20">
+        <div className="lg:col-span-7 bg-[#14234f] text-white rounded-2xl p-4 sm:p-6 shadow-xl space-y-4 border border-blue-500/20">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
             <div className="flex items-center gap-2">
               <Terminal className="w-5 h-5 text-[#f9b44d]" />
@@ -329,12 +329,12 @@ export default function PromptOptimizerClient() {
           </div>
 
           {/* Code Window */}
-          <div className="relative rounded-xl bg-[#0b132b] p-4 border border-white/10 font-mono text-xs text-zinc-200 leading-relaxed overflow-x-auto min-h-[360px] whitespace-pre-wrap selection:bg-[#f9b44d] selection:text-[#1b2e67]">
+          <div className="relative rounded-xl bg-[#0b132b] p-3 sm:p-4 border border-white/10 font-mono text-xs text-zinc-200 leading-relaxed overflow-x-auto min-h-[260px] sm:min-h-[360px] whitespace-pre-wrap break-words selection:bg-[#f9b44d] selection:text-[#1b2e67]">
             {generatedPrompt}
           </div>
 
           {/* Quick Launch Buttons */}
-          <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300 border-t border-white/10">
+          <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3 text-xs text-zinc-300 border-t border-white/10">
             <span>Launch directly into web workspace:</span>
             <div className="flex items-center gap-2 flex-wrap">
               <a

@@ -71,25 +71,25 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
   // On AI Chatbot tool page, display only the brand logo header
   if (pathname === '/tools/free-ai-chat') {
     return (
-      <header className="w-full bg-[#1b2e67] border-b border-white/10 px-4 sm:px-6 py-2.5 flex items-center justify-between sticky top-0 z-40 shrink-0">
+      <header className="w-full bg-[#1b2e67] border-b border-white/10 px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between sticky top-0 z-40 shrink-0">
         <Link href="/" className="flex items-center gap-2 group" title="Return to BunusRadar Home">
           <div className="bg-white text-[#1b2e67] font-black text-xl tracking-tighter px-2 py-0.5 rounded shadow-sm group-hover:bg-[#f9b44d] group-hover:text-[#1b2e67] transition-all">
             BR
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-[#f9b44d] transition-colors">
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white group-hover:text-[#f9b44d] transition-colors">
               BUNUS<span className="text-[#f9b44d]">RADAR</span>
             </span>
-            <span className="text-[9px] uppercase font-semibold tracking-widest text-zinc-300">
+            <span className="text-[8px] sm:text-[9px] uppercase font-semibold tracking-widest text-zinc-300">
               More Than The News
             </span>
           </div>
         </Link>
         <Link
           href="/"
-          className="text-xs font-semibold text-zinc-300 hover:text-[#f9b44d] px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"
+          className="text-xs font-semibold text-zinc-300 hover:text-[#f9b44d] px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1 sm:gap-1.5"
         >
-          <span>Exit to Home</span>
+          <span><span className="hidden sm:inline">Exit to </span>Home</span>
           <span>→</span>
         </Link>
       </header>
