@@ -87,14 +87,14 @@ export function saveCachedImage(id: string, buffer: Buffer, mimeType = 'image/we
 export function getDimensionsForAspectRatio(ratio: AspectRatio = '1:1'): { width: number; height: number } {
   switch (ratio) {
     case '16:9':
-      return { width: 1024, height: 576 };
+      return { width: 768, height: 448 };
     case '9:16':
-      return { width: 576, height: 1024 };
+      return { width: 448, height: 768 };
     case '4:3':
-      return { width: 1024, height: 768 };
+      return { width: 704, height: 512 };
     case '1:1':
     default:
-      return { width: 1024, height: 1024 };
+      return { width: 512, height: 512 };
   }
 }
 
@@ -276,7 +276,7 @@ Requirements:
     }
   }
 
-  // Fallback procedural modern SVG card if all models fail
+  // Fallback procedural modern graphic if all models fail
   const fallbackSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="100%" height="100%">
     <defs>
       <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -291,8 +291,6 @@ Requirements:
     </defs>
     <rect width="${width}" height="${height}" fill="url(#bg)"/>
     <circle cx="${width / 2}" cy="${height / 2}" r="${Math.min(width, height) / 3}" fill="url(#glow)"/>
-    <text x="50%" y="48%" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="28" font-weight="bold">${escapeXml(prompt.slice(0, 40))}</text>
-    <text x="50%" y="54%" text-anchor="middle" fill="#f9b44d" font-family="sans-serif" font-size="16" letter-spacing="2">GEMINI AI ARTWORK</text>
   </svg>`;
 
   return { buffer: Buffer.from(fallbackSvg, 'utf-8'), mimeType: 'image/svg+xml' };
@@ -307,7 +305,7 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-// Provider 3: AI Horde (Decentralized Open Stable Diffusion cluster with public key)
+// Provider: Open Photorealistic Diffusion Grid (AI Horde)
 async function generateViaAiHorde(
   prompt: string,
   width: number,
@@ -315,6 +313,19 @@ async function generateViaAiHorde(
   seed: number,
   negativePrompt?: string
 ): Promise<string> {
+  const models = [
+    'stable_diffusion',
+    'AbsoluteReality',
+    'Deliberate',
+    'ICBINP - I Can\'t Believe It\'s Not Photography',
+    'AlbedoBase XL (SDXL)'
+  ];
+
+  const defaultNegative =
+    'blurry, low resolution, bad anatomy, deformed, distorted face, extra limbs, ugly, poorly drawn hands, poorly drawn face, mutation, disfigured, cartoon, anime, illustration, 3d, vector, clipart, graphic, text, watermark, signature';
+
+  const fullNegative = negativePrompt ? `${negativePrompt}, ${defaultNegative}` : defaultNegative;
+
   const submitRes = await fetch('https://aihorde.net/api/v2/generate/async', {
     method: 'POST',
     headers: {
@@ -323,12 +334,13 @@ async function generateViaAiHorde(
       'Client-Agent': 'BunusRadarAI:1.0:github.com',
     },
     body: JSON.stringify({
-      prompt: negativePrompt ? `${prompt} ### ${negativePrompt}` : prompt,
+      prompt: `${prompt} ### ${fullNegative}`,
+      models,
       params: {
         width: Math.min(width, 768),
         height: Math.min(height, 768),
-        steps: 22,
-        cfg_scale: 7.5,
+        steps: 12,
+        cfg_scale: 7.0,
         seed: seed.toString(),
         sampler_name: 'k_euler_a',
       },
@@ -342,9 +354,9 @@ async function generateViaAiHorde(
   const { id } = await submitRes.json();
   if (!id) throw new Error('No job ID returned from AI Horde');
 
-  // Poll for completion (up to 20 seconds)
-  for (let attempt = 0; attempt < 10; attempt++) {
-    await new Promise(r => setTimeout(r, 2000));
+  // Poll for completion (up to 33 seconds)
+  for (let attempt = 0; attempt < 22; attempt++) {
+    await new Promise(r => setTimeout(r, 1500));
 
     const checkRes = await fetch(`https://aihorde.net/api/v2/generate/check/${id}`);
     if (!checkRes.ok) continue;
@@ -368,7 +380,7 @@ export async function generateAiImage(options: ImageGenerationOptions): Promise<
     prompt,
     style = 'photorealistic',
     aspectRatio = '1:1',
-    negativePrompt = 'watermark, text, signature, blurry, low resolution, bad anatomy, deformed',
+    negativePrompt = 'blurry, low resolution, bad anatomy, deformed, cartoon, illustration, vector, watermark',
     referenceImage,
     apiKey,
   } = options;
@@ -379,14 +391,40 @@ export async function generateAiImage(options: ImageGenerationOptions): Promise<
   const enhancedPrompt = buildEnhancedPrompt(prompt, style);
   const id = `img_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
-  let providerUsed: ImageProvider = 'gemini';
-  let mimeType = 'image/png';
+  // Step 1: Try Native Gemini Image Generation only if user provided their own custom key
+  if (options.apiKey && options.apiKey.trim()) {
+    try {
+      const geminiNative = await generateViaGeminiNative(enhancedPrompt, options.apiKey.trim(), referenceImage);
+      if (geminiNative) {
+        saveCachedImage(id, geminiNative.buffer, geminiNative.mimeType);
+        const localProxyUrl = `/api/chat/image?id=${id}`;
+        return {
+          id,
+          imageUrl: localProxyUrl,
+          localProxyUrl,
+          width,
+          height,
+          seed,
+          style,
+          aspectRatio,
+          enhancedPrompt,
+          provider: 'gemini',
+          mimeType: geminiNative.mimeType,
+        };
+      }
+    } catch {
+      // Proceed to realistic diffusion pipeline
+    }
+  }
 
-  // Step 1: Try Native Gemini Image Generation
-  if (effectiveKey) {
-    const geminiNative = await generateViaGeminiNative(enhancedPrompt, effectiveKey, referenceImage);
-    if (geminiNative) {
-      saveCachedImage(id, geminiNative.buffer, geminiNative.mimeType);
+  // Step 2: Realistic Stable Diffusion Generation via Photorealistic Cluster (AbsoluteReality / Deliberate)
+  try {
+    const hordeUrl = await generateViaAiHorde(enhancedPrompt, width, height, seed, negativePrompt);
+    const imgRes = await fetch(hordeUrl);
+    if (imgRes.ok) {
+      const buf = Buffer.from(await imgRes.arrayBuffer());
+      const mime = imgRes.headers.get('content-type') || 'image/webp';
+      saveCachedImage(id, buf, mime);
       const localProxyUrl = `/api/chat/image?id=${id}`;
       return {
         id,
@@ -398,20 +436,38 @@ export async function generateAiImage(options: ImageGenerationOptions): Promise<
         style,
         aspectRatio,
         enhancedPrompt,
-        provider: 'gemini',
-        mimeType: geminiNative.mimeType,
+        provider: 'ai-horde',
+        mimeType: mime,
       };
     }
+  } catch {
+    // If diffusion times out, continue to fallback
   }
 
-  // Step 2: High-Fidelity Gemini Vector & Graphic Art Synthesis
+  // Step 3: High-Resolution Graphic Fallback for Explicit Vector/Illustration Requests
+  if (style === 'illustration') {
+    const geminiVector = await generateViaGeminiVector(cleanImageSubject(prompt), style, width, height, effectiveKey);
+    saveCachedImage(id, geminiVector.buffer, geminiVector.mimeType);
+    const localProxyUrl = `/api/chat/image?id=${id}`;
+    return {
+      id,
+      imageUrl: localProxyUrl,
+      localProxyUrl,
+      width,
+      height,
+      seed,
+      style,
+      aspectRatio,
+      enhancedPrompt,
+      provider: 'gemini',
+      mimeType: geminiVector.mimeType,
+    };
+  }
+
+  // Fallback: Vector artwork if diffusion was unavailable
   const geminiVector = await generateViaGeminiVector(cleanImageSubject(prompt), style, width, height, effectiveKey);
   saveCachedImage(id, geminiVector.buffer, geminiVector.mimeType);
-  providerUsed = 'gemini';
-  mimeType = geminiVector.mimeType;
-
   const localProxyUrl = `/api/chat/image?id=${id}`;
-
   return {
     id,
     imageUrl: localProxyUrl,
@@ -422,8 +478,8 @@ export async function generateAiImage(options: ImageGenerationOptions): Promise<
     style,
     aspectRatio,
     enhancedPrompt,
-    provider: providerUsed,
-    mimeType,
+    provider: 'gemini',
+    mimeType: geminiVector.mimeType,
   };
 }
 
