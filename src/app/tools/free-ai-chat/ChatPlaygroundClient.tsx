@@ -639,11 +639,25 @@ export default function ChatPlaygroundClient() {
     }
 
     const newItems: AttachedDocumentItem[] = rawFiles.map(f => {
-      const ext = (f.name.split('.').pop() || '').toLowerCase();
+      let ext = (f.name.split('.').pop() || '').toLowerCase();
+      if (!ext || ext === f.name.toLowerCase()) {
+        const mime = (f.type || '').toLowerCase();
+        if (mime.includes('pdf')) ext = 'pdf';
+        else if (mime.includes('wordprocessingml') || mime.includes('officedocument')) ext = 'docx';
+        else if (mime.includes('msword')) ext = 'doc';
+        else if (mime.includes('png')) ext = 'png';
+        else if (mime.includes('jpeg') || mime.includes('jpg')) ext = 'jpg';
+        else if (mime.includes('webp')) ext = 'webp';
+        else if (mime.includes('csv')) ext = 'csv';
+        else if (mime.includes('markdown')) ext = 'md';
+        else if (mime.includes('text/plain')) ext = 'txt';
+        else if (mime.includes('json')) ext = 'json';
+        else ext = 'file';
+      }
       return {
         id: 'temp-' + Math.random().toString(36).slice(2, 9),
-        name: f.name,
-        mimeType: f.type,
+        name: f.name || 'document',
+        mimeType: f.type || 'application/octet-stream',
         extension: ext,
         sizeFormatted: `${(f.size / 1024).toFixed(1)} KB`,
         sizeBytes: f.size,
@@ -657,7 +671,10 @@ export default function ChatPlaygroundClient() {
 
     try {
       const formData = new FormData();
-      rawFiles.forEach(f => formData.append('files', f));
+      rawFiles.forEach((f, idx) => {
+        formData.append('files', f);
+        formData.append('clientTempIds', newItems[idx].id);
+      });
 
       const res = await fetch('/api/chat/upload', {
         method: 'POST',
@@ -676,8 +693,10 @@ export default function ChatPlaygroundClient() {
 
       const processed: any[] = data.documents || [];
       setPendingAttachments(prev => {
-        return prev.map(p => {
-          const match = processed.find(doc => doc.name === p.name);
+        return prev.map((p, pIdx) => {
+          const match =
+            processed.find(doc => (doc.clientTempId && doc.clientTempId === p.id) || doc.name === p.name) ||
+            processed[pIdx];
           if (match) {
             return {
               ...p,
@@ -1217,7 +1236,43 @@ export default function ChatPlaygroundClient() {
       </aside>
 
       {/* ─── CENTER CHAT CONTAINER (CHATGPT STREAM VIEW) ────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#070d1e] relative overflow-hidden">
+      <div
+        className="flex-1 flex flex-col min-w-0 bg-[#070d1e] relative overflow-hidden"
+        onDragOver={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsDragging(true);
+        }}
+        onDragEnter={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsDragging(true);
+        }}
+        onDragLeave={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+          setIsDragging(false);
+        }}
+        onDrop={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsDragging(false);
+          if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            handleFiles(e.dataTransfer.files);
+          }
+        }}
+      >
+        {/* Full-Screen Drag & Drop Overlay */}
+        {isDragging && (
+          <div className="absolute inset-0 z-50 bg-[#070d1e]/90 backdrop-blur-md border-2 border-dashed border-[#f9b44d] flex flex-col items-center justify-center pointer-events-none animate-in fade-in">
+            <UploadCloud className="w-12 h-12 text-[#f9b44d] mb-2 animate-bounce" />
+            <p className="text-base sm:text-lg font-bold text-white">Drop your files here</p>
+            <p className="text-xs text-slate-300 mt-1 max-w-sm text-center px-4">
+              Attach PDF, DOCX, TXT, CSV, or Images for forensic document analysis and multi-turn chat
+            </p>
+          </div>
+        )}
 
         {/* Top Control Header (ChatGPT Pill Model Switcher with Unified Brand Logo) */}
         <header className="h-13 sm:h-14 border-b border-slate-800/80 bg-[#0a1226]/90 backdrop-blur-md px-2 sm:px-4 md:px-6 flex items-center justify-between gap-1.5 sm:gap-3 shrink-0 z-20">
@@ -1893,17 +1948,21 @@ export default function ChatPlaygroundClient() {
               }}
               className="relative rounded-3xl border border-slate-700/80 bg-[#0e1938] focus-within:border-[#f9b44d] focus-within:ring-1 focus-within:ring-[#f9b44d]/40 shadow-2xl transition-all duration-200 p-2.5"
             >
-              {/* Hidden File Input */}
+              {/* Accessible File Input */}
               <input
+                id="chat-file-upload-input"
                 type="file"
                 ref={fileInputRef}
                 multiple
                 onChange={e => {
-                  if (e.target.files) handleFiles(e.target.files);
+                  if (e.target.files && e.target.files.length > 0) {
+                    handleFiles(e.target.files);
+                  }
                   e.target.value = '';
                 }}
-                className="hidden"
-                accept=".pdf,.docx,.txt,.csv,.md,.tsv,.png,.jpg,.jpeg,.webp"
+                className="sr-only"
+                tabIndex={-1}
+                accept=".pdf,application/pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.doc,application/msword,.txt,text/plain,.csv,text/csv,.md,text/markdown,.tsv,text/tab-separated-values,.json,application/json,.png,image/png,.jpg,.jpeg,image/jpeg,.webp,image/webp"
               />
 
               {/* Drag & Drop Visual Overlay */}
@@ -1997,10 +2056,9 @@ export default function ChatPlaygroundClient() {
                 {/* Left Action Buttons */}
                 <div className="min-w-0 flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
                   {/* File Attachment Button (Paperclip) */}
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold border transition shrink-0 ${
+                  <label
+                    htmlFor="chat-file-upload-input"
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold border transition shrink-0 cursor-pointer ${
                       pendingAttachments.length > 0
                         ? 'bg-[#f9b44d]/20 text-[#f9b44d] border-[#f9b44d]/50 shadow-sm'
                         : 'bg-[#121f45] text-slate-300 border-slate-700 hover:text-white hover:border-[#f9b44d]/40'
@@ -2012,7 +2070,7 @@ export default function ChatPlaygroundClient() {
                       Attach
                       {pendingAttachments.length > 0 && ` (${pendingAttachments.length})`}
                     </span>
-                  </button>
+                  </label>
 
                   {/* Create Image Toggle */}
                   <button

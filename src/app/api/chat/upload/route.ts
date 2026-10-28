@@ -9,6 +9,7 @@ const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
 const ALLOWED_EXTENSIONS = new Set([
   'pdf',
   'docx',
+  'doc',
   'txt',
   'md',
   'csv',
@@ -23,13 +24,22 @@ const ALLOWED_EXTENSIONS = new Set([
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const files = formData.getAll('files') as File[];
+    const rawFiles = formData.getAll('files');
+    const clientTempIds = formData.getAll('clientTempIds').map(id => String(id));
 
-    if (!files || files.length === 0) {
-      // Also check 'file' single parameter
-      const singleFile = formData.get('file') as File | null;
-      if (singleFile) {
-        files.push(singleFile);
+    const files: File[] = [];
+    if (rawFiles && rawFiles.length > 0) {
+      for (const item of rawFiles) {
+        if (item && typeof item === 'object' && 'arrayBuffer' in item) {
+          files.push(item as File);
+        }
+      }
+    }
+
+    if (files.length === 0) {
+      const singleFile = formData.get('file');
+      if (singleFile && typeof singleFile === 'object' && 'arrayBuffer' in singleFile) {
+        files.push(singleFile as File);
       }
     }
 
@@ -43,17 +53,30 @@ export async function POST(req: NextRequest) {
 
     const processedDocs = [];
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const clientTempId = clientTempIds[i] || undefined;
       const originalName = file.name || 'document';
-      const ext = (originalName.split('.').pop() || '').toLowerCase();
+      let ext = (originalName.split('.').pop() || '').toLowerCase();
+
+      // If ext is missing or not recognized, infer from MIME type
+      if (!ext || ext === originalName.toLowerCase() || !ALLOWED_EXTENSIONS.has(ext)) {
+        const mime = (file.type || '').toLowerCase();
+        if (mime.includes('pdf')) ext = 'pdf';
+        else if (mime.includes('wordprocessingml') || mime.includes('officedocument')) ext = 'docx';
+        else if (mime.includes('msword')) ext = 'doc';
+        else if (mime.includes('png')) ext = 'png';
+        else if (mime.includes('jpeg') || mime.includes('jpg')) ext = 'jpg';
+        else if (mime.includes('webp')) ext = 'webp';
+        else if (mime.includes('csv')) ext = 'csv';
+        else if (mime.includes('markdown')) ext = 'md';
+        else if (mime.includes('text/plain')) ext = 'txt';
+        else if (mime.includes('json')) ext = 'json';
+        else ext = ext || 'txt';
+      }
 
       if (!ALLOWED_EXTENSIONS.has(ext)) {
-        return NextResponse.json(
-          {
-            error: `Unsupported file format (.${ext}). Allowed formats: PDF, DOCX, TXT, CSV, MD, PNG, JPG, WebP.`,
-          },
-          { status: 400 }
-        );
+        ext = 'txt';
       }
 
       if (file.size > MAX_FILE_SIZE) {
@@ -69,9 +92,12 @@ export async function POST(req: NextRequest) {
       const buffer = Buffer.from(arrayBuffer);
 
       try {
-        const processed = await processUploadedFile(buffer, originalName, file.type);
+        const processed = await processUploadedFile(buffer, originalName, file.type || `application/${ext}`);
         saveUploadedDocument(processed, buffer);
-        processedDocs.push(processed);
+        processedDocs.push({
+          ...processed,
+          clientTempId,
+        });
       } catch (procErr: any) {
         return NextResponse.json(
           { error: `Error processing "${originalName}": ${procErr.message}` },
