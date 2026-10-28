@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateAiImage } from '@/lib/imageGenerator';
+import { generateAiImage, detectImageStyle, detectAspectRatio } from '@/lib/imageGenerator';
+import { getUploadedDocument } from '@/lib/documentStore';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -81,12 +82,16 @@ Follow these essential behavioral principles:
      4. **Technical Details**: Incremental revisions/re-saves, metadata dictionary vs XMP stream alignment, annotations/overlays, fonts, and digital signatures.
      5. **Final Assessment**: Evidence-based judgment (No significant signs detected / Possible editing detected / Strong evidence of post-creation modifications / Inconclusive).
    - If the user asks general questions or follow-ups (e.g. 'Summarize this', 'Extract dates and amounts', 'Why was page 2 flagged?'), reference specific pages and quote exact sections accurately.
-6. Stunning AI Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image/photo/artwork/logo:
-   - Formulate a breathtaking visual description of the artwork in the user's language.
+6. Critical User Intent Accuracy and Image Generation: When the user asks to generate, draw, paint, create, illustrate, or show an image, photo, artwork, logo, or diagram:
+   - Understand the request before generating: Accurately identify the main subject, required details (objects, people, characters, text, colors, clothing, poses, environment), composition (camera angle, framing, background), style (photorealistic, 3D, anime, illustration, etc.), purpose (logo, poster, product photo, portrait, diagram, thumbnail), and constraints.
+   - Generate the requested image, not your own interpretation: Treat user explicit instructions as strict requirements. Never substitute the requested subject with a different subject. Do not add unrelated objects or decorations. Do not change requested colors, numbers, clothing, poses, or proportions. Do not turn a photo request into an illustration or a cartoon into a photo.
+   - Handle reference images correctly: When an image is uploaded for editing, treat it as the primary visual reference. Preserve original recognizable identity, composition, and proportions unless explicitly instructed to change them. Modify only requested elements.
+   - Exact text and object requirements: If the user specifies text to appear, preserve exact wording, spelling, capitalization, and numbers. For diagrams and infographics, preserve requested labels and structure.
+   - Priority of requirements over decoration: 1) Correct subject and user intent; 2) Required objects, details, and text; 3) Correct composition and positioning; 4) Reference image preservation; 5) Requested visual style and colors; 6) Visual polish.
    - Embed the generated image cleanly in your markdown response using:
      ![Descriptive Title](IMAGE_URL_PLACEHOLDER)
    - NEVER output, mention, or link to 'pollinations.ai' or any external third-party URL. Use ONLY the placeholder: ![Descriptive Title](IMAGE_URL_PLACEHOLDER).
-   - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition in the user's language.
+   - Accompany the image with a concise, accurate description matching the user's exact requirements in the user's language.
 7. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
 8. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
 
@@ -172,12 +177,37 @@ function extractImageSubject(prompt: string): string {
   return cleaned || prompt.trim() || 'a breathtaking futuristic sci-fi city with flying vehicles in 8k cinematic lighting';
 }
 
-async function generateGeminiImageUrl(subject: string, apiKey?: string): Promise<string> {
+async function generateGeminiImageUrl(
+  prompt: string,
+  apiKey?: string,
+  attachments?: DocumentAttachment[]
+): Promise<string> {
   try {
+    const style = detectImageStyle(prompt);
+    const aspectRatio = detectAspectRatio(prompt);
+    const cleanSubject = extractImageSubject(prompt);
+
+    // Extract reference image if user uploaded an image
+    let referenceImage: string | undefined;
+    if (attachments && attachments.length > 0) {
+      for (const att of attachments) {
+        const ext = (att.extension || '').toLowerCase();
+        const isImg = att.mimeType?.startsWith('image/') || ['png', 'jpg', 'jpeg', 'webp'].includes(ext);
+        if (isImg) {
+          const stored = getUploadedDocument(att.id);
+          if (stored && stored.buffer) {
+            referenceImage = `data:${att.mimeType || 'image/png'};base64,${stored.buffer.toString('base64')}`;
+            break;
+          }
+        }
+      }
+    }
+
     const result = await generateAiImage({
-      prompt: subject,
-      style: 'photorealistic',
-      aspectRatio: '1:1',
+      prompt: cleanSubject,
+      style,
+      aspectRatio,
+      referenceImage,
       apiKey,
     });
     return result.localProxyUrl || result.imageUrl;
@@ -376,22 +406,22 @@ async function generateOfflineFallback(
   comparison?: any,
   userApiKey?: string
 ): Promise<{ reply: string; thinking?: string }> {
+  // If user asks for an image or image mode is active
+  if (isImageQuery(userQuery, imageMode)) {
+    const cleanSubject = extractImageSubject(userQuery);
+    const imageUrl = await generateGeminiImageUrl(userQuery, userApiKey, attachments);
+    return {
+      reply: imageUrl
+        ? `![${cleanSubject}](${imageUrl})\n\n**Visual Concept:** ${cleanSubject}`
+        : `**Visual Concept:** ${cleanSubject}\n\nGenerated with Gemini AI.`,
+    };
+  }
+
   // If attachments are present, produce forensic document analysis
   if (attachments && attachments.length > 0) {
     return {
       reply: buildOfflineForensicReply(userQuery, attachments, comparison),
       thinking: 'Evaluated document binary structure, parsed revision markers, and synthesized findings.',
-    };
-  }
-
-  // If user asks for an image or image mode is active
-  if (isImageQuery(userQuery, imageMode)) {
-    const cleanSubject = extractImageSubject(userQuery);
-    const imageUrl = await generateGeminiImageUrl(cleanSubject, userApiKey);
-    return {
-      reply: imageUrl
-        ? `![${cleanSubject}](${imageUrl})\n\n**Visual Concept:** ${cleanSubject}`
-        : `**Visual Concept:** ${cleanSubject}\n\nGenerated with Gemini AI.`,
     };
   }
 
@@ -538,7 +568,7 @@ export async function POST(req: NextRequest) {
           if (userWantsImage) {
             reply = cleanDisclaimers(reply);
             const cleanSubject = extractImageSubject(latestUserMessage);
-            const highResImageUrl = await generateGeminiImageUrl(cleanSubject, activeKey);
+            const highResImageUrl = await generateGeminiImageUrl(latestUserMessage, activeKey, attachments);
 
             // Strip any third-party or hallucinated image markdown
             reply = reply.replace(/!\[.*?\]\(https?:\/\/[^\s)]+\)/gi, '').trim();

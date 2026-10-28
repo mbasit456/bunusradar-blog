@@ -98,6 +98,74 @@ export function getDimensionsForAspectRatio(ratio: AspectRatio = '1:1'): { width
   }
 }
 
+// Detect requested image style from prompt text
+export function detectImageStyle(prompt: string): ImageStyle {
+  const p = prompt.toLowerCase();
+  if (/\b(anime|manga|makoto shinkai|studio ghibli|hayao miyazaki|otaku|cel-shaded)\b/i.test(p)) {
+    return 'anime';
+  }
+  if (/\b(3d|3d render|pixar|disney 3d|cgi|unreal engine|octane render|blender render)\b/i.test(p)) {
+    return '3d';
+  }
+  if (/\b(illustration|vector|flat vector|vector art|clipart|icon|sticker|minimalist logo|line art|editorial vector|drawing|sketch)\b/i.test(p)) {
+    return 'illustration';
+  }
+  if (/\b(digital art|concept art|fantasy art|digital painting|matte painting|artstation)\b/i.test(p)) {
+    return 'digital-art';
+  }
+  if (/\b(cinematic|film still|35mm photograph|movie scene|anamorphic|blockbuster)\b/i.test(p)) {
+    return 'cinematic';
+  }
+  return 'photorealistic';
+}
+
+// Detect requested aspect ratio from prompt text
+export function detectAspectRatio(prompt: string): AspectRatio {
+  const p = prompt.toLowerCase();
+  if (/\b(16:9|widescreen|horizontal|landscape|youtube thumbnail|banner|desktop wallpaper)\b/i.test(p)) {
+    return '16:9';
+  }
+  if (/\b(9:16|vertical|mobile wallpaper|story|reels|tiktok|phone wallpaper)\b/i.test(p)) {
+    return '9:16';
+  }
+  if (/\b(4:3|standard format|tv format)\b/i.test(p)) {
+    return '4:3';
+  }
+  return '1:1';
+}
+
+// Build adaptive negative prompt respecting user constraints and requested style
+export function buildAdaptiveNegativePrompt(
+  style: ImageStyle = 'photorealistic',
+  userNegative?: string,
+  userPrompt?: string
+): string {
+  const userExclusions: string[] = [];
+  if (userPrompt) {
+    const exclusionMatches = userPrompt.matchAll(/(?:without|no|exclude|omit|remove|don't include|do not include)\s+([a-zA-Z0-9\s,]+?)(?=[.,;!?]|$)/gi);
+    for (const match of exclusionMatches) {
+      if (match[1] && match[1].trim()) {
+        userExclusions.push(match[1].trim());
+      }
+    }
+  }
+
+  let baseNegative = 'blurry, low resolution, bad anatomy, deformed, distorted face, extra limbs, ugly, poorly drawn hands, poorly drawn face, mutation, disfigured, watermark, signature';
+
+  if (style === 'anime') {
+    baseNegative += ', realistic photo, 3d render, photograph';
+  } else if (style === '3d') {
+    baseNegative += ', flat 2d drawing, sketch, anime, cartoon';
+  } else if (style === 'illustration' || style === 'digital-art') {
+    baseNegative += ', realistic photograph, camera noise';
+  } else {
+    baseNegative += ', cartoon, anime, illustration, 3d render, vector, clipart, graphic, drawing, fake';
+  }
+
+  const parts = [userNegative, userExclusions.join(', '), baseNegative].filter(Boolean);
+  return parts.join(', ');
+}
+
 // Enhance user prompt with aesthetic directives based on chosen style
 export function buildEnhancedPrompt(prompt: string, style: ImageStyle = 'photorealistic'): string {
   const cleanPrompt = prompt
@@ -305,15 +373,17 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-// Provider: Open Photorealistic Diffusion Grid (AI Horde)
+// Provider: Open Diffusion Grid (AI Horde)
 async function generateViaAiHorde(
   prompt: string,
   width: number,
   height: number,
   seed: number,
-  negativePrompt?: string
+  negativePrompt?: string,
+  referenceImage?: string,
+  style: ImageStyle = 'photorealistic'
 ): Promise<string> {
-  const models = [
+  let models = [
     'stable_diffusion',
     'AbsoluteReality',
     'Deliberate',
@@ -321,10 +391,35 @@ async function generateViaAiHorde(
     'AlbedoBase XL (SDXL)'
   ];
 
-  const defaultNegative =
-    'blurry, low resolution, bad anatomy, deformed, distorted face, extra limbs, ugly, poorly drawn hands, poorly drawn face, mutation, disfigured, cartoon, anime, illustration, 3d, vector, clipart, graphic, text, watermark, signature';
+  if (style === 'anime') {
+    models = ['Anything Diffusion', 'stable_diffusion'];
+  }
 
-  const fullNegative = negativePrompt ? `${negativePrompt}, ${defaultNegative}` : defaultNegative;
+  const fullNegative = buildAdaptiveNegativePrompt(style, negativePrompt, prompt);
+
+  let sourceImageBase64: string | undefined;
+  if (referenceImage) {
+    const m = referenceImage.match(/^data:[^;]+;base64,(.+)$/);
+    sourceImageBase64 = m ? m[1] : referenceImage;
+  }
+
+  const payload: any = {
+    prompt: `${prompt} ### ${fullNegative}`,
+    models,
+    params: {
+      width: Math.min(width, 768),
+      height: Math.min(height, 768),
+      steps: 12,
+      cfg_scale: 7.0,
+      seed: seed.toString(),
+      sampler_name: 'k_euler_a',
+      ...(sourceImageBase64 ? { denoising_strength: 0.6 } : {}),
+    },
+    ...(sourceImageBase64 ? {
+      source_image: sourceImageBase64,
+      source_processing: 'img2img',
+    } : {}),
+  };
 
   const submitRes = await fetch('https://aihorde.net/api/v2/generate/async', {
     method: 'POST',
@@ -333,18 +428,7 @@ async function generateViaAiHorde(
       apikey: '0000000000',
       'Client-Agent': 'BunusRadarAI:1.0:github.com',
     },
-    body: JSON.stringify({
-      prompt: `${prompt} ### ${fullNegative}`,
-      models,
-      params: {
-        width: Math.min(width, 768),
-        height: Math.min(height, 768),
-        steps: 12,
-        cfg_scale: 7.0,
-        seed: seed.toString(),
-        sampler_name: 'k_euler_a',
-      },
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!submitRes.ok) {
@@ -378,12 +462,16 @@ async function generateViaAiHorde(
 export async function generateAiImage(options: ImageGenerationOptions): Promise<GeneratedImageResult> {
   const {
     prompt,
-    style = 'photorealistic',
-    aspectRatio = '1:1',
-    negativePrompt = 'blurry, low resolution, bad anatomy, deformed, cartoon, illustration, vector, watermark',
+    style: requestedStyle,
+    aspectRatio: requestedRatio,
+    negativePrompt,
     referenceImage,
     apiKey,
   } = options;
+
+  // Resolve style and aspect ratio: honor explicit option, or infer from user prompt text
+  const style: ImageStyle = requestedStyle || detectImageStyle(prompt);
+  const aspectRatio: AspectRatio = requestedRatio || detectAspectRatio(prompt);
 
   const effectiveKey = getEffectiveGeminiKey(apiKey);
   const seed = options.seed || Math.floor(Math.random() * 900000000) + 100000000;
@@ -417,9 +505,9 @@ export async function generateAiImage(options: ImageGenerationOptions): Promise<
     }
   }
 
-  // Step 2: Realistic Stable Diffusion Generation via Photorealistic Cluster (AbsoluteReality / Deliberate)
+  // Step 2: Realistic Stable Diffusion Generation via Diffusion Grid
   try {
-    const hordeUrl = await generateViaAiHorde(enhancedPrompt, width, height, seed, negativePrompt);
+    const hordeUrl = await generateViaAiHorde(enhancedPrompt, width, height, seed, negativePrompt, referenceImage, style);
     const imgRes = await fetch(hordeUrl);
     if (imgRes.ok) {
       const buf = Buffer.from(await imgRes.arrayBuffer());

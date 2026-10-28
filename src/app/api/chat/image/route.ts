@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateAiImage, getCachedImage, ImageStyle, AspectRatio } from '@/lib/imageGenerator';
+import {
+  generateAiImage,
+  getCachedImage,
+  detectImageStyle,
+  detectAspectRatio,
+  ImageStyle,
+  AspectRatio,
+} from '@/lib/imageGenerator';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -22,10 +29,14 @@ export async function POST(req: NextRequest) {
     }
 
     const validStyles: ImageStyle[] = ['photorealistic', 'cinematic', 'anime', 'illustration', '3d', 'digital-art'];
-    const chosenStyle: ImageStyle = validStyles.includes(style) ? style : 'photorealistic';
+    const chosenStyle: ImageStyle = validStyles.includes(style) && style !== 'photorealistic'
+      ? style
+      : detectImageStyle(prompt);
 
     const validRatios: AspectRatio[] = ['1:1', '16:9', '9:16', '4:3'];
-    const chosenRatio: AspectRatio = validRatios.includes(aspectRatio) ? aspectRatio : '1:1';
+    const chosenRatio: AspectRatio = validRatios.includes(aspectRatio) && aspectRatio !== '1:1'
+      ? aspectRatio
+      : detectAspectRatio(prompt);
 
     const headerApiKey = req.headers.get('x-api-key') || undefined;
     const effectiveKey = typeof apiKey === 'string' && apiKey.trim() ? apiKey.trim() : headerApiKey;
