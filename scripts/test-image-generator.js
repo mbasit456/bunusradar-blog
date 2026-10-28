@@ -44,15 +44,28 @@ async function runImageTests() {
   assert(photoNeg.includes('beard'), 'Should capture explicit user exclusion: no beard');
   console.log('✓ Adaptive negative prompt tests passed.');
 
-  // Test 4: Prompt enhancement per style
-  console.log('\nTest 4: Prompt enhancement per style...');
+  // Test 4: Prompt enhancement per style and context
+  console.log('\nTest 4: Prompt enhancement per style and context...');
   const cinematic = buildEnhancedPrompt('a futuristic city at sunset', 'cinematic');
   assert(cinematic.includes('cinematic film still'), 'Should include cinematic keywords');
   assert(cinematic.includes('futuristic city at sunset'), 'Should retain original prompt');
 
   const anime = buildEnhancedPrompt('a brave cyber warrior', 'anime');
   assert(anime.includes('anime aesthetic'), 'Should include anime keywords');
-  console.log('✓ Prompt enhancement tests passed.');
+
+  const macbook = buildEnhancedPrompt('a MacBook with Adobe Photoshop open on its screen', 'photorealistic');
+  assert(macbook.toLowerCase().includes('dark workspace and photo editing interface'), 'Should front-load Photoshop UI elements');
+  assert(macbook.toLowerCase().includes('toolbars and layer panels'), 'Should specify toolbars and panels');
+
+  const tiger = buildEnhancedPrompt('a realistic wildlife photograph of a tiger in a rainforest', 'photorealistic');
+  assert(tiger.toLowerCase().includes('national geographic wildlife documentary'), 'Should use authentic wildlife documentary tokens');
+
+  const watch = buildEnhancedPrompt('a premium product photograph of a luxury watch', 'photorealistic');
+  assert(watch.toLowerCase().includes('luxury commercial product photography'), 'Should use product studio tokens');
+
+  const macNeg = buildAdaptiveNegativePrompt('photorealistic', undefined, 'a MacBook with Adobe Photoshop open on its screen');
+  assert(macNeg.toLowerCase().includes('generic desktop wallpaper'), 'Should suppress generic desktop wallpaper for screen requests');
+  console.log('✓ Prompt enhancement and context tests passed.');
 
   // Test 5: Actual Keyless Image Generation (Real Model Execution)
   console.log('\nTest 5: Executing live keyless image generation (Prompt: "a realistic portrait of a woman in cinematic lighting")...');

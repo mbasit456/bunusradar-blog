@@ -159,7 +159,12 @@ export function buildAdaptiveNegativePrompt(
   } else if (style === 'illustration' || style === 'digital-art') {
     baseNegative += ', realistic photograph, camera noise';
   } else {
-    baseNegative += ', cartoon, anime, illustration, 3d render, vector, clipart, graphic, drawing, fake';
+    baseNegative += ', cartoon, anime, illustration, 3d render, vector, clipart, graphic, drawing, fake, plastic, cgi';
+  }
+
+  // Detect screen or device requests to suppress generic desktop wallpapers or blank screens
+  if (userPrompt && /\b(macbook|laptop|computer|screen|monitor|display|photoshop|software|interface|ui|app)\b/i.test(userPrompt)) {
+    baseNegative += ', generic desktop wallpaper, nature landscape wallpaper, mountains wallpaper, blank screen, off screen, screensaver';
   }
 
   const parts = [userNegative, userExclusions.join(', '), baseNegative].filter(Boolean);
@@ -173,13 +178,39 @@ export function buildEnhancedPrompt(prompt: string, style: ImageStyle = 'photore
     .replace(/^(can you\s+)?(please\s+)?(generate|create|draw|make|paint|render)\s+(an?\s+)?(image|picture|photo|artwork)\s+(of\s+)?/i, '')
     .trim();
 
+  // Screen and Software display detection: front-load software UI details to prevent wallpaper bias
+  if (/\b(photoshop|illustrator|figma|vs code|terminal|dashboard|software|app|browser|website|editing program)\b/i.test(cleanPrompt) &&
+      /\b(macbook|laptop|computer|screen|monitor|display|desktop)\b/i.test(cleanPrompt)) {
+    const swMatch = cleanPrompt.match(/\b(photoshop|illustrator|figma|vs code|terminal|dashboard|software|app|browser|website|editing program)\b/i);
+    const swName = swMatch ? swMatch[0] : 'Adobe Photoshop';
+    return `${swName} dark workspace and photo editing interface visibly open on display, toolbars and layer panels on screen, ${cleanPrompt}, professional photography, crisp screen detail`;
+  }
+
+  // Wildlife and Nature documentary detection: natural diffuse lighting instead of artificial studio lights
+  if (/\b(tiger|lion|leopard|bear|wolf|animal|wildlife|bird|elephant|deer|nature|rainforest|jungle|safari)\b/i.test(cleanPrompt) &&
+      (style === 'photorealistic' || style === 'cinematic')) {
+    return `${cleanPrompt}, National Geographic wildlife documentary photography, authentic fur texture, natural diffuse jungle lighting, sharp focus, 35mm DSLR lens`;
+  }
+
+  // Luxury Product detection
+  if (/\b(watch|chronograph|rolex|timepiece|jewelry|ring|necklace|perfume bottle|handbag)\b/i.test(cleanPrompt) &&
+      (style === 'photorealistic' || style === 'cinematic')) {
+    return `${cleanPrompt}, luxury commercial product photography, precision studio lighting, macro lens, razor-sharp dial and material textures, 8k`;
+  }
+
+  // City Street at Night / Rain
+  if (/\b(night|rain|rainy|wet street|neon|city street|cyberpunk)\b/i.test(cleanPrompt) &&
+      (style === 'photorealistic' || style === 'cinematic')) {
+    return `${cleanPrompt}, cinematic nighttime street photography, wet rain reflections on asphalt, natural ambient streetlights, 35mm film still, sharp focus`;
+  }
+
   let styleTag = '';
   switch (style) {
     case 'cinematic':
-      styleTag = 'cinematic film still, 35mm photograph, dramatic volumetric lighting, anamorphic lens, moody atmosphere, blockbuster color grading, sharp focus, 8k';
+      styleTag = 'cinematic film still, 35mm photograph, dramatic volumetric lighting, anamorphic lens, moody atmosphere, blockbuster color grading, sharp focus';
       break;
     case 'anime':
-      styleTag = 'masterpiece anime aesthetic, Makoto Shinkai style, vibrant luminous colors, clean crisp linework, detailed illustration, expressive lighting';
+      styleTag = 'masterpiece anime aesthetic, Makoto Shinkai style, vibrant luminous colors, clean crisp linework, detailed illustration';
       break;
     case 'illustration':
       styleTag = 'editorial vector illustration, exquisite graphic art, clean bold shapes, artistic elegance, harmonic palette, highly detailed';
@@ -192,7 +223,7 @@ export function buildEnhancedPrompt(prompt: string, style: ImageStyle = 'photore
       break;
     case 'photorealistic':
     default:
-      styleTag = 'masterpiece, professional 8k photography, Hasselblad camera, studio lighting, hyper-realistic, intricate fine textures, crisp sharp focus';
+      styleTag = 'professional 35mm photography, natural lighting, authentic skin and material textures, sharp focus, unedited realism, 8k';
       break;
   }
 
@@ -384,15 +415,19 @@ async function generateViaAiHorde(
   style: ImageStyle = 'photorealistic'
 ): Promise<string> {
   let models = [
-    'stable_diffusion',
-    'AbsoluteReality',
     'Deliberate',
+    'AbsoluteReality',
     'ICBINP - I Can\'t Believe It\'s Not Photography',
+    'stable_diffusion',
     'AlbedoBase XL (SDXL)'
   ];
 
   if (style === 'anime') {
-    models = ['Anything Diffusion', 'stable_diffusion'];
+    models = ['Anything Diffusion', 'Deliberate', 'stable_diffusion'];
+  } else if (style === '3d') {
+    models = ['Deliberate', 'AbsoluteReality', 'stable_diffusion'];
+  } else if (style === 'illustration') {
+    models = ['Deliberate', 'stable_diffusion', 'AbsoluteReality'];
   }
 
   const fullNegative = buildAdaptiveNegativePrompt(style, negativePrompt, prompt);
@@ -409,8 +444,8 @@ async function generateViaAiHorde(
     params: {
       width: Math.min(width, 768),
       height: Math.min(height, 768),
-      steps: 12,
-      cfg_scale: 7.0,
+      steps: 18,
+      cfg_scale: 7.5,
       seed: seed.toString(),
       sampler_name: 'k_euler_a',
       ...(sourceImageBase64 ? { denoising_strength: 0.6 } : {}),
