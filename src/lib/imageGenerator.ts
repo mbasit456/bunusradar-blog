@@ -153,6 +153,9 @@ const GEMINI_IMAGE_MODELS = [
 
 // Gemini Text/Vector Models
 const GEMINI_VECTOR_MODELS = [
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-flash-latest',
   'gemini-3.5-flash-lite',
   'gemini-3.5-flash',
   'gemini-3.8-flash',
@@ -404,36 +407,7 @@ export async function generateAiImage(options: ImageGenerationOptions): Promise<
     }
   }
 
-  // Step 2: Try AI Horde for realistic raster generation if requested
-  if (style === 'photorealistic' || style === 'cinematic') {
-    try {
-      const hordeUrl = await generateViaAiHorde(enhancedPrompt, width, height, seed, negativePrompt);
-      const imgFetch = await fetch(hordeUrl);
-      if (imgFetch.ok) {
-        const buf = Buffer.from(await imgFetch.arrayBuffer());
-        const mime = imgFetch.headers.get('content-type') || 'image/webp';
-        saveCachedImage(id, buf, mime);
-        const localProxyUrl = `/api/chat/image?id=${id}`;
-        return {
-          id,
-          imageUrl: localProxyUrl,
-          localProxyUrl,
-          width,
-          height,
-          seed,
-          style,
-          aspectRatio,
-          enhancedPrompt,
-          provider: 'ai-horde',
-          mimeType: mime,
-        };
-      }
-    } catch {
-      // Continue to Gemini Vector Illustration
-    }
-  }
-
-  // Step 3: High-Fidelity Gemini Vector Art Synthesis
+  // Step 2: High-Fidelity Gemini Vector & Graphic Art Synthesis
   const geminiVector = await generateViaGeminiVector(cleanImageSubject(prompt), style, width, height, effectiveKey);
   saveCachedImage(id, geminiVector.buffer, geminiVector.mimeType);
   providerUsed = 'gemini';

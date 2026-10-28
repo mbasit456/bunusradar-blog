@@ -198,7 +198,7 @@ function renderMarkdownToHtml(content: string): string {
 
 function parseMessageParts(text: string): MessagePart[] {
   const parts: MessagePart[] = [];
-  const regex = /(!\[(.*?)\]\((https?:\/\/[^\s)]+)\))|(```([a-zA-Z0-9_-]*)\n([\s\S]*?)```)/g;
+  const regex = /(!\[(.*?)\]\(((?:https?:\/\/|\/api\/chat\/image)[^\s)]+)\))|(```([a-zA-Z0-9_-]*)\n([\s\S]*?)```)/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
@@ -519,7 +519,7 @@ export default function ChatPlaygroundClient() {
 
   // Extract artifacts from assistant reply (Images or Code)
   const extractArtifact = (text: string): Artifact | null => {
-    const imgMatch = text.match(/!\[(.*?)\]\((https?:\/\/[^\s)]+)\)/);
+    const imgMatch = text.match(/!\[(.*?)\]\(((?:https?:\/\/|\/api\/chat\/image)[^\s)]+)\)/);
     if (imgMatch) {
       return {
         id: 'art-img-' + Date.now(),
@@ -560,7 +560,7 @@ export default function ChatPlaygroundClient() {
     let initialContent = '';
     let textToStream = fullReply;
 
-    const imageMatch = fullReply.match(/^(!\[.*?\]\(https?:\/\/[^\s)]+\)\n*)/);
+    const imageMatch = fullReply.match(/^(!\[.*?\]\((?:https?:\/\/|\/api\/chat\/image)[^\s)]+\)\n*)/);
     if (imageMatch) {
       initialContent = imageMatch[1];
       textToStream = fullReply.slice(imageMatch[1].length);

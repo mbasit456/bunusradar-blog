@@ -17,6 +17,9 @@ function getRuntimeApiKey(userKey?: string): string {
 
 // Order candidates from fastest & most reliable to robust fallbacks
 const MODEL_CANDIDATES = [
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-flash-latest',
   'gemini-3.5-flash-lite',
   'gemini-3.5-flash',
   'gemini-3.6-flash',
@@ -83,6 +86,7 @@ Follow these essential behavioral principles:
    - Formulate a breathtaking visual description of the artwork in the user's language.
    - Embed the generated image cleanly in your markdown response using:
      ![Descriptive Title](IMAGE_URL_PLACEHOLDER)
+   - NEVER output, mention, or link to 'pollinations.ai' or any external third-party URL. Use ONLY the placeholder: ![Descriptive Title](IMAGE_URL_PLACEHOLDER).
    - Accompany the image with a creative aesthetic breakdown explaining the lighting, mood, palette, and composition in the user's language.
 7. Canvas Code Generation: When the user explicitly requests code, games, or interactive web apps, provide complete, self-contained, production-ready code inside standard markdown blocks (\`\`\`html, \`\`\`python, etc.) so it immediately runs in the Canvas playground.
 8. Strict Punctuation Constraint: Strictly avoid using em-dash characters anywhere in your response. Always use standard hyphens (-) or clean commas instead.`;
@@ -193,6 +197,9 @@ function cleanSeparators(text: string): string {
 
 function cleanDisclaimers(text: string): string {
   return text
+    .replace(/!\[.*?\]\(https?:\/\/(?:[a-zA-Z0-9-]+\.)*pollinations\.ai[^\s)]*\)/gi, '')
+    .replace(/https?:\/\/(?:[a-zA-Z0-9-]+\.)*pollinations\.ai[^\s)]*/gi, '')
+    .replace(/\b(?:image\.)?pollinations\.ai\b/gi, 'Gemini AI')
     .replace(/(as an ai|i am an ai|i cannot directly generate|i do not have the capability to generate|i'm unable to create images|while i cannot directly generate|unfortunately, i cannot create|i can't generate images|as a text-based ai|i am a text-based ai)[^.\n]*[.\n]?/gi, '')
     .replace(/(como ia|soy una ia|no puedo generar directamente|no tengo la capacidad de generar|no puedo crear imagenes)[^.\n]*[.\n]?/gi, '')
     .replace(/(en tant qu'ia|je suis une ia|je ne peux pas generer directement)[^.\n]*[.\n]?/gi, '')
@@ -534,11 +541,14 @@ export async function POST(req: NextRequest) {
             const cleanSubject = extractImageSubject(latestUserMessage);
             const highResImageUrl = await generateGeminiImageUrl(cleanSubject, activeKey);
 
+            // Strip any third-party or hallucinated image markdown
+            reply = reply.replace(/!\[.*?\]\(https?:\/\/[^\s)]+\)/gi, '').trim();
+
             if (highResImageUrl) {
               if (reply.includes('IMAGE_URL_PLACEHOLDER')) {
                 reply = reply.replace(/IMAGE_URL_PLACEHOLDER/g, highResImageUrl);
-              } else if (!/!\[.*?\]\(([^\s)]+)\)/i.test(reply)) {
-                reply = `![${cleanSubject}](${highResImageUrl})\n\n${reply}`;
+              } else {
+                reply = `![${cleanSubject}](${highResImageUrl})\n\n${reply}`.trim();
               }
             }
           }

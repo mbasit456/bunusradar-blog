@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@types/pdf-parse": "^1.1.5",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "gray-matter": "^4.0.3",
@@ -25,7 +24,6 @@
     "mammoth": "^1.13.0",
     "marked": "^14.1.2",
     "next": "^14.2.15",
-    "pdf-parse": "^2.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "reading-time": "^1.5.0",

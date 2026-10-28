@@ -1,5 +1,3 @@
-import { PDFParse } from 'pdf-parse';
-
 export interface PdfMetadata {
   title?: string;
   author?: string;
@@ -384,48 +382,80 @@ export async function analyzePdfForensics(
   }
   const fontFamilies = Array.from(fontFamiliesSet);
 
-  // 7. Parse Text and Page Structure with PDFParse
+  // 7. Resilient Native Text and Page Structure Extraction
   let pageCount = 1;
-  let totalTextCharacters = 0;
-  let hasExtractableText = false;
-  const pageTextSamples: Array<{ pageNumber: number; text: string }> = [];
-
-  try {
-    const parser = new PDFParse({ data: buffer });
-    const info = await parser.getInfo();
-    const parsedText = await parser.getText();
-
-    if (info?.total) {
-      pageCount = info.total;
-    }
-
-    if (parsedText?.pages && Array.isArray(parsedText.pages)) {
-      parsedText.pages.forEach((p: any, idx: number) => {
-        const pageText = typeof p?.text === 'string' ? p.text.trim() : '';
-        totalTextCharacters += pageText.length;
-        if (idx < 10) {
-          pageTextSamples.push({
-            pageNumber: idx + 1,
-            text: pageText.slice(0, 500),
-          });
-        }
-      });
-    } else if (parsedText?.text) {
-      totalTextCharacters = parsedText.text.length;
-      pageTextSamples.push({
-        pageNumber: 1,
-        text: parsedText.text.slice(0, 500),
-      });
-    }
-
-    hasExtractableText = totalTextCharacters > 40;
-  } catch (err: unknown) {
-    // Fallback: estimate from binary /Page objects
+  const countMatch = asciiString.match(/\/Type\s*\/Pages[^>]*\/Count\s+(\d+)/);
+  if (countMatch && countMatch[1]) {
+    pageCount = Math.max(1, parseInt(countMatch[1], 10));
+  } else {
     const pageObjectMatches = asciiString.match(/\/Type\s*\/Page\b/g);
     if (pageObjectMatches && pageObjectMatches.length > 0) {
       pageCount = pageObjectMatches.length;
     }
   }
+
+  let totalTextCharacters = 0;
+  const extractedChunks: string[] = [];
+
+  // Match text in literal strings (...) Tj or ' or "
+  const literalRegex = /\(([^)]+)\)\s*(?:Tj|'|")/g;
+  let litMatch: RegExpExecArray | null;
+  while ((litMatch = literalRegex.exec(asciiString)) !== null) {
+    const clean = litMatch[1].replace(/\\([nrtbf()\\])/g, '$1').trim();
+    if (clean.length > 1) {
+      extractedChunks.push(clean);
+      totalTextCharacters += clean.length;
+    }
+  }
+
+  // Match text in array operators [(...) 10 (...)] TJ
+  const arrayRegex = /\[(.*?)\]\s*TJ/g;
+  let arrMatch: RegExpExecArray | null;
+  while ((arrMatch = arrayRegex.exec(asciiString)) !== null) {
+    const inner = arrMatch[1];
+    const subMatches = inner.match(/\(([^)]+)\)/g);
+    if (subMatches) {
+      const combined = subMatches
+        .map(s => s.slice(1, -1).replace(/\\([nrtbf()\\])/g, '$1'))
+        .join('');
+      if (combined.trim().length > 1) {
+        extractedChunks.push(combined.trim());
+        totalTextCharacters += combined.trim().length;
+      }
+    }
+  }
+
+  const pageTextSamples: Array<{ pageNumber: number; text: string }> = [];
+  if (extractedChunks.length > 0) {
+    const chunkSize = Math.max(1, Math.ceil(extractedChunks.length / Math.max(1, pageCount)));
+    for (let p = 0; p < Math.min(pageCount, 10); p++) {
+      const slice = extractedChunks.slice(p * chunkSize, (p + 1) * chunkSize).join(' ');
+      if (slice.trim().length > 0) {
+        pageTextSamples.push({
+          pageNumber: p + 1,
+          text: slice.slice(0, 1000),
+        });
+      }
+    }
+  }
+
+  // If no stream text was parsed, check for uncompressed readable text lines
+  if (totalTextCharacters < 20) {
+    const textLines = asciiString
+      .split(/[\r\n]+/)
+      .map(line => line.trim())
+      .filter(line => line.length > 3 && /^[\x20-\x7E\xA0-\xFF]+$/.test(line) && !line.startsWith('/') && !line.startsWith('%') && !/^(xref|trailer|startxref|endobj|obj|stream|endstream)$/.test(line));
+    if (textLines.length > 0) {
+      const fallbackSample = textLines.slice(0, 30).join(' ');
+      totalTextCharacters = fallbackSample.length;
+      pageTextSamples.push({
+        pageNumber: 1,
+        text: fallbackSample.slice(0, 1000),
+      });
+    }
+  }
+
+  const hasExtractableText = totalTextCharacters > 30;
 
   const isScannedOrImageOnly = !hasExtractableText && asciiString.includes('/Subtype /Image');
 
