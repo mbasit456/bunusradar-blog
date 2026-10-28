@@ -4,6 +4,7 @@ import { saveUploadedDocument, getUploadedDocument } from '@/lib/documentStore';
 import { compareDocumentVersions } from '@/lib/pdfForensics';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
 const ALLOWED_EXTENSIONS = new Set([
