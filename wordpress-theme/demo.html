@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravity SEO Agency - Live Interactive Theme Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #05070d;
+      --bg-surface: #0b0f19;
+      --bg-card: rgba(16, 23, 38, 0.7);
+      --bg-card-hover: rgba(22, 32, 54, 0.85);
+      --accent-cyan: #00f2fe;
+      --accent-blue: #4facfe;
+      --accent-indigo: #6366f1;
+      --accent-violet: #8b5cf6;
+      --accent-emerald: #10b981;
+      --gradient-primary: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #6366f1 100%);
+      --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f43f5e 100%);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --shadow-neon: 0 0 35px -5px rgba(0, 242, 254, 0.25);
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --radius-full: 9999px;
+      --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: 
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(0, 242, 254, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.12) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .demo-bar {
+      position: sticky;
+      top: 0;
+      z-index: 2000;
+      background: #0f172a;
+      border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 0.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 242, 254, 0.1);
+      color: var(--accent-cyan);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 41px;
+      z-index: 1000;
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4.75rem;
+    }
+
+    .brand-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #05070d;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    }
+
+    .site-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-full);
+    }
+
+    .desktop-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .desktop-nav a {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.925rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .desktop-nav a:hover {
+      color: #fff;
+    }
+
+    .btn-glow {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-full);
+      color: #05070d;
+      background: var(--gradient-primary);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+      transition: all 0.3s var(--transition-smooth);
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(0, 242, 254, 0.6);
+    }
+
+    .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-agency {
+      padding: 5.5rem 0 4.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 1.1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .live-indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      position: relative;
+    }
+
+    .live-indicator-dot::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-emerald);
+      animation: pulse-ring 2s infinite;
+    }
+
+    .hero-headline {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      max-width: 950px;
+      margin: 0 auto 1.5rem;
+      color: #fff;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 2.75rem;
+      line-height: 1.6;
+    }
+
+    .seo-audit-bar-wrapper {
+      max-width: 680px;
+      margin: 0 auto 3rem;
+    }
+
+    .seo-audit-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(13, 17, 26, 0.85);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      border-radius: var(--radius-full);
+      padding: 0.5rem 0.6rem 0.5rem 1.5rem;
+      box-shadow: 0 0 40px -10px rgba(0, 242, 254, 0.25);
+    }
+
+    .seo-audit-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+    }
+
+    .scanner-results-card {
+      display: none;
+      background: var(--bg-surface);
+      border: 1px solid var(--accent-cyan);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: left;
+      font-family: var(--font-mono);
+      box-shadow: var(--shadow-neon);
+    }
+
+    .scanner-results-card.is-active {
+      display: block;
+      animation: slideUpFade 0.4s ease forwards;
+    }
+
+    .scan-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .scan-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gradient-primary);
+      transition: width 1.5s cubic-bezier(0.1, 0.9, 0.2, 1);
+    }
+
+    .hero-floating-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .hero-floating-stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s;
+    }
+
+    .stat-pill:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 242, 254, 0.3);
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-label {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .marquee-section {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(11, 15, 25, 0.4);
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 22s linear infinite;
+      gap: 4rem;
+    }
+
+    .marquee-item {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .bento-section {
+      padding: 5rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .bento-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .bento-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+      transition: transform 0.35s var(--transition-smooth), border-color 0.35s;
+    }
+
+    .bento-card::before {
+      content: "";
+      position: absolute;
+      top: var(--mouse-y, -1000px);
+      left: var(--mouse-x, -1000px);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 60%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .bento-card:hover::before {
+      opacity: 1;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 242, 254, 0.4);
+    }
+
+    .bento-span-2 {
+      grid-column: span 1;
+    }
+
+    @media (min-width: 768px) {
+      .bento-span-2 {
+        grid-column: span 2;
+      }
+    }
+
+    .bento-icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-cyan);
+      margin-bottom: 1.5rem;
+    }
+
+    .bento-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .bento-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .pricing-card.featured {
+      background: rgba(16, 23, 38, 0.95);
+      border: 1px solid var(--accent-cyan);
+      box-shadow: 0 0 50px -10px rgba(0, 242, 254, 0.35);
+      transform: scale(1.04);
+    }
+
+    .pricing-badge-popular {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-primary);
+      color: #05070d;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.3rem 0.9rem;
+      border-radius: var(--radius-full);
+    }
+
+    .plan-price {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 1.5rem 0;
+    }
+
+    .plan-price span {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .faq-item.is-open {
+      border-color: rgba(0, 242, 254, 0.4);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s;
+    }
+
+    .faq-item.is-open .faq-icon {
+      transform: rotate(180deg);
+      color: var(--accent-cyan);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1.75rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .faq-item.is-open .faq-answer {
+      max-height: 250px;
+      padding-bottom: 1.5rem;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.6); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes slideUpFade {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-bar">
+    <div style="display:flex; align-items:center; gap:0.75rem;">
+      <span class="demo-badge">THEME PREVIEW</span>
+      <span style="color:#94a3b8; font-weight:600;">Gravity SEO Agency WordPress Theme v1.0</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:0.75rem;">
+      <span style="color:#10b981; font-size:0.8rem; font-weight:600;">● Live Animations Active</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-wrapper">
+        <div class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg>
+        </div>
+        <span class="site-title"><span style="color:#fff;">GRAVITY</span><span style="color:var(--accent-cyan);">SEO</span></span>
+        <span class="brand-badge">AI 3.0</span>
+      </div>
+
+      <nav class="desktop-nav">
+        <ul>
+          <li><a href="#audit">Home</a></li>
+          <li><a href="#services">Solutions</a></li>
+          <li><a href="#pricing">Retainers</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <a href="#audit" class="btn-glow">Audit Website</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-agency" id="audit">
+    <div class="container">
+      <div class="hero-pill-badge">
+        <span class="live-indicator-dot"></span>
+        <span>Generative Engine Optimization 3.0 Live</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Dominate Google, ChatGPT &amp; <span class="gradient-text">Perplexity Search</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        We engineer autonomous organic search flywheels for modern SaaS, AI startups, and high-growth technology enterprises. Scale high-intent traffic with semantic entity architecture.
+      </p>
+
+      <div class="seo-audit-bar-wrapper">
+        <form id="heroAuditForm" class="seo-audit-bar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-dim); margin-right: 0.5rem;">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="auditInput" placeholder="Try entering: stripe.com or yourcompany.com" value="bunusradar.site">
+          <button type="submit" class="btn-glow">Scan Site Now</button>
+        </form>
+
+        <div id="scanResultsCard" class="scanner-results-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.5rem; margin-bottom:0.75rem;">
+            <span style="color:#fff; font-weight:700; font-size:0.85rem;">DIAGNOSTIC TELEMETRY</span>
+            <span style="color:var(--accent-cyan); font-size:0.75rem;">CLUSTER #4 READY</span>
+          </div>
+          <div class="scan-progress-bar">
+            <div id="scanProgressFill" class="scan-progress-fill"></div>
+          </div>
+          <div id="scanTerminalLog" style="font-size:0.825rem; line-height:1.6; color:var(--text-muted);">
+            &gt; Standby for target initialization...
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-floating-stats">
+        <div class="stat-pill">
+          <div class="stat-number">+340%</div>
+          <div class="stat-label">Organic Pipeline Growth</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-number">99.4%</div>
+          <div class="stat-label">Top 3 Rank Retention</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-number">14.8M</div>
+          <div class="stat-label">AI Search Impressions</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Autonomous Vector Crawling</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="marquee-section">
+    <div class="marquee-track">
+      <div class="marquee-item">⚡ ACME.AI</div>
+      <div class="marquee-item">✦ HYPERVECTOR</div>
+      <div class="marquee-item">◈ NEXTSCALE</div>
+      <div class="marquee-item">❖ CLOUDMATRIX</div>
+      <div class="marquee-item">▲ CYBERFLOW</div>
+      <div class="marquee-item">⬡ KERNEL LABS</div>
+      <div class="marquee-item">⚡ ACME.AI</div>
+      <div class="marquee-item">✦ HYPERVECTOR</div>
+      <div class="marquee-item">◈ NEXTSCALE</div>
+      <div class="marquee-item">❖ CLOUDMATRIX</div>
+      <div class="marquee-item">▲ CYBERFLOW</div>
+      <div class="marquee-item">⬡ KERNEL LABS</div>
+    </div>
+  </section>
+
+  <section class="bento-section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">ENGINEERING SUITE</span>
+        <h2 class="section-title">The Complete <span class="gradient-text">Algorithmic Advantage</span></h2>
+        <p class="section-desc">Interactive Spotlight: Move your mouse cursor across the cards below.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-span-2">
+          <div class="bento-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+          </div>
+          <h3 class="bento-title">Generative Engine Optimization (GEO)</h3>
+          <p class="bento-desc">ChatGPT, Claude, and Perplexity synthesize direct answers rather than blue links. We structure your knowledge graphs, JSON-LD schemas, and entity authority to ensure your company is cited as the primary definitive source.</p>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg>
+          </div>
+          <h3 class="bento-title">Vector Clustering</h3>
+          <p class="bento-desc">Transform 10,000+ keywords into high-dimensional semantic clusters that prevent keyword cannibalization and cement topical authority.</p>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+          </div>
+          <h3 class="bento-title">Edge Architecture</h3>
+          <p class="bento-desc">Sub-800ms LCP and near-zero TTFB across globally distributed edge CDNs for lightning-fast Googlebot rendering.</p>
+        </div>
+
+        <div class="bento-card bento-span-2">
+          <div class="bento-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path></svg>
+          </div>
+          <h3 class="bento-title">High-Velocity Algorithmic Digital PR</h3>
+          <p class="bento-desc">Proprietary industry benchmark studies and data releases that organically attract DR 80+ editorial backlinks from premier technology publications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bento-section" id="pricing" style="background:rgba(11,15,25,0.4);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">INVESTMENT</span>
+        <h2 class="section-title">Growth <span class="gradient-text">Retainers</span></h2>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3 style="font-size:1.35rem; margin-bottom:0.5rem; color:#fff;">Seed Growth</h3>
+          <p style="color:var(--text-muted); font-size:0.9rem;">For early-stage startups.</p>
+          <div class="plan-price">$3,800<span> /mo</span></div>
+          <button class="btn-glow" style="width:100%; background:rgba(255,255,255,0.1); color:#fff; box-shadow:none;">Select Seed</button>
+        </div>
+
+        <div class="pricing-card featured">
+          <span class="pricing-badge-popular">MOST POPULAR FOR SAAS</span>
+          <h3 style="font-size:1.35rem; margin-bottom:0.5rem; color:#fff;">Scale AI</h3>
+          <p style="color:var(--text-muted); font-size:0.9rem;">For high-growth venture scaleups.</p>
+          <div class="plan-price">$7,500<span> /mo</span></div>
+          <button class="btn-glow" style="width:100%;">Accelerate With Scale</button>
+        </div>
+
+        <div class="pricing-card">
+          <h3 style="font-size:1.35rem; margin-bottom:0.5rem; color:#fff;">Enterprise</h3>
+          <p style="color:var(--text-muted); font-size:0.9rem;">For multinational tech leaders.</p>
+          <div class="plan-price">$14,000<span> /mo</span></div>
+          <button class="btn-glow" style="width:100%; background:rgba(255,255,255,0.1); color:#fff; box-shadow:none;">Contact Desk</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bento-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">CLARITY</span>
+        <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item is-open">
+          <button class="faq-question">
+            <span>How does Generative Engine Optimization (GEO) differ from classic SEO?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            Traditional SEO focuses on blue links and keyword densities. GEO focuses on high-dimensional semantic entities, structured citation formats, and schema markup that LLMs (ChatGPT, Perplexity, Claude) synthesize into direct answers.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How fast do we see measurable organic pipeline growth?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            Technical fixes and schema indexation manifest within 14–30 days. Core keyword cluster rankings and organic traffic acceleration typically compound noticeably within 60–90 days.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.bento-card, .pricing-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+        card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+      });
+    });
+
+    const auditForm = document.getElementById('heroAuditForm');
+    const resultsCard = document.getElementById('scanResultsCard');
+    const fill = document.getElementById('scanProgressFill');
+    const log = document.getElementById('scanTerminalLog');
+
+    auditForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const domain = document.getElementById('auditInput').value || 'example.com';
+      resultsCard.classList.add('is-active');
+      fill.style.width = '0%';
+      log.innerHTML = `<span style="color:#00f2fe;">&gt; Initializing AI Crawler targeting: <strong>${domain}</strong>...</span>`;
+
+      setTimeout(() => {
+        fill.style.width = '40%';
+        log.innerHTML += `<br><span style="color:#94a3b8;">&gt; Analyzing Core Web Vitals, Vector Entities &amp; Inbound Link Velocity...</span>`;
+      }, 500);
+
+      setTimeout(() => {
+        fill.style.width = '75%';
+        log.innerHTML += `<br><span style="color:#8b5cf6;">&gt; Evaluating generative citations in ChatGPT &amp; Perplexity AI...</span>`;
+      }, 1200);
+
+      setTimeout(() => {
+        fill.style.width = '100%';
+        log.innerHTML += `<br><span style="color:#10b981; font-weight:700;">&gt; [AUDIT COMPLETE] Health Score: 94/100. 18 High-Value AI Keyword Opportunities Found!</span>`;
+      }, 1900);
+    });
+
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('is-open'));
+        if (!isOpen) item.classList.add('is-open');
+      });
+    });
+  </script>
+</body>
+</html>

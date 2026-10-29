@@ -23,6 +23,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'content', 'posts');
 const KEYWORDS_FILE = path.join(__dirname, 'keywords.json');
+const PRIORITY_KEYWORDS_FILE = path.join(__dirname, 'priority-keywords.json');
 const AI_KEYWORDS_FILE = path.join(__dirname, 'ai-keywords.json');
 const OPENAI_KEYWORDS_FILE = path.join(__dirname, 'openai-keywords.json');
 
@@ -48,13 +49,23 @@ const COVER_IMAGES = [
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
 function slugify(text) {
-  return text
+  const ascii = text
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .trim()
     .substring(0, 80);
+
+  if (ascii.length >= 2) return ascii;
+
+  const clean = text
+    .replace(/\s+/g, '-')
+    .replace(/[\\/:*?"<>|]/g, '')
+    .trim()
+    .substring(0, 80);
+
+  return clean.length > 0 ? clean : `post-${Date.now()}`;
 }
 
 function randomItem(arr) {
@@ -165,7 +176,7 @@ function getUnusedFrom(filePath, requestedCount) {
   for (const kw of allKeywords) {
     const s = slugify(kw);
     const kwLower = kw.toLowerCase();
-    const alreadyExists = existingSlugs.some(slug => slug.includes(s) || s.includes(slug)) ||
+    const alreadyExists = (s.length >= 3 && existingSlugs.some(slug => slug.includes(s) || s.includes(slug))) ||
                           existingTitles.some(title => title.includes(kwLower));
     if (!alreadyExists && !unused.includes(kw)) {
       unused.push(kw);
@@ -177,17 +188,33 @@ function getUnusedFrom(filePath, requestedCount) {
 }
 
 /**
- * Returns balanced daily keywords: 3 from keywords.json and 1 from ai-keywords.json per day.
+ * Returns prioritized keywords: Priority queue first, then OpenAI keywords, then AI keywords, then general.
  */
 function getDailyKeywords(totalCount) {
-  // Primary priority: low-competition, high-search-volume OpenAI keywords
-  const openAiKw = getUnusedFrom(OPENAI_KEYWORDS_FILE, totalCount);
-  if (openAiKw.length >= totalCount) {
-    return openAiKw;
+  // 1. Highest priority: user-specified priority keywords
+  const priorityKw = getUnusedFrom(PRIORITY_KEYWORDS_FILE, totalCount);
+  if (priorityKw.length >= totalCount) {
+    return priorityKw;
   }
-  const remaining = totalCount - openAiKw.length;
+  const remainingAfterPriority = totalCount - priorityKw.length;
+
+  // 2. Secondary priority: low-competition, high-search-volume OpenAI keywords
+  const openAiKw = getUnusedFrom(OPENAI_KEYWORDS_FILE, remainingAfterPriority);
+  if (priorityKw.length + openAiKw.length >= totalCount) {
+    return [...priorityKw, ...openAiKw];
+  }
+  const remaining = totalCount - priorityKw.length - openAiKw.length;
+
+  // 3. Tertiary priority: general AI keywords
   const aiKw = getUnusedFrom(AI_KEYWORDS_FILE, remaining);
-  return [...openAiKw, ...aiKw];
+  if (priorityKw.length + openAiKw.length + aiKw.length >= totalCount) {
+    return [...priorityKw, ...openAiKw, ...aiKw];
+  }
+  const remainingGeneral = totalCount - priorityKw.length - openAiKw.length - aiKw.length;
+
+  // 4. Fallback: general keywords
+  const genKw = getUnusedFrom(KEYWORDS_FILE, remainingGeneral);
+  return [...priorityKw, ...openAiKw, ...aiKw, ...genKw];
 }
 
 // ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
