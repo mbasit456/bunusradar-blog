@@ -217,15 +217,31 @@ function getDailyKeywords(totalCount) {
   return [...priorityKw, ...openAiKw, ...aiKw, ...genKw];
 }
 
-// ─── ARTICLE GENERATION VIA GEMINI 3.6 FLASH ──────────────────────────────────
+// ─── ARTICLE GENERATION VIA GEMINI ─────────────────────────────────────────────
 
 const MODEL_CANDIDATES = [
-  'gemini-3.8-flash',
-  'gemini-3.6-flash',
-  'gemini-3.5-flash',
   'gemini-3.5-flash-lite',
+  'gemini-3.5-flash',
   'gemini-flash-latest',
 ];
+
+function safeJsonParse(jsonString) {
+  try {
+    return JSON.parse(jsonString);
+  } catch (initialErr) {
+    try {
+      const sanitized = jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, (char) => {
+        if (char === '\n') return '\\n';
+        if (char === '\r') return '\\r';
+        if (char === '\t') return '\\t';
+        return '';
+      });
+      return JSON.parse(sanitized);
+    } catch {
+      throw initialErr;
+    }
+  }
+}
 
 async function generateArticle(keyword, apiKey, availableArticles = [], attempt = 1) {
   const currentModelName = MODEL_CANDIDATES[(attempt - 1) % MODEL_CANDIDATES.length];
@@ -282,7 +298,7 @@ Content Guidelines:
     const result = await model.generateContent(prompt);
     const text = result.response.text().trim();
     const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
-    return JSON.parse(cleaned);
+    return safeJsonParse(cleaned);
   } catch (err) {
     if (attempt < 5) {
       const delay = attempt * 5000;
