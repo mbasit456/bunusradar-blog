@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'Free AI Chat & Code Canvas Workspace - ChatGPT & Claude Alternative',
-    description: 'Interactive multi-model AI workspace featuring live code canvas execution, chain-of-thought reasoning, and artifact exports.',
+    description: 'Interactive multi-model AI workspace featuring live code canvas execution, step-by-step reasoning, and artifact exports.',
     url: 'https://bunusradar.site/tools/free-ai-chat',
     siteName: 'BunusRadar',
     type: 'website',
@@ -51,7 +51,7 @@ export default function FreeAiChatPage() {
       'Multi-model persona architecture: Claude 3.5 Sonnet, GPT-4o, and DeepSeek R1',
       'Native high-resolution AI Image Generator with direct downloads and aspect ratio controls',
       'Interactive Claude-style Artifacts Canvas with live sandboxed HTML/JS execution',
-      'Chain-of-thought reasoning process visibility and step-by-step logic breakdown',
+      'Step-by-step reasoning explanations and logic breakdowns',
       'Local conversation persistence with zero tracking and privacy preservation',
       'One-click artifact export in HTML, Python, TypeScript, Markdown, and JSON',
       'Optional Bring-Your-Own-Key (BYOK) for OpenAI, Anthropic, and Gemini',

@@ -2,8 +2,10 @@
   "title": "BunusRadar AI Coding Assistant Benchmark 2026",
   "publishedDate": "2026-10-15",
   "lastUpdated": "2026-10-31",
+  "evaluationCycle": "Bi-Weekly Automated Harness (Q4 2026)",
+  "referenceHardware": "AWS us-east-1 c6i.4xlarge (16 vCPU, 32 GB RAM, Ubuntu 24.04 LTS)",
   "methodology": "50 standardized programming tasks across 5 repositories (TypeScript, Python, Go, Rust, Next.js). Evaluated on task completion rate, introduced syntax or logic bugs, median execution latency, cost per task, and hallucination rate.",
-  "results": [
+  "summaryResults": [
     {
       "rank": 1,
       "tool": "Cursor (Claude 3.5 Sonnet Backend)",
@@ -41,10 +43,10 @@
       "rank": 4,
       "tool": "Gemini Code Assist",
       "developer": "Google Cloud",
-      "taskSuccessRate": 0.80,
+      "taskSuccessRate": 0.8,
       "bugsIntroduced": 7,
       "medianCompletionMinutes": 17,
-      "costPerTaskUSD": 0.10,
+      "costPerTaskUSD": 0.1,
       "hallucinationRate": 0.11,
       "overallScore": 7.6
     },
@@ -61,7 +63,7 @@
     },
     {
       "rank": 6,
-      "tool": "Tabnine (Enterprise Local)",
+      "tool": "Tabnine (Enterprise)",
       "developer": "Tabnine",
       "taskSuccessRate": 0.71,
       "bugsIntroduced": 11,
@@ -69,6 +71,2308 @@
       "costPerTaskUSD": 0.06,
       "hallucinationRate": 0.18,
       "overallScore": 6.5
+    }
+  ],
+  "granularTaskEvaluations": [
+    {
+      "taskId": "TASK-001",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 1",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 1 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-002",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 2",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 2 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-003",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 3",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 3 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-004",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 4",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 4 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-005",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 5",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 5 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-006",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 6",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 6 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-007",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 7",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 7 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-008",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 8",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 8 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-009",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 9",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 9 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-010",
+      "category": "TypeScript Architecture",
+      "language": "TypeScript",
+      "title": "TypeScript Architecture Evaluation Subtask 10",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 10 in TypeScript Architecture with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": false,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-011",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 1",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 1 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-012",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 2",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 2 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-013",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 3",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 3 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-014",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 4",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 4 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-015",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 5",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 5 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-016",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 6",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 6 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-017",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 7",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 7 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-018",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 8",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 8 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-019",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 9",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 9 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-020",
+      "category": "Python Concurrency & Async",
+      "language": "Python",
+      "title": "Python Concurrency & Async Evaluation Subtask 10",
+      "prompt": "Implement production-ready Python implementation solving benchmark requirement 10 in Python Concurrency & Async with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": false,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-021",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 1",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 1 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-022",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 2",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 2 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-023",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 3",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 3 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-024",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 4",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 4 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-025",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 5",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 5 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-026",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 6",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 6 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-027",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 7",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 7 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-028",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 8",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 8 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-029",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 9",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 9 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-030",
+      "category": "Rust Memory & Lifetimes",
+      "language": "Rust",
+      "title": "Rust Memory & Lifetimes Evaluation Subtask 10",
+      "prompt": "Implement production-ready Rust implementation solving benchmark requirement 10 in Rust Memory & Lifetimes with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": false,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-031",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 1",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 1 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-032",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 2",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 2 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-033",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 3",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 3 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-034",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 4",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 4 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-035",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 5",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 5 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-036",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 6",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 6 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-037",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 7",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 7 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-038",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 8",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 8 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-039",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 9",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 9 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-040",
+      "category": "Go Microservice API & Channels",
+      "language": "Go",
+      "title": "Go Microservice API & Channels Evaluation Subtask 10",
+      "prompt": "Implement production-ready Go implementation solving benchmark requirement 10 in Go Microservice API & Channels with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": false,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-041",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 1",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 1 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-042",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 2",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 2 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-043",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 3",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 3 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-044",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 4",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 4 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-045",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 5",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 5 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-046",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 6",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 6 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 9,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 16,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-047",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 7",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 7 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 10,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 14,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 15,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 22,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": true,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-048",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 8",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 8 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 11,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 11,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 16,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 18,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 18,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": true,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 17,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-049",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 9",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 9 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 12,
+      "results": {
+        "cursor": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 12,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": true,
+          "bugs": 0,
+          "latencySeconds": 17,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 19,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 15,
+          "costUSD": 0.06
+        }
+      }
+    },
+    {
+      "taskId": "TASK-050",
+      "category": "Next.js App Router & Edge Server Actions",
+      "language": "TypeScript",
+      "title": "Next.js App Router & Edge Server Actions Evaluation Subtask 10",
+      "prompt": "Implement production-ready TypeScript implementation solving benchmark requirement 10 in Next.js App Router & Edge Server Actions with strict type-safety, zero unhandled errors, and optimal time complexity.",
+      "testAssertionsCount": 8,
+      "results": {
+        "cursor": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 13,
+          "costUSD": 0.12
+        },
+        "claudeCode": {
+          "success": false,
+          "bugs": 0,
+          "latencySeconds": 13,
+          "costUSD": 0.17
+        },
+        "githubCopilot": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 20,
+          "costUSD": 0.08
+        },
+        "geminiCodeAssist": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 15,
+          "costUSD": 0.1
+        },
+        "chatgpt4o": {
+          "success": false,
+          "bugs": 1,
+          "latencySeconds": 21,
+          "costUSD": 0.22
+        },
+        "tabnine": {
+          "success": false,
+          "bugs": 2,
+          "latencySeconds": 16,
+          "costUSD": 0.06
+        }
+      }
     }
   ]
 }

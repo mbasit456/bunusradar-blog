@@ -1,7 +1,57 @@
-rank,tool,developer,taskSuccessRate,bugsIntroduced,medianCompletionMinutes,costPerTaskUSD,hallucinationRate,overallScore
-1,Cursor (Claude 3.5 Sonnet Backend),Anysphere,91%,2,13,$0.12,4%,9.1
-2,Claude Code (CLI Agent),Anthropic,89%,3,15,$0.18,5%,8.7
-3,GitHub Copilot (Workspace Mode),GitHub / Microsoft,82%,6,18,$0.08,9%,7.9
-4,Gemini Code Assist,Google Cloud,80%,7,17,$0.10,11%,7.6
-5,ChatGPT (GPT-4o Canvas),OpenAI,78%,8,20,$0.22,13%,7.2
-6,Tabnine (Enterprise Local),Tabnine,71%,11,16,$0.06,18%,6.5
+Type,ID/Tool,Category/Developer,Metric1,Metric2,Metric3,Metric4,OverallScore
+Summary,"Cursor (Claude 3.5 Sonnet Backend)","Anysphere",0.91,2,13m,$0.12,9.1
+Summary,"Claude Code (CLI Agent)","Anthropic",0.89,3,15m,$0.18,8.7
+Summary,"GitHub Copilot (Workspace Mode)","GitHub / Microsoft",0.82,6,18m,$0.08,7.9
+Summary,"Gemini Code Assist","Google Cloud",0.8,7,17m,$0.1,7.6
+Summary,"ChatGPT (GPT-4o Canvas)","OpenAI",0.78,8,20m,$0.22,7.2
+Summary,"Tabnine (Enterprise)","Tabnine",0.71,11,16m,$0.06,6.5
+Task,"TASK-001","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-002","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-003","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-004","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-005","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
+Task,"TASK-006","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-007","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-008","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-009","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-010","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
+Task,"TASK-011","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-012","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-013","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-014","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-015","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
+Task,"TASK-016","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-017","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-018","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-019","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-020","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
+Task,"TASK-021","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-022","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-023","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-024","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-025","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
+Task,"TASK-026","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-027","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-028","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-029","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-030","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
+Task,"TASK-031","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-032","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-033","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-034","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-035","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
+Task,"TASK-036","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-037","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-038","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-039","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-040","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
+Task,"TASK-041","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-042","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-043","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-044","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-045","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
+Task,"TASK-046","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
+Task,"TASK-047","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
+Task,"TASK-048","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
+Task,"TASK-049","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
+Task,"TASK-050","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"

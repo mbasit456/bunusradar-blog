@@ -122,7 +122,7 @@ export default function ResearchPage() {
                   AI Coding Assistant Benchmark 2026
                 </h2>
               </div>
-              <p className="text-sm text-zinc-500">Comparative evaluation across 6 leading developer tools · Methodology: BunusRadar Framework</p>
+              <p className="text-sm text-zinc-500">Comparative evaluation across 6 leading developer tools and 50 granular task records · Methodology: BunusRadar Framework</p>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <a

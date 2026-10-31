@@ -122,7 +122,7 @@ const DEFAULT_MODELS = [
   {
     id: 'deepseek-r1',
     name: 'DeepSeek R1',
-    tagline: 'Open chain-of-thought reasoning engine',
+    tagline: 'Step-by-step reasoning & logic engine',
     desc: 'Mathematical verification, formal logic, multi-turn reasoning',
     icon: '🧠',
     badge: 'Reasoning',
@@ -1422,7 +1422,7 @@ export default function ChatPlaygroundClient() {
                   What can I help with today?
                 </h1>
                 <p className="text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-                  Chat conversationally, draft stories, generate 8K AI artwork, or build web applications in your interactive canvas.
+                  Chat conversationally, draft stories, generate high-resolution AI artwork (1024x1024), or build web applications in your interactive canvas.
                 </p>
               </div>
 
@@ -1816,7 +1816,7 @@ export default function ChatPlaygroundClient() {
                     <RefreshCw className="w-3.5 h-3.5 text-[#f9b44d] animate-spin" />
                     <span>
                       {imageMode
-                        ? 'Creating 8K AI artwork...'
+                        ? 'Generating high-res AI artwork (Gemini & Open Diffusion)...'
                         : 'BunusRadar AI is thinking...'}
                     </span>
                   </div>
@@ -2044,7 +2044,7 @@ export default function ChatPlaygroundClient() {
                   pendingAttachments.length > 0
                     ? 'Ask questions about this file (e.g. Has this PDF been edited? Check authenticity, summarize, or extract dates)...'
                     : imageMode
-                    ? 'Describe the image you want to generate (e.g. A cyberpunk cat in neon Tokyo rain, photorealistic, 8k)...'
+                    ? 'Describe the image you want to generate (e.g. A cyberpunk cat in neon Tokyo rain, photorealistic, 35mm lens)...'
                     : 'Message BunusRadar AI or attach a document...'
                 }
                 rows={1}
