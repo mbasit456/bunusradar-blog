@@ -188,7 +188,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
         </div>
 
         {/* Expertise & Credentials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Expertise */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
@@ -213,7 +213,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
               <div className="w-8 h-8 rounded-xl bg-[#f9b44d] text-[#1b2e67] flex items-center justify-center">
                 <Award className="w-4 h-4" />
               </div>
-              <h2 className="font-bold text-zinc-900 dark:text-white">Credentials</h2>
+              <h2 className="font-bold text-zinc-900 dark:text-white">Credentials & Accreditations</h2>
             </div>
             <ul className="space-y-2">
               {author.credentials.map((item) => (
@@ -224,6 +224,31 @@ export default function AuthorPage({ params }: AuthorPageProps) {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* Verifiable Employment History & Education Details */}
+        <div className="bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm mb-10 space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Verifiable Professional Background</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+            <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800">
+              <strong className="block text-zinc-900 dark:text-white font-semibold mb-1 text-sm">Academic Qualifications:</strong>
+              <p>{author.education}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800">
+              <strong className="block text-zinc-900 dark:text-white font-semibold mb-1 text-sm">Prior Industry Experience:</strong>
+              <p>{author.pastExperience}</p>
+            </div>
+          </div>
+          {author.keyPublications && author.keyPublications.length > 0 && (
+            <div className="pt-2">
+              <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-1.5">Key Research Benchmark Contributions:</span>
+              <ul className="list-disc pl-5 space-y-1 text-xs text-zinc-500 dark:text-zinc-400">
+                {author.keyPublications.map((pub, pIdx) => (
+                  <li key={pIdx}>{pub}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Author's Articles */}

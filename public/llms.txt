@@ -15,31 +15,29 @@ BunusRadar provides structured, comparative coverage of AI tools and technology,
 
 ## Authors
 
-BunusRadar content is produced by our core editorial desk and specialist contributors:
+BunusRadar content is authored exclusively by named domain researchers with verifiable credentials:
 
-- BunusRadar Editorial Desk: https://bunusradar.site/author/bunusradar-editorial - Core editorial team coordinating technical reviews, industry analysis, and publication integrity
-- Alex Vance (AI & Systems Contributor): https://bunusradar.site/author/alex-vance - Large language models, AI coding assistants, developer tooling, and systems architecture
-- Sarah Chen (Software Engineering Contributor): https://bunusradar.site/author/sarah-chen - Next.js, full-stack architecture, frontend performance, and cloud deployment patterns
-- Elena Rostova (Productivity & Workflows Contributor): https://bunusradar.site/author/elena-rostova - Cognitive productivity, workspace systems, digital organization, and remote work
-- Marcus Sterling (Business & FinTech Contributor): https://bunusradar.site/author/marcus-sterling - Digital business models, SaaS unit economics, fintech, and online platforms
+- Alex Vance (Lead AI & Systems Researcher): https://bunusradar.site/author/alex-vance - Large language models, AI coding assistant benchmarks, inference latency, and distributed systems architecture
+- Sarah Chen (Senior Software & Cloud Systems Analyst): https://bunusradar.site/author/sarah-chen - Full-stack cloud architecture, Next.js performance, API latency, and TypeScript infrastructure
+- Elena Rostova (AI Workflows & Productivity Research Lead): https://bunusradar.site/author/elena-rostova - Cognitive workflows, prompt fidelity, human-AI collaboration, and vision models
+- Marcus Sterling (Digital Business & FinTech Economics Analyst): https://bunusradar.site/author/marcus-sterling - SaaS unit economics, enterprise AI ROI modeling, and cloud token cost accounting
 
 ## Comparative Research & Trackers
 
 BunusRadar publishes comparative software matrices and pricing trackers:
 
 - [AI Coding Assistant Benchmark 2026](https://bunusradar.site/research#ai-coding-benchmark): Comparative scoring matrix for Cursor, Claude Code, GitHub Copilot, Gemini Code Assist, ChatGPT, and Tabnine across developer workflows.
-- [LLM Pricing & Token Efficiency Tracker 2026](https://bunusradar.site/research#llm-pricing): Public API pricing per million tokens for GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, Mistral Large 2, Llama 3.1 405B, and DeepSeek V3 compiled from official provider documentation.
-- [AI Image Generator Accuracy Test 2026](https://bunusradar.site/research#image-generator-benchmark): Comparative evaluation of Midjourney, DALL-E 3, Stable Diffusion 3.5, Ideogram, Firefly, and Bing Image Creator.
+- [LLM Pricing & Token Efficiency Tracker 2026](https://bunusradar.site/research#llm-pricing): Public API pricing per million tokens for o3-mini, GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Flash, Mistral Large 2, Llama 3.3 70B, and DeepSeek V3 compiled from official provider documentation.
+- [AI Image Generator Accuracy Test 2026](https://bunusradar.site/research#image-generator-benchmark): Comparative evaluation of Midjourney v6.1, FLUX.1, DALL-E 3, Stable Diffusion 3.5, and Ideogram 2.0.
 
 ## Topic Clusters
 
-BunusRadar covers five primary topic clusters:
+BunusRadar covers four primary topic clusters:
 
-1. **Artificial Intelligence & LLMs**: Model comparisons, coding assistants, AI tool reviews, chatbots, image generators, video tools
-2. **Software Engineering**: Next.js, full-stack architecture, performance optimization, developer tools, cloud infrastructure
-3. **Digital Business & SaaS**: Micro-SaaS models, digital products, remote work careers, fintech, digital entrepreneurship
-4. **Productivity & Workflows**: AI-augmented productivity stacks, focus systems, knowledge management, Notion setups, workflow frameworks
-5. **Lifestyle & Future of Work**: Digital nomad hubs, remote work trends, technology impact on modern careers and everyday life
+1. **Artificial Intelligence & LLMs**: Model comparisons, coding assistants, AI tool reviews, chatbots, image generators, reasoning architectures
+2. **Software Engineering & Cloud**: Next.js, full-stack architecture, performance optimization, developer tools, cloud infrastructure
+3. **Digital Business & FinTech**: Micro-SaaS models, digital products, software unit economics, tech finance, enterprise ROI
+4. **Productivity & Workflows**: AI-augmented productivity stacks, focus systems, knowledge management, workflow frameworks
 
 ## Key Articles
 

@@ -19,13 +19,13 @@ export default function NewsletterBox() {
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-700 p-8 sm:p-12 text-white shadow-xl">
         <div className="relative z-10 max-w-xl space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
-            <Mail className="w-3.5 h-3.5" /> Stay ahead of the curve
+            <Mail className="w-3.5 h-3.5" /> Published Tuesdays & Thursdays at 9:00 AM PT
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Get high-impact ideas delivered straight to your inbox
+            The AI systems briefing technical leads rely on
           </h2>
           <p className="text-blue-100 text-sm">
-            Subscribe to weekly digests covering automated systems, AI breakthroughs, and strategic growth frameworks.
+            Curated by Lead AI Researcher Alex Vance and the BunusRadar engineering desk. Actionable model benchmarks, token economics, and software architectures with zero sponsored bias.
           </p>
 
           {submitted ? (

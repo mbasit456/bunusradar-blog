@@ -6,11 +6,22 @@ const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 const OUTPUT_FILE = path.join(process.cwd(), 'public', 'llms-full.txt');
 
 const AUTHORS = {
-  'bunusradar-editorial': { name: 'BunusRadar Editorial', role: 'Editorial Team' },
-  'alex-vance': { name: 'Alex Vance', role: 'AI & Systems Contributor' },
-  'sarah-chen': { name: 'Sarah Chen', role: 'Software Engineering Contributor' },
-  'elena-rostova': { name: 'Elena Rostova', role: 'Productivity & Workflows Contributor' },
-  'marcus-sterling': { name: 'Marcus Sterling', role: 'Business & FinTech Contributor' }
+  'alex-vance': { name: 'Alex Vance', role: 'Lead AI & Systems Researcher' },
+  'sarah-chen': { name: 'Sarah Chen', role: 'Senior Software & Cloud Systems Analyst' },
+  'elena-rostova': { name: 'Elena Rostova', role: 'AI Workflows & Productivity Research Lead' },
+  'marcus-sterling': { name: 'Marcus Sterling', role: 'Digital Business & FinTech Economics Analyst' },
+  'bunusradar-editorial': { name: 'Alex Vance', role: 'Lead AI & Systems Researcher' }
+};
+
+const AUTHOR_NAME_MAP = {
+  'Alex Vance': 'alex-vance',
+  'Sarah Chen': 'sarah-chen',
+  'Elena Rostova': 'elena-rostova',
+  'Marcus Sterling': 'marcus-sterling',
+  'alex-vance': 'alex-vance',
+  'sarah-chen': 'sarah-chen',
+  'elena-rostova': 'elena-rostova',
+  'marcus-sterling': 'marcus-sterling'
 };
 
 const POST_AUTHOR_ASSIGNMENT = {
@@ -116,8 +127,16 @@ All articles published on BunusRadar follow published editorial guidelines and i
     const raw = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(raw);
 
-    const authorSlug = POST_AUTHOR_ASSIGNMENT[slug] || 'bunusradar-editorial';
-    const author = AUTHORS[authorSlug] || AUTHORS['bunusradar-editorial'];
+    let authorKey = 'alex-vance';
+    if (data.author) {
+      const rawAuthor = typeof data.author === 'string' ? data.author : data.author.name;
+      if (AUTHOR_NAME_MAP[rawAuthor]) {
+        authorKey = AUTHOR_NAME_MAP[rawAuthor];
+      }
+    } else if (POST_AUTHOR_ASSIGNMENT[slug]) {
+      authorKey = POST_AUTHOR_ASSIGNMENT[slug];
+    }
+    const author = AUTHORS[authorKey] || AUTHORS['alex-vance'];
     const takeaways = extractKeyTakeaways(content);
 
     articles.push({

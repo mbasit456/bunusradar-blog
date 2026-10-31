@@ -367,13 +367,18 @@ export default async function PostPage({ params }: PostPageProps) {
               )}
 
               {/* Citation & Attribution Footer */}
-              <div className="pt-3 border-t border-blue-100/70 flex flex-wrap items-center justify-between text-[11px] text-zinc-500 gap-2">
-                <span>
-                  Byline: <strong className="text-zinc-700">{authorData?.name || post.author.name}</strong> ({authorData?.role || post.author.role})
-                </span>
-                <span>
-                  Published under BunusRadar Editorial Guidelines
-                </span>
+              <div className="pt-3 border-t border-blue-100/70 space-y-2 text-[11px] text-zinc-500">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span>
+                    Byline: <Link href={authorUrl} className="font-semibold text-zinc-800 hover:text-[#1b2e67] hover:underline">{authorData?.name || post.author.name}</Link> ({authorData?.role || post.author.role})
+                  </span>
+                  <Link href="/editorial-standards" className="hover:text-[#1b2e67] hover:underline">
+                    Published under BunusRadar Editorial Standards
+                  </Link>
+                </div>
+                <div className="p-2.5 rounded-lg bg-blue-50/60 border border-blue-100/80 text-[11px] text-zinc-600 leading-relaxed">
+                  <strong>AI & Editorial Disclosure:</strong> Authored by {authorData?.name || post.author.name}. AI tools are utilized for data structuring, sandbox code testing, and copy editing assistance. All technical claims, benchmark scores, and architectural recommendations are independently verified by human editors against primary documentation under our <Link href="/editorial-standards" className="text-[#1b2e67] underline font-semibold">Editorial Standards</Link>.
+                </div>
               </div>
             </div>
 

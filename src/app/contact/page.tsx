@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { Mail, MessageSquare, MapPin, Clock, ShieldCheck, Send } from 'lucide-react';
+import { Mail, MessageSquare, MapPin, Clock, ShieldCheck, Send, Building2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Contact Us | BunusRadar Editorial Desk',
@@ -71,23 +71,24 @@ export default function ContactPage() {
 
         {/* Operating Hours & Physical Address */}
         <div className="p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-4">
-          <h2 className="font-bold text-base text-zinc-900 dark:text-white">Publication Headquarters & Operating Hours</h2>
+          <h2 className="font-bold text-base text-zinc-900 dark:text-white">Publication Operations & Operating Hours</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-zinc-600 dark:text-zinc-400">
             <div className="flex items-start gap-2.5">
-              <MapPin className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
+              <Building2 className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
               <div>
                 <strong>Digital Newsroom & Research Desk:</strong>
-                <p>BunusRadar Media Group (Remote-First Independent Publication)</p>
-                <p>Editorial Inquiries: editorial@bunusradar.site</p>
-                <p>Research & Datasets: github.com/mbasit456/bunusradar-blog</p>
+                <p>BunusRadar Media (Distributed, Remote-First Independent Publication)</p>
+                <p className="mt-1">We operate as a distributed digital newsroom without a public walk-in commercial facility. All technical benchmarks, editorial submissions, and research dataset audits are conducted electronically via our dedicated desks or public GitHub repository.</p>
+                <p className="mt-1">Research & Datasets: github.com/mbasit456/bunusradar-blog</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
               <Clock className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
               <div>
                 <strong>Desk Hours:</strong>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM PST</p>
-                <p>Typical editorial response time: Within 24-48 business hours</p>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM PT (Pacific Time, observing PDT in summer/fall and PST in winter)</p>
+                <p className="mt-1">Typical editorial response time: Within 24-48 business hours</p>
+                <p className="mt-1">Urgent factual correction requests are triaged within 12 hours.</p>
               </div>
             </div>
           </div>

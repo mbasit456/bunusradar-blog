@@ -57,11 +57,16 @@ export default function Footer() {
                 <span>Executive Intelligence Briefing</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                Get the morning breakdown top engineers rely on
+                The AI systems briefing technical leads rely on
               </h3>
               <p className="text-sm text-slate-300 max-w-xl leading-relaxed">
-                Curated AI model benchmarks, edge computing architecture, and software analysis delivered directly to your inbox every weekday morning.
+                Curated by Lead AI Researcher Alex Vance and the BunusRadar engineering desk. Delivered twice weekly (Tuesdays and Thursdays at 9:00 AM PT).
               </p>
+              <div className="pt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400">
+                <span>• Raw model benchmark logs</span>
+                <span>• Token pricing & caching updates</span>
+                <span>• Zero vendor-sponsored reviews</span>
+              </div>
             </div>
 
             {/* Newsletter Form */}
@@ -99,7 +104,7 @@ export default function Footer() {
                   </button>
                 </form>
               )}
-              <div className="mt-3 flex items-center gap-6 text-[11px] text-slate-300">
+              <div className="mt-3 flex flex-wrap items-center gap-4 text-[11px] text-slate-300">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                   Zero spam guaranteed
@@ -107,7 +112,9 @@ export default function Footer() {
                 <span>•</span>
                 <span>Unsubscribe anytime in 1 click</span>
                 <span>•</span>
-                <span>Strict privacy standard</span>
+                <Link href="/research" className="text-[#f9b44d] hover:underline">
+                  Preview latest benchmark research →
+                </Link>
               </div>
             </div>
           </div>

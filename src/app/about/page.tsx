@@ -148,7 +148,7 @@ export default function AboutPage() {
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Editorial Team</h2>
-            <p className="text-sm text-zinc-500 mt-1">Articles are authored by named domain researchers or the collective BunusRadar Editorial Desk, with verifiable credentials and published benchmark methodologies.</p>
+            <p className="text-sm text-zinc-500 mt-1">Every published article is authored by a named domain specialist with verifiable professional credentials, technical engineering backgrounds, and strict adherence to our published evaluation methodology.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {authors.map((author) => (
