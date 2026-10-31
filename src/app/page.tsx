@@ -163,7 +163,7 @@ export default function HomePage() {
                   <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
                     LLM Cost & Token Tracker
                   </strong>
-                  <span className="text-[11px] text-zinc-600 block mt-1">GPT-4o, Claude 3.5, Gemini 1.5, DeepSeek V3 per 1M.</span>
+                  <span className="text-[11px] text-zinc-600 block mt-1">DeepSeek R1, o3-mini, Claude 3.7, Gemini 2.0 Flash per 1M.</span>
                 </Link>
 
                 <Link

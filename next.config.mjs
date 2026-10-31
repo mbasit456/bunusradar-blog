@@ -24,6 +24,26 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/blog/navigating-ai-news-updates-for-strategic-enterprise-growth',
+        destination: '/blog/decoding-ai-news-last-24-hours-enterprise-ai-impact-and-strategy',
+        permanent: true,
+      },
+      {
+        source: '/blog/llm-news-today-enterprise-ai-architectures-market-dynamics',
+        destination: '/blog/decoding-ai-news-last-24-hours-enterprise-ai-impact-and-strategy',
+        permanent: true,
+      },
+      {
+        source: '/blog/decoding-chatgpt-news-enterprise-ai-architectures-and-roi',
+        destination: '/blog/chatgpt-vs-claude-vs-gemini-practical-comparison',
+        permanent: true,
+      },
+      {
+        source: '/blog/scaling-enterprise-content-pipelines-with-a-strategic-blog-post-about-ai',
+        destination: '/blog/artificial-intelligence-in-business-implementation-roi-guide',
+        permanent: true,
+      },
+      {
         source: '/feed',
         destination: '/rss.xml',
         permanent: true,

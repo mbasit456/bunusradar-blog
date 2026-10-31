@@ -4,22 +4,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { PostMetadata } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
-import { Flame, Layers, Mail, ArrowRight, Check } from 'lucide-react';
+import { Flame, Layers, BarChart3, ArrowRight } from 'lucide-react';
 
 interface SidebarProps {
   mustReadPosts: PostMetadata[];
 }
 
 export default function Sidebar({ mustReadPosts }: SidebarProps) {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-    }
-  };
 
   return (
     <aside className="space-y-8">
@@ -77,44 +69,41 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
         </div>
       </div>
 
-      {/* Newsletter Signup Widget */}
-      <div className="bg-[#1b2e67] text-white p-6 rounded shadow-sm space-y-3">
+      {/* Featured Research & Tools Widget */}
+      <div className="bg-[#1b2e67] text-white p-6 rounded shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-[#f9b44d] text-xs font-bold uppercase tracking-wider">
-          <Mail className="w-4 h-4" /> Daily Tech Digest
+          <BarChart3 className="w-4 h-4" /> Original Research & Tools
         </div>
         <h4 className="text-base font-extrabold leading-snug">
-          Get breaking technology & AI intelligence delivered daily.
+          Independent AI Benchmarks & Real-Time Trackers
         </h4>
-        <p className="text-xs text-zinc-300">
-          Curated AI benchmarks, model comparisons, and developer tools delivered directly to your inbox.
+        <p className="text-xs text-zinc-300 leading-relaxed">
+          Access our open research datasets, coding assistant evaluations, and live token pricing matrices.
         </p>
 
-        {subscribed ? (
-          <div className="p-3 bg-white/20 rounded text-xs font-semibold flex items-center gap-2 text-emerald-300">
-            <Check className="w-4 h-4" /> You are subscribed!
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-2 pt-2">
-            <label htmlFor="sidebar-newsletter-email" className="sr-only">Your email address</label>
-            <input
-              id="sidebar-newsletter-email"
-              name="email"
-              aria-label="Your email address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your email address"
-              className="w-full px-3 py-2 text-xs bg-white text-zinc-900 rounded focus:outline-none"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full py-2 text-xs font-bold uppercase tracking-wider bg-[#f9b44d] hover:bg-[#e09e38] text-[#1b2e67] rounded transition-colors"
-            >
-              Subscribe Now
-            </button>
-          </form>
-        )}
+        <div className="space-y-2 pt-1">
+          <Link
+            href="/research#ai-coding-benchmark"
+            className="flex items-center justify-between p-2.5 rounded bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-colors"
+          >
+            <span>Coding Assistant Benchmark 2026</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#f9b44d]" />
+          </Link>
+          <Link
+            href="/research#llm-pricing"
+            className="flex items-center justify-between p-2.5 rounded bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-colors"
+          >
+            <span>Frontier LLM Token Cost Tracker</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#f9b44d]" />
+          </Link>
+          <Link
+            href="/tools/free-ai-chat"
+            className="flex items-center justify-between p-2.5 rounded bg-[#f9b44d] hover:bg-[#e09e38] text-xs font-bold text-[#1b2e67] transition-colors"
+          >
+            <span>Launch Free AI Chatbot</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#1b2e67]" />
+          </Link>
+        </div>
       </div>
     </aside>
   );

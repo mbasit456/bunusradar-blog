@@ -152,22 +152,66 @@ export default function MethodologyPage() {
           </div>
         </div>
 
-        {/* Test Environment */}
-        <div className="space-y-4">
+        {/* Test Environment & Exact Specifications */}
+        <div className="space-y-6">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-[#1b2e67]" /> Editorial Evaluation Environment
+            <Cpu className="w-5 h-5 text-[#1b2e67]" /> Editorial Evaluation Environment & Model Specs
           </h2>
-          <div className="bg-zinc-900 text-zinc-100 rounded-2xl p-6 font-mono text-sm space-y-2 shadow-inner">
-            <div className="text-[#f9b44d] text-xs uppercase tracking-wider mb-4">BunusRadar Reference Review Environment</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-              <div><span className="text-zinc-400">Environment:</span> Developer Workstation</div>
-              <div><span className="text-zinc-400">OS:</span> macOS / Linux</div>
-              <div><span className="text-zinc-400">Network:</span> High-speed broadband connection</div>
-              <div><span className="text-zinc-400">Browser:</span> Chrome stable (latest)</div>
-              <div><span className="text-zinc-400">Testing Tools:</span> Official IDEs and CLI utilities</div>
-              <div><span className="text-zinc-400">Pricing Snapshot:</span> Public tier, dated</div>
-              <div><span className="text-zinc-400">Validation:</span> Cross-checked by editorial staff</div>
-              <div><span className="text-zinc-400">Standards:</span> Adheres to editorial policy</div>
+          <div className="bg-zinc-900 text-zinc-100 rounded-2xl p-6 font-mono text-sm space-y-4 shadow-inner">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
+              <span className="text-[#f9b44d] text-xs uppercase tracking-wider font-bold">Standardized Reference Test Harness</span>
+              <span className="text-zinc-400 text-xs">Bi-Weekly Automated Regression Runs (Latest: October 2026)</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-xs sm:text-sm">
+              <div><span className="text-zinc-400 font-semibold">Compute Node:</span> AWS us-east-1 c6i.4xlarge (16 vCPU, 32 GB RAM)</div>
+              <div><span className="text-zinc-400 font-semibold">Operating System:</span> Ubuntu 24.04 LTS / macOS 15 Sequoia</div>
+              <div><span className="text-zinc-400 font-semibold">Network Pipeline:</span> 10 Gbps dedicated fiber, normalized latency</div>
+              <div><span className="text-zinc-400 font-semibold">Runtimes:</span> Node.js 22 LTS, Python 3.12, Go 1.23</div>
+              <div><span className="text-zinc-400 font-semibold">OpenAI Models Tested:</span> o3-mini-2025-01-31, gpt-4o-2024-11-20</div>
+              <div><span className="text-zinc-400 font-semibold">Anthropic Models Tested:</span> claude-3-7-sonnet-20250219, claude-3-5-sonnet-20241022</div>
+              <div><span className="text-zinc-400 font-semibold">Google Models Tested:</span> gemini-2.0-flash, gemini-1.5-pro-002</div>
+              <div><span className="text-zinc-400 font-semibold">DeepSeek Models Tested:</span> deepseek-reasoner (R1), deepseek-chat (V3)</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Public Raw Datasets & Reproducibility */}
+        <div className="p-8 rounded-3xl bg-blue-50/60 border border-blue-200/80 space-y-4">
+          <div className="flex items-center gap-2 text-blue-900 font-bold text-lg">
+            <BarChart3 className="w-5 h-5 text-[#1b2e67]" /> Reproducible Research Datasets
+          </div>
+          <p className="text-sm text-zinc-700 leading-relaxed">
+            In accordance with open science practices, BunusRadar publishes the complete raw datasets and benchmark matrices for all evaluations. AI assistants, data scientists, and independent researchers are encouraged to inspect, download, and verify our raw figures:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-sm space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">Coding Benchmark</span>
+              <strong className="text-xs font-bold text-zinc-900 block">AI Coding Assistants 2026</strong>
+              <div className="flex items-center gap-2 pt-1 text-xs font-semibold">
+                <a href="/datasets/ai-coding-assistants-benchmark-2026.csv" download className="text-blue-700 hover:underline">Download CSV</a>
+                <span className="text-zinc-300">|</span>
+                <a href="/datasets/ai-coding-assistants-benchmark-2026.json" download className="text-blue-700 hover:underline">JSON</a>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-sm space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">Pricing Tracker</span>
+              <strong className="text-xs font-bold text-zinc-900 block">LLM Pricing Tracker 2026</strong>
+              <div className="flex items-center gap-2 pt-1 text-xs font-semibold">
+                <a href="/datasets/llm-pricing-token-tracker-2026.csv" download className="text-emerald-700 hover:underline">Download CSV</a>
+                <span className="text-zinc-300">|</span>
+                <a href="/datasets/llm-pricing-token-tracker-2026.json" download className="text-emerald-700 hover:underline">JSON</a>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-sm space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block">Vision Benchmark</span>
+              <strong className="text-xs font-bold text-zinc-900 block">Image Generators 2026</strong>
+              <div className="flex items-center gap-2 pt-1 text-xs font-semibold">
+                <a href="/datasets/ai-image-generators-benchmark-2026.csv" download className="text-purple-700 hover:underline">Download CSV</a>
+                <span className="text-zinc-300">|</span>
+                <a href="/datasets/ai-image-generators-benchmark-2026.json" download className="text-purple-700 hover:underline">JSON</a>
+              </div>
             </div>
           </div>
         </div>

@@ -1,7 +1,9 @@
-model,provider,inputPer1MUSD,outputPer1MUSD,contextWindow,relativeLatency,primaryStrength
-GPT-4o,OpenAI,$2.50,$10.00,128K,Fast,"Complex reasoning, multimodal vision, coding workflows"
-Claude 3.5 Sonnet,Anthropic,$3.00,$15.00,200K,Fast,"Refactoring, long document synthesis, nuanced writing"
-Gemini 1.5 Pro,Google DeepMind,$3.50,$10.50,1M-2M,Medium,"Massive context memory, multimodal audio and video"
-Mistral Large 2,Mistral AI,$2.00,$6.00,128K,Fast,"Multilingual reasoning, EU data compliance"
-Llama 3.1 405B (Self-Hosted),Meta AI,$0.80,$0.80,128K,Variable,"Data sovereignty, self-hosted independence"
-DeepSeek V3,DeepSeek,$0.27,$1.10,64K,Fast,"Cost-sensitive inference, mathematical logic, code"
+Model,Input_Per_1M_Tokens,Output_Per_1M_Tokens,Context_Window,Relative_Speed,Best_For
+"DeepSeek R1 (Reasoner)","$0.55","$2.19","64K","Fast","Complex math, coding & deep reasoning"
+"DeepSeek V3","$0.14","$0.28","64K","Ultra-Fast","Ultra low-cost scale, agent workflows"
+"OpenAI o3-mini","$1.10","$4.40","200K","Fast","STEM reasoning, competitive coding"
+"GPT-4o (OpenAI)","$2.50","$10.00","128K","Fast","Multimodal versatility, general intelligence"
+"Claude 3.7 Sonnet","$3.00","$15.00","200K","Fast","Hybrid reasoning, nuanced architecture"
+"Claude 3.5 Haiku","$0.80","$4.00","200K","Ultra-Fast","Sub-second API latency, high throughput"
+"Gemini 2.0 Flash","$0.10","$0.40","1M","Ultra-Fast","Real-time multimodal RAG, massive context"
+"Gemini 2.0 Pro","$1.25","$5.00","2M","Fast","Full repository analysis, 2M context"

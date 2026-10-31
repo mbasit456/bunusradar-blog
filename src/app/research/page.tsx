@@ -27,12 +27,14 @@ const codingBenchmark = [
 ];
 
 const llmPricing = [
-  { model: 'GPT-4o (OpenAI)', inputPer1M: '$2.50', outputPer1M: '$10.00', contextWindow: '128K', relativeSpeed: 'Fast', bestFor: 'General reasoning, code' },
-  { model: 'Claude 3.5 Sonnet', inputPer1M: '$3.00', outputPer1M: '$15.00', contextWindow: '200K', relativeSpeed: 'Fast', bestFor: 'Long docs, nuanced writing' },
-  { model: 'Gemini 1.5 Pro', inputPer1M: '$3.50', outputPer1M: '$10.50', contextWindow: '1M', relativeSpeed: 'Medium', bestFor: 'Massive context, multimodal' },
-  { model: 'Mistral Large 2', inputPer1M: '$2.00', outputPer1M: '$6.00', contextWindow: '128K', relativeSpeed: 'Fast', bestFor: 'European data sovereignty' },
-  { model: 'Llama 3.1 405B (self-hosted)', inputPer1M: '~$0.80*', outputPer1M: '~$0.80*', contextWindow: '128K', relativeSpeed: 'Variable', bestFor: 'Privacy, no API dependency' },
-  { model: 'DeepSeek V3', inputPer1M: '$0.27', outputPer1M: '$1.10', contextWindow: '64K', relativeSpeed: 'Fast', bestFor: 'Cost-sensitive, coding tasks' },
+  { model: 'DeepSeek R1 (Reasoner)', inputPer1M: '$0.55', outputPer1M: '$2.19', contextWindow: '64K', relativeSpeed: 'Fast', bestFor: 'Complex math, coding & deep reasoning' },
+  { model: 'DeepSeek V3', inputPer1M: '$0.14', outputPer1M: '$0.28', contextWindow: '64K', relativeSpeed: 'Ultra-Fast', bestFor: 'Ultra low-cost scale, agent workflows' },
+  { model: 'OpenAI o3-mini', inputPer1M: '$1.10', outputPer1M: '$4.40', contextWindow: '200K', relativeSpeed: 'Fast', bestFor: 'STEM reasoning, competitive coding' },
+  { model: 'GPT-4o (OpenAI)', inputPer1M: '$2.50', outputPer1M: '$10.00', contextWindow: '128K', relativeSpeed: 'Fast', bestFor: 'Multimodal versatility, general intelligence' },
+  { model: 'Claude 3.7 Sonnet', inputPer1M: '$3.00', outputPer1M: '$15.00', contextWindow: '200K', relativeSpeed: 'Fast', bestFor: 'Hybrid reasoning, nuanced architecture' },
+  { model: 'Claude 3.5 Haiku', inputPer1M: '$0.80', outputPer1M: '$4.00', contextWindow: '200K', relativeSpeed: 'Ultra-Fast', bestFor: 'Sub-second API latency, high throughput' },
+  { model: 'Gemini 2.0 Flash', inputPer1M: '$0.10', outputPer1M: '$0.40', contextWindow: '1M', relativeSpeed: 'Ultra-Fast', bestFor: 'Real-time multimodal RAG, massive context' },
+  { model: 'Gemini 2.0 Pro', inputPer1M: '$1.25', outputPer1M: '$5.00', contextWindow: '2M', relativeSpeed: 'Fast', bestFor: 'Full repository analysis, 2M context' },
 ];
 
 const imageGenBenchmark = [
