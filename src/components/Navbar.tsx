@@ -124,14 +124,6 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             </Link>
 
             <Link
-              href="/tools"
-              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
-              AI Tools
-            </Link>
-
-            <Link
               href="/category/technology"
               className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
             >
@@ -157,6 +149,13 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
               className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
             >
               AI Business
+            </Link>
+
+            <Link
+              href="/tools"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
+            >
+              AI Tools
             </Link>
 
             <Link
@@ -226,40 +225,39 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             AI News
           </Link>
           <Link
-            href="/tools"
-            onClick={() => setIsOpen(false)}
-            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded flex items-center gap-2"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
-            AI Tools Hub
-          </Link>
-          <Link
             href="/category/technology"
             onClick={() => setIsOpen(false)}
             className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
-            AI Models & Frameworks
+            AI Models
           </Link>
           <Link
             href="/research"
             onClick={() => setIsOpen(false)}
             className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
-            AI Research & Benchmarks
+            AI Research
           </Link>
           <Link
             href="/category/productivity"
             onClick={() => setIsOpen(false)}
             className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
-            AI Tutorials & Guides
+            AI Tutorials
           </Link>
           <Link
             href="/category/business"
             onClick={() => setIsOpen(false)}
             className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
-            AI Business & Automation
+            AI Business
+          </Link>
+          <Link
+            href="/tools"
+            onClick={() => setIsOpen(false)}
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            AI Tools
           </Link>
           <Link
             href="/tools/free-ai-chat"
@@ -267,7 +265,7 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#1b2e67] bg-[#f9b44d] hover:bg-[#e5a038] rounded-lg mt-2 font-extrabold flex items-center gap-2"
           >
             <span className="w-2 h-2 rounded-full bg-[#1b2e67]"></span>
-            Free AI Chat & Canvas
+            Free AI Chat
           </Link>
         </div>
       )}

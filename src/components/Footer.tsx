@@ -208,12 +208,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/tools" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
-                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
-                  <span>AI Tools Hub</span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/category/technology" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
                   <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
                   <span>AI Models</span>
@@ -235,6 +229,18 @@ export default function Footer() {
                 <Link href="/category/business" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
                   <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
                   <span>AI Business</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI Tools</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/free-ai-chat" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>Free AI Chat</span>
                 </Link>
               </li>
               <li className="pt-1">
