@@ -1838,7 +1838,7 @@ export default function ChatPlaygroundClient() {
                   <div className="flex items-center gap-2">
                     <Wand2 className="w-4 h-4 text-[#f9b44d] animate-pulse" />
                     <span className="text-xs font-bold text-white uppercase tracking-wider">
-                      AI Image Studio (No API Key Required)
+                      AI Image Studio • Engine: Open Diffusion SDXL & Gemini Vision (1024x1024 HD)
                     </span>
                   </div>
                   <button

@@ -5,7 +5,7 @@ import { ArrowLeft, Cpu, Zap, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'AI Token & Model Cost Calculator (2026 Edition) - OpenAI, Claude, Gemini, DeepSeek',
-  description: 'Free interactive AI Token Cost Calculator. Compare API pricing for OpenAI o1, GPT-4o, GPT-4o mini, Claude 3.5 Sonnet, Gemini 1.5 Pro, and DeepSeek. Estimate monthly costs, batch discounts, and prompt caching savings.',
+  description: 'Free interactive AI Token Cost Calculator. Compare API pricing for OpenAI o3-mini, GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Flash, and DeepSeek R1/V3. Estimate monthly costs, batch discounts, and prompt caching savings.',
   keywords: [
     'ai token calculator',
     'openai api cost calculator',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'AI Token & Model Cost Calculator (2026 Edition) - BunusRadar',
-    description: 'Calculate and compare LLM API costs across OpenAI o1, GPT-4o, Claude 3.5, and Gemini with real-time prompt caching and batch discounts.',
+    description: 'Calculate and compare LLM API costs across OpenAI o3-mini, GPT-4o, Claude 3.7 Sonnet, and Gemini 2.0 with real-time prompt caching and batch discounts.',
     url: 'https://bunusradar.site/tools/ai-token-calculator',
     type: 'website',
   },
@@ -34,7 +34,7 @@ export default function TokenCalculatorPage() {
     'url': 'https://bunusradar.site/tools/ai-token-calculator',
     'applicationCategory': 'DeveloperApplication',
     'operatingSystem': 'All',
-    'description': 'Free real-time AI Token Cost Calculator comparing OpenAI o1, GPT-4o, Claude 3.5 Sonnet, and Gemini API pricing with batch discounts and prompt caching.',
+    'description': 'Free real-time AI Token Cost Calculator comparing OpenAI o3-mini, GPT-4o, Claude 3.7 Sonnet, and Gemini 2.0 Flash/Pro API pricing with batch discounts and prompt caching.',
     'offers': {
       '@type': 'Offer',
       'price': '0',
@@ -64,10 +64,10 @@ export default function TokenCalculatorPage() {
       },
       {
         '@type': 'Question',
-        'name': 'What is the price difference between OpenAI o1 and GPT-4o?',
+        'name': 'What is the price difference between OpenAI o3-mini and GPT-4o?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'OpenAI o1 costs $15.00 per 1 million input tokens and $60.00 per 1 million output tokens, reflecting its advanced reasoning capabilities. In contrast, GPT-4o costs $2.50 per 1 million input tokens and $10.00 per 1 million output tokens.',
+          'text': 'OpenAI o3-mini costs $1.10 per 1 million input tokens and $4.40 per 1 million output tokens, delivering state-of-the-art STEM reasoning at a fraction of legacy frontier costs. In contrast, GPT-4o costs $2.50 per 1 million input tokens and $10.00 per 1 million output tokens.',
         },
       },
     ],
@@ -102,7 +102,7 @@ export default function TokenCalculatorPage() {
             AI Token & Model Cost Calculator
           </h1>
           <p className="text-zinc-300 max-w-2xl text-sm md:text-base leading-relaxed">
-            Estimate, compare, and forecast monthly LLM API expenditures across OpenAI o1, GPT-4o, Claude 3.5 Sonnet, Gemini, and DeepSeek with real-time prompt caching and batch discount modeling.
+            Estimate, compare, and forecast monthly LLM API expenditures across OpenAI o3-mini, GPT-4o, Claude 3.7 Sonnet, Gemini 2.0, and DeepSeek R1/V3 with real-time prompt caching and batch discount modeling.
           </p>
         </div>
       </div>
@@ -148,10 +148,10 @@ export default function TokenCalculatorPage() {
           </h2>
           <ul className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
             <li>
-              <strong className="text-zinc-900 dark:text-white">High-Speed Microservices & High-Volume Bots:</strong> Use <strong className="text-blue-600">GPT-4o mini</strong> ($0.15/1M input) or <strong className="text-emerald-600">DeepSeek V2.5</strong>. They provide sub-second responses at fractions of a cent per thousand calls.
+              <strong className="text-zinc-900 dark:text-white">High-Speed Microservices & High-Volume Bots:</strong> Use <strong className="text-blue-600">GPT-4o mini</strong> ($0.15/1M input) or <strong className="text-emerald-600">DeepSeek V3</strong>. They provide sub-second responses at fractions of a cent per thousand calls.
             </li>
             <li>
-              <strong className="text-zinc-900 dark:text-white">Complex Reasoning & Multi-Step Code Architecture:</strong> Deploy <strong className="text-purple-600">OpenAI o1</strong> ($15.00/1M input) or <strong className="text-blue-500">Claude 3.5 Sonnet</strong>. Their internal chain-of-thought processing prevents logical failures in heavy mathematical and architectural problem spaces.
+              <strong className="text-zinc-900 dark:text-white">Complex Reasoning & Multi-Step Code Architecture:</strong> Deploy <strong className="text-purple-600">OpenAI o1</strong> ($15.00/1M input) or <strong className="text-blue-500">Claude 3.7 Sonnet</strong>. Their internal chain-of-thought processing prevents logical failures in heavy mathematical and architectural problem spaces.
             </li>
             <li>
               <strong className="text-zinc-900 dark:text-white">Enterprise General Intelligence:</strong> Rely on <strong className="text-zinc-900 dark:text-white">GPT-4o</strong> ($2.50/1M input) for vision, document parsing, and high-quality structured output synthesis.
