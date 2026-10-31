@@ -4,7 +4,7 @@ date: "2026-09-29"
 excerpt: "Discover the best free Character AI alternatives for custom roleplay, creative writing, and chat. Explore top conversational AI platforms available today."
 category: "Artificial Intelligence"
 tags: ["Character AI", "Conversational AI", "AI Chatbots", "Roleplay AI", "Artificial Intelligence"]
-author: "BunusRadar Editorial"
+author: "Elena Rostova"
 coverImage: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

@@ -4,7 +4,7 @@ date: "2026-10-24T10:00:00Z"
 excerpt: "Explore how modern artificial intelligence chatbots are transitioning from scripted heuristics into agentic enterprise systems that optimize cost and workflows."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Chatbots", "Enterprise Software", "RAG Architecture", "LLM Integration"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false

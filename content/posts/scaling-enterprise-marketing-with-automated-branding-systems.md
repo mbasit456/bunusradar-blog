@@ -4,7 +4,7 @@ date: "2026-10-17T10:00:00Z"
 excerpt: "Discover how automated branding transforms enterprise growth, streamlining creative workflows, digital asset management, and global marketing consistency."
 category: "Business & Growth"
 tags: ["Automated Branding", "Business & Growth", "Artificial Intelligence", "Digital Infrastructure", "Workflow Optimization"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/scaling-enterprise-marketing-with-automated-branding-systems.jpg"
 readingTime: "8 min read"
 featured: false

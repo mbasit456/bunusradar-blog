@@ -5,7 +5,7 @@ import { ArrowLeft, Sparkles, Terminal, CheckCircle2, ShieldCheck, Zap } from 'l
 
 export const metadata: Metadata = {
   title: 'AI Prompt Optimizer & System Prompt Generator (2026) - Claude, ChatGPT, Cursor',
-  description: 'Free interactive AI Prompt Optimizer. Craft high-performance system prompts, CRISPE frameworks, and Chain-of-Thought instructions for Claude 3.5 Sonnet, GPT-4o, Cursor IDE, and Midjourney.',
+  description: 'Free interactive AI Prompt Optimizer. Craft high-performance system prompts, CRISPE frameworks, and structured verification directives for Claude 3.7 Sonnet, GPT-4o, Cursor IDE, and Midjourney.',
   keywords: [
     'ai prompt optimizer',
     'system prompt generator',
@@ -34,7 +34,7 @@ export default function PromptOptimizerPage() {
     'url': 'https://bunusradar.site/tools/ai-prompt-optimizer',
     'applicationCategory': 'DeveloperApplication',
     'operatingSystem': 'All',
-    'description': 'Free developer tool for crafting structured CRISPE and Chain-of-Thought system prompts for modern foundation models.',
+    'description': 'Free developer tool for crafting structured CRISPE and verifiable architectural analysis system prompts for modern foundation models.',
     'offers': {
       '@type': 'Offer',
       'price': '0',
@@ -102,7 +102,7 @@ export default function PromptOptimizerPage() {
             AI Prompt Optimizer & System Prompt Generator
           </h1>
           <p className="text-sm sm:text-base text-zinc-300 max-w-3xl leading-relaxed">
-            Eliminate conversational fluff and hallucinations. Construct production-grade system prompts, CRISPE frameworks, and Chain-of-Thought directives optimized for Claude 3.5 Sonnet, GPT-4o, Cursor IDE, and Midjourney.
+            Eliminate conversational fluff and hallucinations. Construct production-grade system prompts, CRISPE frameworks, and verifiable reasoning directives optimized for Claude 3.7 Sonnet, GPT-4o, Cursor IDE, and Midjourney.
           </p>
 
           <div className="pt-2 flex flex-wrap gap-3 sm:gap-6 text-xs text-zinc-400">
@@ -131,7 +131,7 @@ export default function PromptOptimizerPage() {
             Why Prompt Engineering Frameworks Matter in 2026
           </h2>
           <p className="text-sm text-zinc-700 leading-relaxed">
-            As foundation models advance in reasoning ability, naive one-sentence prompts produce generic responses filled with boilerplate apologies and conversational filler. Modern prompt engineering leverages structured methodologies such as <strong>CRISPE</strong> and <strong>Chain-of-Thought (CoT)</strong> to anchor the model in high-dimensional domain expertise.
+            As foundation models advance in reasoning ability, naive one-sentence prompts produce generic responses filled with boilerplate apologies and conversational filler. Modern prompt engineering leverages structured frameworks such as <strong>CRISPE</strong> and <strong>Verifiable Architectural Analysis</strong> to anchor models in verifiable technical constraints, trade-off evaluations, and production code outputs.
           </p>
         </div>
 

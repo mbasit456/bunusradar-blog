@@ -4,7 +4,7 @@ date: "2026-10-13T10:30:00Z"
 excerpt: "Comprehensive executive roadmap to deploying artificial intelligence in business, covering strategic adoption frameworks, ROI measurement, risk mitigation, and case studies."
 category: "AI"
 tags: ["Artificial Intelligence", "AI in Business", "Enterprise AI", "Machine Learning", "Digital Transformation"]
-author: "Alex Vance"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop"
 readingTime: "9 min read"
 featured: true

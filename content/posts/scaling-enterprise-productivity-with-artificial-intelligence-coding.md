@@ -4,7 +4,7 @@ date: "2026-10-22T14:00:00Z"
 excerpt: "Discover how artificial intelligence coding transforms software architectures, boosts developer workflows, and drives unprecedented enterprise growth."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Software Development", "Productivity", "Enterprise Tech", "Automation"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

@@ -4,7 +4,7 @@ date: "2026-09-17"
 excerpt: "Discover Forbes' top business and wealth tips for 2026. Learn how AI tools, alternative assets, and lean strategies can build your future fortune today."
 category: "Business & Growth"
 tags: ["Wealth Building", "Business Strategy", "Forbes 2026", "Investing Tips", "Financial Freedom"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

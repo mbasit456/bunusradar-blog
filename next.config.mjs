@@ -24,6 +24,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/blog/how-to-start-a-photography-business-tech-saas-blueprint',
+        destination: '/blog/how-to-scale-digital-micro-saas',
+        permanent: true,
+      },
+      {
         source: '/blog/architecting-enterprise-scale-and-productivity-on-national-coffee-day',
         destination: '/blog/ultimate-personal-productivity-stack-10x-focus',
         permanent: true,

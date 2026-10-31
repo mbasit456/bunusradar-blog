@@ -4,7 +4,7 @@ date: "2026-10-31T06:00:00Z"
 excerpt: "A rigorous, hands-on comparison of ChatGPT, Claude, and Gemini across coding, reasoning, and enterprise AI workflows to help you choose the right model."
 category: "Artificial Intelligence"
 tags: ["ChatGPT", "Claude", "Gemini", "Artificial Intelligence", "Productivity"]
-author: "BunusRadar Editorial"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

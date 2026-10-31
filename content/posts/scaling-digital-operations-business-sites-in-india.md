@@ -4,7 +4,7 @@ date: "2026-10-16T06:00:00Z"
 excerpt: "Explore how enterprise architecture, cloud infrastructure, and modern SaaS models are reshaping digital business sites in India for global scalability."
 category: "Business & Growth"
 tags: ["Business & Growth", "Digital Infrastructure", "SaaS", "Enterprise Architecture", "Market Dynamics"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/scaling-digital-operations-business-sites-in-india.jpg"
 readingTime: "8 min read"
 featured: false

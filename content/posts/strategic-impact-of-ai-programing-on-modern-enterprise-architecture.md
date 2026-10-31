@@ -4,7 +4,7 @@ date: "2026-10-21T14:00:00Z"
 excerpt: "Explore how enterprise-grade ai programing transforms software development lifecycles, accelerates digital delivery, and optimizes technical infrastructure."
 category: "Artificial Intelligence"
 tags: ["AI Programing", "Software Architecture", "Enterprise AI", "Developer Productivity", "Digital Transformation"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

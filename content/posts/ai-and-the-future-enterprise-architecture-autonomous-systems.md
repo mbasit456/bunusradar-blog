@@ -4,7 +4,7 @@ date: "2026-10-24T14:00:00Z"
 excerpt: "An analytical deep dive into AI and the future, exploring autonomous agent architectures, cognitive workflows, enterprise ROI, and next-gen scaling models."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise AI", "Autonomous Agents", "Machine Learning", "Digital Transformation"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

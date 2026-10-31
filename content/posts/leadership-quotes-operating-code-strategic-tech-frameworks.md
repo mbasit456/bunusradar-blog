@@ -4,7 +4,7 @@ date: "2026-10-17T18:00:00Z"
 excerpt: "Discover how iconic leadership quotes function as algorithmic heuristics, driving executive decision-making, organizational resilience, and tech scalability."
 category: "Business & Growth"
 tags: ["Leadership", "Tech Strategy", "Enterprise Architecture", "Operational Heuristics", "Business Scaling"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop"
 readingTime: "7 min read"
 featured: false

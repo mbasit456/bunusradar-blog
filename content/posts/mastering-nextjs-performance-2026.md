@@ -6,11 +6,9 @@ category: "technology"
 tags: ["nextjs", "web-development", "performance", "react", "vercel"]
 coverImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80"
 featured: false
-author:
-  name: "Sarah Chen"
-  avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80"
-  role: "Full-Stack Engineer"
----Speed is not just a vanity metric - it directly impacts user engagement, bounce rates, and organic Google search rankings. With modern Core Web Vitals (LCP, INP, and CLS) acting as first-class ranking signals, mastering performance in Next.js is essential for any serious web publisher.
+author: "Alex Vance"
+---
+Speed is not just a vanity metric - it directly impacts user engagement, bounce rates, and organic Google search rankings. With modern Core Web Vitals (LCP, INP, and CLS) acting as first-class ranking signals, mastering performance in Next.js is essential for any serious web publisher.
 
 In this guide, we break down actionable patterns to achieve perfect 100/100 Lighthouse performance using Next.js App Router.
 

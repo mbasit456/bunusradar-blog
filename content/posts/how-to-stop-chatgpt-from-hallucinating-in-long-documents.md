@@ -4,7 +4,7 @@ date: "2026-10-28T06:00:00Z"
 excerpt: "Discover enterprise strategies on how to stop ChatGPT from hallucinating in long documents, optimizing AI workflows, retrieval systems, and accuracy."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise AI", "LLM Accuracy", "Prompt Engineering", "Productivity"]
-author: "BunusRadar Editorial"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

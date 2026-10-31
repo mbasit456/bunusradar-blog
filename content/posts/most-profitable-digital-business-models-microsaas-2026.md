@@ -4,7 +4,7 @@ date: "2026-09-22"
 excerpt: "Explore the top digital business models and high-margin Micro-SaaS ideas poised for massive growth in 2026. Turn emerging tech into sustainable revenue."
 category: "Business & Growth"
 tags: ["Micro-SaaS", "Digital Business", "SaaS Ideas", "Entrepreneurship", "Tech Trends 2026"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

@@ -6,11 +6,9 @@ category: "ai"
 tags: ["ai", "software-engineering", "autonomous-agents", "future-of-work"]
 coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80"
 featured: true
-author:
-  name: "Alex Vance"
-  avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
-  role: "AI Architecture Lead"
----The landscape of software development is undergoing its most profound shift since the inception of high-level programming languages. We are moving from simple code auto-completion towards **fully autonomous, goal-directed [ai](/category/ai) coding systems**.
+author: "Alex Vance"
+---
+The landscape of software development is undergoing its most profound shift since the inception of high-level programming languages. We are moving from simple code auto-completion towards **fully autonomous, goal-directed [ai](/category/ai) coding systems**.
 
 Rather than operating as autocomplete widgets that predict the next token, modern agents synthesize entire architectures, orchestrate test suites, fix runtime errors in isolated virtual environments, and submit clean pull requests.
 
@@ -30,7 +28,11 @@ The agent formulates a multi-step execution plan, queries the codebase using sem
 ### Comparing Traditional vs. Agentic Development
 
 | Characteristic | Traditional Development | AI [Copilot](/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot) (2023-2024) | Autonomous Agents (2026+) |
-| :--- | :--- | :--- | :--- |
+| :---
+ | :---
+ | :---
+ | :---
+ |
 | **Input** | Manual code writing | Inline prompts / snippets | High-level PR goals & Jira issues |
 | **Scope** | Single file / function | Single function | Entire repository context |
 | **Error Handling** | Human developer fixes bugs | Human prompts for fixes | Self-evaluating diagnostic loops |

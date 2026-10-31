@@ -4,7 +4,7 @@ date: "2026-10-25T14:00:00Z"
 excerpt: "An empirical guide to Generative Engine Optimization (GEO). Learn how ChatGPT Search selects sources, parses structured data, and cites brands using Princeton's GEO research."
 category: "Artificial Intelligence"
 tags: ["ChatGPT Search", "Generative Engine Optimization", "AI Visibility", "Technical SEO", "LLM Citations"]
-author: "Alex Vance"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
 readingTime: "9 min read"
 featured: false

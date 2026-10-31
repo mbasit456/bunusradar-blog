@@ -4,7 +4,7 @@ date: "2026-09-19"
 excerpt: "Discover how BBC technology reporting is driving digital media trends, from AI journalism to streaming innovation and fighting misinformation online."
 category: "Technology"
 tags: ["Digital Media", "BBC Tech", "Media Trends", "AI Journalism", "Streaming"]
-author: "BunusRadar Editorial"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

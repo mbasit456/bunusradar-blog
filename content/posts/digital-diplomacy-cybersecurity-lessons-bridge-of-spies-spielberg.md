@@ -4,7 +4,7 @@ date: "2026-10-15T10:00:00Z"
 excerpt: "Analyze high-stakes digital negotiation, risk mitigation, and enterprise data security protocols through the strategic lens of bridge of spies spielberg."
 category: "Technology"
 tags: ["Cybersecurity", "Digital Diplomacy", "Risk Mitigation", "Enterprise Security", "Technology"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

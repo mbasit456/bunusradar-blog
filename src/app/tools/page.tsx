@@ -138,6 +138,20 @@ export default function ToolsIndexPage() {
         </div>
       </div>
 
+
+      {/* Fair Use & Usage Policy Transparency */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-700 space-y-2">
+          <div className="flex items-center gap-2 font-bold uppercase tracking-wider text-[#1b2e67]">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>Fair Use & Access Policy Transparency</span>
+          </div>
+          <p className="leading-relaxed">
+            All interactive calculators, economic models, and prompt architects on BunusRadar are 100% free with zero mandatory account creation. The interactive AI Chat and Image Studio workspace operates under community fair-use rate limits (up to 30 free turns per session) to prevent automated abuse. Users requiring high-concurrency automated generation may supply their personal API key (BYOK) with zero platform markup and full client-side privacy.
+          </p>
+        </div>
+      </div>
+
       {/* Tools Grid */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">

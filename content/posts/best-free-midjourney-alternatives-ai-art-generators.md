@@ -4,7 +4,7 @@ date: "2026-09-28"
 excerpt: "Looking for free AI art generators that rival Midjourney? Discover the top free tools offering photorealistic outputs, commercial rights, and custom styles."
 category: "Artificial Intelligence"
 tags: ["AI Art", "Midjourney Alternatives", "Generative AI", "Design Tools", "Artificial Intelligence"]
-author: "BunusRadar Editorial"
+author: "Elena Rostova"
 coverImage: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

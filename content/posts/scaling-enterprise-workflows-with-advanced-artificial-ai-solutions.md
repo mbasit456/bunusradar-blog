@@ -4,7 +4,7 @@ date: "2026-10-23T14:00:00Z"
 excerpt: "Explore how enterprise organizations deploy artificial ai to optimize software architectures, automate complex workflows, and accelerate growth metrics."
 category: "Artificial Intelligence"
 tags: ["artificial ai", "enterprise ai", "workflow automation", "machine learning", "business intelligence"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1633412802994-5c058f151b66?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

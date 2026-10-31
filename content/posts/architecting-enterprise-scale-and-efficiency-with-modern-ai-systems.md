@@ -4,7 +4,7 @@ date: "2026-10-20T14:00:00Z"
 excerpt: "Discover how modern enterprises architect scalable ai systems to optimize software development, accelerate operational workflows, and maximize ROI."
 category: "Artificial Intelligence"
 tags: ["ai systems", "enterprise architecture", "digital transformation", "workflow optimization", "artificial intelligence"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

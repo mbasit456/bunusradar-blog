@@ -4,7 +4,7 @@ date: "2026-09-15"
 excerpt: "Discover our comprehensive TG Daily tech news review. Uncover top articles, cutting-edge hardware insights, AI trends, and expert journalism tips."
 category: "Technology"
 tags: ["TG Daily", "Tech News", "Hardware Review", "Tech Journalism", "Emerging Tech"]
-author: "BunusRadar Editorial"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

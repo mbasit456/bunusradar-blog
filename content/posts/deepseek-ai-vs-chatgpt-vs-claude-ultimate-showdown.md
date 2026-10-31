@@ -4,7 +4,7 @@ date: "2026-09-26"
 excerpt: "Compare DeepSeek-R1/V3, ChatGPT (GPT-4o/o1), and Claude 3.5/3.7 Sonnet. Verified 2026 performance benchmarks, API pricing, and coding evaluations."
 category: "Artificial Intelligence"
 tags: ["DeepSeek", "ChatGPT", "Claude", "Artificial Intelligence", "AI Comparison", "LLM Benchmarks"]
-author: "BunusRadar Editorial"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

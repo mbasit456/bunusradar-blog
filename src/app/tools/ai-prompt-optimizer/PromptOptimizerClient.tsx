@@ -63,7 +63,7 @@ export default function PromptOptimizerClient() {
   const [model, setModel] = useState('Claude 3.5 Sonnet');
   const [role, setRole] = useState('Senior Software Architect');
   const [task, setTask] = useState('');
-  const [framework, setFramework] = useState('CRISPE');
+  const [framework, setFramework] = useState('Structured Architectural Analysis');
   const [format, setFormat] = useState('Markdown with Step-by-Step Code');
   const [selectedConstraints, setSelectedConstraints] = useState<string[]>([
     'No conversational filler or throat-clearing',
@@ -108,14 +108,14 @@ export default function PromptOptimizerClient() {
     lines.push(`# Primary Objective`);
     lines.push(task || `Provide expert architectural analysis and actionable execution protocols for the given request.`);
     lines.push(``);
-    lines.push(`# Execution Framework (${framework})`);
+    lines.push(`# Execution Framework & Verification (${framework})`);
     if (framework === 'CRISPE') {
       lines.push(`- Context: Analyze the underlying requirements, technical constraints, and domain standards.`);
       lines.push(`- Role: Maintain the specified expert persona throughout all guidance and code.`);
       lines.push(`- Insight: Synthesize best practices and avoid common anti-patterns.`);
       lines.push(`- Statement: Deliver direct, high-value, reproducible technical solutions.`);
       lines.push(`- Personality: Objective, rigorous, concise, and focused on production reliability.`);
-    } else if (framework === 'Chain-of-Thought (CoT)') {
+    } else if (framework === 'Structured Architectural Analysis' || framework === 'Chain-of-Thought (CoT)') {
       lines.push(`1. Explicit Assumptions: State core technical premises and boundary constraints upfront.`);
       lines.push(`2. Architecture & Trade-Offs: Evaluate alternative approaches, failure modes, and performance trade-offs.`);
       lines.push(`3. Implementation: Provide verified, production-grade code or step-by-step guidance.`);
@@ -251,7 +251,7 @@ export default function PromptOptimizerClient() {
               className="w-full px-3 py-2 text-xs bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1b2e67]"
             >
               <option value="CRISPE">CRISPE (Context, Role, Insight, Statement, Personality)</option>
-              <option value="Chain-of-Thought (CoT)">Chain-of-Thought (Deconstruct before answering)</option>
+              <option value="Structured Architectural Analysis">Structured Architectural Analysis (Assumptions & Verification)</option>
               <option value="Standard Structured">Standard Structured Specification</option>
             </select>
           </div>

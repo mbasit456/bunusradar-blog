@@ -4,7 +4,7 @@ date: "2026-10-24T06:00:00Z"
 excerpt: "Discover how conversational artificial intelligence transforms enterprise software architectures, driving operational efficiency and ROI across modern organizations."
 category: "Artificial Intelligence"
 tags: ["Conversational Artificial Intelligence", "Artificial Intelligence", "Enterprise Software", "Workflow Optimization", "Business & Growth"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

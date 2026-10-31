@@ -4,7 +4,7 @@ date: "2026-10-05T16:00:00Z"
 excerpt: "Investigate how viral laptop giveaway campaigns established modern phishing blueprints, what social engineering methods are used in 2026, and how to verify legitimate hardware promotions."
 category: "Technology"
 tags: ["Cybersecurity", "Phishing", "Hardware Scams", "Consumer Protection", "Social Engineering"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

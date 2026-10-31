@@ -4,7 +4,7 @@ date: "2026-09-24"
 excerpt: "Discover the top remote work and digital nomad trends shaping 2026. From AI-driven productivity to global visas, learn how distributed work is evolving."
 category: "Business & Growth"
 tags: ["Remote Work", "Digital Nomad", "Future of Work", "Productivity", "Global Trends"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false

@@ -4,7 +4,7 @@ date: "2026-10-22T10:00:00Z"
 excerpt: "Explore how digital transformation, SaaS infrastructure, and modern strategies redefine the best ways to support local businesses in the digital economy."
 category: "Business & Growth"
 tags: ["Digital Transformation", "Local Business", "SaaS", "Business Growth", "E-commerce Infrastructure"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop"
 readingTime: "8 min read"
 featured: false

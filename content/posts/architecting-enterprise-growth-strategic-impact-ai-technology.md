@@ -4,7 +4,7 @@ date: "2026-10-16T10:00:00Z"
 excerpt: "Discover how modern enterprises leverage advanced ai technology to optimize operations, scale infrastructure, and drive measurable ROI in digital markets."
 category: "Artificial Intelligence"
 tags: ["ai technology", "enterprise ai", "business strategy", "digital transformation", "automation"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/architecting-enterprise-growth-strategic-impact-ai-technology.jpg"
 readingTime: "8 min read"
 featured: false

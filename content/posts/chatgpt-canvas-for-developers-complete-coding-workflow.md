@@ -4,7 +4,7 @@ date: "2026-10-24T18:00:00Z"
 excerpt: "Discover how the chatgpt canvas for developers complete coding workflow transforms software engineering productivity, architecture, and team scalability."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Productivity", "Technology", "Software Development", "Enterprise Architecture"]
-author: "BunusRadar Editorial"
+author: "Sarah Chen"
 coverImage: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

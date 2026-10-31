@@ -4,7 +4,7 @@ date: "2026-10-15T18:00:00Z"
 excerpt: "Discover how modern ai development is transforming industries through advanced coding assistants, autonomous agents, and scalable business implementation workflows."
 category: "Artificial Intelligence"
 tags: ["ai development", "artificial intelligence", "software engineering", "coding assistants", "business technology"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/the-evolution-of-ai-development-strategies-for-the-modern-tech-era.jpg"
 readingTime: "8 min read"
 featured: false

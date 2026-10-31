@@ -4,7 +4,7 @@ date: "2026-10-17T14:00:00Z"
 excerpt: "Explore how the future of ai is reshaping enterprise software architectures, driving automated workflows, and redefining ROI for modern digital businesses."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise Software", "Business & Growth", "Automation", "Technology"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/navigating-the-future-of-ai-in-enterprise-software-architectures.jpg"
 readingTime: "8 min read"
 featured: false

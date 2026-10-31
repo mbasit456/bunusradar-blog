@@ -4,7 +4,7 @@ date: "2026-10-26T06:00:00Z"
 excerpt: "Discover how to leverage advanced chatgpt prompts for competitive gap analysis to optimize enterprise strategy, market positioning, and workflow efficiency."
 category: "Business & Growth"
 tags: ["Artificial Intelligence", "Business Strategy", "Competitive Analysis", "Productivity", "Market Research"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

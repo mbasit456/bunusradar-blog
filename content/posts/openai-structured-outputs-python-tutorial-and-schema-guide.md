@@ -4,7 +4,7 @@ date: "2026-10-25T10:00:00Z"
 excerpt: "Discover how to leverage strict data parsing in enterprise software development. Read our comprehensive openai structured outputs python tutorial and schema guide."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Python", "API Architecture", "Data Engineering", "Developer Tools"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

@@ -4,7 +4,7 @@ date: "2026-10-30T06:00:00Z"
 excerpt: "Analyze how ai news last 24 hours reshapes enterprise architecture, deployment cycles, and artificial intelligence integration strategies for modern digital businesses."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise Architecture", "Business Strategy", "Tech Trends", "Workflow Optimization"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1200&q=80"
 readingTime: "6 min read"
 featured: false

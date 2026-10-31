@@ -4,7 +4,7 @@ date: "2026-10-23T18:00:00Z"
 excerpt: "Discover how strategic enterprise ai use transforms software architectures, drives operational efficiency, and accelerates digital growth metrics."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise AI", "Business Growth", "Software Architecture", "Productivity"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

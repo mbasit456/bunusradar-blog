@@ -6,11 +6,9 @@ category: "productivity"
 tags: ["productivity", "deep-work", "time-management", "focus", "habits"]
 coverImage: "/images/posts/hyper-focused-productivity-systems.jpg"
 featured: false
-author:
-  name: "Elena Rostova"
-  avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80"
-  role: "Cognitive Workflow Researcher"
----The modern knowledge worker spends an estimated 60% of their workday dealing with "work about work" - answering repetitive Slack messages, attending status sync meetings, and switching contexts between disconnected tabs.
+author: "Alex Vance"
+---
+The modern knowledge worker spends an estimated 60% of their workday dealing with "work about work" - answering repetitive Slack messages, attending status sync meetings, and switching contexts between disconnected tabs.
 
 Reclaiming deep creative leverage requires ruthless intentionality. Here are the core protocols used by top performers.
 

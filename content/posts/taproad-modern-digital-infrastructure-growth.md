@@ -4,7 +4,7 @@ date: "2026-10-15T06:00:00Z"
 excerpt: "Discover how taproad is transforming digital growth, streamlining modern business workflows, and redefining technological connectivity across industries."
 category: "Technology"
 tags: ["taproad", "digital growth", "technology", "business optimization", "infrastructure"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/taproad-modern-digital-infrastructure-growth.jpg"
 readingTime: "6 min read"
 featured: false

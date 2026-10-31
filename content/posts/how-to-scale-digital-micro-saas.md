@@ -6,10 +6,7 @@ category: "business"
 tags: ["business", "saas", "bootstrapping", "growth", "entrepreneurship"]
 coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
 featured: false
-author:
-  name: "Marcus Sterling"
-  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
-  role: "Founder & Product Strategist"
+author: "Marcus Sterling"
 ---
 
 The era of bloated enterprise software companies requiring tens of millions in venture capital to achieve profitability is waning. In its place, a nimble breed of **[micro-SaaS](/blog/most-profitable-digital-business-models-microsaas-2026) operators** is thriving by solving narrow, high-value problems for dedicated customer bases.

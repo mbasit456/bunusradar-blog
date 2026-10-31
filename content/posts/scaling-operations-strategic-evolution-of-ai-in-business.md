@@ -4,7 +4,7 @@ date: "2026-10-18T14:00:00Z"
 excerpt: "Discover how modern organizations leverage ai in business to optimize operations, drive strategic growth, and architect scalable enterprise software systems."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Business & Growth", "Enterprise Architecture", "Workflow Automation", "Digital Transformation"]
-author: "BunusRadar Editorial"
+author: "Marcus Sterling"
 coverImage: "/images/posts/scaling-operations-strategic-evolution-of-ai-in-business.jpg"
 readingTime: "8 min read"
 featured: false

@@ -4,7 +4,7 @@ date: "2026-10-19T14:00:00Z"
 excerpt: "Discover how the future of artificial intelligence is transforming enterprise architecture, compute economics, agentic workflows, and market strategies."
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Machine Learning", "Enterprise Architecture", "Autonomous Agents", "Cloud Computing"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

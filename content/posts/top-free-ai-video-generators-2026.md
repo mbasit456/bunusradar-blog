@@ -4,7 +4,7 @@ date: "2026-09-21"
 excerpt: "Discover the best free AI video generators in 2026. Turn text prompts into stunning 4K videos effortlessly with top tools analyzed by our tech experts."
 category: "Artificial Intelligence"
 tags: ["AI Video", "Text to Video", "Artificial Intelligence", "Content Creation", "Generative AI"]
-author: "BunusRadar Editorial"
+author: "Elena Rostova"
 coverImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
