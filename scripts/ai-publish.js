@@ -275,9 +275,25 @@ Category pillars:
 4. NEVER use generic anchor text like "click here" or "read more".
 5. NEVER invent URLs. If a relevant destination is not available, leave text unlinked.
 
+TITLE VARIETY & NATURAL EDITORIAL VOICE:
+- NEVER start titles with repetitive boilerplate templates like "Architecting Enterprise...", "Scaling Enterprise...", or forcing "Enterprise" into every single headline.
+- Craft natural, punchy, authoritative headlines that vary dynamically across editorial styles:
+  * Hands-on Comparison: e.g. "Cursor vs GitHub Copilot vs Windsurf: 2026 Developer Benchmark"
+  * Practical Step-by-Step Tutorial: e.g. "How to Run Local LLMs on Your Computer: Complete Guide"
+  * Original Evaluation: e.g. "ChatGPT vs Claude vs Gemini: Real-World Testing & Accuracy"
+  * Technical Breakdown: e.g. "DeepSeek AI Developments: Architecture, Cost, and Open-Source Impact"
+  * Actionable Business Guide: e.g. "Best AI Tools for Small Businesses That Actually Save Time"
+
+PRIMARY EDITORIAL CATEGORIES:
+Assign one of the official BunusRadar publication pillars:
+- "Artificial Intelligence" (for AI news, model announcements, industry developments)
+- "Technology" (for AI models, LLM architectures, coding tools, developer frameworks)
+- "Productivity" (for AI tutorials, practical how-to guides, prompt patterns, RAG workflows)
+- "Business & Growth" (for AI business, agentic automation, software reviews, ROI analysis)
+
 STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
 {
-  "title": "Engaging, click-worthy article title containing the keyword naturally (55-70 chars)",
+  "title": "Natural, engaging, varied article title containing the keyword naturally without repetitive corporate buzzwords (55-70 chars)",
   "slug": "url-friendly-slug-with-hyphens",
   "excerpt": "Compelling 2-3 sentence SEO meta description (150-160 chars)",
   "category": "ONE of: Technology | Artificial Intelligence | Business & Growth | Productivity | Lifestyle",

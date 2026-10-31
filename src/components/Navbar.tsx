@@ -108,39 +108,19 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
               <span className="font-extrabold text-2xl tracking-tight text-white group-hover:text-[#f9b44d] transition-colors">
                 BUNUS<span className="text-[#f9b44d]">RADAR</span>
               </span>
-              <span className="text-[10px] uppercase font-semibold tracking-widest text-zinc-300">
-                More Than The News
+              <span className="text-[10px] uppercase font-semibold tracking-widest text-[#f9b44d]">
+                Discover. Compare. Understand AI.
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Items */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 shrink-0">
-            {Object.values(CATEGORIES).map((cat) => {
-              const shortLabel =
-                cat.slug === 'ai' ? 'AI' :
-                cat.slug === 'business' ? 'Business' :
-                cat.slug === 'lifestyle' ? 'Lifestyle' :
-                cat.name;
-
-              return (
-                <Link
-                  key={cat.slug}
-                  href={`/category/${cat.slug}`}
-                  className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
-                  title={cat.name}
-                >
-                  <span className="2xl:hidden">{shortLabel}</span>
-                  <span className="hidden 2xl:inline">{cat.name}</span>
-                </Link>
-              );
-            })}
-
             <Link
-              href="/research"
+              href="/category/ai"
               className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
             >
-              Research
+              AI News
             </Link>
 
             <Link
@@ -149,6 +129,42 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
               AI Tools
+            </Link>
+
+            <Link
+              href="/category/technology"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
+            >
+              AI Models
+            </Link>
+
+            <Link
+              href="/research"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
+            >
+              AI Research
+            </Link>
+
+            <Link
+              href="/category/productivity"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
+            >
+              AI Tutorials
+            </Link>
+
+            <Link
+              href="/category/business"
+              className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded transition-colors whitespace-nowrap"
+            >
+              AI Business
+            </Link>
+
+            <Link
+              href="/tools/free-ai-chat"
+              className="ml-1 px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#1b2e67] bg-[#f9b44d] hover:bg-[#e5a038] rounded-full transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#1b2e67]"></span>
+              Free AI Chat
             </Link>
           </nav>
 
@@ -202,38 +218,56 @@ export default function Navbar({ trendingPosts = [] }: NavbarProps) {
       {/* Mobile Navigation Drawer */}
       {isOpen && (
         <div className="lg:hidden bg-[#14234f] border-t border-white/10 px-4 pt-2 pb-6 space-y-1">
-          {Object.values(CATEGORIES).map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/category/${cat.slug}`}
-              onClick={() => setIsOpen(false)}
-              className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
-            >
-              {cat.name}
-            </Link>
-          ))}
           <Link
-            href="/research"
+            href="/category/ai"
             onClick={() => setIsOpen(false)}
-            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
           >
-            Research
+            AI News
           </Link>
           <Link
             href="/tools"
             onClick={() => setIsOpen(false)}
-            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded flex items-center gap-2"
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#f9b44d] hover:bg-white/10 rounded flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#f9b44d] animate-pulse"></span>
-            Free AI Tools
+            AI Tools Hub
+          </Link>
+          <Link
+            href="/category/technology"
+            onClick={() => setIsOpen(false)}
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            AI Models & Frameworks
+          </Link>
+          <Link
+            href="/research"
+            onClick={() => setIsOpen(false)}
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            AI Research & Benchmarks
+          </Link>
+          <Link
+            href="/category/productivity"
+            onClick={() => setIsOpen(false)}
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            AI Tutorials & Guides
+          </Link>
+          <Link
+            href="/category/business"
+            onClick={() => setIsOpen(false)}
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-[#f9b44d] hover:bg-white/10 rounded"
+          >
+            AI Business & Automation
           </Link>
           <Link
             href="/tools/free-ai-chat"
             onClick={() => setIsOpen(false)}
-            className="block px-3 py-2 text-sm font-bold uppercase tracking-wider text-amber-300 hover:bg-white/10 rounded flex items-center gap-2"
+            className="min-h-[44px] flex items-center px-3 py-2 text-sm font-bold uppercase tracking-wider text-[#1b2e67] bg-[#f9b44d] hover:bg-[#e5a038] rounded-lg mt-2 font-extrabold flex items-center gap-2"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-            AI Chat & Canvas
+            <span className="w-2 h-2 rounded-full bg-[#1b2e67]"></span>
+            Free AI Chat & Canvas
           </Link>
         </div>
       )}

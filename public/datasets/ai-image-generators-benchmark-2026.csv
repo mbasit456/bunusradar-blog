@@ -1,0 +1,7 @@
+rank,tool,developer,promptAdherence,realismScore,styleCoherenceScore,averageLatencySeconds,freeTier,overallScore
+1,Midjourney v6.1,Midjourney,88%,9.2/10,9.5/10,30s,No,9.3
+2,DALL-E 3,OpenAI,92%,8.8/10,8.4/10,15s,No,8.9
+3,Stable Diffusion 3.5 Large,Stability AI,81%,8.6/10,9.0/10,5s,Yes,8.5
+4,Ideogram 2.0,Ideogram,87%,8.4/10,8.7/10,20s,Yes,8.4
+5,Adobe Firefly 3,Adobe,84%,8.3/10,8.2/10,10s,No,8.1
+6,Bing Image Creator,Microsoft,79%,7.8/10,7.5/10,25s,Yes,7.5

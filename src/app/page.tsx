@@ -7,15 +7,15 @@ import Sidebar from '@/components/Sidebar';
 import { ChevronRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'BunusRadar - Independent AI Tool Reviews, Tests & Developer Research',
-  description: 'BunusRadar helps developers, engineers, and businesses evaluate AI tools through practical benchmarks, reproducible tests, and evidence-based software research.',
+  title: 'BunusRadar - Discover. Compare. Understand AI.',
+  description: 'An independent AI publication covering AI tools, models, research, comparisons, and practical applications. Practical benchmarks and reproducible research.',
   alternates: {
     canonical: 'https://bunusradar.site',
   },
   openGraph: {
     url: 'https://bunusradar.site',
-    title: 'BunusRadar - Independent AI Tool Reviews, Tests & Developer Research',
-    description: 'Practical AI benchmarks, developer software evaluations, and reproducible research.',
+    title: 'BunusRadar - Discover. Compare. Understand AI.',
+    description: 'An independent AI publication covering AI tools, models, research, comparisons, and practical applications.'
   },
 };
 
@@ -117,13 +117,13 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-100 pb-4">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-blue-50 text-[#1b2e67] border border-blue-100">
-                    Editorial Promise
+                    Discover. Compare. Understand AI.
                   </div>
                   <h2 className="text-xl sm:text-2xl font-black text-zinc-900 mt-1">
-                    Independent AI Tool Reviews, Tests & Research
+                    Independent AI Publication, Benchmarks & Tools
                   </h2>
                   <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mt-1">
-                    BunusRadar helps developers, engineers, and tech leaders evaluate emerging AI systems through hands-on testing, reproducible benchmarks, and documented methodologies.
+                    BunusRadar helps developers, engineers, and tech leaders evaluate emerging AI models, coding assistants, image generators, and automation workflows through hands-on testing, reproducible benchmarks, and documented methodologies.
                   </p>
                 </div>
                 <div className="flex gap-2 shrink-0">

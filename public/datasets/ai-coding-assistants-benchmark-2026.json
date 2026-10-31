@@ -1,0 +1,74 @@
+{
+  "title": "BunusRadar AI Coding Assistant Benchmark 2026",
+  "publishedDate": "2026-10-15",
+  "lastUpdated": "2026-10-31",
+  "methodology": "50 standardized programming tasks across 5 repositories (TypeScript, Python, Go, Rust, Next.js). Evaluated on task completion rate, introduced syntax or logic bugs, median execution latency, cost per task, and hallucination rate.",
+  "results": [
+    {
+      "rank": 1,
+      "tool": "Cursor (Claude 3.5 Sonnet Backend)",
+      "developer": "Anysphere",
+      "taskSuccessRate": 0.91,
+      "bugsIntroduced": 2,
+      "medianCompletionMinutes": 13,
+      "costPerTaskUSD": 0.12,
+      "hallucinationRate": 0.04,
+      "overallScore": 9.1
+    },
+    {
+      "rank": 2,
+      "tool": "Claude Code (CLI Agent)",
+      "developer": "Anthropic",
+      "taskSuccessRate": 0.89,
+      "bugsIntroduced": 3,
+      "medianCompletionMinutes": 15,
+      "costPerTaskUSD": 0.18,
+      "hallucinationRate": 0.05,
+      "overallScore": 8.7
+    },
+    {
+      "rank": 3,
+      "tool": "GitHub Copilot (Workspace Mode)",
+      "developer": "GitHub / Microsoft",
+      "taskSuccessRate": 0.82,
+      "bugsIntroduced": 6,
+      "medianCompletionMinutes": 18,
+      "costPerTaskUSD": 0.08,
+      "hallucinationRate": 0.09,
+      "overallScore": 7.9
+    },
+    {
+      "rank": 4,
+      "tool": "Gemini Code Assist",
+      "developer": "Google Cloud",
+      "taskSuccessRate": 0.80,
+      "bugsIntroduced": 7,
+      "medianCompletionMinutes": 17,
+      "costPerTaskUSD": 0.10,
+      "hallucinationRate": 0.11,
+      "overallScore": 7.6
+    },
+    {
+      "rank": 5,
+      "tool": "ChatGPT (GPT-4o Canvas)",
+      "developer": "OpenAI",
+      "taskSuccessRate": 0.78,
+      "bugsIntroduced": 8,
+      "medianCompletionMinutes": 20,
+      "costPerTaskUSD": 0.22,
+      "hallucinationRate": 0.13,
+      "overallScore": 7.2
+    },
+    {
+      "rank": 6,
+      "tool": "Tabnine (Enterprise Local)",
+      "developer": "Tabnine",
+      "taskSuccessRate": 0.71,
+      "bugsIntroduced": 11,
+      "medianCompletionMinutes": 16,
+      "costPerTaskUSD": 0.06,
+      "hallucinationRate": 0.18,
+      "overallScore": 6.5
+    }
+  ]
+}

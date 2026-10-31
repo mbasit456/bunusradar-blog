@@ -1,0 +1,7 @@
+model,provider,inputPer1MUSD,outputPer1MUSD,contextWindow,relativeLatency,primaryStrength
+GPT-4o,OpenAI,$2.50,$10.00,128K,Fast,"Complex reasoning, multimodal vision, coding workflows"
+Claude 3.5 Sonnet,Anthropic,$3.00,$15.00,200K,Fast,"Refactoring, long document synthesis, nuanced writing"
+Gemini 1.5 Pro,Google DeepMind,$3.50,$10.50,1M-2M,Medium,"Massive context memory, multimodal audio and video"
+Mistral Large 2,Mistral AI,$2.00,$6.00,128K,Fast,"Multilingual reasoning, EU data compliance"
+Llama 3.1 405B (Self-Hosted),Meta AI,$0.80,$0.80,128K,Variable,"Data sovereignty, self-hosted independence"
+DeepSeek V3,DeepSeek,$0.27,$1.10,64K,Fast,"Cost-sensitive inference, mathematical logic, code"

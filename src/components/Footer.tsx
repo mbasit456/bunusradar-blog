@@ -132,7 +132,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-sm text-slate-300 leading-relaxed">
-              BunusRadar is an independent technology newsroom delivering objective evaluations of artificial intelligence models, enterprise software systems, developer tooling, and modern digital hardware.
+              BunusRadar is an independent AI publication covering AI tools, models, research, comparisons, and practical applications. Discover. Compare. Understand AI.
             </p>
 
             <div className="p-3.5 rounded-lg bg-white/5 border border-white/10 space-y-2">
@@ -191,20 +191,45 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#f9b44d] pb-2 border-b border-white/10 flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" />
-              Coverage
+              AI Coverage
             </h4>
             <ul className="space-y-2 text-sm text-slate-300">
-              {Object.values(CATEGORIES).map((cat) => (
-                <li key={cat.slug}>
-                  <Link
-                    href={`/category/${cat.slug}`}
-                    className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group"
-                  >
-                    <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
-                    <span>{cat.name}</span>
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/category/ai" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI News</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI Tools Hub</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/technology" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI Models</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/research" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI Research</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/productivity" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI Tutorials</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/business" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
+                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
+                  <span>AI Business</span>
+                </Link>
+              </li>
               <li className="pt-1">
                 <Link
                   href="/latest-publications"

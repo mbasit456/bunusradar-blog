@@ -122,12 +122,28 @@ export default function ResearchPage() {
               </div>
               <p className="text-sm text-zinc-500">Comparative evaluation across 6 leading developer tools · Methodology: BunusRadar Framework</p>
             </div>
-            <Link
-              href="/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot"
-              className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#1b2e67] hover:underline"
-            >
-              <ExternalLink className="w-3 h-3" /> Full Review
-            </Link>
+            <div className="flex items-center gap-2 flex-wrap">
+              <a
+                href="/datasets/ai-coding-assistants-benchmark-2026.csv"
+                download="ai-coding-assistants-benchmark-2026.csv"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-blue-600" /> Download CSV
+              </a>
+              <a
+                href="/datasets/ai-coding-assistants-benchmark-2026.json"
+                download="ai-coding-assistants-benchmark-2026.json"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-blue-600" /> JSON Dataset
+              </a>
+              <Link
+                href="/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot"
+                className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#1b2e67] hover:underline ml-1"
+              >
+                <ExternalLink className="w-3 h-3" /> Full Review
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
@@ -184,12 +200,28 @@ export default function ResearchPage() {
               </div>
               <p data-nosnippet="true" className="text-sm text-zinc-500">Public API pricing for leading LLMs · Updated: October 2026 · Context: per million tokens</p>
             </div>
-            <Link
-              href="/blog/deepseek-ai-vs-chatgpt-vs-claude-ultimate-showdown"
-              className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#1b2e67] hover:underline"
-            >
-              <ExternalLink className="w-3 h-3" /> Full Comparison
-            </Link>
+            <div className="flex items-center gap-2 flex-wrap">
+              <a
+                href="/datasets/llm-pricing-token-tracker-2026.csv"
+                download="llm-pricing-token-tracker-2026.csv"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-emerald-600" /> Download CSV
+              </a>
+              <a
+                href="/datasets/llm-pricing-token-tracker-2026.json"
+                download="llm-pricing-token-tracker-2026.json"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-emerald-600" /> JSON Dataset
+              </a>
+              <Link
+                href="/blog/deepseek-ai-vs-chatgpt-vs-claude-ultimate-showdown"
+                className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#1b2e67] hover:underline ml-1"
+              >
+                <ExternalLink className="w-3 h-3" /> Full Comparison
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
@@ -238,12 +270,28 @@ export default function ResearchPage() {
               </div>
               <p className="text-sm text-zinc-500">Comparative evaluation across 6 leading tools · Scored on: prompt adherence, realism, stylistic range</p>
             </div>
-            <Link
-              href="/blog/best-free-midjourney-alternatives-ai-art-generators"
-              className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#1b2e67] hover:underline"
-            >
-              <ExternalLink className="w-3 h-3" /> Full Review
-            </Link>
+            <div className="flex items-center gap-2 flex-wrap">
+              <a
+                href="/datasets/ai-image-generators-benchmark-2026.csv"
+                download="ai-image-generators-benchmark-2026.csv"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-purple-600" /> Download CSV
+              </a>
+              <a
+                href="/datasets/ai-image-generators-benchmark-2026.json"
+                download="ai-image-generators-benchmark-2026.json"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-800 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-purple-600" /> JSON Dataset
+              </a>
+              <Link
+                href="/blog/best-free-midjourney-alternatives-ai-art-generators"
+                className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#1b2e67] hover:underline ml-1"
+              >
+                <ExternalLink className="w-3 h-3" /> Full Review
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">

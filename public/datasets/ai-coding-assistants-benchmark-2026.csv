@@ -1,0 +1,7 @@
+rank,tool,developer,taskSuccessRate,bugsIntroduced,medianCompletionMinutes,costPerTaskUSD,hallucinationRate,overallScore
+1,Cursor (Claude 3.5 Sonnet Backend),Anysphere,91%,2,13,$0.12,4%,9.1
+2,Claude Code (CLI Agent),Anthropic,89%,3,15,$0.18,5%,8.7
+3,GitHub Copilot (Workspace Mode),GitHub / Microsoft,82%,6,18,$0.08,9%,7.9
+4,Gemini Code Assist,Google Cloud,80%,7,17,$0.10,11%,7.6
+5,ChatGPT (GPT-4o Canvas),OpenAI,78%,8,20,$0.22,13%,7.2
+6,Tabnine (Enterprise Local),Tabnine,71%,11,16,$0.06,18%,6.5

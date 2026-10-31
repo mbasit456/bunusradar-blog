@@ -1,0 +1,62 @@
+{
+  "title": "BunusRadar LLM Pricing & Token Cost Tracker 2026",
+  "publishedDate": "2026-10-15",
+  "lastUpdated": "2026-10-31",
+  "methodology": "Public enterprise and developer API rates normalized to cost per 1 million input and output tokens across standard context windows.",
+  "models": [
+    {
+      "model": "GPT-4o",
+      "provider": "OpenAI",
+      "inputPer1MUSD": 2.50,
+      "outputPer1MUSD": 10.00,
+      "contextWindow": "128K",
+      "relativeLatency": "Fast",
+      "primaryStrength": "Complex reasoning, multimodal vision, coding workflows"
+    },
+    {
+      "model": "Claude 3.5 Sonnet",
+      "provider": "Anthropic",
+      "inputPer1MUSD": 3.00,
+      "outputPer1MUSD": 15.00,
+      "contextWindow": "200K",
+      "relativeLatency": "Fast",
+      "primaryStrength": "Refactoring, long document synthesis, nuanced writing"
+    },
+    {
+      "model": "Gemini 1.5 Pro",
+      "provider": "Google DeepMind",
+      "inputPer1MUSD": 3.50,
+      "outputPer1MUSD": 10.50,
+      "contextWindow": "1M-2M",
+      "relativeLatency": "Medium",
+      "primaryStrength": "Massive context memory, multimodal audio and video"
+    },
+    {
+      "model": "Mistral Large 2",
+      "provider": "Mistral AI",
+      "inputPer1MUSD": 2.00,
+      "outputPer1MUSD": 6.00,
+      "contextWindow": "128K",
+      "relativeLatency": "Fast",
+      "primaryStrength": "Multilingual reasoning, EU data compliance"
+    },
+    {
+      "model": "Llama 3.1 405B (Self-Hosted)",
+      "provider": "Meta AI",
+      "inputPer1MUSD": 0.80,
+      "outputPer1MUSD": 0.80,
+      "contextWindow": "128K",
+      "relativeLatency": "Variable",
+      "primaryStrength": "Data sovereignty, self-hosted independence"
+    },
+    {
+      "model": "DeepSeek V3",
+      "provider": "DeepSeek",
+      "inputPer1MUSD": 0.27,
+      "outputPer1MUSD": 1.10,
+      "contextWindow": "64K",
+      "relativeLatency": "Fast",
+      "primaryStrength": "Cost-sensitive inference, mathematical logic, code"
+    }
+  ]
+}

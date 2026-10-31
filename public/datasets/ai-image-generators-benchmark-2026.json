@@ -1,0 +1,74 @@
+{
+  "title": "BunusRadar AI Image Generator Benchmark 2026",
+  "publishedDate": "2026-10-15",
+  "lastUpdated": "2026-10-31",
+  "methodology": "100 standardized test prompts across 5 categories (photorealism, macro product, typography, multi-subject composition, fantasy art). Evaluated blindly for prompt adherence, anatomical realism, stylistic coherence, generation latency, and cost accessibility.",
+  "results": [
+    {
+      "rank": 1,
+      "tool": "Midjourney v6.1",
+      "developer": "Midjourney",
+      "promptAdherence": 0.88,
+      "realismScore": 9.2,
+      "styleCoherenceScore": 9.5,
+      "averageLatencySeconds": 30,
+      "freeTier": false,
+      "overallScore": 9.3
+    },
+    {
+      "rank": 2,
+      "tool": "DALL-E 3",
+      "developer": "OpenAI",
+      "promptAdherence": 0.92,
+      "realismScore": 8.8,
+      "styleCoherenceScore": 8.4,
+      "averageLatencySeconds": 15,
+      "freeTier": false,
+      "overallScore": 8.9
+    },
+    {
+      "rank": 3,
+      "tool": "Stable Diffusion 3.5 Large",
+      "developer": "Stability AI",
+      "promptAdherence": 0.81,
+      "realismScore": 8.6,
+      "styleCoherenceScore": 9.0,
+      "averageLatencySeconds": 5,
+      "freeTier": true,
+      "overallScore": 8.5
+    },
+    {
+      "rank": 4,
+      "tool": "Ideogram 2.0",
+      "developer": "Ideogram",
+      "promptAdherence": 0.87,
+      "realismScore": 8.4,
+      "styleCoherenceScore": 8.7,
+      "averageLatencySeconds": 20,
+      "freeTier": true,
+      "overallScore": 8.4
+    },
+    {
+      "rank": 5,
+      "tool": "Adobe Firefly 3",
+      "developer": "Adobe",
+      "promptAdherence": 0.84,
+      "realismScore": 8.3,
+      "styleCoherenceScore": 8.2,
+      "averageLatencySeconds": 10,
+      "freeTier": false,
+      "overallScore": 8.1
+    },
+    {
+      "rank": 6,
+      "tool": "Bing Image Creator",
+      "developer": "Microsoft",
+      "promptAdherence": 0.79,
+      "realismScore": 7.8,
+      "styleCoherenceScore": 7.5,
+      "averageLatencySeconds": 25,
+      "freeTier": true,
+      "overallScore": 7.5
+    }
+  ]
+}
