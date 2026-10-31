@@ -5,7 +5,7 @@ excerpt: "Discover how to start a photography business through the lens of moder
 category: "Business & Growth"
 tags: ["Business & Growth", "SaaS", "Digital Infrastructure", "Productivity", "Technology"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

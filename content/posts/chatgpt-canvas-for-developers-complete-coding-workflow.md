@@ -5,7 +5,7 @@ excerpt: "Discover how the chatgpt canvas for developers complete coding workflo
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Productivity", "Technology", "Software Development", "Enterprise Architecture"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

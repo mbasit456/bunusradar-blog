@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const { resolveCoverImage } = require('./topic-image-matcher.cjs');
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 
@@ -58,7 +59,8 @@ async function createPost({ title, category, excerpt, tags, content }) {
   }
 
   const date = new Date().toISOString().split('T')[0];
-  const coverImage = CATEGORY_IMAGES[category.toLowerCase()] || CATEGORY_IMAGES.general;
+  const resolved = resolveCoverImage({ title, category, tags: tagList });
+  const coverImage = resolved.url;
   const tagList = Array.isArray(tags) ? tags : tags.split(',').map((t) => t.trim().toLowerCase());
 
   const template = `---

@@ -5,7 +5,7 @@ excerpt: "Explore the latest llm news today through an enterprise lens, analyzin
 category: "Artificial Intelligence"
 tags: ["llm news today", "Enterprise AI", "Artificial Intelligence", "Software Architecture", "Business Growth"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

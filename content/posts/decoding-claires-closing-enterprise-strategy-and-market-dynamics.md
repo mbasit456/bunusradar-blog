@@ -5,7 +5,7 @@ excerpt: "Analyze the enterprise implications of claire's closing through the le
 category: "Business & Growth"
 tags: ["Business Strategy", "Market Dynamics", "Digital Transformation", "Enterprise Growth", "SaaS Metrics"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

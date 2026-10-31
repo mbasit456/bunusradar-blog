@@ -33,18 +33,44 @@ const SITE_NAME = 'BunusRadar';
 const AUTHOR = 'BunusRadar Editorial';
 const DAILY_SLOTS = ['06:00:00Z', '10:00:00Z', '14:00:00Z', '18:00:00Z'];
 
-const COVER_IMAGES = [
-  'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop',
-];
+const { resolveCoverImage, detectTopicKey } = require('./topic-image-matcher.cjs');
+
+const USED_IMAGES_IN_SESSION = new Set();
+
+function getUsedCoverImages() {
+  const used = new Set();
+  if (!fs.existsSync(POSTS_DIR)) return used;
+  const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+  for (const f of files) {
+    try {
+      const content = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8');
+      const match = content.match(/^coverImage:\s*"([^"]+)"/m);
+      if (match) {
+        const raw = match[1].trim();
+        used.add(raw);
+        used.add(raw.split('?')[0]);
+      }
+    } catch {}
+  }
+  return used;
+}
+
+function getUniqueCoverImage({ title, keyword, category, slug, tags }) {
+  const existingUsed = getUsedCoverImages();
+  const allUsed = new Set([...existingUsed, ...USED_IMAGES_IN_SESSION]);
+  const resolved = resolveCoverImage({
+    title,
+    keyword,
+    slug,
+    category,
+    tags,
+    usedSet: allUsed
+  });
+  USED_IMAGES_IN_SESSION.add(resolved.url);
+  USED_IMAGES_IN_SESSION.add(resolved.url.split('?')[0]);
+  console.log(`  🖼️  Assigned relevant cover image for topic [${resolved.topic}]: ${resolved.url.slice(0, 70)}...`);
+  return resolved.url;
+}
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
@@ -328,8 +354,8 @@ Content Guidelines:
 
 // ─── MARKDOWN FILE BUILDER WITH STRICT LINK VALIDATION ───────────────────────
 
-function buildMarkdownFile(data, publishTimestamp, currentSlug) {
-  const coverImage = randomItem(COVER_IMAGES);
+function buildMarkdownFile(data, publishTimestamp, currentSlug, keyword) {
+  const coverImage = getUniqueCoverImage({ title: data.title, keyword, category: data.category, slug: currentSlug, tags: data.tags });
   const tags = Array.isArray(data.tags) ? data.tags : [];
 
   const safeTitle = data.title.replace(/\u2014/g, ' - ');
@@ -468,7 +494,7 @@ async function main() {
         continue;
       }
 
-      const markdown = buildMarkdownFile(data, pubTimestamp, slug);
+      const markdown = buildMarkdownFile(data, pubTimestamp, slug, keyword);
       fs.writeFileSync(filepath, markdown, 'utf8');
 
       console.log(`  ✅ Scheduled for: ${pubTimestamp}`);

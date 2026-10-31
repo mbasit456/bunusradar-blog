@@ -5,7 +5,7 @@ excerpt: "Explore this OpenAI o1 vs GPT 4o benchmark and enterprise cost guide t
 category: "Artificial Intelligence"
 tags: ["OpenAI o1", "GPT-4o", "Enterprise AI", "LLM Benchmarks", "AI Cost Optimization"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

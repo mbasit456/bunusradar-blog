@@ -5,7 +5,7 @@ excerpt: "Analyze recent chatgpt news through an enterprise architecture lens. D
 category: "Artificial Intelligence"
 tags: ["ChatGPT News", "Enterprise AI", "Large Language Models", "Artificial Intelligence", "Business Strategy"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

@@ -5,7 +5,7 @@ excerpt: "Discover how parsing daily ai news updates can drive enterprise archit
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise Architecture", "Business Growth", "AI News Updates", "Technology Strategy"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

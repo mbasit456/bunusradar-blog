@@ -5,7 +5,7 @@ excerpt: "Discover advanced algorithmic strategies and optimization frameworks o
 category: "Artificial Intelligence"
 tags: ["ChatGPT Search", "Generative Engine Optimization", "AI Visibility", "Enterprise Growth", "Digital Strategy"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

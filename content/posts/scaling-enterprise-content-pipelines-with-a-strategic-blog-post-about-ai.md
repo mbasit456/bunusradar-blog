@@ -5,7 +5,7 @@ excerpt: "Discover how a data-driven blog post about AI transforms enterprise co
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Content Operations", "Business & Growth", "Workflow Optimization", "Enterprise AI"]
 author: "BunusRadar Editorial"
-coverImage: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

@@ -20,6 +20,7 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { submitToIndexNow } from './submit-indexnow.mjs';
 import { pingSearchEngines } from './ping-search-engines.mjs';
+import { resolveCoverImage, detectTopicKey } from './topic-image-matcher.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -34,69 +35,6 @@ const OPENAI_KEYWORDS_FILE = path.join(__dirname, 'openai-keywords.json');
 const SITE_NAME = 'BunusRadar';
 const AUTHOR = 'BunusRadar Editorial';
 const DAILY_SLOTS = ['06:00:00Z', '10:00:00Z', '14:00:00Z', '18:00:00Z'];
-
-const CATEGORY_IMAGE_POOLS = {
-  'Artificial Intelligence': [
-    'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1674027444485-cec3da58eef4?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1633412802994-5c058f151b66?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop',
-  ],
-  'Technology': [
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop',
-  ],
-  'Business & Growth': [
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop',
-  ],
-  'Productivity': [
-    'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop',
-  ],
-  'Lifestyle': [
-    'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=800&auto=format&fit=crop',
-  ],
-};
 
 const USED_IMAGES_IN_SESSION = new Set();
 
@@ -118,35 +56,21 @@ function getUsedCoverImages() {
   return used;
 }
 
-function getUniqueCoverImage(category, slug) {
+function getUniqueCoverImage({ title, keyword, category, slug, tags }) {
   const existingUsed = getUsedCoverImages();
   const allUsed = new Set([...existingUsed, ...USED_IMAGES_IN_SESSION]);
-
-  const pool = CATEGORY_IMAGE_POOLS[category] || CATEGORY_IMAGE_POOLS['Technology'];
-  const unusedInPool = pool.filter(url => !allUsed.has(url) && !allUsed.has(url.split('?')[0]));
-
-  if (unusedInPool.length > 0) {
-    const selected = randomItem(unusedInPool);
-    USED_IMAGES_IN_SESSION.add(selected);
-    USED_IMAGES_IN_SESSION.add(selected.split('?')[0]);
-    return selected;
-  }
-
-  // Fallback to unused image in any category pool
-  const allImages = Object.values(CATEGORY_IMAGE_POOLS).flat();
-  const unusedGeneral = allImages.filter(url => !allUsed.has(url) && !allUsed.has(url.split('?')[0]));
-  if (unusedGeneral.length > 0) {
-    const selected = randomItem(unusedGeneral);
-    USED_IMAGES_IN_SESSION.add(selected);
-    USED_IMAGES_IN_SESSION.add(selected.split('?')[0]);
-    return selected;
-  }
-
-  // Fallback with unique slug signature to ensure zero collision
-  const seed = slug ? slug.replace(/[^a-z0-9]/g, '') : Date.now().toString();
-  const fallbackUrl = `https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&sig=${seed}`;
-  USED_IMAGES_IN_SESSION.add(fallbackUrl);
-  return fallbackUrl;
+  const resolved = resolveCoverImage({
+    title,
+    keyword,
+    slug,
+    category,
+    tags,
+    usedSet: allUsed
+  });
+  USED_IMAGES_IN_SESSION.add(resolved.url);
+  USED_IMAGES_IN_SESSION.add(resolved.url.split('?')[0]);
+  console.log(`  🖼️  Assigned relevant cover image for topic [${resolved.topic}]: ${resolved.url.slice(0, 70)}...`);
+  return resolved.url;
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -469,8 +393,8 @@ STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
 
 // ─── MARKDOWN FILE BUILDER WITH STRICT LINK VALIDATION ───────────────────────
 
-function buildMarkdownFile(data, publishTimestamp, currentSlug) {
-  const coverImage = getUniqueCoverImage(data.category, currentSlug);
+function buildMarkdownFile(data, publishTimestamp, currentSlug, keyword) {
+  const coverImage = getUniqueCoverImage({ title: data.title, keyword, category: data.category, slug: currentSlug, tags: data.tags });
   const tags = Array.isArray(data.tags) ? data.tags : [];
 
   const safeTitle = data.title.replace(/\u2014/g, ' - ');
@@ -609,7 +533,7 @@ async function main() {
         continue;
       }
 
-      const markdown = buildMarkdownFile(data, pubTimestamp, slug);
+      const markdown = buildMarkdownFile(data, pubTimestamp, slug, keyword);
       fs.writeFileSync(filepath, markdown, 'utf8');
 
       console.log(`  ✅ Scheduled for: ${pubTimestamp}`);
