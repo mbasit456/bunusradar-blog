@@ -54,11 +54,11 @@ When calculating total cost of ownership (TCO), developers must evaluate input a
 
 ## Frequently Asked Questions
 
-### Which model is best for software development?-
+### Which model is best for software development?
 Claude 3.5 Sonnet is widely considered the superior model for coding tasks, offering exceptional debugging capabilities, precise syntax generation, and an intuitive developer experience.
 
-### How do context windows affect enterprise workflows?-
+### How do context windows affect enterprise workflows?
 Larger context windows, such as those found in Gemini, allow teams to analyze massive documents, video files, or entire code repositories simultaneously without needing complex vector database retrieval systems.
 
-### Are enterprise data privacy standards maintained across all three platforms?-
+### Are enterprise data privacy standards maintained across all three platforms?
 Yes, when utilizing enterprise-tier API endpoints or paid business subscriptions, OpenAI, Anthropic, and Google all guarantee that customer input data is strictly isolated and never used for training future foundational models.
