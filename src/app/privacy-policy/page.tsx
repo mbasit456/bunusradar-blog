@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
             At <strong>BunusRadar</strong>, accessible from <a href="https://bunusradar.site" className="text-[#1b2e67] dark:text-[#f9b44d] font-semibold underline">https://bunusradar.site</a>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by BunusRadar and how we use it.
           </p>
           <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
-            Last Updated: October 10, 2026 • Effective Date: January 1, 2024
+            Last Updated: October 31, 2026 • Effective Date: October 31, 2026 (Originally Published: January 1, 2024)
           </p>
         </div>
 
@@ -79,6 +79,24 @@ export default function PrivacyPolicyPage() {
               <li><strong>Direct Communications:</strong> If you contact us directly (via our contact forms or editorial desk), we may receive additional information about you such as your name, email address, phone number, and the contents of your message.</li>
               <li><strong>Newsletter Subscriptions:</strong> If you subscribe to our weekly technology digests, we collect your email address solely to deliver requested dispatches. You may unsubscribe at any time via the one-click unsubscribe link in every email.</li>
               <li><strong>Log Files:</strong> BunusRadar follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and number of clicks. These are not linked to any personally identifiable information.</li>
+            </ul>
+          </section>
+
+          
+          {/* Interactive AI Tools & Chatbot Data Processing Section */}
+          <section className="space-y-4 p-6 rounded-2xl bg-purple-50/60 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900">
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+              <Lock className="w-5 h-5 text-purple-600" />
+              3. Interactive AI Tools, Chatbot & Image Generation Data Practices
+            </h2>
+            <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              BunusRadar hosts client-side interactive utilities, including the AI Token Calculator, AI Prompt Optimizer, Enterprise AI ROI Calculator, and the Free AI Chat & Image Studio workspace. Our data handling for these utilities is strictly separated into local client-side state and stateless transit:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
+              <li><strong>Local Browser Storage:</strong> Your conversation histories, created personas, canvas artifacts, and optional Bring-Your-Own-Key (BYOK) credentials are stored solely in your browser local storage (localStorage). They are never written to any BunusRadar server database, nor are they harvested for user profiling.</li>
+              <li><strong>Stateless API Transit:</strong> When you submit a prompt or request an image generation, your query is sent over encrypted HTTPS to our stateless Next.js server endpoints (/api/chat and /api/chat/image). Our servers immediately proxy the payload to upstream AI providers (such as Google Generative AI or the Open Diffusion Grid) strictly to return the response stream, without persistent server logging or text retention.</li>
+              <li><strong>Upstream Model Providers:</strong> Queries forwarded to upstream AI API providers are processed under their commercial API privacy terms, which prohibit utilizing customer API inputs for model pre-training.</li>
+              <li><strong>Client-Side Sandboxing:</strong> All HTML, SVG, and JavaScript code generated inside our interactive Canvas workspace is isolated inside an iframe sandbox with opaque origin restrictions, preventing generated scripts from accessing cookies, storage, or parent window state.</li>
             </ul>
           </section>
 
@@ -164,7 +182,7 @@ export default function PrivacyPolicyPage() {
             <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs space-y-1">
               <p><strong>Email:</strong> privacy@bunusradar.site</p>
               <p><strong>Editorial Desk:</strong> editorial@bunusradar.site</p>
-              <p><strong>Mailing Address:</strong> BunusRadar Editorial Desk, 100 Tech Media Plaza, Las Vegas, NV 89101</p>
+              <p><strong>Digital Newsroom:</strong> BunusRadar Editorial Desk (Remote-First Independent Publication), editorial@bunusradar.site</p>
             </div>
           </section>
         </div>

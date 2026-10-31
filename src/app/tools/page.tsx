@@ -45,9 +45,9 @@ const TOOLS = [
     category: 'Conversational AI, Art & Code',
     badge: 'Flagship',
     badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
-    description: 'Conversational assistant with native Flux AI image generation, Claude-style interactive code canvases, step-by-step reasoning, and live sandboxed web execution.',
+    description: 'Conversational assistant with multi-engine AI image generation (Gemini Vision and Open Diffusion Grid), Claude-style interactive code canvases, step-by-step reasoning, and live sandboxed web execution.',
     icon: Bot,
-    stats: 'Flux Image Generator • Claude Artifacts • DeepSeek Reasoning • Multi-Model',
+    stats: 'AI Image Studio • Code Canvas Artifacts • DeepSeek Reasoning • Multi-Model',
     cta: 'Launch AI Workspace',
   },
   {

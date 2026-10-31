@@ -40,14 +40,7 @@ export const CATEGORIES: Record<string, CategoryMeta> = {
     wikidataUrl: "https://www.wikidata.org/wiki/Q193638",
     wikipediaUrl: "https://en.wikipedia.org/wiki/Productivity",
   },
-  lifestyle: {
-    name: "Lifestyle & Future",
-    slug: "lifestyle",
-    description: "Reflections on modern living, remote work culture, and future societal trends.",
-    color: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300 border-rose-200 dark:border-rose-800",
-    wikidataUrl: "https://www.wikidata.org/wiki/Q322302",
-    wikipediaUrl: "https://en.wikipedia.org/wiki/Lifestyle_(sociology)",
-  },
+
 };
 
 export function normalizeCategorySlug(rawSlug: string): string {
@@ -80,13 +73,8 @@ export function normalizeCategorySlug(rawSlug: string): string {
   if (normalized === 'productivity') {
     return 'productivity';
   }
-  if (
-    normalized === 'lifestyle' ||
-    normalized === 'lifestyle-future' ||
-    normalized === 'lifestylefuture' ||
-    normalized.startsWith('lifestyle')
-  ) {
-    return 'lifestyle';
+  if (normalized === 'lifestyle' || normalized.startsWith('lifestyle')) {
+    return 'technology';
   }
 
   return normalized || 'technology';

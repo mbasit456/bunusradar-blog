@@ -32,7 +32,7 @@ export default function TermsAndConditionsPage() {
             Welcome to <strong>BunusRadar</strong> (&ldquo;Website&rdquo;). These terms and conditions outline the rules and regulations for the use of BunusRadar, located at <a href="https://bunusradar.site" className="text-[#1b2e67] dark:text-[#f9b44d] font-semibold underline">https://bunusradar.site</a>.
           </p>
           <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
-            Last Updated: October 10, 2026 • Effective Date: January 1, 2024
+            Last Updated: October 31, 2026 • Effective Date: October 31, 2026 (Originally Published: January 1, 2024)
           </p>
         </div>
 

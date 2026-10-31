@@ -14,13 +14,13 @@ interface ModelPricing {
 
 const MODELS: ModelPricing[] = [
   { id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'OpenAI', inputPerMillion: 0.15, outputPerMillion: 0.60, color: 'bg-emerald-500' },
-  { id: 'deepseek-v25', name: 'DeepSeek V2.5', provider: 'DeepSeek', inputPerMillion: 0.14, outputPerMillion: 0.28, color: 'bg-teal-500' },
-  { id: 'gemini-15-flash', name: 'Gemini 1.5 Flash', provider: 'Google', inputPerMillion: 0.075, outputPerMillion: 0.30, color: 'bg-cyan-500' },
+  { id: 'deepseek-v3', name: 'DeepSeek V3', provider: 'DeepSeek', inputPerMillion: 0.14, outputPerMillion: 0.28, color: 'bg-teal-500' },
+  { id: 'gemini-20-flash', name: 'Gemini 2.0 Flash', provider: 'Google', inputPerMillion: 0.10, outputPerMillion: 0.40, color: 'bg-cyan-500' },
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI', inputPerMillion: 2.50, outputPerMillion: 10.00, color: 'bg-blue-600' },
-  { id: 'claude-35-sonnet', name: 'Claude 3.5 Sonnet', provider: 'Anthropic', inputPerMillion: 3.00, outputPerMillion: 15.00, color: 'bg-amber-500' },
-  { id: 'gemini-15-pro', name: 'Gemini 1.5 Pro', provider: 'Google', inputPerMillion: 3.50, outputPerMillion: 10.50, color: 'bg-indigo-500' },
-  { id: 'o1-mini', name: 'o1-mini', provider: 'OpenAI', inputPerMillion: 3.00, outputPerMillion: 12.00, color: 'bg-purple-500' },
-  { id: 'o1', name: 'OpenAI o1', provider: 'OpenAI', inputPerMillion: 15.00, outputPerMillion: 60.00, color: 'bg-rose-500' },
+  { id: 'claude-37-sonnet', name: 'Claude 3.7 Sonnet', provider: 'Anthropic', inputPerMillion: 3.00, outputPerMillion: 15.00, color: 'bg-amber-500' },
+  { id: 'gemini-20-pro', name: 'Gemini 2.0 Pro', provider: 'Google', inputPerMillion: 2.50, outputPerMillion: 10.00, color: 'bg-indigo-500' },
+  { id: 'o3-mini', name: 'o3-mini', provider: 'OpenAI', inputPerMillion: 1.10, outputPerMillion: 4.40, color: 'bg-purple-500' },
+  { id: 'deepseek-r1', name: 'DeepSeek R1', provider: 'DeepSeek', inputPerMillion: 0.55, outputPerMillion: 2.19, color: 'bg-rose-500' },
 ];
 
 export default function TokenCalculatorClient() {
@@ -247,8 +247,8 @@ Calculate yours at: https://bunusradar.site/tools/ai-token-calculator`;
               className="w-4 h-4 accent-blue-600 rounded cursor-pointer"
             />
             <div>
-              <div className="text-xs font-bold text-zinc-900 dark:text-white">Prompt Caching (50% In)</div>
-              <div className="text-[10px] text-zinc-500">Repeated system prefix discount</div>
+              <div className="text-xs font-bold text-zinc-900 dark:text-white">Prompt Caching (50% to 90% In)</div>
+              <div className="text-[10px] text-zinc-500">50% OpenAI / up to 90% Anthropic prefix discount</div>
             </div>
           </label>
         </div>

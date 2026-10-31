@@ -116,9 +116,10 @@ export default function PromptOptimizerClient() {
       lines.push(`- Statement: Deliver direct, high-value, reproducible technical solutions.`);
       lines.push(`- Personality: Objective, rigorous, concise, and focused on production reliability.`);
     } else if (framework === 'Chain-of-Thought (CoT)') {
-      lines.push(`1. Deconstruct the problem into granular sub-components.`);
-      lines.push(`2. Evaluate trade-offs, potential failure modes, and edge cases explicitly.`);
-      lines.push(`3. Synthesize the optimal solution with verified reasoning.`);
+      lines.push(`1. Explicit Assumptions: State core technical premises and boundary constraints upfront.`);
+      lines.push(`2. Architecture & Trade-Offs: Evaluate alternative approaches, failure modes, and performance trade-offs.`);
+      lines.push(`3. Implementation: Provide verified, production-grade code or step-by-step guidance.`);
+      lines.push(`4. Verification & Validation: Confirm output correctness with executable examples and test specifications.`);
     } else {
       lines.push(`Follow standard prompt engineering standards with clear structural separation.`);
     }

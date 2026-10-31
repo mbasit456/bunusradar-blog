@@ -135,8 +135,8 @@ export default function TokenCalculatorPage() {
             </div>
             <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
               <span className="text-xs font-bold uppercase text-zinc-400">Prompt Caching</span>
-              <p className="text-xl font-black text-blue-600 dark:text-blue-400 mt-1">Up to 80% Off</p>
-              <p className="text-xs text-zinc-500 mt-1">Automatic savings on repeated system prompts.</p>
+              <p className="text-xl font-black text-blue-600 dark:text-blue-400 mt-1">50% - 90% Off</p>
+              <p className="text-xs text-zinc-500 mt-1">Automatic savings: 50% for OpenAI, up to 90% on Anthropic cached input tokens (audited October 2026).</p>
             </div>
           </div>
         </section>

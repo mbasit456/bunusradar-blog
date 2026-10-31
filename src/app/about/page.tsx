@@ -128,7 +128,7 @@ export default function AboutPage() {
               icon: Users,
               color: 'bg-emerald-100 text-emerald-700',
               title: 'Transparent Authorship',
-              desc: 'Every article carries a transparent byline from our editorial desk and specialist contributors, adhering to published editorial guidelines.',
+              desc: 'Every article carries a transparent byline from our editorial desk or named specialist contributors, adhering to published editorial guidelines.',
               link: '/authors',
               linkText: 'Meet the team →',
             },
@@ -148,7 +148,7 @@ export default function AboutPage() {
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Editorial Team</h2>
-            <p className="text-sm text-zinc-500 mt-1">Every article is written by a named expert with direct, verifiable credentials in their field.</p>
+            <p className="text-sm text-zinc-500 mt-1">Articles are authored by named domain researchers or the collective BunusRadar Editorial Desk, with verifiable credentials and published benchmark methodologies.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {authors.map((author) => (

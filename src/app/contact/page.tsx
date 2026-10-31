@@ -76,10 +76,10 @@ export default function ContactPage() {
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
               <div>
-                <strong>Mailing Office:</strong>
-                <p>BunusRadar Media Group</p>
-                <p>100 Tech Media Plaza, Suite 400</p>
-                <p>Las Vegas, NV 89101, United States</p>
+                <strong>Digital Newsroom & Research Desk:</strong>
+                <p>BunusRadar Media Group (Remote-First Independent Publication)</p>
+                <p>Editorial Inquiries: editorial@bunusradar.site</p>
+                <p>Research & Datasets: github.com/mbasit456/bunusradar-blog</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">

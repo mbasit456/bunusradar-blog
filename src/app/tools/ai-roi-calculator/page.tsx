@@ -124,26 +124,29 @@ export default function RoiCalculatorPage() {
 
       {/* Methodology & Research Citations */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pt-8 border-t border-zinc-200">
-        <div className="space-y-3">
+                <div className="space-y-3">
           <h2 className="text-xl sm:text-2xl font-black text-zinc-900">
             Calculation Methodology & Productivity Benchmarks
           </h2>
           <p className="text-sm text-zinc-700 leading-relaxed">
-            The BunusRadar AI ROI Model synthesizes empirical telemetry from Fortune 500 engineering deployments and peer-reviewed software studies. Calculations assume a standard 50-week operating year, excluding paid time off and national holidays.
+            The BunusRadar AI ROI Model synthesizes empirical telemetry from peer-reviewed software studies and enterprise engineering deployments. All calculations assume a standard 50-week operating year, excluding paid time off and national holidays.
           </p>
+          <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+            <strong>Important Disclaimer:</strong> Projections are modeled estimates based on user-entered variables, wage rates, and team adoption assumptions. Reclaimed hours and actual dollar returns will vary according to development stack, codebase maturity, and workflow integration.
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-1.5 shadow-xs">
-            <strong className="text-xs font-black uppercase text-[#1b2e67]">GitHub Copilot Study</strong>
+            <strong className="text-xs font-black uppercase text-[#1b2e67]">GitHub Copilot Study (2023)</strong>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Developers completed coding tasks 55.8% faster and felt 88% more fulfilled in their work when assisted by AI code generation.
+              Peng et al. (ACM Queue / arXiv:2206.15331) showed developers completed coding tasks 55.8% faster and reported 88% higher satisfaction with AI code generation.
             </p>
           </div>
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-1.5 shadow-xs">
-            <strong className="text-xs font-black uppercase text-[#1b2e67]">McKinsey Global Institute</strong>
+            <strong className="text-xs font-black uppercase text-[#1b2e67]">McKinsey Global Institute (June 2023)</strong>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Generative AI accelerates software development throughput by 20% to 45% of annual engineering overhead, predominantly in refactoring and documentation.
+              McKinsey research revealed generative AI accelerates software engineering output by 20% to 45% of annual overhead, primarily in refactoring, testing, and documentation.
             </p>
           </div>
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-1.5 shadow-xs">

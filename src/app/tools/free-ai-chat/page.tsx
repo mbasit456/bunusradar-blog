@@ -3,13 +3,13 @@ import ChatPlaygroundClient from './ChatPlaygroundClient';
 
 export const metadata: Metadata = {
   title: 'Free AI Chat, Image Generator & Canvas - ChatGPT & Claude Alternative',
-  description: 'Free interactive AI Chat, Flux Image Generator, and Code Canvas Workspace. Multi-model support for Claude 3.5 Sonnet, GPT-4o, and DeepSeek R1. Generate high-res AI images and run live web apps.',
+  description: 'Free interactive AI Chat, Multi-Engine Image Generator, and Code Canvas Workspace. Multi-model support for Claude 3.5 Sonnet, GPT-4o, and DeepSeek R1. Generate high-res AI images and run live web apps.',
   keywords: [
     'free ai chat',
     'free ai image generator',
     'chatgpt alternative',
     'claude online free',
-    'flux image generator online',
+    'ai image generator online',
     'ai art generator free',
     'claude artifacts free',
     'ai code canvas',

@@ -145,9 +145,9 @@ const QUICK_STARTERS = [
     icon: '🔍',
   },
   {
-    title: 'Generate an 8K Image',
-    desc: 'A futuristic cybernetic cat in neon Tokyo rain, photorealistic',
-    prompt: 'Generate an image of a futuristic cybernetic cat sitting on a rainy rooftop in neon Tokyo at night, cinematic lighting, 8k.',
+    title: 'Generate High-Res AI Image',
+    desc: 'Futuristic cybernetic cat in neon Tokyo rain, photorealistic 1024x1024',
+    prompt: 'Generate an image of a futuristic cybernetic cat sitting on a rainy rooftop in neon Tokyo at night, cinematic lighting, photorealistic.',
     icon: '🎨',
   },
   {
