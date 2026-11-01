@@ -53,7 +53,12 @@ export default function ArticleCard({ post }: ArticleCardProps) {
         </div>
 
         <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-600">
-          <span className="font-semibold text-zinc-700">By {post.author.name}</span>
+          <Link
+            href={`/author/${post.authorSlug || 'alex-vance'}`}
+            className="font-semibold text-zinc-700 hover:text-[#1b2e67] transition-colors hover:underline"
+          >
+            By {post.author.name}
+          </Link>
           <span data-nosnippet="true">{post.date}</span>
         </div>
       </div>

@@ -58,7 +58,7 @@ const TOOLS = [
     badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     description: 'Real-time pricing comparison across OpenAI o3-mini, GPT-4o, Claude 3.7 Sonnet, Gemini 2.0, and DeepSeek R1/V3. Model monthly operational costs, batch discounts, and prompt caching savings.',
     icon: Cpu,
-    stats: '6 Models Tracked • Prompt Caching • Batch API',
+    stats: '8 Models Tracked • Prompt Caching • Batch API',
     cta: 'Launch Token Calculator',
   },
   {

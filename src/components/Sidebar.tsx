@@ -37,7 +37,12 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
                 {post.title}
               </Link>
               <div className="flex items-center gap-2 text-[11px] text-zinc-600 mt-1">
-                <span>By {post.author.name}</span>
+                <Link
+                  href={`/author/${post.authorSlug || 'alex-vance'}`}
+                  className="font-medium text-zinc-700 hover:text-[#1b2e67] transition-colors hover:underline"
+                >
+                  By {post.author.name}
+                </Link>
                 <span>•</span>
                 <span>{post.date}</span>
               </div>

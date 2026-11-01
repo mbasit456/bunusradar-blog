@@ -1,5 +1,5 @@
 ---
-title: "Scaling Enterprise Marketing With Automated Branding Systems"
+title: "Enterprise Brand Automation: Multimodal AI Workflows and Content Operations"
 date: "2026-10-17T10:00:00Z"
 excerpt: "Discover how automated branding transforms enterprise growth, streamlining creative workflows, digital asset management, and global marketing consistency."
 category: "Business & Growth"

@@ -1,5 +1,5 @@
 ---
-title: "Scaling Enterprise Productivity with Artificial Intelligence Coding"
+title: "Developer Velocity Benchmarks: Measuring Engineering Output with AI Coding Assistants"
 date: "2026-10-22T14:00:00Z"
 excerpt: "Discover how artificial intelligence coding transforms software architectures, boosts developer workflows, and drives unprecedented enterprise growth."
 category: "Artificial Intelligence"

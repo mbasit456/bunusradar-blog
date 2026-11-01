@@ -404,6 +404,93 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             )}
 
+            {/* Author Profile & E-E-A-T Credibility Box */}
+            {authorData && (
+              <section className="p-6 sm:p-7 rounded-xl border border-zinc-200/90 bg-gradient-to-br from-zinc-50 via-white to-blue-50/30 shadow-sm space-y-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 pb-4 border-b border-zinc-200/70">
+                  <Link href={authorUrl} className="relative block shrink-0 group">
+                    <img
+                      src={authorData.avatar}
+                      alt={authorData.name}
+                      width={72}
+                      height={72}
+                      className="w-16 h-16 sm:w-18 sm:h-18 rounded-full object-cover ring-2 ring-[#1b2e67]/20 group-hover:ring-[#1b2e67] transition-all shadow"
+                    />
+                    <div className="absolute -bottom-1 -right-1 bg-[#1b2e67] text-white p-1 rounded-full shadow" title="Verified Author">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    </div>
+                  </Link>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Link
+                        href={authorUrl}
+                        className="text-lg sm:text-xl font-bold text-zinc-900 hover:text-[#1b2e67] transition-colors"
+                      >
+                        {authorData.name}
+                      </Link>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#1b2e67]/10 text-[#1b2e67] border border-[#1b2e67]/20">
+                        <ShieldCheck className="w-3 h-3 text-[#1b2e67]" />
+                        Verified Domain Expert
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-[#1b2e67]">
+                      {authorData.role}
+                    </p>
+                    <p className="text-xs text-zinc-500">
+                      {authorData.education}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed">
+                  {authorData.bio}
+                </p>
+
+                {authorData.expertise && authorData.expertise.length > 0 && (
+                  <div className="space-y-1.5 pt-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">Core Expertise:</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {authorData.expertise.map((exp, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-0.5 rounded text-[11px] font-medium bg-white border border-zinc-200 text-zinc-700"
+                        >
+                          {exp}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="pt-3 border-t border-zinc-200/70 flex flex-wrap items-center justify-between gap-3 text-xs">
+                  <Link
+                    href={authorUrl}
+                    className="inline-flex items-center gap-1.5 font-bold text-[#1b2e67] hover:text-[#f9b44d] transition-colors"
+                  >
+                    <span>View all publications by {authorData.name}</span>
+                    <span>›</span>
+                  </Link>
+                  <div className="flex items-center gap-3 text-zinc-500">
+                    {authorData.social?.linkedin && (
+                      <a href={authorData.social.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#1b2e67] transition-colors font-medium">
+                        LinkedIn
+                      </a>
+                    )}
+                    {authorData.social?.twitter && (
+                      <a href={authorData.social.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-[#1b2e67] transition-colors font-medium">
+                        Twitter / X
+                      </a>
+                    )}
+                    {authorData.social?.github && (
+                      <a href={authorData.social.github} target="_blank" rel="noopener noreferrer" className="hover:text-[#1b2e67] transition-colors font-medium">
+                        GitHub
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </section>
+            )}
+
             {/* Verified FAQ Section for Human Readers and AI Crawlers */}
             {post.faqs && post.faqs.length > 0 && (
               <section className="pt-8 border-t border-zinc-200 space-y-4">

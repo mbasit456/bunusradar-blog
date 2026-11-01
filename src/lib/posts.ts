@@ -71,9 +71,9 @@ export function resolveAuthorForPost(slug: string, explicitAuthor?: any): {
     authorSlug = resolveAuthorSlug(rawName);
   }
   
-  // 3. Fallback default
-  if (!authorSlug || !AUTHORS[authorSlug]) {
-    authorSlug = 'bunusradar-editorial';
+  // 3. Fallback default to named senior research director
+  if (!authorSlug || !AUTHORS[authorSlug] || authorSlug === 'bunusradar-editorial') {
+    authorSlug = 'alex-vance';
   }
 
   const author = AUTHORS[authorSlug];
