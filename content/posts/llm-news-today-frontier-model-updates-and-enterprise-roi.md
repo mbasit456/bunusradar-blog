@@ -4,7 +4,7 @@ date: "2026-11-01T06:00:00Z"
 excerpt: "Analyze today's top LLM news, evaluating architectural shifts, model performance benchmarks, and actionable ROI metrics for enterprise adoption."
 category: "Artificial Intelligence"
 tags: ["llm news today", "Artificial Intelligence", "Enterprise AI", "Frontier Models", "Machine Learning"]
-author: "BunusRadar Editorial"
+author: "Alex Vance"
 coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false

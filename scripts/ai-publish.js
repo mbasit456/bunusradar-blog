@@ -30,7 +30,21 @@ const OPENAI_KEYWORDS_FILE = path.join(__dirname, 'openai-keywords.json');
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
 const SITE_NAME = 'BunusRadar';
-const AUTHOR = 'BunusRadar Editorial';
+const AUTHOR = 'Alex Vance';
+
+function getAuthorForTopic(topic, category) {
+  const t = (topic + ' ' + (category || '')).toLowerCase();
+  if (t.includes('code') || t.includes('coding') || t.includes('web') || t.includes('next.js') || t.includes('typescript') || t.includes('developer') || t.includes('portfolio') || t.includes('performance')) {
+    return 'Sarah Chen';
+  }
+  if (t.includes('business') || t.includes('saas') || t.includes('finance') || t.includes('roi') || t.includes('money') || t.includes('wealth') || t.includes('monetiz')) {
+    return 'Marcus Sterling';
+  }
+  if (t.includes('productiv') || t.includes('workflow') || t.includes('notion') || t.includes('focus') || t.includes('image') || t.includes('video') || t.includes('creative')) {
+    return 'Elena Rostova';
+  }
+  return 'Alex Vance';
+}
 const DAILY_SLOTS = ['06:00:00Z', '10:00:00Z', '14:00:00Z', '18:00:00Z'];
 
 const { resolveCoverImage, detectTopicKey } = require('./topic-image-matcher.cjs');
@@ -387,7 +401,7 @@ date: "${publishTimestamp}"
 excerpt: "${safeExcerpt.replace(/"/g, '\\"')}"
 category: "${data.category}"
 tags: [${tags.map(t => `"${t}"`).join(', ')}]
-author: "${AUTHOR}"
+author: "${getAuthorForTopic(topic, data.category)}"
 coverImage: "${coverImage}"
 readingTime: "${data.readingTime || '7 min read'}"
 featured: false
