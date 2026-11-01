@@ -8,14 +8,14 @@ import { getOptimizedImageUrl, getCategoryFallback } from '@/lib/images';
 
 export const metadata: Metadata = {
   title: 'Latest Publications | BunusRadar Archive',
-  description: 'Browse all published articles, guides, and intelligence briefings on Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.',
+  description: 'Browse all published articles, guides, and intelligence briefings on Artificial Intelligence, Frontier Models, Developer Tooling, and Productivity Systems.',
   alternates: {
     canonical: 'https://bunusradar.site/latest-publications',
   },
   openGraph: {
     url: 'https://bunusradar.site/latest-publications',
     title: 'Latest Publications | BunusRadar Archive',
-    description: 'Browse all published articles, guides, and intelligence briefings on Technology, Artificial Intelligence, Business & Growth, Productivity, and Lifestyle.',
+    description: 'Browse all published articles, guides, and intelligence briefings on Artificial Intelligence, Frontier Models, Developer Tooling, and Productivity Systems.',
   },
 };
 
@@ -37,7 +37,7 @@ export default function LatestPublicationsPage() {
             Latest Publications
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
-            Explore our daily releases across cutting-edge technology, AI applications, sustainable wealth systems, high-leverage productivity frameworks, and modern living.
+            Explore our daily releases across cutting-edge artificial intelligence, frontier LLM architectures, developer tooling benchmarks, and high-leverage productivity systems.
           </p>
         </div>
 
@@ -108,9 +108,12 @@ export default function LatestPublicationsPage() {
                 </div>
 
                 <div className="pt-2 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800">
-                  <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                  <Link
+                    href={`/author/${post.authorSlug || 'alex-vance'}`}
+                    className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-[#1b2e67] dark:hover:text-[#f9b44d] transition-colors hover:underline"
+                  >
                     By {post.author.name}
-                  </span>
+                  </Link>
                   <Link
                     href={`/blog/${post.slug}`}
                     className="inline-flex items-center gap-1 text-xs font-bold text-[#1b2e67] dark:text-[#f9b44d] hover:underline"

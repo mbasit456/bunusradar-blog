@@ -144,38 +144,65 @@ export default function HomePage() {
 
               {/* Research Benchmarks Quick Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                <Link
-                  href="/research#ai-coding-benchmark"
-                  className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group"
-                >
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">Benchmark</span>
-                  <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
-                    AI Coding Assistants 2026
-                  </strong>
-                  <span className="text-[11px] text-zinc-600 block mt-1">50 tasks across 5 repos. Accuracy, latency & cost.</span>
-                </Link>
+                <div className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">Benchmark</span>
+                    <Link href="/research#ai-coding-benchmark">
+                      <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
+                        AI Coding Assistants 2026
+                      </strong>
+                    </Link>
+                    <span className="text-[11px] text-zinc-600 block mt-1">50 tasks across 5 repos. Accuracy, latency & cost.</span>
+                  </div>
+                  <div className="pt-2 mt-2 border-t border-zinc-200/60 flex items-center justify-between text-[10px]">
+                    <Link href="/research#ai-coding-benchmark" className="text-blue-700 font-bold hover:underline">
+                      Results
+                    </Link>
+                    <Link href="/methodology" className="text-zinc-500 hover:text-[#1b2e67] font-semibold hover:underline">
+                      Methodology →
+                    </Link>
+                  </div>
+                </div>
 
-                <Link
-                  href="/research#llm-pricing"
-                  className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group"
-                >
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">Pricing Tracker</span>
-                  <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
-                    LLM Cost & Token Tracker
-                  </strong>
-                  <span className="text-[11px] text-zinc-600 block mt-1">DeepSeek R1, o3-mini, Claude 3.7, Gemini 2.0 Flash per 1M.</span>
-                </Link>
+                <div className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">Pricing Tracker</span>
+                    <Link href="/research#llm-pricing">
+                      <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
+                        LLM Cost & Token Tracker
+                      </strong>
+                    </Link>
+                    <span className="text-[11px] text-zinc-600 block mt-1">DeepSeek R1, o3-mini, Claude 3.7, Gemini 2.0 Flash per 1M.</span>
+                  </div>
+                  <div className="pt-2 mt-2 border-t border-zinc-200/60 flex items-center justify-between text-[10px]">
+                    <Link href="/research#llm-pricing" className="text-emerald-700 font-bold hover:underline">
+                      Live Matrix
+                    </Link>
+                    <Link href="/methodology" className="text-zinc-500 hover:text-[#1b2e67] font-semibold hover:underline">
+                      Telemetry →
+                    </Link>
+                  </div>
+                </div>
 
-                <Link
-                  href="/research#image-generator-benchmark"
-                  className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group"
-                >
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block">Evaluation</span>
-                  <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
-                    AI Image Generators
-                  </strong>
-                  <span className="text-[11px] text-zinc-600 block mt-1">Prompt adherence & fidelity across 100 test prompts.</span>
-                </Link>
+                <div className="p-3.5 rounded-lg border border-zinc-100 bg-zinc-50/70 hover:bg-zinc-100 transition-colors group flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block">Evaluation</span>
+                    <Link href="/research#image-generator-benchmark">
+                      <strong className="text-xs font-bold text-zinc-900 group-hover:text-[#1b2e67] block mt-0.5">
+                        AI Image Generators
+                      </strong>
+                    </Link>
+                    <span className="text-[11px] text-zinc-600 block mt-1">Prompt adherence & fidelity across 100 test prompts.</span>
+                  </div>
+                  <div className="pt-2 mt-2 border-t border-zinc-200/60 flex items-center justify-between text-[10px]">
+                    <Link href="/research#image-generator-benchmark" className="text-purple-700 font-bold hover:underline">
+                      Scores
+                    </Link>
+                    <Link href="/methodology" className="text-zinc-500 hover:text-[#1b2e67] font-semibold hover:underline">
+                      Test Suite →
+                    </Link>
+                  </div>
+                </div>
               </div>
             </section>
 

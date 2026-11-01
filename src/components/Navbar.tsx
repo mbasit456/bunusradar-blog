@@ -27,8 +27,8 @@ const DEFAULT_TRENDING: TrendingItem[] = [
     title: 'DeepSeek AI vs ChatGPT vs Claude: The Ultimate AI Showdown (2026)',
   },
   {
-    slug: 'future-of-remote-work-digital-nomad-careers-2026',
-    title: 'The Future of Remote Work & Digital Nomad Careers in 2026',
+    slug: 'openai-o1-vs-gpt-4o-benchmark-and-enterprise-cost-guide',
+    title: 'OpenAI o1 vs GPT-4o: Benchmark and Enterprise Cost Guide',
   },
   {
     slug: 'how-to-scale-digital-micro-saas',
