@@ -24,6 +24,56 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/blog/strategic-impact-of-ai-programing-on-modern-enterprise-architecture',
+        destination: '/blog/strategic-impact-of-ai-programming-on-modern-enterprise-architecture',
+        permanent: true,
+      },
+      {
+        source: '/blog/top-free-ai-video-generators-2026',
+        destination: '/blog/best-free-ai-video-generators-text-to-video-2026',
+        permanent: true,
+      },
+      {
+        source: '/blog/scaling-enterprise-workflows-with-advanced-artificial-ai-solutions',
+        destination: '/blog/architecting-enterprise-scale-and-efficiency-with-modern-ai-systems',
+        permanent: true,
+      },
+      {
+        source: '/blog/scaling-enterprise-workflows-with-conversational-artificial-intelligence',
+        destination: '/blog/artificial-intelligence-chatbots-enterprise-architecture-roi',
+        permanent: true,
+      },
+      {
+        source: '/blog/optimizing-enterprise-ai-use-for-maximum-scalability-and-roi',
+        destination: '/blog/artificial-intelligence-in-business-implementation-roi-guide',
+        permanent: true,
+      },
+      {
+        source: '/blog/scaling-operations-strategic-evolution-of-ai-in-business',
+        destination: '/blog/artificial-intelligence-in-business-implementation-roi-guide',
+        permanent: true,
+      },
+      {
+        source: '/blog/taproad-modern-digital-infrastructure-growth',
+        destination: '/blog/mastering-nextjs-performance-2026',
+        permanent: true,
+      },
+      {
+        source: '/blog/scaling-digital-operations-business-sites-in-india',
+        destination: '/blog/most-profitable-digital-business-models-microsaas-2026',
+        permanent: true,
+      },
+      {
+        source: '/blog/digital-diplomacy-cybersecurity-lessons-bridge-of-spies-spielberg',
+        destination: '/blog/mastering-nextjs-performance-2026',
+        permanent: true,
+      },
+      {
+        source: '/blog/leadership-quotes-operating-code-strategic-tech-frameworks',
+        destination: '/blog/hyper-focused-productivity-systems',
+        permanent: true,
+      },
+      {
         source: '/blog/how-to-start-a-photography-business-tech-saas-blueprint',
         destination: '/blog/how-to-scale-digital-micro-saas',
         permanent: true,

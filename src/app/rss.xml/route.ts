@@ -35,7 +35,7 @@ export async function GET() {
         ? (rawImage.startsWith('http') ? rawImage : `${baseUrl}${rawImage.startsWith('/') ? rawImage : `/${rawImage}`}`)
         : '';
       const escapedImageUrl = fullImageUrl ? escapeXmlAttr(fullImageUrl) : '';
-      const authorName = post.author?.name || 'BunusRadar Editorial';
+      const authorName = post.author?.name || 'Alex Vance';
       const escapedAuthorName = escapeXmlAttr(authorName);
 
       return `

@@ -20,7 +20,12 @@ export const metadata: Metadata = {
   },
   description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
   keywords: ['AI', 'Technology', 'Productivity', 'Business Growth', 'Software Engineering', 'BunusRadar'],
-  authors: [{ name: 'BunusRadar Editorial' }],
+  authors: [
+    { name: 'Alex Vance' },
+    { name: 'Sarah Chen' },
+    { name: 'Elena Rostova' },
+    { name: 'Marcus Sterling' }
+  ],
   creator: 'BunusRadar',
   openGraph: {
     type: 'website',
