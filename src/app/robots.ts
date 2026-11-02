@@ -5,93 +5,104 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      // Google AdSense Crawlers: explicit full access
+      // Google AdSense Crawlers
       {
         userAgent: 'Mediapartners-Google',
         allow: '/',
+        disallow: ['/api/'],
       },
       {
         userAgent: 'AdsBot-Google',
         allow: '/',
+        disallow: ['/api/'],
       },
-      // Standard search engines and Google News: full access
+      // Standard search engines and Google News
       {
         userAgent: 'Googlebot',
         allow: '/',
+        disallow: ['/api/', '/search'],
       },
       {
         userAgent: 'Googlebot-News',
         allow: '/',
+        disallow: ['/api/'],
       },
       {
         userAgent: 'Bingbot',
         allow: '/',
+        disallow: ['/api/', '/search'],
       },
-      // AI and Generative Answer Crawlers: explicitly welcomed for AEO, GEO, and AIO
-      // OpenAI ChatGPT training and real-time retrieval
+      // OpenAI ChatGPT Search Indexer (Primary crawler for ChatGPT Search)
       {
-        userAgent: 'GPTBot',
+        userAgent: 'OAI-SearchBot',
         allow: '/',
+        disallow: ['/api/'],
       },
+      // OpenAI User-Initiated Retrieval Agent (Live browsing lookups)
       {
         userAgent: 'ChatGPT-User',
         allow: '/',
+        disallow: ['/api/'],
       },
-      // Anthropic Claude
+      // OpenAI Training Crawler
+      {
+        userAgent: 'GPTBot',
+        allow: '/',
+        disallow: ['/api/'],
+      },
+      // Anthropic Search Crawler
+      {
+        userAgent: 'Claude-SearchBot',
+        allow: '/',
+        disallow: ['/api/'],
+      },
+      // Anthropic Training and Web Crawlers
       {
         userAgent: 'ClaudeBot',
         allow: '/',
+        disallow: ['/api/'],
       },
       {
         userAgent: 'Claude-Web',
         allow: '/',
+        disallow: ['/api/'],
       },
-      // Perplexity AI Search
+      // Perplexity AI Search Crawler
       {
         userAgent: 'PerplexityBot',
         allow: '/',
+        disallow: ['/api/'],
       },
       // Google Gemini, AI Overviews, and SGE
       {
         userAgent: 'Google-Extended',
         allow: '/',
+        disallow: ['/api/'],
       },
       // Apple Intelligence and Siri
       {
+        userAgent: 'Applebot',
+        allow: '/',
+        disallow: ['/api/'],
+      },
+      {
         userAgent: 'Applebot-Extended',
         allow: '/',
+        disallow: ['/api/'],
       },
       // Meta AI
       {
         userAgent: 'Meta-ExternalAgent',
         allow: '/',
+        disallow: ['/api/'],
       },
-      // Common Crawl (primary foundation for LLM pretraining)
+      // Common Crawl (Foundation for pretraining)
       {
         userAgent: 'CCBot',
         allow: '/',
+        disallow: ['/api/'],
       },
-      // ByteDance / TikTok AI Search
-      {
-        userAgent: 'Bytespider',
-        allow: '/',
-      },
-      // Diffbot Structured Knowledge Graph
-      {
-        userAgent: 'Diffbot',
-        allow: '/',
-      },
-      // You.com AI Search
-      {
-        userAgent: 'YouBot',
-        allow: '/',
-      },
-      // Cohere AI
-      {
-        userAgent: 'cohere-ai',
-        allow: '/',
-      },
-      // Catch-all: all other bots granted full crawl access (excluding internal search and APIs)
+      // Catch-all: all other bots granted public access (excluding internal search and APIs)
       {
         userAgent: '*',
         allow: '/',

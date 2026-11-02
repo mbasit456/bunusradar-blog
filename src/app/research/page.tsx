@@ -65,17 +65,61 @@ export default function ResearchPage() {
         '@type': 'Dataset',
         name: 'BunusRadar AI Coding Assistant Benchmark 2026',
         description: 'Task success rate, bug count, latency, and cost for 6 leading AI coding assistants across 50 standardized repository tasks.',
-        url: `${baseUrl}/research`,
+        url: `${baseUrl}/research#ai-coding-benchmark`,
         creator: { '@type': 'Organization', name: 'BunusRadar', url: baseUrl },
         license: 'https://creativecommons.org/licenses/by/4.0/',
+        distribution: [
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'application/json',
+            contentUrl: `${baseUrl}/datasets/ai-coding-assistants-benchmark-2026.json`,
+          },
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'text/csv',
+            contentUrl: `${baseUrl}/datasets/ai-coding-assistants-benchmark-2026.csv`,
+          },
+        ],
       },
       {
         '@type': 'Dataset',
-        name: 'LLM Pricing & Token Efficiency Tracker 2026',
-        description: 'Current public pricing per million tokens for leading large language models, updated quarterly.',
-        url: `${baseUrl}/research`,
+        name: 'LLM Pricing & Token Cost Tracker 2026',
+        description: 'Current public pricing per million tokens for leading large language models, updated bi-weekly.',
+        url: `${baseUrl}/research#llm-pricing`,
         creator: { '@type': 'Organization', name: 'BunusRadar', url: baseUrl },
         license: 'https://creativecommons.org/licenses/by/4.0/',
+        distribution: [
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'application/json',
+            contentUrl: `${baseUrl}/datasets/llm-pricing-token-tracker-2026.json`,
+          },
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'text/csv',
+            contentUrl: `${baseUrl}/datasets/llm-pricing-token-tracker-2026.csv`,
+          },
+        ],
+      },
+      {
+        '@type': 'Dataset',
+        name: 'AI Image Generator Accuracy Test 2026',
+        description: 'Prompt adherence and fidelity scores for leading generative image models across 100 benchmark prompts.',
+        url: `${baseUrl}/research#image-generator-benchmark`,
+        creator: { '@type': 'Organization', name: 'BunusRadar', url: baseUrl },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+        distribution: [
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'application/json',
+            contentUrl: `${baseUrl}/datasets/ai-image-generators-benchmark-2026.json`,
+          },
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'text/csv',
+            contentUrl: `${baseUrl}/datasets/ai-image-generators-benchmark-2026.csv`,
+          },
+        ],
       },
     ],
   };

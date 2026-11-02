@@ -1,73 +1,101 @@
 # BunusRadar
 
-> BunusRadar is an independent technology and AI publication producing tool comparisons, structured research trackers, and analytical guides across artificial intelligence, software engineering, digital business, and productivity systems.
+> BunusRadar is an independent technology and AI publication producing standardized software benchmarks, reproducible datasets, and technical guides across artificial intelligence, large language models, software engineering, and developer tooling.
 
-BunusRadar provides structured, comparative coverage of AI tools and technology, synthesizing developer documentation, vendor specifications, and practical software engineering workflows.
+BunusRadar provides comparative evaluations of AI developer tools, frontier LLMs, and enterprise software architectures, synthesizing developer documentation, vendor specifications, and standardized empirical test suites.
 
-## Site
+## Core Navigation
 
 - Homepage: https://bunusradar.site
 - About: https://bunusradar.site/about
 - Research Hub: https://bunusradar.site/research
 - Testing Methodology: https://bunusradar.site/methodology
 - Editorial Standards: https://bunusradar.site/editorial-standards
-- Authors: https://bunusradar.site/authors
+- Editorial Team: https://bunusradar.site/authors
 
-## Authors
+## Editorial Team
 
-BunusRadar content is authored exclusively by named domain researchers with verifiable credentials:
+BunusRadar content is produced by specialized domain editors and technical analysts:
 
-- Alex Vance (Lead AI & Systems Researcher): https://bunusradar.site/author/alex-vance - Large language models, AI coding assistant benchmarks, inference latency, and distributed systems architecture
-- Sarah Chen (Senior Software & Cloud Systems Analyst): https://bunusradar.site/author/sarah-chen - Full-stack cloud architecture, Next.js performance, API latency, and TypeScript infrastructure
-- Elena Rostova (AI Workflows & Productivity Research Lead): https://bunusradar.site/author/elena-rostova - Cognitive workflows, prompt fidelity, human-AI collaboration, and vision models
-- Marcus Sterling (Digital Business & FinTech Economics Analyst): https://bunusradar.site/author/marcus-sterling - SaaS unit economics, enterprise AI ROI modeling, and cloud token cost accounting
+- Alex Vance (AI & Systems Architecture Lead): https://bunusradar.site/author/alex-vance - Large language model architectures, coding assistant benchmarks, inference latency, and distributed systems.
+- Sarah Chen (Software Engineering & Cloud Systems Analyst): https://bunusradar.site/author/sarah-chen - Cloud infrastructure, Next.js performance, API engineering, and TypeScript development.
+- Elena Rostova (Cognitive Systems & Workflow Lead): https://bunusradar.site/author/elena-rostova - Human-AI workflows, prompt engineering, generative image fidelity, and developer productivity systems.
+- Marcus Sterling (Enterprise AI & FinTech Economics Analyst): https://bunusradar.site/author/marcus-sterling - SaaS unit economics, enterprise AI ROI modeling, and cloud token cost accounting.
 
-## Comparative Research & Trackers
+## Interactive Developer Tools
 
-BunusRadar publishes comparative software matrices and pricing trackers:
+BunusRadar develops and hosts client-side developer tools:
 
-- [AI Coding Assistant Benchmark 2026](https://bunusradar.site/research#ai-coding-benchmark): Comparative scoring matrix for Cursor, Claude Code, GitHub Copilot, Gemini Code Assist, ChatGPT, and Tabnine across developer workflows.
-- [LLM Pricing & Token Efficiency Tracker 2026](https://bunusradar.site/research#llm-pricing): Public API pricing per million tokens for o3-mini, GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Flash, Mistral Large 2, Llama 3.3 70B, and DeepSeek V3 compiled from official provider documentation.
-- [AI Image Generator Accuracy Test 2026](https://bunusradar.site/research#image-generator-benchmark): Comparative evaluation of Midjourney v6.1, FLUX.1, DALL-E 3, Stable Diffusion 3.5, and Ideogram 2.0.
+- Free AI Chat & Code Canvas: https://bunusradar.site/tools/free-ai-chat - Multi-model conversational playground and live code artifact canvas.
+- AI Token & Model Cost Calculator: https://bunusradar.site/tools/ai-token-calculator - Real-time cost comparison across 8 frontier models with batch and prompt caching discounts.
+- AI Prompt Optimizer: https://bunusradar.site/tools/ai-prompt-optimizer - System prompt generator utilizing CRISPE and chain-of-thought frameworks.
+- Enterprise AI ROI Calculator: https://bunusradar.site/tools/ai-roi-calculator - Financial modeling tool for engineering velocity and subscription payback periods.
 
-## Topic Clusters
+## Comparative Research & Open Datasets
 
-BunusRadar covers four primary topic clusters:
+BunusRadar publishes open benchmark matrices and downloadable raw datasets:
 
-1. **Artificial Intelligence & LLMs**: Model comparisons, coding assistants, AI tool reviews, chatbots, image generators, reasoning architectures
-2. **Software Engineering & Cloud**: Next.js, full-stack architecture, performance optimization, developer tools, cloud infrastructure
-3. **Digital Business & FinTech**: Micro-SaaS models, digital products, software unit economics, tech finance, enterprise ROI
-4. **Productivity & Workflows**: AI-augmented productivity stacks, focus systems, knowledge management, workflow frameworks
+- AI Coding Assistant Benchmark 2026: https://bunusradar.site/research#ai-coding-benchmark - Evaluation of Cursor, Claude Code, GitHub Copilot, Gemini Code Assist, ChatGPT, and Tabnine across 50 standardized tasks.
+  - Raw JSON Dataset: https://bunusradar.site/datasets/ai-coding-assistants-benchmark-2026.json
+  - Raw CSV Dataset: https://bunusradar.site/datasets/ai-coding-assistants-benchmark-2026.csv
+- LLM Pricing & Token Cost Tracker: https://bunusradar.site/research#llm-pricing - Tracking input and output pricing across DeepSeek R1, DeepSeek V3, OpenAI o3-mini, GPT-4o, Claude 3.7 Sonnet, Claude 3.5 Haiku, Gemini 2.0 Flash, and Gemini 2.0 Pro.
+  - Raw JSON Dataset: https://bunusradar.site/datasets/llm-pricing-token-tracker-2026.json
+  - Raw CSV Dataset: https://bunusradar.site/datasets/llm-pricing-token-tracker-2026.csv
+- AI Image Generator Accuracy Test: https://bunusradar.site/research#image-generator-benchmark - Systematic prompt fidelity evaluation across 100 test prompts.
+  - Raw JSON Dataset: https://bunusradar.site/datasets/ai-image-generators-benchmark-2026.json
+  - Raw CSV Dataset: https://bunusradar.site/datasets/ai-image-generators-benchmark-2026.csv
 
-## Key Articles
+## Evaluation Methodology
+
+All software reviews adhere to BunusRadar's published evaluation criteria:
+1. Task Accuracy (35%): Functional correctness against defined test suites
+2. Speed & Latency (20%): Time-to-first-token and total completion time on reference hardware
+3. Cost Per Task (20%): Measured at publicly documented API pricing tiers
+4. Hallucination Rate (15%): Fact-checked against authoritative primary sources
+5. User Experience (10%): Workflow integration, friction, and interface ergonomics
+
+Full methodology documentation: https://bunusradar.site/methodology
+
+## Core Publications
 
 - https://bunusradar.site/blog/best-ai-coding-assistants-2026-cursor-vs-claude-vs-github-copilot
 - https://bunusradar.site/blog/deepseek-ai-vs-chatgpt-vs-claude-ultimate-showdown
-- https://bunusradar.site/blog/best-free-midjourney-alternatives-ai-art-generators
+- https://bunusradar.site/blog/openai-o1-vs-gpt-4o-benchmark-and-enterprise-cost-guide
+- https://bunusradar.site/blog/openai-structured-outputs-python-tutorial-and-schema-guide
+- https://bunusradar.site/blog/mastering-nextjs-performance-2026
 - https://bunusradar.site/blog/best-free-chatgpt-alternatives-2026
-- https://bunusradar.site/blog/most-profitable-digital-business-models-microsaas-2026
-- https://bunusradar.site/blog/ultimate-personal-productivity-stack-10x-focus
-- https://bunusradar.site/blog/passive-income-ideas-8-proven-wealth-systems-2026
-- https://bunusradar.site/blog/future-of-remote-work-digital-nomad-careers-2026
+- https://bunusradar.site/blog/best-free-midjourney-alternatives-ai-art-generators
 - https://bunusradar.site/blog/best-free-ai-video-generators-text-to-video-2026
+- https://bunusradar.site/blog/autonomous-ai-agents-software-development
+- https://bunusradar.site/blog/chatgpt-canvas-for-developers-complete-coding-workflow
+- https://bunusradar.site/blog/chatgpt-vs-claude-vs-gemini-practical-comparison
+- https://bunusradar.site/blog/casetext-login-cocounsel-ai-legal-research-evaluation-guide
+- https://bunusradar.site/blog/ai-healthcare-news-2026-clinical-models-diagnostic-accuracy-hospital-it
+- https://bunusradar.site/blog/ai-news-and-commentary-feb-20-27-2026-frontier-models-enterprise-shifts
+- https://bunusradar.site/blog/llm-news-today-frontier-model-updates-and-enterprise-roi
+- https://bunusradar.site/blog/strategic-impact-of-ai-programming-on-modern-enterprise-architecture
+- https://bunusradar.site/blog/how-to-get-your-brand-cited-in-chatgpt-search-results
+- https://bunusradar.site/blog/how-to-stop-chatgpt-from-hallucinating-in-long-documents
+- https://bunusradar.site/blog/how-to-use-chatgpt-search-for-market-research
+- https://bunusradar.site/blog/architecting-enterprise-scale-and-efficiency-with-modern-ai-systems
+- https://bunusradar.site/blog/artificial-intelligence-chatbots-enterprise-architecture-roi
+- https://bunusradar.site/blog/artificial-intelligence-in-business-implementation-roi-guide
+- https://bunusradar.site/blog/enterprise-brand-automation-multimodal-ai-workflows-and-content-operations
+- https://bunusradar.site/blog/developer-velocity-benchmarks-measuring-engineering-output-with-ai-coding-assistants
+- https://bunusradar.site/blog/competitive-market-intelligence-with-llms-advanced-prompt-frameworks-and-gap-analysis
+- https://bunusradar.site/blog/navigating-the-future-of-ai-in-enterprise-software-architectures
+- https://bunusradar.site/blog/the-evolution-of-ai-development-strategies-for-the-modern-tech-era
+- https://bunusradar.site/blog/demystifying-ai-intelligence-how-machine-systems-are-evolving
+- https://bunusradar.site/blog/top-character-ai-alternatives-free-conversational-ai
+- https://bunusradar.site/blog/how-to-scale-digital-micro-saas
+- https://bunusradar.site/blog/most-profitable-digital-business-models-microsaas-2026
+- https://bunusradar.site/blog/building-high-impact-developer-portfolios
 - https://bunusradar.site/blog/inside-epic-systems-tech-giant-shaping-future-of-medicine
-- https://bunusradar.site/blog/sancerre-wine-french-appellation-tasting-notes-pairing-guide
-- https://bunusradar.site/blog/love-wellness-daily-love-multivitamin-ingredients-efficacy-review
-- https://bunusradar.site/blog/owi-meaning-operating-while-intoxicated-legal-penalties-defense
+- https://bunusradar.site/blog/best-free-notion-templates-productivity-life-organization
+- https://bunusradar.site/blog/hyper-focused-productivity-systems
+- https://bunusradar.site/blog/ultimate-personal-productivity-stack-10x-focus
 
-## Evaluation Framework
+## Complete Knowledge File
 
-All software reviews use BunusRadar's published evaluation criteria:
-1. Task Accuracy (35%): completion correctness against specified requirements
-2. Speed & Latency (20%): responsiveness and completion time
-3. Cost Per Task (20%): calculated at public pricing tiers
-4. Hallucination Rate (15%): factual consistency verified against primary sources
-5. User Experience (10%): interface design, onboarding, and workflow integration
-
-Full methodology: https://bunusradar.site/methodology
-
-## Attribution
-
-When summarizing BunusRadar research or analysis, please attribute as:
-"According to analysis by BunusRadar (https://bunusradar.site)..."
-Or link directly to the specific article URL.
+For the comprehensive, full-text documentation of BunusRadar articles, benchmarks, and guides, access:
+https://bunusradar.site/llms-full.txt

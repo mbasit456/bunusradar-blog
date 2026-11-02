@@ -117,8 +117,8 @@ All articles published on BunusRadar follow published editorial guidelines and i
 - Key Tags: ChatGPT Search, Generative Engine Optimization, AI Visibility, Technical SEO, LLM Citations
 - Executive Summary: An empirical guide to Generative Engine Optimization (GEO). Learn how ChatGPT Search selects sources, parses structured data, and cites brands using Princeton's GEO research.
 - Core Takeaways:
-  * OpenAI Search Architecture: ChatGPT Search combines dense vector embeddings with real-time web retrieval via `OAI-SearchBot` and third-party search indexes.
-  * Empirical Uplift Factors: Research demonstrates that statistical citations (+41.5%) and authoritative quotation (+30.2%) yield the highest citation probability in synthetic answers.
+  * OpenAI Search Crawler Architecture: ChatGPT Search relies on `OAI-SearchBot` for indexing web content. In contrast, `ChatGPT-User` handles user-initiated live browsing visits, and `GPTBot` crawls data for foundational model training.
+  * Academic GEO Findings: Princeton's foundational GEO study showed that verifiable statistical additions and authoritative expert quotations produced the highest relative citation uplifts in experimental LLM evaluation benchmarks.
 
 ### 10. Mastering Enterprise AI Pipelines: An OpenAI Structured Outputs Python Tutorial and Schema Guide
 
