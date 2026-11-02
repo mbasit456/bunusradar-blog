@@ -144,6 +144,26 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/blog/is-liquid-iv-good-for-you-analyzing-d2c-tech-saas-growth',
+        destination: '/blog/how-to-scale-digital-micro-saas',
+        permanent: true,
+      },
+      {
+        source: '/blog/is-liquid-iv-good-for-you',
+        destination: '/blog/how-to-scale-digital-micro-saas',
+        permanent: true,
+      },
+      {
+        source: '/blog/optimizing-field-operations-mileage-rate-2025',
+        destination: '/blog/how-to-scale-digital-micro-saas',
+        permanent: true,
+      },
+      {
+        source: '/blog/architecting-financial-growth-the-milestone-card-credit-strategy',
+        destination: '/blog/artificial-intelligence-in-business-implementation-roi-guide',
+        permanent: true,
+      },
+      {
         source: '/blog/how-to-start-a-photography-business-tech-saas-blueprint',
         destination: '/blog/how-to-scale-digital-micro-saas',
         permanent: true,
