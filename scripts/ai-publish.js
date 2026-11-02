@@ -262,8 +262,7 @@ function getDailyKeywords(totalCount) {
 const MODEL_CANDIDATES = [
   'gemini-3.5-flash-lite',
   'gemini-3.5-flash',
-  'gemini-flash-latest',
-];
+  ];
 
 function safeJsonParse(jsonString) {
   try {
@@ -336,7 +335,7 @@ STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
   "title": "Natural, engaging, varied article title containing the keyword naturally without repetitive corporate buzzwords (55-70 chars)",
   "slug": "url-friendly-slug-with-hyphens",
   "excerpt": "Compelling 2-3 sentence SEO meta description (150-160 chars)",
-  "category": "ONE of: Technology | Artificial Intelligence | Business & Growth | Productivity | Lifestyle",
+  "category": "ONE of: Technology | Artificial Intelligence | Business & Growth | Productivity",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
   "readingTime": "estimated reading time like '7 min read'",
   "body": "Full article in markdown (1300-1800 words). Use ## for H2 headings, ### for H3. Include an engaging intro, 4-6 detailed sections with actionable insights, bullet points/tables where helpful, and a thoughtful conclusion. NO frontmatter, just the body content."
@@ -401,7 +400,7 @@ date: "${publishTimestamp}"
 excerpt: "${safeExcerpt.replace(/"/g, '\\"')}"
 category: "${data.category}"
 tags: [${tags.map(t => `"${t}"`).join(', ')}]
-author: "${getAuthorForTopic(topic, data.category)}"
+author: "${getAuthorForTopic(keyword || data.title, data.category)}"
 coverImage: "${coverImage}"
 readingTime: "${data.readingTime || '7 min read'}"
 featured: false
