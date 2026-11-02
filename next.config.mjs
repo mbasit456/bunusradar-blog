@@ -24,6 +24,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/blog',
+        destination: '/latest-publications',
+        permanent: true,
+      },
+      {
+        source: '/terms',
+        destination: '/terms-and-conditions',
+        permanent: true,
+      },
+      {
         source: '/blog/strategic-impact-of-ai-programing-on-modern-enterprise-architecture',
         destination: '/blog/strategic-impact-of-ai-programming-on-modern-enterprise-architecture',
         permanent: true,
