@@ -254,7 +254,7 @@ const nextConfig = {
       },
       {
         source: '/blog/money-piece-hair-trend-styling-maintenance-guide',
-        destination: '/blog/how-to-make-money-online-2026-legitimate-methods-beginners',
+        destination: '/blog/how-to-scale-digital-micro-saas',
         permanent: true,
       },
       {
@@ -294,7 +294,7 @@ const nextConfig = {
       },
       {
         source: '/blog/phone-prefix-702-location-time-zone-caller-identification',
-        destination: '/blog/laptop-giveaway-scams-warning-signs-phishing-prevention',
+        destination: '/blog/casetext-login-cocounsel-ai-legal-research-evaluation-guide',
         permanent: true,
       },
       {
