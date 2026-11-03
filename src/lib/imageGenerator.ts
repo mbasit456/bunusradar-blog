@@ -142,7 +142,7 @@ export function buildAdaptiveNegativePrompt(
 ): string {
   const userExclusions: string[] = [];
   if (userPrompt) {
-    const exclusionMatches = userPrompt.matchAll(/(?:without|no|exclude|omit|remove|don't include|do not include)\s+([a-zA-Z0-9\s,]+?)(?=[.,;!?]|$)/gi);
+    const exclusionMatches = Array.from(userPrompt.matchAll(/(?:without|no|exclude|omit|remove|don't include|do not include)\s+([a-zA-Z0-9\s,]+?)(?=[.,;!?]|$)/gi));
     for (const match of exclusionMatches) {
       if (match[1] && match[1].trim()) {
         userExclusions.push(match[1].trim());
