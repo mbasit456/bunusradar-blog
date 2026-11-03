@@ -271,11 +271,23 @@ export async function getPostBySlug(slug: string, includeScheduled = true): Prom
     return `<h${depth} id="${id}" class="scroll-mt-24 group flex items-center font-bold">${text} <a href="#${id}" class="ml-2 text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity text-sm font-normal">#</a></h${depth}>`;
   };
 
-  const htmlContent = await marked.parse(content, { renderer });
-
   const authorResolved = resolveAuthorForPost(slug, data.author);
   const faqs = extractFaqsFromContent(content);
   const keyTakeaways = extractKeyTakeaways(content);
+
+  // Strip duplicate sections from prose so they render exclusively in their dedicated UI cards
+  let proseMarkdown = content;
+  if (keyTakeaways.length > 0) {
+    proseMarkdown = proseMarkdown.replace(/(?:^|\r?\n)#{2,3}\s+Key Takeaways[\s\S]*?(?=\r?\n##\s+[^#]|\s*$)/i, '\n\n');
+  }
+  if (faqs.length > 0) {
+    proseMarkdown = proseMarkdown.replace(/(?:^|\r?\n)#{2,3}\s+(?:Frequently Asked Questions|FAQ)[\s\S]*?(?=\r?\n##\s+[^#]|\s*$)/i, '\n\n');
+  }
+
+  const htmlContent = await marked.parse(proseMarkdown.trim(), { renderer });
+
+  // Clean TOC to avoid duplicate jump to key takeaways already displayed in executive summary
+  const cleanToc = toc.filter((item) => item.id !== 'key-takeaways');
 
   return {
     slug,
@@ -295,7 +307,7 @@ export async function getPostBySlug(slug: string, includeScheduled = true): Prom
     featured: Boolean(data.featured),
     content,
     htmlContent,
-    toc,
+    toc: cleanToc,
     faqs,
     keyTakeaways,
   };
@@ -366,8 +378,10 @@ export function extractFaqsFromContent(markdown: string): FaqItem[] {
 
 export function extractKeyTakeaways(markdown: string): string[] {
   const bullets: string[] = [];
-  const lines = markdown.split('\n');
+  const keySectionMatch = markdown.match(/(?:^|\r?\n)#{2,3}\s+Key Takeaways[\s\S]*?(?=\r?\n##\s+[^#]|\s*$)/i);
+  const targetText = keySectionMatch ? keySectionMatch[0] : markdown;
 
+  const lines = targetText.split('\n');
   for (const line of lines) {
     const trimmed = line.trim();
     if ((trimmed.startsWith('* ') || trimmed.startsWith('- ')) && trimmed.length > 25 && !trimmed.includes('http')) {
@@ -377,14 +391,14 @@ export function extractKeyTakeaways(markdown: string): string[] {
         .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
         .replace(/<[^>]*>/g, '')
         .trim();
-      if (clean.length > 30 && clean.length < 240) {
+      if (clean.length > 25 && clean.length < 240) {
         bullets.push(clean);
-        if (bullets.length >= 3) break;
+        if (bullets.length >= 4) break;
       }
     }
   }
 
-  return bullets;
+  return bullets.slice(0, 4);
 }
 
 

@@ -58,3 +58,6 @@ For legal tech founders and independent practitioners designing custom document 
 To achieve maximum return on legal technology investments, law firms should establish structured training programs rather than relying on unguided associate experimentation. Teams should establish standard operating procedures that require independent human verification of all cited case law and statutory references.
 
 Furthermore, legal operations directors should regularly review subscription utilization metrics to ensure licenses are actively deployed across litigation and transactional groups. For a deeper understanding of how modern generative systems balance accuracy, reasoning, and operating costs, explore our comprehensive [ChatGPT vs Claude vs Gemini Practical Comparison](/blog/chatgpt-vs-claude-vs-gemini-practical-comparison).
+
+> [!NOTE]
+> **Legal Technology & Professional Disclaimer:** This evaluation examines legal research platforms, AI citation verification, and workflow automation software for informational and technology research purposes only. BunusRadar is not a law firm and does not provide legal advice or attorney representations. Legal professionals must independently verify citations, precedent validity, and local jurisdictional rules before filing or submitting court materials.

@@ -1,57 +1,51 @@
-Type,ID/Tool,Category/Developer,Metric1,Metric2,Metric3,Metric4,OverallScore
-Summary,"Cursor (Claude 3.5 Sonnet Backend)","Anysphere",0.91,2,13m,$0.12,9.1
-Summary,"Claude Code (CLI Agent)","Anthropic",0.89,3,15m,$0.18,8.7
-Summary,"GitHub Copilot (Workspace Mode)","GitHub / Microsoft",0.82,6,18m,$0.08,7.9
-Summary,"Gemini Code Assist","Google Cloud",0.8,7,17m,$0.1,7.6
-Summary,"ChatGPT (GPT-4o Canvas)","OpenAI",0.78,8,20m,$0.22,7.2
-Summary,"Tabnine (Enterprise)","Tabnine",0.71,11,16m,$0.06,6.5
-Task,"TASK-001","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-002","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-003","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-004","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-005","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
-Task,"TASK-006","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-007","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-008","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-009","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-010","TypeScript Architecture","TypeScript","TypeScript Architecture Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
-Task,"TASK-011","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-012","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-013","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-014","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-015","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
-Task,"TASK-016","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-017","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-018","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-019","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-020","Python Concurrency & Async","Python","Python Concurrency & Async Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
-Task,"TASK-021","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-022","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-023","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-024","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-025","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
-Task,"TASK-026","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-027","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-028","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-029","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-030","Rust Memory & Lifetimes","Rust","Rust Memory & Lifetimes Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
-Task,"TASK-031","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-032","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-033","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-034","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-035","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
-Task,"TASK-036","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-037","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-038","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-039","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-040","Go Microservice API & Channels","Go","Go Microservice API & Channels Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
-Task,"TASK-041","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 1","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-042","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 2","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-043","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 3","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-044","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 4","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-045","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 5","Tests: 8","Cursor: PASS","Score: 10"
-Task,"TASK-046","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 6","Tests: 9","Cursor: PASS","Score: 10"
-Task,"TASK-047","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 7","Tests: 10","Cursor: PASS","Score: 10"
-Task,"TASK-048","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 8","Tests: 11","Cursor: PASS","Score: 10"
-Task,"TASK-049","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 9","Tests: 12","Cursor: PASS","Score: 10"
-Task,"TASK-050","Next.js App Router & Edge Server Actions","TypeScript","Next.js App Router & Edge Server Actions Evaluation Subtask 10","Tests: 8","Cursor: FAIL","Score: 0"
+TaskID,Category,Language,TaskName,AssertionsCount,Cursor_Result,ClaudeCode_Result,Copilot_Result,Gemini_Result,ChatGPT4o_Result,Tabnine_Result,Cursor_TTFT_ms,Cursor_CostUSD
+TASK-001,"TypeScript & React Architecture","TypeScript","Next.js 15 Server Action Optimistic State Mutation with Rollback",14,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.12
+TASK-002,"TypeScript & React Architecture","TypeScript","Discriminated Union Event Bus with Exhaustive Type Narrowing",18,PASS,PASS,PASS,PASS,PASS,PASS,11000,0.10
+TASK-003,"TypeScript & React Architecture","TypeScript","React Server Components Suspense Streaming Hydration Boundary Fix",16,PASS,PASS,PASS,PASS,PASS,PASS,15000,0.15
+TASK-004,"TypeScript & React Architecture","TypeScript","Zod v3 Recursive JSON-LD Schema Validation and Type Inference",22,PASS,PASS,PASS,PASS,PASS,PASS,14000,0.14
+TASK-005,"TypeScript & React Architecture","TypeScript","TanStack Query v5 Infinite Scroll Virtualized Window Invalidation",19,PASS,PASS,PASS,PASS,PASS,FAIL,13000,0.11
+TASK-006,"TypeScript & React Architecture","TypeScript","Redux Toolkit RTK Query Optimistic Cache Update with EntityAdapter",15,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.11
+TASK-007,"TypeScript & React Architecture","TypeScript","Dynamic CSS-in-JS Token Extraction to Tailwind v4 CSS Variables",12,PASS,PASS,PASS,PASS,PASS,PASS,10000,0.09
+TASK-008,"TypeScript & React Architecture","TypeScript","Web Worker Chunked SHA-256 Checksum Pipeline via Comlink",17,PASS,PASS,PASS,PASS,PASS,FAIL,14000,0.13
+TASK-009,"TypeScript & React Architecture","TypeScript","Vitest Mocking of Next.js Dynamic Headers, Cookies, and Middleware",20,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.12
+TASK-010,"TypeScript & React Architecture","TypeScript","Turborepo Strict Package Boundary Enforcement and Circular Dependency Elimination",24,FAIL,FAIL,FAIL,FAIL,FAIL,FAIL,18000,0.19
+TASK-011,"Python Async & Data Pipelines","Python","FastAPI Async SQLAlchemy 2.0 Connection Pool Tuning with Read Replicas",16,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.12
+TASK-012,"Python Async & Data Pipelines","Python","Celery Distributed Task Pipeline with Redis Token Bucket Rate Limiter",21,PASS,PASS,PASS,PASS,PASS,PASS,16000,0.15
+TASK-013,"Python Async & Data Pipelines","Python","Asyncio Semaphore Controlled Multi-Domain Crawler with Backoff",18,PASS,PASS,PASS,PASS,PASS,PASS,14000,0.13
+TASK-014,"Python Async & Data Pipelines","Python","Pydantic v2 Custom Generic Discriminator and Root Validator Migration",23,PASS,PASS,PASS,PASS,PASS,PASS,15000,0.14
+TASK-015,"Python Async & Data Pipelines","Python","PyTorch TorchScript JIT Tracing and ONNX Export for Low-Latency Serving",15,PASS,PASS,FAIL,FAIL,FAIL,FAIL,17000,0.16
+TASK-016,"Python Async & Data Pipelines","Python","DuckDB In-Memory Parquet Partition Pruning and Rolling Window Analytics",19,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.11
+TASK-017,"Python Async & Data Pipelines","Python","Polars LazyFrame Asynchronous Streaming Join and Schema Validation",17,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.12
+TASK-018,"Python Async & Data Pipelines","Python","LangChain LCEL Async Streaming Token Callback with Disconnect Handling",14,PASS,PASS,PASS,PASS,PASS,PASS,11000,0.10
+TASK-019,"Python Async & Data Pipelines","Python","Pytest Asyncio Fixture Lifecycle Cleanup and Event Loop Deadlock Fix",20,PASS,PASS,PASS,PASS,PASS,FAIL,15000,0.13
+TASK-020,"Python Async & Data Pipelines","Python","Multi-Stage Dockerfile with uv Virtualenv Layer Caching and Non-Root User",13,PASS,PASS,PASS,PASS,PASS,PASS,10000,0.08
+TASK-021,"Rust Memory & Concurrency","Rust","Tokio Async RwLock Contention Mitigation with Sharded Concurrent Maps",18,PASS,PASS,PASS,PASS,FAIL,FAIL,16000,0.16
+TASK-022,"Rust Memory & Concurrency","Rust","Zero-Copy Nom Parser with Generic Lifetime Annotations for Binary Packets",26,PASS,PASS,FAIL,FAIL,FAIL,FAIL,19000,0.20
+TASK-023,"Rust Memory & Concurrency","Rust","Crossbeam MPMC Channel Bounded Worker Pool with Graceful Cancellation",20,PASS,PASS,PASS,PASS,PASS,PASS,15000,0.14
+TASK-024,"Rust Memory & Concurrency","Rust","Axum 0.7 Custom Async State Extractor and Tower Middleware Auth Guard",19,PASS,PASS,PASS,PASS,PASS,PASS,14000,0.13
+TASK-025,"Rust Memory & Concurrency","Rust","Rayon Data-Parallel Matrix Multiplication with Cache Line Alignment",15,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.11
+TASK-026,"Rust Memory & Concurrency","Rust","Serde Visitor Pattern Custom Deserializer for Polymorphic Event Enums",24,PASS,PASS,PASS,PASS,PASS,PASS,17000,0.17
+TASK-027,"Rust Memory & Concurrency","Rust","SQLx Offline Compile-Time Checked Migrations and JSONB Field Mapping",17,PASS,PASS,PASS,PASS,PASS,PASS,14000,0.12
+TASK-028,"Rust Memory & Concurrency","Rust","Generic Associated Types (GAT) Trait Abstraction for Storage Engines",22,FAIL,FAIL,FAIL,FAIL,FAIL,FAIL,21000,0.22
+TASK-029,"Rust Memory & Concurrency","Rust","SIMD Portable Vectorized String Sanitization Benchmark with Criterion",16,PASS,PASS,FAIL,FAIL,FAIL,FAIL,15000,0.14
+TASK-030,"Rust Memory & Concurrency","Rust","Cargo Workspace Dynamic Feature Flag Resolution and Dead Code Pruning",14,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.10
+TASK-031,"Go Microservices & Concurrency","Go","Context Propagation with Deadline and Value Propagation in Nested gRPC Trees",19,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.11
+TASK-032,"Go Microservices & Concurrency","Go","Bounded Goroutine Worker Pool with Non-Blocking Dynamic Backpressure Queue",23,PASS,PASS,PASS,PASS,PASS,PASS,15000,0.14
+TASK-033,"Go Microservices & Concurrency","Go","Sync.Pool Buffer Recycler for High-Throughput JSON Stream Encoder",16,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.10
+TASK-034,"Go Microservices & Concurrency","Go","Chi Router Middleware Pipeline with OpenTelemetry Trace Header Injection",18,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.11
+TASK-035,"Go Microservices & Concurrency","Go","Redis Distributed Mutex with Auto-Renewal Heartbeat Goroutine",22,PASS,PASS,PASS,PASS,PASS,FAIL,17000,0.16
+TASK-036,"Go Microservices & Concurrency","Go","Prometheus Custom Collector with Exponential Histogram Buckets",15,PASS,PASS,PASS,PASS,PASS,PASS,11000,0.09
+TASK-037,"Go Microservices & Concurrency","Go","IBM Sarama Kafka Consumer Group Rebalance Safe Commit Handler",25,FAIL,FAIL,FAIL,FAIL,FAIL,FAIL,20000,0.21
+TASK-038,"Go Microservices & Concurrency","Go","Go Atomic Pointer Lock-Free Configuration Reload Pipeline",17,PASS,PASS,PASS,PASS,PASS,PASS,14000,0.12
+TASK-039,"Go Microservices & Concurrency","Go","Table-Driven Concurrent Test Suite for Leaky Bucket Rate Limiter",21,PASS,PASS,PASS,PASS,PASS,PASS,15000,0.13
+TASK-040,"Go Microservices & Concurrency","Go","Go 1.23 Range-Over-Function Custom Iterator Implementation for Binary Trees",16,PASS,PASS,PASS,FAIL,FAIL,FAIL,13000,0.11
+TASK-041,"Cloud Infrastructure & Database Architecture","SQL & Infrastructure","PostgreSQL 16 Declarative Range Partitioning and Automated Detach Script",17,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.12
+TASK-042,"Cloud Infrastructure & Database Architecture","Terraform","Terraform AWS Multi-Region Transit Gateway Peering and Route Propagation",20,PASS,PASS,PASS,PASS,PASS,PASS,16000,0.15
+TASK-043,"Cloud Infrastructure & Database Architecture","Kubernetes","Kubernetes Helm Chart HorizontalPodAutoscaler v2 with Custom Prometheus Metrics",18,PASS,PASS,PASS,PASS,PASS,PASS,14000,0.13
+TASK-044,"Cloud Infrastructure & Database Architecture","GitHub Actions","GitHub Actions Matrix CI Workflow with Rust sccache and Docker Buildx Caching",15,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.10
+TASK-045,"Cloud Infrastructure & Database Architecture","Python","Redis Cluster Hash Slot Distribution Migration Script with Zero Downtime",22,FAIL,FAIL,FAIL,FAIL,FAIL,FAIL,18000,0.18
+TASK-046,"Cloud Infrastructure & Database Architecture","YAML","Istio Service Mesh EnvoyFilter Global Rate Limiting and JWT Claim Header Rewriting",19,PASS,FAIL,FAIL,FAIL,FAIL,FAIL,16000,0.15
+TASK-047,"Cloud Infrastructure & Database Architecture","SQL","ClickHouse AggregatingMergeTree Table Engine with Materialized View Rollups",16,PASS,PASS,PASS,PASS,PASS,PASS,13000,0.12
+TASK-048,"Cloud Infrastructure & Database Architecture","YAML","OpenTelemetry Collector Configuration with Tail-Based Sampling and PII Masking",18,PASS,PASS,PASS,PASS,PASS,PASS,15000,0.14
+TASK-049,"Cloud Infrastructure & Database Architecture","TypeScript","Cloudflare Workers Edge HMAC-SHA256 Request Verification and KV Rate Limiting",17,PASS,PASS,PASS,PASS,PASS,PASS,12000,0.11
+TASK-050,"Cloud Infrastructure & Database Architecture","YAML","Prometheus Alertmanager Multi-Tier Routing and Alert Inhibition Rules",21,FAIL,FAIL,FAIL,FAIL,FAIL,FAIL,17000,0.16

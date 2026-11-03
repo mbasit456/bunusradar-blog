@@ -55,7 +55,7 @@ The following structured dataset summarizes performance metrics across core soft
 | **HumanEval (Pass@1 Accuracy)** | 92.4% | 94.8% | 88.2% | High baseline execution, with marginal reasoning gains on isolated function tasks. |
 | **Tau-bench (Agentic Tool Use)** | 68.7% | 81.2% | 62.1% | Superior execution in managing multi-step API calls and developer tool integrations. |
 | **LiveCodeBench (Algorithmic Logic)** | 53.1% | 65.4% | 44.5% | Exceptional capability in solving unseen algorithmic puzzles without overfitting. |
-| **Multi-File Context Drift** | Low | Ultra-Low | Moderate | Maintains strict compliance with project architectural rules across broad code bases. |
+| **Aider Polyglot Benchmark (Diff Edits)** | 78.4% | 88.0% | 68.2% | State-of-the-art precise unified diff generation across complex multi-language codebases. |
 
 ## Enterprise Software Engineering ROI and Workflow Impact
 

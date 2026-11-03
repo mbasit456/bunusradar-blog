@@ -34,11 +34,20 @@ export const metadata: Metadata = {
     title: 'BunusRadar - Insights on Technology, AI, & Digital Growth',
     description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
     siteName: 'BunusRadar',
+    images: [
+      {
+        url: 'https://bunusradar.site/logos/rectangular-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'BunusRadar Technology and AI Research',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'BunusRadar - Technology, AI, & Future Business',
     description: 'A modern, high-velocity digital publication exploring Artificial Intelligence, Software Engineering, Digital Business Models, and Future Trends.',
+    images: ['https://bunusradar.site/logos/rectangular-logo.png'],
   },
   alternates: {
     canonical: 'https://bunusradar.site',

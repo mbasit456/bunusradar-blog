@@ -51,12 +51,11 @@ export const AUTHORS: Record<string, Author> = {
       'AI Image Generator Accuracy Test 2026',
     ],
     social: {
-      github: 'https://github.com/mbasit456/bunusradar-blog',
       website: 'https://bunusradar.site/about',
     },
     sameAs: [
-      'https://github.com/mbasit456/bunusradar-blog',
       'https://bunusradar.site/about',
+      'https://bunusradar.site/editorial-standards',
     ],
   },
 
@@ -88,12 +87,11 @@ export const AUTHORS: Record<string, Author> = {
       'DeepSeek AI vs ChatGPT vs Claude: The Ultimate AI Showdown (2026)',
     ],
     social: {
-      github: 'https://github.com/mbasit456/bunusradar-blog',
       website: 'https://bunusradar.site/author/alex-vance',
     },
     sameAs: [
-      'https://github.com/mbasit456/bunusradar-blog',
       'https://bunusradar.site/author/alex-vance',
+      'https://bunusradar.site/methodology',
     ],
   },
 
@@ -125,12 +123,11 @@ export const AUTHORS: Record<string, Author> = {
       'How to Get Your Brand Cited in ChatGPT Search Results: The GEO Framework',
     ],
     social: {
-      github: 'https://github.com/mbasit456/bunusradar-blog',
       website: 'https://bunusradar.site/author/sarah-chen',
     },
     sameAs: [
-      'https://github.com/mbasit456/bunusradar-blog',
       'https://bunusradar.site/author/sarah-chen',
+      'https://bunusradar.site/editorial-standards',
     ],
   },
 
@@ -162,12 +159,11 @@ export const AUTHORS: Record<string, Author> = {
       'Ultimate Personal Productivity Stack: Build Your 10x Focus Engine',
     ],
     social: {
-      github: 'https://github.com/mbasit456/bunusradar-blog',
       website: 'https://bunusradar.site/author/elena-rostova',
     },
     sameAs: [
-      'https://github.com/mbasit456/bunusradar-blog',
       'https://bunusradar.site/author/elena-rostova',
+      'https://bunusradar.site/editorial-standards',
     ],
   },
 
@@ -199,12 +195,11 @@ export const AUTHORS: Record<string, Author> = {
       'Most Profitable Digital Business Models & Micro-SaaS Ideas for 2026',
     ],
     social: {
-      github: 'https://github.com/mbasit456/bunusradar-blog',
       website: 'https://bunusradar.site/author/marcus-sterling',
     },
     sameAs: [
-      'https://github.com/mbasit456/bunusradar-blog',
       'https://bunusradar.site/author/marcus-sterling',
+      'https://bunusradar.site/editorial-standards',
     ],
   },
 };

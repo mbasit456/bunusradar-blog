@@ -493,7 +493,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Verified FAQ Section for Human Readers and AI Crawlers */}
             {post.faqs && post.faqs.length > 0 && (
-              <section className="pt-8 border-t border-zinc-200 space-y-4">
+              <section id="frequently-asked-questions" className="pt-8 border-t border-zinc-200 space-y-4 scroll-mt-24">
                 <div className="tg-section-header flex items-center justify-between">
                   <h2 className="tg-section-title flex items-center gap-2">
                     <HelpCircle className="w-4 h-4 text-[#1b2e67]" />

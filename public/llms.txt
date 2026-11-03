@@ -17,7 +17,7 @@ BunusRadar provides comparative evaluations of AI developer tools, frontier LLMs
 
 BunusRadar content is produced by specialized domain editors and technical analysts:
 
-- Alex Vance (AI & Systems Architecture Lead): https://bunusradar.site/author/alex-vance - Large language model architectures, coding assistant benchmarks, inference latency, and distributed systems.
+- Alex Vance (Lead AI & Systems Researcher): https://bunusradar.site/author/alex-vance - Large language model architectures, coding assistant benchmarks, inference latency, and distributed systems.
 - Sarah Chen (Software Engineering & Cloud Systems Analyst): https://bunusradar.site/author/sarah-chen - Cloud infrastructure, Next.js performance, API engineering, and TypeScript development.
 - Elena Rostova (Cognitive Systems & Workflow Lead): https://bunusradar.site/author/elena-rostova - Human-AI workflows, prompt engineering, generative image fidelity, and developer productivity systems.
 - Marcus Sterling (Enterprise AI & FinTech Economics Analyst): https://bunusradar.site/author/marcus-sterling - SaaS unit economics, enterprise AI ROI modeling, and cloud token cost accounting.

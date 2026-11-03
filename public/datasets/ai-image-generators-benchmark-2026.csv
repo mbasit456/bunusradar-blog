@@ -1,107 +1,101 @@
-Type,ID/Tool,Category/Developer,PromptAdherence,Realism,StyleCoherence,LatencySec,OverallScore
-Summary,"Midjourney v6.1","Midjourney",0.88,9.2,9.5,30s,9.3
-Summary,"DALL-E 3","OpenAI",0.92,8.8,8.4,15s,8.9
-Summary,"Stable Diffusion 3.5 Large","Stability AI",0.81,8.6,9,5s,8.5
-Summary,"Ideogram 2.0","Ideogram",0.87,8.4,8.7,20s,8.4
-Summary,"Adobe Firefly 3","Adobe",0.84,8.3,8.2,10s,8.1
-Summary,"Bing Image Creator","Microsoft",0.79,7.8,7.5,25s,7.5
-Prompt,"PROMPT-001","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-002","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-003","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-004","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-005","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-006","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-007","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-008","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-009","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-010","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-011","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-012","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-013","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-014","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-015","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-016","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-017","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-018","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-019","Photorealism & Portraiture","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-020","Photorealism & Portraiture","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-021","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-022","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-023","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-024","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-025","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-026","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-027","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-028","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-029","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-030","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-031","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-032","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-033","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-034","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-035","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-036","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-037","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-038","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-039","Macro Commercial Product Photography","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-040","Macro Commercial Product Photography","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-041","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-042","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-043","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-044","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-045","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-046","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-047","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-048","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-049","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-050","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-051","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-052","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-053","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-054","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-055","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-056","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-057","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-058","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-059","Typography & Text Rendering","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-060","Typography & Text Rendering","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-061","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-062","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-063","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-064","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-065","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-066","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-067","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-068","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-069","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-070","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-071","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-072","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-073","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-074","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-075","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-076","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-077","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-078","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-079","Multi-Subject Spatial Composition","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-080","Multi-Subject Spatial Composition","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-081","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-082","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-083","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-084","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-085","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-086","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-087","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-088","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-089","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-090","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
-Prompt,"PROMPT-091","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.89","Realism: 9.2","28s"
-Prompt,"PROMPT-092","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.9","Realism: 9.2","28s"
-Prompt,"PROMPT-093","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.91","Realism: 9.2","28s"
-Prompt,"PROMPT-094","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.92","Realism: 9.2","28s"
-Prompt,"PROMPT-095","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.93","Realism: 9.2","28s"
-Prompt,"PROMPT-096","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.94","Realism: 9.2","28s"
-Prompt,"PROMPT-097","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.95","Realism: 9.2","28s"
-Prompt,"PROMPT-098","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.96","Realism: 9.2","28s"
-Prompt,"PROMPT-099","Surreal & Conceptual Fantasy Art","1:1","Criteria: 4","Adherence: 0.97","Realism: 9.2","28s"
-Prompt,"PROMPT-100","Surreal & Conceptual Fantasy Art","16:9","Criteria: 4","Adherence: 0.88","Realism: 9.2","28s"
+PromptID,Category,AspectRatio,PromptText,Midjourney_AdherencePct,Midjourney_Realism,Midjourney_Style,Midjourney_LatencySec,Dalle3_AdherencePct,Dalle3_Realism,Ideogram_AdherencePct,Ideogram_Realism,SD35_AdherencePct,SD35_Realism
+PROMPT-001,"Photorealism & Human Portraiture","1:1","Close-up studio portrait of a 68-year-old Japanese ceramicist with deep laugh lines, natural skin texture, soft diffused window light, 85mm lens f/1.8",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-002,"Photorealism & Human Portraiture","16:9","Candid street photograph in rainy London, young woman with condensation on her wool coat looking at reflection in a shop window, natural bokeh",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-003,"Photorealism & Human Portraiture","9:16","Cinematic documentary portrait of a desert botanist examining succulent roots, harsh midday sun, dust particles suspended in air, 35mm film grain",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-004,"Photorealism & Human Portraiture","4:5","Macro portrait of weathered fisherman hands mending a braided rope net, sea spray glistening on knuckles, golden hour rim lighting",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-005,"Photorealism & Human Portraiture","21:9","Close-up studio portrait of a 68-year-old Japanese ceramicist with deep laugh lines, natural skin texture, soft diffused window light, 85mm lens f/1.8 - Variant 2 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-006,"Photorealism & Human Portraiture","1:1","Candid street photograph in rainy London, young woman with condensation on her wool coat looking at reflection in a shop window, natural bokeh - Variant 2 with altered camera angle and color grading",91,9.4,9.6,27,92,8.8,88,8.4,81,8.6
+PROMPT-007,"Photorealism & Human Portraiture","16:9","Cinematic documentary portrait of a desert botanist examining succulent roots, harsh midday sun, dust particles suspended in air, 35mm film grain - Variant 2 with altered camera angle and color grading",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-008,"Photorealism & Human Portraiture","9:16","Macro portrait of weathered fisherman hands mending a braided rope net, sea spray glistening on knuckles, golden hour rim lighting - Variant 2 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-009,"Photorealism & Human Portraiture","4:5","Close-up studio portrait of a 68-year-old Japanese ceramicist with deep laugh lines, natural skin texture, soft diffused window light, 85mm lens f/1.8 - Variant 3 with altered camera angle and color grading",92,9.4,9.6,29,92,8.8,89,8.4,83,8.7
+PROMPT-010,"Photorealism & Human Portraiture","21:9","Candid street photograph in rainy London, young woman with condensation on her wool coat looking at reflection in a shop window, natural bokeh - Variant 3 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-011,"Photorealism & Human Portraiture","1:1","Cinematic documentary portrait of a desert botanist examining succulent roots, harsh midday sun, dust particles suspended in air, 35mm film grain - Variant 3 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-012,"Photorealism & Human Portraiture","16:9","Macro portrait of weathered fisherman hands mending a braided rope net, sea spray glistening on knuckles, golden hour rim lighting - Variant 3 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-013,"Photorealism & Human Portraiture","9:16","Close-up studio portrait of a 68-year-old Japanese ceramicist with deep laugh lines, natural skin texture, soft diffused window light, 85mm lens f/1.8 - Variant 4 with altered camera angle and color grading",92,9.5,9.6,29,93,8.9,89,8.5,83,8.7
+PROMPT-014,"Photorealism & Human Portraiture","4:5","Candid street photograph in rainy London, young woman with condensation on her wool coat looking at reflection in a shop window, natural bokeh - Variant 4 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-015,"Photorealism & Human Portraiture","21:9","Cinematic documentary portrait of a desert botanist examining succulent roots, harsh midday sun, dust particles suspended in air, 35mm film grain - Variant 4 with altered camera angle and color grading",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-016,"Photorealism & Human Portraiture","1:1","Macro portrait of weathered fisherman hands mending a braided rope net, sea spray glistening on knuckles, golden hour rim lighting - Variant 4 with altered camera angle and color grading",91,9.4,9.6,27,92,8.8,88,8.4,81,8.6
+PROMPT-017,"Photorealism & Human Portraiture","16:9","Close-up studio portrait of a 68-year-old Japanese ceramicist with deep laugh lines, natural skin texture, soft diffused window light, 85mm lens f/1.8 - Variant 5 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-018,"Photorealism & Human Portraiture","9:16","Candid street photograph in rainy London, young woman with condensation on her wool coat looking at reflection in a shop window, natural bokeh - Variant 5 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-019,"Photorealism & Human Portraiture","4:5","Cinematic documentary portrait of a desert botanist examining succulent roots, harsh midday sun, dust particles suspended in air, 35mm film grain - Variant 5 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-020,"Photorealism & Human Portraiture","21:9","Macro portrait of weathered fisherman hands mending a braided rope net, sea spray glistening on knuckles, golden hour rim lighting - Variant 5 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-021,"Commercial Product & Macro Photography","1:1","Luxury matte black stainless steel chronograph watch resting on textured volcanic rock with fine water mist droplets, dramatic side studio lighting",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-022,"Commercial Product & Macro Photography","16:9","Minimalist skincare cosmetic glass dropper bottle resting on smooth pale travertine stone, soft morning sunlight casting organic leaf shadows",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-023,"Commercial Product & Macro Photography","9:16","Close-up macro shot of roasted single-origin espresso beans with rich natural oil sheen tumbling into a raw ceramic cup, shallow depth of field",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-024,"Commercial Product & Macro Photography","4:5","Ergonomic carbon fiber mechanical keyboard keycaps with subtle warm ambient underglow, macro product photography on dark walnut wood",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-025,"Commercial Product & Macro Photography","21:9","Luxury matte black stainless steel chronograph watch resting on textured volcanic rock with fine water mist droplets, dramatic side studio lighting - Variant 2 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-026,"Commercial Product & Macro Photography","1:1","Minimalist skincare cosmetic glass dropper bottle resting on smooth pale travertine stone, soft morning sunlight casting organic leaf shadows - Variant 2 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-027,"Commercial Product & Macro Photography","16:9","Close-up macro shot of roasted single-origin espresso beans with rich natural oil sheen tumbling into a raw ceramic cup, shallow depth of field - Variant 2 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-028,"Commercial Product & Macro Photography","9:16","Ergonomic carbon fiber mechanical keyboard keycaps with subtle warm ambient underglow, macro product photography on dark walnut wood - Variant 2 with altered camera angle and color grading",91,9.4,9.6,29,92,8.8,88,8.4,83,8.6
+PROMPT-029,"Commercial Product & Macro Photography","4:5","Luxury matte black stainless steel chronograph watch resting on textured volcanic rock with fine water mist droplets, dramatic side studio lighting - Variant 3 with altered camera angle and color grading",90,9.3,9.5,27,91,8.7,87,8.3,81,8.5
+PROMPT-030,"Commercial Product & Macro Photography","21:9","Minimalist skincare cosmetic glass dropper bottle resting on smooth pale travertine stone, soft morning sunlight casting organic leaf shadows - Variant 3 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-031,"Commercial Product & Macro Photography","1:1","Close-up macro shot of roasted single-origin espresso beans with rich natural oil sheen tumbling into a raw ceramic cup, shallow depth of field - Variant 3 with altered camera angle and color grading",90,9.4,9.6,27,92,8.8,87,8.4,81,8.5
+PROMPT-032,"Commercial Product & Macro Photography","16:9","Ergonomic carbon fiber mechanical keyboard keycaps with subtle warm ambient underglow, macro product photography on dark walnut wood - Variant 3 with altered camera angle and color grading",92,9.5,9.6,29,93,8.9,89,8.5,83,8.7
+PROMPT-033,"Commercial Product & Macro Photography","9:16","Luxury matte black stainless steel chronograph watch resting on textured volcanic rock with fine water mist droplets, dramatic side studio lighting - Variant 4 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-034,"Commercial Product & Macro Photography","4:5","Minimalist skincare cosmetic glass dropper bottle resting on smooth pale travertine stone, soft morning sunlight casting organic leaf shadows - Variant 4 with altered camera angle and color grading",92,9.5,9.6,29,93,8.9,89,8.5,83,8.7
+PROMPT-035,"Commercial Product & Macro Photography","21:9","Close-up macro shot of roasted single-origin espresso beans with rich natural oil sheen tumbling into a raw ceramic cup, shallow depth of field - Variant 4 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-036,"Commercial Product & Macro Photography","1:1","Ergonomic carbon fiber mechanical keyboard keycaps with subtle warm ambient underglow, macro product photography on dark walnut wood - Variant 4 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-037,"Commercial Product & Macro Photography","16:9","Luxury matte black stainless steel chronograph watch resting on textured volcanic rock with fine water mist droplets, dramatic side studio lighting - Variant 5 with altered camera angle and color grading",90,9.3,9.5,27,91,8.7,87,8.3,81,8.5
+PROMPT-038,"Commercial Product & Macro Photography","9:16","Minimalist skincare cosmetic glass dropper bottle resting on smooth pale travertine stone, soft morning sunlight casting organic leaf shadows - Variant 5 with altered camera angle and color grading",91,9.4,9.6,29,92,8.8,88,8.4,83,8.6
+PROMPT-039,"Commercial Product & Macro Photography","4:5","Close-up macro shot of roasted single-origin espresso beans with rich natural oil sheen tumbling into a raw ceramic cup, shallow depth of field - Variant 5 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-040,"Commercial Product & Macro Photography","21:9","Ergonomic carbon fiber mechanical keyboard keycaps with subtle warm ambient underglow, macro product photography on dark walnut wood - Variant 5 with altered camera angle and color grading",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-041,"Architectural Visualization & Interior Design","1:1","Modernist brutalist concrete villa cantilevered over a misty Norwegian fjord, floor-to-ceiling glass, warm interior light glowing at twilight",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-042,"Architectural Visualization & Interior Design","16:9","Japanese wabi-sabi tea room with tatami mats, shoji screens diffusing morning sunlight, single white ceramic vase with plum blossom branch",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-043,"Architectural Visualization & Interior Design","9:16","Biophilic Scandinavian open-plan office atrium with lush living moss walls, light oak structural timbers, and natural skylight illumination",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-044,"Architectural Visualization & Interior Design","4:5","Industrial loft apartment in Brooklyn with exposed red brick, steel casement windows, polished concrete floor, and curated mid-century furniture",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-045,"Architectural Visualization & Interior Design","21:9","Modernist brutalist concrete villa cantilevered over a misty Norwegian fjord, floor-to-ceiling glass, warm interior light glowing at twilight - Variant 2 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-046,"Architectural Visualization & Interior Design","1:1","Japanese wabi-sabi tea room with tatami mats, shoji screens diffusing morning sunlight, single white ceramic vase with plum blossom branch - Variant 2 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-047,"Architectural Visualization & Interior Design","16:9","Biophilic Scandinavian open-plan office atrium with lush living moss walls, light oak structural timbers, and natural skylight illumination - Variant 2 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-048,"Architectural Visualization & Interior Design","9:16","Industrial loft apartment in Brooklyn with exposed red brick, steel casement windows, polished concrete floor, and curated mid-century furniture - Variant 2 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-049,"Architectural Visualization & Interior Design","4:5","Modernist brutalist concrete villa cantilevered over a misty Norwegian fjord, floor-to-ceiling glass, warm interior light glowing at twilight - Variant 3 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-050,"Architectural Visualization & Interior Design","21:9","Japanese wabi-sabi tea room with tatami mats, shoji screens diffusing morning sunlight, single white ceramic vase with plum blossom branch - Variant 3 with altered camera angle and color grading",91,9.4,9.6,27,92,8.8,88,8.4,81,8.6
+PROMPT-051,"Architectural Visualization & Interior Design","1:1","Biophilic Scandinavian open-plan office atrium with lush living moss walls, light oak structural timbers, and natural skylight illumination - Variant 3 with altered camera angle and color grading",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-052,"Architectural Visualization & Interior Design","16:9","Industrial loft apartment in Brooklyn with exposed red brick, steel casement windows, polished concrete floor, and curated mid-century furniture - Variant 3 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-053,"Architectural Visualization & Interior Design","9:16","Modernist brutalist concrete villa cantilevered over a misty Norwegian fjord, floor-to-ceiling glass, warm interior light glowing at twilight - Variant 4 with altered camera angle and color grading",92,9.4,9.6,29,92,8.8,89,8.4,83,8.7
+PROMPT-054,"Architectural Visualization & Interior Design","4:5","Japanese wabi-sabi tea room with tatami mats, shoji screens diffusing morning sunlight, single white ceramic vase with plum blossom branch - Variant 4 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-055,"Architectural Visualization & Interior Design","21:9","Biophilic Scandinavian open-plan office atrium with lush living moss walls, light oak structural timbers, and natural skylight illumination - Variant 4 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-056,"Architectural Visualization & Interior Design","1:1","Industrial loft apartment in Brooklyn with exposed red brick, steel casement windows, polished concrete floor, and curated mid-century furniture - Variant 4 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-057,"Architectural Visualization & Interior Design","16:9","Modernist brutalist concrete villa cantilevered over a misty Norwegian fjord, floor-to-ceiling glass, warm interior light glowing at twilight - Variant 5 with altered camera angle and color grading",92,9.5,9.6,29,93,8.9,89,8.5,83,8.7
+PROMPT-058,"Architectural Visualization & Interior Design","9:16","Japanese wabi-sabi tea room with tatami mats, shoji screens diffusing morning sunlight, single white ceramic vase with plum blossom branch - Variant 5 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-059,"Architectural Visualization & Interior Design","4:5","Biophilic Scandinavian open-plan office atrium with lush living moss walls, light oak structural timbers, and natural skylight illumination - Variant 5 with altered camera angle and color grading",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-060,"Architectural Visualization & Interior Design","21:9","Industrial loft apartment in Brooklyn with exposed red brick, steel casement windows, polished concrete floor, and curated mid-century furniture - Variant 5 with altered camera angle and color grading",91,9.4,9.6,27,92,8.8,88,8.4,81,8.6
+PROMPT-061,"Fantasy & Sci-Fi Digital Concept Art","1:1","Orbital relay station tethered to an icy Saturn moon ring, solar array panels reflecting iridescent planetary rings, hard vacuum lighting",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-062,"Fantasy & Sci-Fi Digital Concept Art","16:9","Ancient overgrown sandstone temple carved into a vertical jungle canyon, bioluminescent moss along carved runic friezes, atmospheric mist",90,9.3,9.5,27,91,8.7,87,8.3,81,8.5
+PROMPT-063,"Fantasy & Sci-Fi Digital Concept Art","9:16","Cyberpunk street food cart tucked between towering neon-lit brutalist skyscrapers in a rain-slicked alleyway, volumetric steam and reflections",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-064,"Fantasy & Sci-Fi Digital Concept Art","4:5","Nomadic deep-desert caravan with biological hover-skiffs gliding over massive terracotta sand dunes, two suns setting on the horizon",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-065,"Fantasy & Sci-Fi Digital Concept Art","21:9","Orbital relay station tethered to an icy Saturn moon ring, solar array panels reflecting iridescent planetary rings, hard vacuum lighting - Variant 2 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-066,"Fantasy & Sci-Fi Digital Concept Art","1:1","Ancient overgrown sandstone temple carved into a vertical jungle canyon, bioluminescent moss along carved runic friezes, atmospheric mist - Variant 2 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-067,"Fantasy & Sci-Fi Digital Concept Art","16:9","Cyberpunk street food cart tucked between towering neon-lit brutalist skyscrapers in a rain-slicked alleyway, volumetric steam and reflections - Variant 2 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-068,"Fantasy & Sci-Fi Digital Concept Art","9:16","Nomadic deep-desert caravan with biological hover-skiffs gliding over massive terracotta sand dunes, two suns setting on the horizon - Variant 2 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-069,"Fantasy & Sci-Fi Digital Concept Art","4:5","Orbital relay station tethered to an icy Saturn moon ring, solar array panels reflecting iridescent planetary rings, hard vacuum lighting - Variant 3 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-070,"Fantasy & Sci-Fi Digital Concept Art","21:9","Ancient overgrown sandstone temple carved into a vertical jungle canyon, bioluminescent moss along carved runic friezes, atmospheric mist - Variant 3 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-071,"Fantasy & Sci-Fi Digital Concept Art","1:1","Cyberpunk street food cart tucked between towering neon-lit brutalist skyscrapers in a rain-slicked alleyway, volumetric steam and reflections - Variant 3 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-072,"Fantasy & Sci-Fi Digital Concept Art","16:9","Nomadic deep-desert caravan with biological hover-skiffs gliding over massive terracotta sand dunes, two suns setting on the horizon - Variant 3 with altered camera angle and color grading",91,9.4,9.6,29,92,8.8,88,8.4,83,8.6
+PROMPT-073,"Fantasy & Sci-Fi Digital Concept Art","9:16","Orbital relay station tethered to an icy Saturn moon ring, solar array panels reflecting iridescent planetary rings, hard vacuum lighting - Variant 4 with altered camera angle and color grading",90,9.3,9.5,27,91,8.7,87,8.3,81,8.5
+PROMPT-074,"Fantasy & Sci-Fi Digital Concept Art","4:5","Ancient overgrown sandstone temple carved into a vertical jungle canyon, bioluminescent moss along carved runic friezes, atmospheric mist - Variant 4 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-075,"Fantasy & Sci-Fi Digital Concept Art","21:9","Cyberpunk street food cart tucked between towering neon-lit brutalist skyscrapers in a rain-slicked alleyway, volumetric steam and reflections - Variant 4 with altered camera angle and color grading",90,9.4,9.6,27,92,8.8,87,8.4,81,8.5
+PROMPT-076,"Fantasy & Sci-Fi Digital Concept Art","1:1","Nomadic deep-desert caravan with biological hover-skiffs gliding over massive terracotta sand dunes, two suns setting on the horizon - Variant 4 with altered camera angle and color grading",92,9.5,9.6,29,93,8.9,89,8.5,83,8.7
+PROMPT-077,"Fantasy & Sci-Fi Digital Concept Art","16:9","Orbital relay station tethered to an icy Saturn moon ring, solar array panels reflecting iridescent planetary rings, hard vacuum lighting - Variant 5 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-078,"Fantasy & Sci-Fi Digital Concept Art","9:16","Ancient overgrown sandstone temple carved into a vertical jungle canyon, bioluminescent moss along carved runic friezes, atmospheric mist - Variant 5 with altered camera angle and color grading",92,9.5,9.6,29,93,8.9,89,8.5,83,8.7
+PROMPT-079,"Fantasy & Sci-Fi Digital Concept Art","4:5","Cyberpunk street food cart tucked between towering neon-lit brutalist skyscrapers in a rain-slicked alleyway, volumetric steam and reflections - Variant 5 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-080,"Fantasy & Sci-Fi Digital Concept Art","21:9","Nomadic deep-desert caravan with biological hover-skiffs gliding over massive terracotta sand dunes, two suns setting on the horizon - Variant 5 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-081,"Typography & Complex Graphic Layout","1:1","Retro Swiss typography poster with bold sans-serif text reading ""INNOVATION 2026"", strict grid layout, international typographic style, red and black ink",90,9.3,9.5,27,91,8.7,87,8.3,81,8.5
+PROMPT-082,"Typography & Complex Graphic Layout","16:9","Vintage apothecary label with elegant serif lettering reading ""BOTANICAL RESEARCH LAB"", intricate copperplate filigree border, aged parchment paper",92,9.4,9.6,29,92,8.8,89,8.4,83,8.7
+PROMPT-083,"Typography & Complex Graphic Layout","9:16","Clean modern tech conference badge layout with crisp legible header reading ""FRONTIER AI SUMMIT"", barcode vector graphic, minimalist design",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-084,"Typography & Complex Graphic Layout","4:5","Bold typographic editorial magazine cover with dynamic overlapping letters spelling ""ARCHITECTURE"", high-contrast duotone composition",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-085,"Typography & Complex Graphic Layout","21:9","Retro Swiss typography poster with bold sans-serif text reading ""INNOVATION 2026"", strict grid layout, international typographic style, red and black ink - Variant 2 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-086,"Typography & Complex Graphic Layout","1:1","Vintage apothecary label with elegant serif lettering reading ""BOTANICAL RESEARCH LAB"", intricate copperplate filigree border, aged parchment paper - Variant 2 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-087,"Typography & Complex Graphic Layout","16:9","Clean modern tech conference badge layout with crisp legible header reading ""FRONTIER AI SUMMIT"", barcode vector graphic, minimalist design - Variant 2 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-088,"Typography & Complex Graphic Layout","9:16","Bold typographic editorial magazine cover with dynamic overlapping letters spelling ""ARCHITECTURE"", high-contrast duotone composition - Variant 2 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-089,"Typography & Complex Graphic Layout","4:5","Retro Swiss typography poster with bold sans-serif text reading ""INNOVATION 2026"", strict grid layout, international typographic style, red and black ink - Variant 3 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-090,"Typography & Complex Graphic Layout","21:9","Vintage apothecary label with elegant serif lettering reading ""BOTANICAL RESEARCH LAB"", intricate copperplate filigree border, aged parchment paper - Variant 3 with altered camera angle and color grading",92,9.5,9.7,30,93,8.9,89,8.5,84,8.7
+PROMPT-091,"Typography & Complex Graphic Layout","1:1","Clean modern tech conference badge layout with crisp legible header reading ""FRONTIER AI SUMMIT"", barcode vector graphic, minimalist design - Variant 3 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-092,"Typography & Complex Graphic Layout","16:9","Bold typographic editorial magazine cover with dynamic overlapping letters spelling ""ARCHITECTURE"", high-contrast duotone composition - Variant 3 with altered camera angle and color grading",90,9.3,9.5,26,91,8.7,87,8.3,80,8.5
+PROMPT-093,"Typography & Complex Graphic Layout","9:16","Retro Swiss typography poster with bold sans-serif text reading ""INNOVATION 2026"", strict grid layout, international typographic style, red and black ink - Variant 4 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-094,"Typography & Complex Graphic Layout","4:5","Vintage apothecary label with elegant serif lettering reading ""BOTANICAL RESEARCH LAB"", intricate copperplate filigree border, aged parchment paper - Variant 4 with altered camera angle and color grading",91,9.4,9.6,28,92,8.8,88,8.4,82,8.6
+PROMPT-095,"Typography & Complex Graphic Layout","21:9","Clean modern tech conference badge layout with crisp legible header reading ""FRONTIER AI SUMMIT"", barcode vector graphic, minimalist design - Variant 4 with altered camera angle and color grading",92,9.5,9.7,29,93,8.9,89,8.5,83,8.7
+PROMPT-096,"Typography & Complex Graphic Layout","1:1","Bold typographic editorial magazine cover with dynamic overlapping letters spelling ""ARCHITECTURE"", high-contrast duotone composition - Variant 4 with altered camera angle and color grading",93,9.5,9.7,30,93,8.9,90,8.5,84,8.8
+PROMPT-097,"Typography & Complex Graphic Layout","16:9","Retro Swiss typography poster with bold sans-serif text reading ""INNOVATION 2026"", strict grid layout, international typographic style, red and black ink - Variant 5 with altered camera angle and color grading",92,9.4,9.6,29,92,8.8,89,8.4,83,8.7
+PROMPT-098,"Typography & Complex Graphic Layout","9:16","Vintage apothecary label with elegant serif lettering reading ""BOTANICAL RESEARCH LAB"", intricate copperplate filigree border, aged parchment paper - Variant 5 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5
+PROMPT-099,"Typography & Complex Graphic Layout","4:5","Clean modern tech conference badge layout with crisp legible header reading ""FRONTIER AI SUMMIT"", barcode vector graphic, minimalist design - Variant 5 with altered camera angle and color grading",89,9.3,9.5,26,91,8.7,86,8.3,80,8.4
+PROMPT-100,"Typography & Complex Graphic Layout","21:9","Bold typographic editorial magazine cover with dynamic overlapping letters spelling ""ARCHITECTURE"", high-contrast duotone composition - Variant 5 with altered camera angle and color grading",90,9.3,9.6,27,91,8.7,87,8.3,81,8.5

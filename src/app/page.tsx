@@ -211,8 +211,8 @@ export default function HomePage() {
               <div className="tg-section-header">
                 <h2 className="tg-section-title">Latest Articles</h2>
                 <Link
-                  href="/category/technology"
-                  aria-label="Browse all articles in the Technology section"
+                  href="/latest-publications"
+                  aria-label="Browse all published articles"
                   className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#1b2e67] hover:text-[#f9b44d] transition-colors"
                 >
                   Browse All <ChevronRight className="w-4 h-4 ml-0.5" />

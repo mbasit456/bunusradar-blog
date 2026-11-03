@@ -1746,7 +1746,7 @@ ${renderPageHero({
   badge: "About Star SEO",
   title: "A Decade of Battle-Tested",
   highlight: "White Hat Link Outreach",
-  description: "Star SEO was founded with a singular, uncompromising mission: to provide agencies and businesses with 100% genuine manual backlinks on verified websites—zero private blog networks, zero link farms, zero spam.",
+  description: "Star SEO was founded with a singular, uncompromising mission: to provide agencies and businesses with 100% genuine manual backlinks on verified websites - zero private blog networks, zero link farms, zero spam.",
   actions: [
     { text: "Explore Our Full Services", href: "index.html#services-overview", primary: true },
     { text: "Contact Our Leadership Team", href: "contact.html", primary: false }

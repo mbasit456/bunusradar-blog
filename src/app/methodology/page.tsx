@@ -12,6 +12,20 @@ export const metadata: Metadata = {
     url: 'https://bunusradar.site/methodology',
     title: 'BunusRadar Testing Methodology - How We Evaluate AI Tools',
     description: 'Standardized evaluation frameworks for AI tool reviews. Task accuracy, latency, cost, hallucination rate, and UX - all evaluated with transparent criteria.',
+    images: [
+      {
+        url: 'https://bunusradar.site/logos/rectangular-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'BunusRadar Testing Methodology',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BunusRadar Testing Methodology - How We Evaluate AI Tools',
+    description: 'Standardized evaluation frameworks for AI tool reviews. Task accuracy, latency, cost, hallucination rate, and UX - all evaluated with transparent criteria.',
+    images: ['https://bunusradar.site/logos/rectangular-logo.png'],
   },
 };
 
@@ -68,8 +82,8 @@ export default function MethodologyPage() {
       color: 'bg-red-100 text-red-600',
       title: 'Hallucination Rate',
       weight: '15%',
-      description: 'For AI tools: the percentage of outputs that contain factually incorrect, fabricated, or confidently wrong information. Verified against primary sources.',
-      detail: 'We use a structured evaluation rubric: 0 (no hallucinations), 1 (minor inaccuracy), 2 (significant error), 3 (fabricated content). Overall score is the mean across the task suite.',
+      description: 'The proportion of outputs containing factually incorrect, fabricated, or confidently broken code/logic verified against official specifications.',
+      detail: 'Measured on a structured 0-3 severity rubric: 0 (verified accurate), 1 (minor inaccuracy), 2 (significant error), 3 (fabricated syntax/facts). Headline percentage reflects the proportion of tasks generating non-zero severity errors.',
     },
     {
       icon: CheckCircle2,
@@ -105,9 +119,9 @@ export default function MethodologyPage() {
             Every AI tool reviewed on BunusRadar is tested using a standardized, reproducible evaluation framework. We define our criteria before testing, run identical workloads across competing tools, and publish our methodology so you can evaluate our conclusions.
           </p>
           <p data-nosnippet="true" className="text-sm text-zinc-500 dark:text-zinc-400">
-            Last updated: October 2026 · Maintained by{' '}
+            Last updated: November 2026 · Maintained by{' '}
             <Link href="/author/alex-vance" className="text-[#1b2e67] font-semibold hover:underline">Alex Vance</Link>,{' '}
-            AI Architecture Lead
+            Lead AI & Systems Researcher
           </p>
         </div>
 
@@ -160,16 +174,16 @@ export default function MethodologyPage() {
           <div className="bg-zinc-900 text-zinc-100 rounded-2xl p-6 font-mono text-sm space-y-4 shadow-inner">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
               <span className="text-[#f9b44d] text-xs uppercase tracking-wider font-bold">Standardized Reference Test Harness</span>
-              <span className="text-zinc-400 text-xs">Bi-Weekly Automated Regression Runs (Latest: October 2026)</span>
+              <span className="text-zinc-400 text-xs">Bi-Weekly Automated Regression Runs (Latest: November 2026)</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-xs sm:text-sm">
-              <div><span className="text-zinc-400 font-semibold">Compute Node:</span> AWS us-east-1 c6i.4xlarge (16 vCPU, 32 GB RAM)</div>
-              <div><span className="text-zinc-400 font-semibold">Operating System:</span> Ubuntu 24.04 LTS / macOS 15 Sequoia</div>
-              <div><span className="text-zinc-400 font-semibold">Network Pipeline:</span> 10 Gbps dedicated fiber, normalized latency</div>
-              <div><span className="text-zinc-400 font-semibold">Runtimes:</span> Node.js 22 LTS, Python 3.12, Go 1.23</div>
+              <div><span className="text-zinc-400 font-semibold">Compute Nodes:</span> Linux Headless (AWS c6i.4xlarge, 16 vCPU, 32 GB) & macOS Local (Apple M3 Max, 36 GB RAM)</div>
+              <div><span className="text-zinc-400 font-semibold">Operating Systems:</span> Ubuntu 24.04 LTS (AWS EC2) / macOS 15 Sequoia (Apple Silicon)</div>
+              <div><span className="text-zinc-400 font-semibold">Network Pipeline:</span> AWS 12.5 Gbps enhanced networking / Gigabit local fiber</div>
+              <div><span className="text-zinc-400 font-semibold">Runtimes:</span> Node.js 22 LTS, Python 3.12, Go 1.23, Rust 1.82</div>
               <div><span className="text-zinc-400 font-semibold">OpenAI Models Tested:</span> o3-mini-2025-01-31, gpt-4o-2024-11-20</div>
               <div><span className="text-zinc-400 font-semibold">Anthropic Models Tested:</span> claude-3-7-sonnet-20250219, claude-3-5-sonnet-20241022</div>
-              <div><span className="text-zinc-400 font-semibold">Google Models Tested:</span> gemini-2.0-flash, gemini-1.5-pro-002</div>
+              <div><span className="text-zinc-400 font-semibold">Google Models Tested:</span> gemini-2.0-flash, gemini-2.0-pro</div>
               <div><span className="text-zinc-400 font-semibold">DeepSeek Models Tested:</span> deepseek-reasoner (R1), deepseek-chat (V3)</div>
             </div>
           </div>
@@ -192,7 +206,7 @@ export default function MethodologyPage() {
                   <th className="px-3.5 py-2.5 text-left font-bold uppercase tracking-wider">Execution Date</th>
                   <th className="px-3.5 py-2.5 text-left font-bold uppercase tracking-wider">Benchmark Suite</th>
                   <th className="px-3.5 py-2.5 text-left font-bold uppercase tracking-wider">Target Harness</th>
-                  <th className="px-3.5 py-2.5 text-center font-bold uppercase tracking-wider">Pass Rate</th>
+                  <th className="px-3.5 py-2.5 text-center font-bold uppercase tracking-wider">Suite Completion</th>
                   <th className="px-3.5 py-2.5 text-right font-bold uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
@@ -202,7 +216,7 @@ export default function MethodologyPage() {
                   <td className="px-3.5 py-2.5 text-zinc-600">October 28, 2026</td>
                   <td className="px-3.5 py-2.5">Coding Assistants v2.4 (50 Tasks)</td>
                   <td className="px-3.5 py-2.5 text-zinc-500">AWS c6i.4xlarge (Node 22)</td>
-                  <td className="px-3.5 py-2.5 text-center text-emerald-600 font-bold">100% (50/50)</td>
+                  <td className="px-3.5 py-2.5 text-center text-emerald-600 font-bold">50/50 Tasks Completed</td>
                   <td className="px-3.5 py-2.5 text-right"><span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">VERIFIED</span></td>
                 </tr>
                 <tr className="bg-zinc-50 dark:bg-zinc-900/60">
@@ -210,7 +224,7 @@ export default function MethodologyPage() {
                   <td className="px-3.5 py-2.5 text-zinc-600">October 24, 2026</td>
                   <td className="px-3.5 py-2.5">Image Generator v1.8 (100 Prompts)</td>
                   <td className="px-3.5 py-2.5 text-zinc-500">Dual RTX 4090 / Cloud API</td>
-                  <td className="px-3.5 py-2.5 text-center text-emerald-600 font-bold">100% (100/100)</td>
+                  <td className="px-3.5 py-2.5 text-center text-emerald-600 font-bold">100/100 Prompts Evaluated</td>
                   <td className="px-3.5 py-2.5 text-right"><span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">VERIFIED</span></td>
                 </tr>
                 <tr className="bg-white dark:bg-zinc-900">
@@ -218,7 +232,7 @@ export default function MethodologyPage() {
                   <td className="px-3.5 py-2.5 text-zinc-600">October 14, 2026</td>
                   <td className="px-3.5 py-2.5">Frontier LLM Pricing Matrix v3.2</td>
                   <td className="px-3.5 py-2.5 text-zinc-500">API Gateway Telemetry</td>
-                  <td className="px-3.5 py-2.5 text-center text-emerald-600 font-bold">100% (8 Models)</td>
+                  <td className="px-3.5 py-2.5 text-center text-emerald-600 font-bold">8/8 Models Sampled</td>
                   <td className="px-3.5 py-2.5 text-right"><span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">VERIFIED</span></td>
                 </tr>
               </tbody>

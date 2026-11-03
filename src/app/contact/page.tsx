@@ -78,8 +78,8 @@ export default function ContactPage() {
               <div>
                 <strong>Digital Newsroom & Research Desk:</strong>
                 <p>BunusRadar Media (Distributed, Remote-First Independent Publication)</p>
-                <p className="mt-1">We operate as a distributed digital newsroom without a public walk-in commercial facility. All technical benchmarks, editorial submissions, and research dataset audits are conducted electronically via our dedicated desks or public GitHub repository.</p>
-                <p className="mt-1">Research & Datasets: github.com/mbasit456/bunusradar-blog</p>
+                <p className="mt-1">We operate as a distributed digital newsroom without a public walk-in commercial facility. All technical benchmarks, editorial submissions, and research dataset audits are conducted electronically via our dedicated desks or public research portal.</p>
+                <p className="mt-1">Research & Datasets: bunusradar.site/research</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5">

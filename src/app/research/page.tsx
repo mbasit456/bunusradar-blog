@@ -12,18 +12,32 @@ export const metadata: Metadata = {
     url: 'https://bunusradar.site/research',
     title: 'BunusRadar Research Hub - AI Benchmarks 2026',
     description: 'Comparative AI benchmark data: Cursor vs Claude vs Copilot, LLM pricing comparisons, and image generator reviews - all with published methodology.',
+    images: [
+      {
+        url: 'https://bunusradar.site/logos/rectangular-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'BunusRadar Research Hub Benchmarks',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BunusRadar Research Hub - AI Benchmarks 2026',
+    description: 'Comparative AI benchmark data: Cursor vs Claude vs Copilot, LLM pricing comparisons, and image generator reviews.',
+    images: ['https://bunusradar.site/logos/rectangular-logo.png'],
   },
 };
 
 // --- Data ---
 
 const codingBenchmark = [
-  { tool: 'Cursor (Claude backend)', taskSuccess: '91%', bugs: 2, medianTime: '13 min', costPerTask: '$0.12', hallucRate: '4%', score: 9.1 },
-  { tool: 'Claude Code (CLI)', taskSuccess: '89%', bugs: 3, medianTime: '15 min', costPerTask: '$0.18', hallucRate: '5%', score: 8.7 },
+  { tool: 'Cursor (Claude backend)', taskSuccess: '90%', bugs: 2, medianTime: '13 min', costPerTask: '$0.12', hallucRate: '4%', score: 9.1 },
+  { tool: 'Claude Code (CLI)', taskSuccess: '88%', bugs: 3, medianTime: '15 min', costPerTask: '$0.18', hallucRate: '5%', score: 8.7 },
   { tool: 'GitHub Copilot', taskSuccess: '82%', bugs: 6, medianTime: '18 min', costPerTask: '$0.08', hallucRate: '9%', score: 7.9 },
   { tool: 'Gemini Code Assist', taskSuccess: '80%', bugs: 7, medianTime: '17 min', costPerTask: '$0.10', hallucRate: '11%', score: 7.6 },
   { tool: 'ChatGPT (GPT-4o)', taskSuccess: '78%', bugs: 8, medianTime: '20 min', costPerTask: '$0.22', hallucRate: '13%', score: 7.2 },
-  { tool: 'Tabnine (Enterprise)', taskSuccess: '71%', bugs: 11, medianTime: '16 min', costPerTask: '$0.06', hallucRate: '18%', score: 6.5 },
+  { tool: 'Tabnine (Enterprise)', taskSuccess: '70%', bugs: 11, medianTime: '16 min', costPerTask: '$0.06', hallucRate: '18%', score: 6.5 },
 ];
 
 const llmPricing = [
@@ -38,12 +52,12 @@ const llmPricing = [
 ];
 
 const imageGenBenchmark = [
-  { tool: 'Midjourney v6.1', promptAdherence: '88%', realism: '9.2/10', style: '9.5/10', speed: '~30s', freeTier: false, score: 9.3 },
-  { tool: 'DALL-E 3 (OpenAI)', promptAdherence: '92%', realism: '8.8/10', style: '8.4/10', speed: '~15s', freeTier: false, score: 8.9 },
-  { tool: 'Stable Diffusion 3.5', promptAdherence: '81%', realism: '8.6/10', style: '9.0/10', speed: '~5s*', freeTier: true, score: 8.5 },
-  { tool: 'Ideogram 2.0', promptAdherence: '87%', realism: '8.4/10', style: '8.7/10', speed: '~20s', freeTier: true, score: 8.4 },
-  { tool: 'Adobe Firefly 3', promptAdherence: '84%', realism: '8.3/10', style: '8.2/10', speed: '~10s', freeTier: false, score: 8.1 },
-  { tool: 'Bing Image Creator', promptAdherence: '79%', realism: '7.8/10', style: '7.5/10', speed: '~25s', freeTier: true, score: 7.5 },
+  { tool: 'Midjourney v6.1', promptAdherence: '91%', realism: '9.4/10', style: '9.6/10', speed: '~30s', freeTier: false, score: 9.3 },
+  { tool: 'DALL-E 3 (OpenAI)', promptAdherence: '92%', realism: '8.8/10', style: '8.3/10', speed: '~15s', freeTier: false, score: 8.9 },
+  { tool: 'Ideogram 2.0', promptAdherence: '88%', realism: '8.4/10', style: '8.6/10', speed: '~20s', freeTier: true, score: 8.6 },
+  { tool: 'Stable Diffusion 3.5', promptAdherence: '82%', realism: '8.6/10', style: '8.9/10', speed: '~5s*', freeTier: true, score: 8.5 },
+  { tool: 'Adobe Firefly 3', promptAdherence: '82%', realism: '8.1/10', style: '8.0/10', speed: '~10s', freeTier: false, score: 8.1 },
+  { tool: 'Bing Image Creator', promptAdherence: '76%', realism: '7.5/10', style: '7.3/10', speed: '~25s', freeTier: true, score: 7.5 },
 ];
 
 export default function ResearchPage() {
@@ -152,7 +166,7 @@ export default function ResearchPage() {
           <p data-nosnippet="true" className="text-xs text-zinc-400">
             All data is collected under standardized conditions. See{' '}
             <Link href="/methodology" className="text-[#1b2e67] hover:underline">Methodology</Link>{' '}
-            for full evaluation criteria. Last updated: October 2026.
+            for full evaluation criteria. Last updated: November 2026.
           </p>
         </div>
 
@@ -209,7 +223,7 @@ export default function ResearchPage() {
                 {codingBenchmark.map((row, i) => (
                   <tr key={row.tool} className={i === 0 ? 'bg-amber-50 dark:bg-amber-950/20' : 'bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'}>
                     <td className="px-4 py-3 font-semibold text-zinc-900 dark:text-white">
-                      {i === 0 && <span className="text-[10px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded mr-1.5">TOP</span>}
+                      {i === 0 && <span className="text-[10px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded mr-1.5">TOP</span>}{' '}
                       {row.tool}
                     </td>
                     <td className="px-4 py-3 text-center font-bold text-emerald-600">{row.taskSuccess}</td>
@@ -227,7 +241,7 @@ export default function ResearchPage() {
             </table>
           </div>
           <p className="text-xs text-zinc-400 italic">
-            Compiled October 2026. Evaluated across representative developer workloads (API development, refactoring, code completion).
+            Compiled November 2026. Evaluated across representative developer workloads (API development, refactoring, code completion).
             Cost calculated at public pricing tiers. See <Link href="/methodology" className="text-[#1b2e67] hover:underline">full methodology</Link>.
           </p>
         </section>
@@ -244,7 +258,7 @@ export default function ResearchPage() {
                   LLM Pricing & Token Efficiency Tracker 2026
                 </h2>
               </div>
-              <p data-nosnippet="true" className="text-sm text-zinc-500">Public API pricing for leading LLMs · Updated: October 2026 · Context: per million tokens</p>
+              <p data-nosnippet="true" className="text-sm text-zinc-500">Public API pricing for leading LLMs · Updated: November 2026 · Context: per million tokens</p>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <a
@@ -297,8 +311,7 @@ export default function ResearchPage() {
             </table>
           </div>
           <p className="text-xs text-zinc-400 italic">
-            * Llama self-hosted cost estimate based on AWS g5.12xlarge instance at $5.67/hr, processing 1M tokens/hr. Actual cost varies.
-            Pricing snapshots from official provider pages, October 2026. Prices change frequently - verify before budgeting.
+            Pricing snapshots from official provider pages, November 2026. Prices change frequently - verify before budgeting.
           </p>
         </section>
 
@@ -357,7 +370,7 @@ export default function ResearchPage() {
                 {imageGenBenchmark.map((row, i) => (
                   <tr key={row.tool} className={i === 0 ? 'bg-purple-50 dark:bg-purple-950/20' : 'bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'}>
                     <td className="px-4 py-3 font-semibold text-zinc-900 dark:text-white">
-                      {i === 0 && <span className="text-[10px] font-bold text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded mr-1.5">TOP</span>}
+                      {i === 0 && <span className="text-[10px] font-bold text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded mr-1.5">TOP</span>}{' '}
                       {row.tool}
                     </td>
                     <td className="px-4 py-3 text-center text-emerald-600 font-semibold">{row.promptAdherence}</td>
@@ -395,7 +408,7 @@ export default function ResearchPage() {
             This data is published under Creative Commons Attribution 4.0 (CC BY 4.0). You may republish, quote, or summarize it with attribution.
           </p>
           <div data-nosnippet="true" className="bg-zinc-900 text-zinc-100 rounded-xl p-4 font-mono text-xs">
-            BunusRadar Research Team. &quot;AI Coding Assistant Benchmark 2026.&quot; BunusRadar, September 2026, https://bunusradar.site/research#ai-coding-benchmark
+            BunusRadar Research Team. &quot;AI Coding Assistant Benchmark 2026.&quot; BunusRadar, November 2026, https://bunusradar.site/research#ai-coding-benchmark
           </div>
         </div>
 
