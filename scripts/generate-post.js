@@ -11,9 +11,25 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
-const { resolveCoverImage } = require('./topic-image-matcher.cjs');
+const { resolveCoverImage, markImageUsed } = require('./topic-image-matcher.cjs');
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
+
+function getUsedCoverImages() {
+  const used = new Set();
+  if (!fs.existsSync(POSTS_DIR)) return used;
+  const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+  for (const f of files) {
+    try {
+      const content = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8');
+      const match = content.match(/^coverImage:\s*"([^"]+)"/m);
+      if (match) {
+        markImageUsed(match[1].trim(), used);
+      }
+    } catch {}
+  }
+  return used;
+}
 
 function slugify(text) {
   return text
@@ -59,9 +75,10 @@ async function createPost({ title, category, excerpt, tags, content }) {
   }
 
   const date = new Date().toISOString().split('T')[0];
-  const resolved = resolveCoverImage({ title, category, tags: tagList });
+  const tagList = Array.isArray(tags) ? tags : (tags ? tags.split(',').map((t) => t.trim().toLowerCase()) : []);
+  const usedSet = getUsedCoverImages();
+  const resolved = resolveCoverImage({ title, category, slug, tags: tagList, usedSet });
   const coverImage = resolved.url;
-  const tagList = Array.isArray(tags) ? tags : tags.split(',').map((t) => t.trim().toLowerCase());
 
   const template = `---
 title: "${title.replace(/"/g, '\\"')}"

@@ -20,7 +20,7 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { submitToIndexNow } from './submit-indexnow.mjs';
 import { pingSearchEngines } from './ping-search-engines.mjs';
-import { resolveCoverImage, detectTopicKey } from './topic-image-matcher.mjs';
+import { resolveCoverImage, detectTopicKey, extractImageToken, markImageUsed } from './topic-image-matcher.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -62,8 +62,7 @@ function getUsedCoverImages() {
       const match = content.match(/^coverImage:\s*"([^"]+)"/m);
       if (match) {
         const raw = match[1].trim();
-        used.add(raw);
-        used.add(raw.split('?')[0]);
+        markImageUsed(raw, used);
       }
     } catch {}
   }
@@ -81,9 +80,8 @@ function getUniqueCoverImage({ title, keyword, category, slug, tags }) {
     tags,
     usedSet: allUsed
   });
-  USED_IMAGES_IN_SESSION.add(resolved.url);
-  USED_IMAGES_IN_SESSION.add(resolved.url.split('?')[0]);
-  console.log(`  🖼️  Assigned relevant cover image for topic [${resolved.topic}]: ${resolved.url.slice(0, 70)}...`);
+  markImageUsed(resolved.url, USED_IMAGES_IN_SESSION);
+  console.log(`  [COVER IMAGE] Assigned relevant cover image for topic [${resolved.topic}]: ${resolved.url.slice(0, 70)}...`);
   return resolved.url;
 }
 

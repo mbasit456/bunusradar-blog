@@ -5,7 +5,7 @@ excerpt: "A comprehensive benchmark and economic comparison of OpenAI o1 and GPT
 category: "Technology"
 tags: ["OpenAI", "Artificial Intelligence", "Enterprise AI", "LLM Benchmarks", "Cloud Computing"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
 readingTime: "10 min read"
 featured: false
 ---

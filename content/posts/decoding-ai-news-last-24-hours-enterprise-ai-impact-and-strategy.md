@@ -5,7 +5,7 @@ excerpt: "Analyze how ai news last 24 hours reshapes enterprise architecture, de
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise Architecture", "Business Strategy", "Tech Trends", "Workflow Optimization"]
 author: "Marcus Sterling"
-coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?auto=format&fit=crop&w=1200&q=80"
 readingTime: "6 min read"
 featured: false
 ---

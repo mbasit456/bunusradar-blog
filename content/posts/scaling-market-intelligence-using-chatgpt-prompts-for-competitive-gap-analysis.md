@@ -5,7 +5,7 @@ excerpt: "Discover how to leverage advanced chatgpt prompts for competitive gap 
 category: "Business & Growth"
 tags: ["Artificial Intelligence", "Business Strategy", "Competitive Analysis", "Productivity", "Market Research"]
 author: "Marcus Sterling"
-coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---
