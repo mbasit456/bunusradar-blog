@@ -5,7 +5,7 @@ excerpt: "Explore how modern artificial intelligence chatbots are transitioning 
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Chatbots", "Enterprise Software", "RAG Architecture", "LLM Integration"]
 author: "Marcus Sterling"
-coverImage: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

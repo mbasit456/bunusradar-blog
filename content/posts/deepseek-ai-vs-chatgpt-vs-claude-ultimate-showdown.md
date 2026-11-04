@@ -5,7 +5,7 @@ excerpt: "Compare DeepSeek-R1/V3, ChatGPT (GPT-4o/o1), and Claude 3.5/3.7 Sonnet
 category: "Artificial Intelligence"
 tags: ["DeepSeek", "ChatGPT", "Claude", "Artificial Intelligence", "AI Comparison", "LLM Benchmarks"]
 author: "Sarah Chen"
-coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1625314887424-9f190599bd56?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

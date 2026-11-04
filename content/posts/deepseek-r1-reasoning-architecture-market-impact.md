@@ -5,7 +5,7 @@ excerpt: "Explore how the deepseek r1 reasoning architecture disrupts enterprise
 category: "Artificial Intelligence"
 tags: ["deepseek r1", "frontier models", "artificial intelligence", "enterprise architecture", "computational efficiency"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1618172193763-c511deb635ca?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

@@ -5,7 +5,7 @@ excerpt: "Learn how to plan, engineer, and publish an authoritative blog post ab
 category: "Business & Growth"
 tags: ["Artificial Intelligence", "Content Strategy", "Digital Business", "SEO", "Generative Engine Optimization"]
 author: "Marcus Sterling"
-coverImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

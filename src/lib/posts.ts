@@ -154,7 +154,7 @@ export function getAllPosts(includeScheduled = false): PostMetadata[] {
         rawDate: rawDateStr,
         category: normalizeCategorySlug(data.category || 'technology'),
         tags: Array.isArray(data.tags) ? data.tags : [],
-        coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+        coverImage: data.coverImage || 'https://images.unsplash.com/photo-1674027444485-cec3da58eef4?auto=format&fit=crop&w=1200&q=80',
         authorSlug: authorResolved.slug,
         author: {
           name: authorResolved.name,
@@ -296,7 +296,7 @@ export async function getPostBySlug(slug: string, includeScheduled = true): Prom
     date: postDate,
     category: normalizeCategorySlug(data.category || 'technology'),
     tags: Array.isArray(data.tags) ? data.tags : [],
-    coverImage: data.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+    coverImage: data.coverImage || 'https://images.unsplash.com/photo-1674027444485-cec3da58eef4?auto=format&fit=crop&w=1200&q=80',
     authorSlug: authorResolved.slug,
     author: {
       name: authorResolved.name,
@@ -429,7 +429,7 @@ export function savePostFile(postData: {
     date: postData.date || new Date().toISOString().split('T')[0],
     category: postData.category || 'technology',
     tags: Array.isArray(postData.tags) ? postData.tags : [],
-    coverImage: postData.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+    coverImage: postData.coverImage || 'https://images.unsplash.com/photo-1674027444485-cec3da58eef4?auto=format&fit=crop&w=1200&q=80',
     ...(postData.author ? { author: postData.author } : {}),
   };
 

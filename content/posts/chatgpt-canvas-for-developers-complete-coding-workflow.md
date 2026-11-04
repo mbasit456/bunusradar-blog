@@ -5,7 +5,7 @@ excerpt: "Discover how the chatgpt canvas for developers complete coding workflo
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Productivity", "Technology", "Software Development", "Enterprise Architecture"]
 author: "Sarah Chen"
-coverImage: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

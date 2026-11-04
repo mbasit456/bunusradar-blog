@@ -5,7 +5,7 @@ excerpt: "Discover how modern enterprises architect scalable ai systems to optim
 category: "Artificial Intelligence"
 tags: ["ai systems", "enterprise architecture", "digital transformation", "workflow optimization", "artificial intelligence"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

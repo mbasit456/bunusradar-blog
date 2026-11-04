@@ -5,7 +5,7 @@ excerpt: "Explore the rapid evolution of modern AI systems, core inference mecha
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Machine Learning", "Tech Trends", "Tech Trends 2026", "Future of Work", "Software Development"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---
