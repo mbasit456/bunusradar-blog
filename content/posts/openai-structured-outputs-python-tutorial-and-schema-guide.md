@@ -5,7 +5,7 @@ excerpt: "Discover how to leverage strict data parsing in enterprise software de
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Python", "API Architecture", "Data Engineering", "Developer Tools"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

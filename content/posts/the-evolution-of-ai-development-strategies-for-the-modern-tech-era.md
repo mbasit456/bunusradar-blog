@@ -5,7 +5,7 @@ excerpt: "Discover how modern ai development is transforming industries through 
 category: "Artificial Intelligence"
 tags: ["ai development", "artificial intelligence", "software engineering", "coding assistants", "business technology"]
 author: "Marcus Sterling"
-coverImage: "/images/posts/the-evolution-of-ai-development-strategies-for-the-modern-tech-era.jpg"
+coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

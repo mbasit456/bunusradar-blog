@@ -5,7 +5,7 @@ excerpt: "Compare the top AI coding tools of 2026: Cursor, Anthropic Claude, and
 category: "Artificial Intelligence"
 tags: ["AI Coding", "Cursor IDE", "Claude AI", "GitHub Copilot", "Developer Tools"]
 author: "Sarah Chen"
-coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

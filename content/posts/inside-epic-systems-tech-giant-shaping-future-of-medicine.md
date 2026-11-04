@@ -5,7 +5,7 @@ excerpt: "Discover how Epic Systems built a healthcare software empire, leading 
 category: "Technology"
 tags: ["Epic Systems", "Healthcare Tech", "Artificial Intelligence", "EHR", "Enterprise Software"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

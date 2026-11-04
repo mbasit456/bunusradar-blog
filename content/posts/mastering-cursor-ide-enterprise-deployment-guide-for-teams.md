@@ -5,7 +5,7 @@ excerpt: "Discover how software teams scale development operations securely usin
 category: "Technology"
 tags: ["Cursor IDE", "Enterprise Deployment", "Software Architecture", "Developer Productivity", "Artificial Intelligence"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

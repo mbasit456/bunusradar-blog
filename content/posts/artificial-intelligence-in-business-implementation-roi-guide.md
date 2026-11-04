@@ -5,7 +5,7 @@ excerpt: "Comprehensive executive roadmap to deploying artificial intelligence i
 category: "AI"
 tags: ["Artificial Intelligence", "AI in Business", "Enterprise AI", "Machine Learning", "Digital Transformation"]
 author: "Marcus Sterling"
-coverImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80"
 readingTime: "9 min read"
 featured: true
 ---

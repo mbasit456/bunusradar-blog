@@ -5,7 +5,7 @@ excerpt: "Explore how enterprise-grade AI programming transforms software develo
 category: "Artificial Intelligence"
 tags: ["AI Programming", "Software Architecture", "Enterprise AI", "Developer Productivity", "Digital Transformation"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

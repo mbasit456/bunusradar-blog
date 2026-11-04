@@ -5,7 +5,7 @@ excerpt: "Discover the ultimate personal productivity stack combining top softwa
 category: "Productivity"
 tags: ["Productivity", "Time Management", "Focus", "Workflow", "Digital Tools"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

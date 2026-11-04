@@ -5,7 +5,7 @@ excerpt: "Discover how to use ChatGPT search for market research to optimize ent
 category: "Artificial Intelligence"
 tags: ["ChatGPT Search", "Market Research", "Enterprise AI", "Business Intelligence", "Data Strategy"]
 author: "Marcus Sterling"
-coverImage: "/images/posts/chatgpt-search-market-research-cover.jpg"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

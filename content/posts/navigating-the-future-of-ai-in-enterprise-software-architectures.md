@@ -5,7 +5,7 @@ excerpt: "Explore how the future of ai is reshaping enterprise software architec
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise Software", "Business & Growth", "Automation", "Technology"]
 author: "Marcus Sterling"
-coverImage: "/images/posts/navigating-the-future-of-ai-in-enterprise-software-architectures.jpg"
+coverImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

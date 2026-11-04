@@ -5,7 +5,7 @@ excerpt: "Discover how openai o3 mini structured outputs transform enterprise so
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "OpenAI", "Structured Outputs", "Software Development", "API Integration"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80"
 readingTime: "7 min read"
 featured: false
 ---

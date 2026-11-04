@@ -5,7 +5,7 @@ excerpt: "Discover how automated branding transforms enterprise growth, streamli
 category: "Business & Growth"
 tags: ["Automated Branding", "Business & Growth", "Artificial Intelligence", "Digital Infrastructure", "Workflow Optimization"]
 author: "Marcus Sterling"
-coverImage: "/images/posts/scaling-enterprise-marketing-with-automated-branding-systems.jpg"
+coverImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

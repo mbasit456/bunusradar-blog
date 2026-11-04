@@ -5,7 +5,7 @@ excerpt: "In-depth AI healthcare news for 2026: evaluating FDA clearance trends 
 category: "Artificial Intelligence"
 tags: ["AI Healthcare News", "Clinical AI", "Medical LLMs", "Hospital IT", "Healthcare Technology"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200&q=80"
 readingTime: "10 min read"
 featured: false
 ---

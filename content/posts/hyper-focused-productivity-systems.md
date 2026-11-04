@@ -4,7 +4,7 @@ excerpt: "Practical tactics, time-blocking strategies, and asynchronous communic
 date: "2026-09-05"
 category: "productivity"
 tags: ["productivity", "deep-work", "time-management", "focus", "habits"]
-coverImage: "/images/posts/hyper-focused-productivity-systems.jpg"
+coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80"
 featured: false
 author: "Alex Vance"
 ---

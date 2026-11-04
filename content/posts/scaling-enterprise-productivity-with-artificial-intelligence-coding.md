@@ -5,7 +5,7 @@ excerpt: "Discover how artificial intelligence coding transforms software archit
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Software Development", "Productivity", "Enterprise Tech", "Automation"]
 author: "Alex Vance"
-coverImage: "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---
