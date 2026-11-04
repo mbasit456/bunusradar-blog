@@ -5,7 +5,7 @@ excerpt: "Discover enterprise strategies on how to stop ChatGPT from hallucinati
 category: "Artificial Intelligence"
 tags: ["Artificial Intelligence", "Enterprise AI", "LLM Accuracy", "Prompt Engineering", "Productivity"]
 author: "Sarah Chen"
-coverImage: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

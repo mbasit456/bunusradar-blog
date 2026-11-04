@@ -5,7 +5,7 @@ excerpt: "A comprehensive guide to Casetext login, CoCounsel generative AI featu
 category: "Technology"
 tags: ["Casetext Login", "CoCounsel AI", "Legal Tech", "Enterprise AI", "Thomson Reuters"]
 author: "Marcus Sterling"
-coverImage: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
 readingTime: "9 min read"
 featured: false
 ---

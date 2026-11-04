@@ -4,7 +4,7 @@ excerpt: "How autonomous coding agents, multi-agent swarms, and self-correcting 
 date: "2026-09-12"
 category: "ai"
 tags: ["ai", "software-engineering", "autonomous-agents", "future-of-work"]
-coverImage: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80"
 featured: true
 author: "Alex Vance"
 ---

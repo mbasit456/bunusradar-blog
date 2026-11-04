@@ -5,7 +5,7 @@ excerpt: "A deep technical benchmark analyzing github copilot vs cursor code com
 category: "Technology"
 tags: ["GitHub Copilot", "Cursor", "Code Completion", "Developer Productivity", "AI Coding Assistants"]
 author: "Sarah Chen"
-coverImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1200&q=80"
 readingTime: "8 min read"
 featured: false
 ---

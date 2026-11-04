@@ -5,7 +5,7 @@ excerpt: "A rigorous, hands-on comparison of ChatGPT, Claude, and Gemini across 
 category: "Artificial Intelligence"
 tags: ["ChatGPT", "Claude", "Gemini", "Artificial Intelligence", "Productivity"]
 author: "Sarah Chen"
-coverImage: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1200&q=80"
+coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1200&q=80"
 readingTime: "9 min read"
 featured: false
 ---
