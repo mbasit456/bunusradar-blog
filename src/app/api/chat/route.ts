@@ -3,7 +3,7 @@ import { generateAiImage, detectImageStyle, detectAspectRatio } from '@/lib/imag
 import { getUploadedDocument } from '@/lib/documentStore';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 15;
 
 const BUILTIN_KEY_B64 = 'QVEuQWI4Uk42SUZqdFBYbXdRT2k2LVdPY05OWTlsYjVTVjZrRmVIU0VxT2FxSzVVcHV3Q3c=';
 
@@ -17,14 +17,10 @@ function getRuntimeApiKey(userKey?: string): string {
   }
 }
 
-// Order candidates from fastest & most reliable to robust fallbacks
+// Fastest Google Gemini models with sub-second execution to prevent CPU exhaustion
 const MODEL_CANDIDATES = [
-  'gemini-3.5-flash-lite',
-  'gemini-3.8-flash',
-  'gemini-3.5-flash',
-  'gemini-3.6-flash',
-  'gemini-flash-lite-latest',
-  'gemini-3-flash-preview',
+  'gemini-2.0-flash',
+  'gemini-1.5-flash',
 ];
 
 interface ChatMessage {
@@ -461,7 +457,36 @@ async function generateOfflineFallback(
   };
 }
 
+function isAuthorizedRequest(req: NextRequest): boolean {
+  const origin = req.headers.get('origin') || '';
+  const referer = req.headers.get('referer') || '';
+  const host = req.headers.get('host') || '';
+  const userAgent = req.headers.get('user-agent') || '';
+
+  if (/(bot|crawler|spider|crawling|python-requests|aiohttp|curl|wget|scrapy|go-http-client)/i.test(userAgent)) {
+    return false;
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1');
+    if (!isLocalhost) {
+      const allowedDomain = 'bunusradar.site';
+      const matchesOrigin = origin && origin.includes(allowedDomain);
+      const matchesReferer = referer && referer.includes(allowedDomain);
+      if (!matchesOrigin && !matchesReferer) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 export async function POST(req: NextRequest) {
+  if (!isAuthorizedRequest(req)) {
+    return NextResponse.json({ error: 'Access forbidden.' }, { status: 403 });
+  }
+
   try {
     const body = (await req.json()) as RequestBody;
     const {
@@ -516,10 +541,10 @@ export async function POST(req: NextRequest) {
       contents[lastIndex].parts[0].text = `${contents[lastIndex].parts[0].text}\n\n[System Note: Provide a vivid, artistic description of this visual concept and critique its aesthetic elements warmly in the exact same language as the user's prompt.]`;
     }
 
-    // Try reliable Gemini candidates in priority order with 18s timeout per attempt
+    // Try reliable Gemini candidates with 7s timeout per attempt
     for (const candidate of MODEL_CANDIDATES) {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 18000);
+      const timeoutId = setTimeout(() => controller.abort(), 7000);
 
       try {
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${candidate}:generateContent?key=${activeKey}`;

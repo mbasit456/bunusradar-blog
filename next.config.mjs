@@ -445,11 +445,33 @@ const nextConfig = {
         ],
       },
       {
+        source: '/ads.txt',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
+        source: '/:path*.xml',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
         source: '/llms.txt',
         headers: [
           {
             key: 'X-Robots-Tag',
             value: 'noindex, follow',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
           },
         ],
       },
@@ -459,6 +481,10 @@ const nextConfig = {
           {
             key: 'X-Robots-Tag',
             value: 'noindex, follow',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
           },
         ],
       },

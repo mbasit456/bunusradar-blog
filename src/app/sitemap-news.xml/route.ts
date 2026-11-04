@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/posts';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const dynamic = 'force-static';
+export const revalidate = false;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';

@@ -9,9 +9,38 @@ import {
 } from '@/lib/imageGenerator';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 15;
+
+function isAuthorizedRequest(req: NextRequest): boolean {
+  const origin = req.headers.get('origin') || '';
+  const referer = req.headers.get('referer') || '';
+  const host = req.headers.get('host') || '';
+  const userAgent = req.headers.get('user-agent') || '';
+
+  if (/(bot|crawler|spider|crawling|python-requests|aiohttp|curl|wget|scrapy|go-http-client)/i.test(userAgent)) {
+    return false;
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1');
+    if (!isLocalhost) {
+      const allowedDomain = 'bunusradar.site';
+      const matchesOrigin = origin && origin.includes(allowedDomain);
+      const matchesReferer = referer && referer.includes(allowedDomain);
+      if (!matchesOrigin && !matchesReferer) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
 
 export async function POST(req: NextRequest) {
+  if (!isAuthorizedRequest(req)) {
+    return NextResponse.json({ error: 'Access forbidden.' }, { status: 403 });
+  }
+
   try {
     const body = await req.json();
     const {
