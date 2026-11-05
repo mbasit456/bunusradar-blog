@@ -292,16 +292,19 @@ function safeJsonParse(jsonString) {
     return JSON.parse(jsonString);
   } catch (initialErr) {
     try {
+      const cleaned = jsonString.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
+      return JSON.parse(cleaned);
+    } catch {}
+    try {
       const sanitized = jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, (char) => {
-        if (char === '\n') return '\\n';
-        if (char === '\r') return '\\r';
-        if (char === '\t') return '\\t';
-        return '';
+        if (char === "\n") return "\\n";
+        if (char === "\r") return "\\r";
+        if (char === "\t") return "\\t";
+        return "";
       });
       return JSON.parse(sanitized);
-    } catch {
-      throw initialErr;
-    }
+    } catch {}
+    throw initialErr;
   }
 }
 
@@ -392,7 +395,7 @@ STRICT OUTPUT FORMAT - Return ONLY a valid JSON object matching this schema:
     const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
     return safeJsonParse(cleaned);
   } catch (err) {
-    if (attempt < 5) {
+    if (attempt < 8) {
       const delay = attempt * 5000;
       console.log(`  ⚠️  Demand spike/error on attempt ${attempt} (${err.message.split('\n')[0]}). Retrying in ${delay / 1000}s...`);
       await sleep(delay);
