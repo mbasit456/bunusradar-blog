@@ -66,7 +66,7 @@ const TOPIC_IMAGE_CATALOG = {
     'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'
   ],
   productivity_workplace: [
-    'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80'
@@ -163,14 +163,17 @@ function detectTopicKey({ title = '', keyword = '', slug = '', category = '', ta
   if (/(owi|paralegal|laws?|legal|compliance|regulations?)/i.test(combined)) {
     return 'legal_compliance';
   }
-  if (/(clouds?|servers?|datacenters?|security|infrastructure|devops|database|networks?|kerberos|zatcoin|asset resilience)/i.test(combined)) {
+  if (/(clouds?|servers?|datacenters?|security|infrastructure|devops|database|networks?|kerberos|zatcoin|asset resilience|wifi|wireless)/i.test(combined)) {
     return 'infrastructure_cloud_security';
   }
-  if (/(notion|workflows?|productivity|templates?|time management|focus|tasks?|workplace|shiftnote|workspace)/i.test(combined)) {
+  if (/(notion|workflows?|productivity|templates?|time management|focus|tasks?|workplace|shiftnote|workspace|planner|planning)/i.test(combined)) {
     return 'productivity_workplace';
   }
-  if (/(healthcare|clinical|diagnos|hospital|medicine|biotech|genom)/i.test(combined)) {
+  if (/(healthcare|clinical|diagnos|hospital|medicine|biotech|genom|prosthetic|bionic|neural interface)/i.test(combined)) {
     return 'healthcare_biotech';
+  }
+  if (/(smart plug|apple watch|iot|gadgets?|hardware|sensors?)/i.test(combined)) {
+    return 'general_tech';
   }
   if (/(ai|artificial intelligence|autonomous|agents?|neural|machine learning|future tech)/i.test(combined) || (category && category.toLowerCase().includes('ai'))) {
     return 'general_ai';
