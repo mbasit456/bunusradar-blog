@@ -1,9 +1,18 @@
-import { getAllPosts, getAllTags } from '@/lib/posts';
+import { getAllPosts } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { getAllAuthors } from '@/lib/authors';
 
 export const dynamic = 'force-static';
 export const revalidate = false;
+
+function xmlEscape(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
@@ -11,33 +20,26 @@ export async function GET() {
   const authors = getAllAuthors();
   const today = new Date().toISOString().split('T')[0];
 
-  // Static Pages with lastmod for Google Search Console freshness signals
+  // Core Static Pages
   const staticPages = [
     { url: `${baseUrl}`, changefreq: 'daily', priority: '1.0', lastmod: today },
     { url: `${baseUrl}/latest-publications`, changefreq: 'daily', priority: '0.9', lastmod: today },
-    { url: `${baseUrl}/tools`, changefreq: 'weekly', priority: '0.95', lastmod: today },
-    { url: `${baseUrl}/tools/free-ai-chat`, changefreq: 'weekly', priority: '1.0', lastmod: today },
-    { url: `${baseUrl}/tools/ai-token-calculator`, changefreq: 'weekly', priority: '0.95', lastmod: today },
-    { url: `${baseUrl}/tools/ai-prompt-optimizer`, changefreq: 'weekly', priority: '0.95', lastmod: today },
-    { url: `${baseUrl}/tools/ai-roi-calculator`, changefreq: 'weekly', priority: '0.95', lastmod: today },
-    { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8' },
-    { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8' },
-    { url: `${baseUrl}/editorial-standards`, changefreq: 'monthly', priority: '0.8' },
-    { url: `${baseUrl}/privacy-policy`, changefreq: 'monthly', priority: '0.7' },
-    { url: `${baseUrl}/terms-and-conditions`, changefreq: 'monthly', priority: '0.7' },
-    { url: `${baseUrl}/disclaimer`, changefreq: 'monthly', priority: '0.7' },
-    { url: `${baseUrl}/contact`, changefreq: 'monthly', priority: '0.7' },
-    { url: `${baseUrl}/cookie-policy`, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/tools`, changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { url: `${baseUrl}/tools/free-ai-chat`, changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { url: `${baseUrl}/tools/ai-token-calculator`, changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { url: `${baseUrl}/tools/ai-prompt-optimizer`, changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { url: `${baseUrl}/tools/ai-roi-calculator`, changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { url: `${baseUrl}/research`, changefreq: 'monthly', priority: '0.8', lastmod: today },
+    { url: `${baseUrl}/methodology`, changefreq: 'monthly', priority: '0.8', lastmod: today },
+    { url: `${baseUrl}/authors`, changefreq: 'monthly', priority: '0.8', lastmod: today },
+    { url: `${baseUrl}/about`, changefreq: 'monthly', priority: '0.8', lastmod: today },
+    { url: `${baseUrl}/editorial-standards`, changefreq: 'monthly', priority: '0.8', lastmod: today },
+    { url: `${baseUrl}/privacy-policy`, changefreq: 'monthly', priority: '0.5', lastmod: today },
+    { url: `${baseUrl}/terms-and-conditions`, changefreq: 'monthly', priority: '0.5', lastmod: today },
+    { url: `${baseUrl}/disclaimer`, changefreq: 'monthly', priority: '0.5', lastmod: today },
+    { url: `${baseUrl}/contact`, changefreq: 'monthly', priority: '0.7', lastmod: today },
+    { url: `${baseUrl}/cookie-policy`, changefreq: 'monthly', priority: '0.5', lastmod: today },
   ];
-
-  // Author Profile Pages
-  const authorPages = authors.map((author) => ({
-    url: `${baseUrl}/author/${author.slug}`,
-    changefreq: 'weekly',
-    priority: '0.8',
-  }));
 
   // Category Hub Pages
   const categoryPages = Object.values(CATEGORIES).map((cat) => ({
@@ -47,41 +49,67 @@ export async function GET() {
     lastmod: today,
   }));
 
-  // Article Pages with W3C YYYY-MM-DD lastmod
+  // Author Profile Pages
+  const authorPages = authors.map((author) => ({
+    url: `${baseUrl}/author/${author.slug}`,
+    changefreq: 'weekly',
+    priority: '0.7',
+    lastmod: today,
+  }));
+
+  // Article Pages with Google Image extension
   const articlePages = posts.map((post) => {
     const d = new Date(post.rawDate || post.date);
-    const lastmod = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : undefined;
+    const lastmod = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : today;
+
+    const rawCover = post.coverImage || '';
+    const fullCoverImageUrl = rawCover
+      ? (rawCover.startsWith('http') ? rawCover : `${baseUrl}${rawCover.startsWith('/') ? rawCover : `/${rawCover}`}`)
+      : null;
+
     return {
       url: `${baseUrl}/blog/${post.slug}`,
       changefreq: 'weekly',
-      priority: '0.9',
+      priority: '1.0',
       lastmod,
+      imageUrl: fullCoverImageUrl,
+      imageTitle: post.title,
     };
   });
 
-  // Tag Hub Pages - only include substantial tags with 2 or more articles to avoid thin content indexing warnings
-  const substantialTags = getAllTags().filter(({ count }) => count >= 2);
-  const tagPages = substantialTags.map(({ tag }) => ({
-    url: `${baseUrl}/tag/${encodeURIComponent(tag.trim().toLowerCase())}`,
-    changefreq: 'weekly',
-    priority: '0.6',
-  }));
-
-  const allUrls = [...staticPages, ...authorPages, ...categoryPages, ...articlePages, ...tagPages];
-
-  const xmlEntries = allUrls
+  const staticXml = [...staticPages, ...categoryPages, ...authorPages]
     .map(
-      (item: { url: string; changefreq: string; priority: string; lastmod?: string }) => `  <url>
-    <loc>${item.url}</loc>${item.lastmod ? `\n    <lastmod>${item.lastmod}</lastmod>` : ''}
+      (item) => `  <url>
+    <loc>${xmlEscape(item.url)}</loc>
+    <lastmod>${item.lastmod}</lastmod>
     <changefreq>${item.changefreq}</changefreq>
     <priority>${item.priority}</priority>
   </url>`
     )
     .join('\n');
 
+  const articlesXml = articlePages
+    .map((item) => {
+      const imageTag = item.imageUrl
+        ? `\n    <image:image>
+      <image:loc>${xmlEscape(item.imageUrl)}</image:loc>
+      <image:title>${xmlEscape(item.imageTitle)}</image:title>
+    </image:image>`
+        : '';
+      return `  <url>
+    <loc>${xmlEscape(item.url)}</loc>
+    <lastmod>${item.lastmod}</lastmod>
+    <changefreq>${item.changefreq}</changefreq>
+    <priority>${item.priority}</priority>${imageTag}
+  </url>`;
+    })
+    .join('\n');
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${xmlEntries}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${staticXml}
+${articlesXml}
 </urlset>`;
 
   return new Response(xml, {
