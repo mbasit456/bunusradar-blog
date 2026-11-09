@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/posts';
 
-export const dynamic = 'force-static';
-export const revalidate = false;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
@@ -48,7 +48,7 @@ ${xmlEntries}
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=120',
+      'Cache-Control': 'public, max-age=60, s-maxage=120, stale-while-revalidate=300',
     },
   });
 }

@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/posts';
 
-export const dynamic = 'force-static';
-export const revalidate = false;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 function xmlEscape(str: string): string {
   return str
@@ -15,11 +15,12 @@ function xmlEscape(str: string): string {
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
   const posts = getAllPosts(true);
+  const today = new Date().toISOString().split('T')[0];
 
   const xmlEntries = posts.map((post) => {
     const postUrl = `${baseUrl}/blog/${post.slug}`;
     const d = new Date(post.rawDate || post.date);
-    const lastmod = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+    const lastmod = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : today;
 
     const rawCover = post.coverImage || '';
     const fullCoverImageUrl = rawCover
@@ -50,7 +51,7 @@ ${xmlEntries}
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=600',
     },
   });
 }

@@ -50,6 +50,17 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     title: post.title,
     description: post.excerpt,
     authors: [{ name: post.author.name }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
       canonical: canonicalUrl,
     },

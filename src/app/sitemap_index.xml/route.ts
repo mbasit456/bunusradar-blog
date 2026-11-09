@@ -1,9 +1,13 @@
-export const dynamic = 'force-static';
-export const revalidate = false;
+import { getAllPosts } from '@/lib/posts';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
   const baseUrl = 'https://bunusradar.site';
-  const lastmod = new Date().toISOString();
+  const posts = getAllPosts(true);
+  const latestPost = posts[0];
+  const lastmod = latestPost?.rawDate || latestPost?.date || new Date().toISOString().split('T')[0];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -16,7 +20,15 @@ export async function GET() {
     <lastmod>${lastmod}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${baseUrl}/sitemap.xml</loc>
+    <loc>${baseUrl}/sitemap-categories.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-authors.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-tags.xml</loc>
     <lastmod>${lastmod}</lastmod>
   </sitemap>
   <sitemap>
@@ -28,7 +40,7 @@ export async function GET() {
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=600',
     },
   });
 }
