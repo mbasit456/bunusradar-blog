@@ -25,24 +25,36 @@ function fullyDecode(str: string): string {
   return decoded.trim();
 }
 
+function normalizeTagSlug(tag: string): string {
+  return tag.toLowerCase().replace(/[-\s]+/g, '-').trim();
+}
+
 export async function generateStaticParams() {
   const tags = getAllTags();
   return tags.map(({ tag }) => ({
-    tag: encodeURIComponent(tag.trim()),
+    tag: encodeURIComponent(tag.trim().toLowerCase()),
   }));
 }
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const cleanTag = fullyDecode(params.tag);
-  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(cleanTag)}`;
+  const normalizedSlug = normalizeTagSlug(cleanTag);
+  const posts = getPostsByTag(cleanTag);
+  const canonicalUrl = `https://bunusradar.site/tag/${encodeURIComponent(normalizedSlug)}`;
+
+  // SEO Quality Control:
+  // Tags with only 1 post are "thin content" and trigger Google Search Console "Crawled - currently not indexed".
+  // Mark thin tags with noindex, follow so Googlebot still discovers the article without penalizing domain quality.
+  const isSubstantial = posts.length >= 2;
+
   return {
-    title: `#${cleanTag}`,
-    description: `Articles and guides tagged with #${cleanTag} on BunusRadar`,
+    title: `#${cleanTag} | BunusRadar`,
+    description: `Browse articles, guides, and intelligence briefings tagged with #${cleanTag} on BunusRadar.`,
     robots: {
-      index: true,
+      index: isSubstantial,
       follow: true,
       googleBot: {
-        index: true,
+        index: isSubstantial,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
@@ -54,7 +66,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     },
     openGraph: {
       url: canonicalUrl,
-      title: `#${cleanTag}`,
+      title: `#${cleanTag} | BunusRadar`,
       description: `Articles tagged with #${cleanTag}`,
     },
   };
@@ -78,13 +90,13 @@ export default function TagPage({ params }: TagPageProps) {
         <div className="p-8 md:p-12 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300">
             <TagIcon className="w-3.5 h-3.5 text-blue-600" />
-            Tag Filter
+            Topic Tag
           </div>
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 dark:white capitalize">
             #{cleanTag}
           </h1>
           <p className="text-xs font-semibold text-zinc-400">
-            Showing {posts.length} {posts.length === 1 ? 'article' : 'articles'} tagged with #{cleanTag}
+            Showing {posts.length} {posts.length === 1 ? 'article' : 'articles'} in this topic cluster
           </p>
         </div>
       </div>
@@ -98,8 +110,11 @@ export default function TagPage({ params }: TagPageProps) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-dashed border-zinc-200 dark:border-zinc-800">
-            <p className="text-zinc-500">No articles found for this tag.</p>
+          <div className="text-center py-16 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800">
+            <p className="text-zinc-500 text-sm">No articles found for this tag.</p>
+            <Link href="/" className="inline-block mt-4 text-xs font-bold text-blue-600 hover:underline">
+              Return to Homepage
+            </Link>
           </div>
         )}
       </div>
