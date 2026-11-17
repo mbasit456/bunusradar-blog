@@ -36,11 +36,6 @@ export default function Footer() {
 
   const pathname = usePathname();
 
-  // Hide footer completely on AI Chatbot page
-  if (pathname === '/tools/free-ai-chat') {
-    return null;
-  }
-
   return (
     <footer className="bg-[#121f45] text-white mt-20 border-t border-slate-800 relative">
       {/* Top Accent Strip */}
@@ -237,12 +232,6 @@ export default function Footer() {
                   <span>AI Tools</span>
                 </Link>
               </li>
-              <li>
-                <Link href="/tools/free-ai-chat" className="hover:text-[#f9b44d] transition-colors flex items-center gap-1.5 group">
-                  <span className="text-slate-500 group-hover:text-[#f9b44d] text-xs">›</span>
-                  <span>Free AI Chat</span>
-                </Link>
-              </li>
               <li className="pt-1">
                 <Link
                   href="/latest-publications"
@@ -308,16 +297,6 @@ export default function Footer() {
                   <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                     Live Apps
                   </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/tools/free-ai-chat" className="hover:text-[#f9b44d] transition-colors flex items-center justify-between group text-xs text-amber-300 font-semibold">
-                  <span className="flex items-center gap-1.5">
-                    <span className="text-[#f9b44d]">›</span>
-                    <span>Free AI Chat & Code Canvas</span>
-                  </span>
-                  {' '}
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300">Interactive</span>
                 </Link>
               </li>
               <li>

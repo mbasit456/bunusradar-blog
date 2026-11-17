@@ -18,6 +18,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/tools/free-ai-chat',
+        destination: '/tools',
+        permanent: true,
+      },
+
+      {
         source: '/blog',
         destination: '/latest-publications',
         permanent: true,

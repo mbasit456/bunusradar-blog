@@ -48,7 +48,7 @@ Data privacy remains the paramount consideration for any healthcare organization
 
 To address these requirements, major healthcare systems are transitioning to sovereign on-premises or private VPC deployments. Using quantized open-weight reasoning models like DeepSeek R1 and specialized medical Llama variants running on local GPU clusters, hospitals can process sensitive patient records entirely within the hospital firewall with zero external telemetry.
 
-For healthcare technology developers building custom medical applications, using our [Free AI Chat and Code Canvas Workspace](/tools/free-ai-chat) provides an isolated sandbox to test user interface prototypes, synthetic patient generators, and FHIR API integrations before deploying them into secure clinical environments.
+For healthcare technology developers building custom medical applications, using our [Interactive AI Developer Tools Suite](/tools) provides an isolated sandbox to test user interface prototypes, synthetic patient generators, and FHIR API integrations before deploying them into secure clinical environments.
 
 ## Looking Ahead: The Future of Autonomous Clinical Systems
 

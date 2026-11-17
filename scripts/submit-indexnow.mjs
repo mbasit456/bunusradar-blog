@@ -28,7 +28,6 @@ export async function submitToIndexNow(urlsToSubmit = null) {
       `https://${HOST}/author/elena-rostova`,
       `https://${HOST}/author/marcus-sterling`,
       `https://${HOST}/tools`,
-      `https://${HOST}/tools/free-ai-chat`,
       `https://${HOST}/tools/ai-token-calculator`,
       `https://${HOST}/tools/ai-prompt-optimizer`,
       `https://${HOST}/tools/ai-roi-calculator`,

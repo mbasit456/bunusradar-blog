@@ -102,10 +102,10 @@ export default function Sidebar({ mustReadPosts }: SidebarProps) {
             <ArrowRight className="w-3.5 h-3.5 text-[#f9b44d]" />
           </Link>
           <Link
-            href="/tools/free-ai-chat"
+            href="/tools"
             className="flex items-center justify-between p-2.5 rounded bg-[#f9b44d] hover:bg-[#e09e38] text-xs font-bold text-[#1b2e67] transition-colors"
           >
-            <span>Launch Free AI Chatbot</span>
+            <span>Explore Developer Tools</span>
             <ArrowRight className="w-3.5 h-3.5 text-[#1b2e67]" />
           </Link>
         </div>

@@ -40,17 +40,6 @@ export const metadata: Metadata = {
 
 const TOOLS = [
   {
-    title: 'Free AI Chat, Image Studio & Canvas Workspace',
-    slug: 'free-ai-chat',
-    category: 'Conversational AI, Art & Code',
-    badge: 'Flagship',
-    badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
-    description: 'Conversational assistant with multi-engine AI image generation (Gemini Vision and Open Diffusion Grid), Claude-style interactive code canvases, step-by-step reasoning, and live sandboxed web execution.',
-    icon: Bot,
-    stats: 'AI Image Studio • Code Canvas Artifacts • DeepSeek Reasoning • Multi-Model',
-    cta: 'Launch AI Workspace',
-  },
-  {
     title: 'AI Token & Model Cost Calculator',
     slug: 'ai-token-calculator',
     category: 'API Economics',
